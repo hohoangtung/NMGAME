@@ -1,25 +1,30 @@
-﻿#include "Game.h"
+﻿#include <string>
+#include "Game.h"
 #include "FrameWork\Event.h"
-#include <string>
-using namespace std;
-US_FRAMEWORK
+
 #if _DEBUG
 #include "debug.h"
 #endif // _DEBUG
+
+using namespace std;
+US_FRAMEWORK
+
 StopWatch* Game::g_StopWatch = new StopWatch();
 int Game::isExit = 0;
+
 void Game::exit()
 {
 	isExit = 1;
 }
-// Tạm để đây để test sprite. Có thể ssau này bỏ vô class 
+
+// Tạm để đây để test sprite. Có thể sau này bỏ vô class 
 static LPD3DXSPRITE g_spritehandle = nullptr;
 Sprite *p;
+
 Game::~Game(void)
 {
 	// Do nothing. Use release instead
 }
-
 
 Game::Game(HINSTANCE hInstance, LPWSTR name, int width, int height, int fps, int isFullScreen)
 {
@@ -28,6 +33,7 @@ Game::Game(HINSTANCE hInstance, LPWSTR name, int width, int height, int fps, int
 	_devicemanager = DeviceManager::getInstance();
 	_input = InputController::getInstance();
 }
+
 void A(KeyEventArg *e)
 {
 	if (e->_key == DIK_SPACE)
@@ -35,6 +41,7 @@ void A(KeyEventArg *e)
 		OutputDebugString(L"down\n");
 	}
 }
+
 void B(KeyEventArg *e)
 {
 	if (e->_key == DIK_SPACE)
@@ -90,6 +97,7 @@ void Game::run()
 			Sleep(_frameRate - _deltaTime);
 	}
 }
+
 void Game::render()
 {
 	// should go to another place
@@ -118,10 +126,12 @@ void Game::draw(float deltatime)
 	// ----
 
 }
+
 void Game::updateInput(float deltatime)
 {
 	// do something
 }
+
 void Game::release()
 {
 	_devicemanager->release();
