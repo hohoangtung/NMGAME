@@ -11,11 +11,11 @@ using namespace std;
 NS_FRAMEWORK
 NS_FRAMEWORK_BEGIN
 
+// định nghĩa các hành động cơ bản khi vẽ hình. chưa đầy đủ. nhưng có thể sử dụng được.
 class Sprite
 {
 public:
 	
-
 	// filePath: đường dẫn hình ảnh
 	// count: số frame ảnh trên một file
 	// SPR: số frame trên một dòng
@@ -37,7 +37,7 @@ private:
 
 	GVector3			_position;				// không được gán trực tiếp mà phải gọi setPosition();
 
-	int		_count;				// số frame của hình, sao khi khởi tạo thì không được sửa
+	int		_count;					// số frame của hình, sao khi khởi tạo thì không được sửa
 	int		_spriteperrow;			// số frame trên một dòng, sao khi khởi tạo thì không được sửa
 	int		_rowCount;				// số dòng frame, sao khi khởi tạo thì không được sửa
 

@@ -1,5 +1,45 @@
 ﻿
+/*
+	HOW TO USE:
 
+	this is a basic game class.
+	inheritance it to which game you want to build
+	override virtual methods (init, release, draw, updateinput, update)
+	
+	example:
+	class GameX: public Game
+	{
+	public:
+		void init() 
+		{
+			Game::init();
+			some objects created
+		}				
+		void release()
+		{
+			Game::release();
+			some objects deleted
+		}
+
+		void updateInput(float deltatime) {check input event and implement action}
+		void update(float deltatime){ update all object on screen}
+		void draw(float deltatime) {draw to screen}
+
+		//5 overrided methods
+
+		// updateinput, update, draw. they are called automatic in Game::run()
+	}
+
+	in main function:
+	call:
+	game* game = new GameX(...);
+	game->init();
+	game->run();
+	game->release();
+	delete game;
+
+	when you build GameY. just replace "new GameX(...)" into "new GameY(...)"
+*/
 #ifndef __GAME_H__
 #define __GAME_H__
 
@@ -14,24 +54,28 @@
 NS_FRAMEWORK
 NS_FRAMEWORK_BEGIN
 
+//define basic game's loop
 class Game
 {
 public:
-	~Game(void);
-	static StopWatch *g_StopWatch;
+	virtual ~Game(void);
+	
 	static int isExit;
 
 	Game(HINSTANCE, LPWSTR = L"Window Game", int width = 800, int height = 600, int fps = 30, int isFullScreen = 0);
-	void virtual init();
-	void virtual run();
-	void virtual release();
-	void virtual draw(float deltatime);			// để tạm
-	void virtual updateInput(float deltatime);
+	void virtual init();						// init your objects
+	void virtual release();						// release your objects
+	
+	void virtual updateInput(float deltatime);	// update input, include played objects and menu button
+	void virtual update(float deltatime);		// update your objects
+	void virtual draw(float deltatime);			// draw your objects
+		
+	void run();
 	void render();		
-	static void exit();			// could call every where to exit the game.
+	static void exit();			// exit the game. call: Game::exit()
 protected:
-	pGraphics wnd_Instance;
-	pGameTime _gametime;
+	pGraphics wnd_Instance;		// for init window. 
+	pGameTime _gametime;		
 	pDeviceManager _devicemanager;
 	pInputController _input;
 	float _frameRate;			// time for 1 frame, milisecond

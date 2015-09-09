@@ -16,7 +16,7 @@ NS_FRAMEWORK_BEGIN
 
 	With RandomFunction and Method is a name of one function or method have no return value and argument
 */
-typedef void(*pFunction)(void); 
+typedef void(*pFunction)(void);
 
 class StopWatch
 {
