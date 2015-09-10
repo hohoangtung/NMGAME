@@ -4,6 +4,11 @@
 #ifndef __NS_FRAMEWORK__
 
 #define __NS_FRAMEWORK__
+
+/*
+	Project properties -> Linker -> Input -> Additional Denpendencies
+	add the *.lib file with each include header.
+ */
 #include <d3d9.h>		// d3d9.lib
 #include <d3dx9.h>		// d3dx9.lib
 #include <dinput.h>		// dinput8.lib, dxguid.lib

@@ -16,7 +16,7 @@ Sprite::Sprite(LPD3DXSPRITE spriteHandle, LPWSTR filePath, int count, int SPR)
 	this->_spriteperrow = SPR;
 	this->_rowCount = count / SPR;
 
-	this->_position = D3DXVECTOR3(0, 0, 1);
+	this->_position = D3DXVECTOR3(0, 0, 0);
 	this->setIndex(0);
 	
 	auto rs = this->_Texture.loadFromFile(spriteHandle, filePath);
@@ -42,7 +42,6 @@ void Sprite::render(LPD3DXSPRITE spriteHandle)
 void Sprite::setIndex(int index)
 {
 	this->_index = index % _count;
-	
 	this->setCurrentFrame();
 }
 
