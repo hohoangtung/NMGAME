@@ -18,7 +18,7 @@ public:
 	
 	// filePath: đường dẫn hình ảnh
 	// count: số frame ảnh trên một file
-	// SPR (sprite per row): số frame trên một dòng
+	// SPR: số frame trên một dòng
 	Sprite(LPD3DXSPRITE spriteHandle, LPWSTR filePath, int count = 1, int SPR = 1);
 	//Sprite(int width, int height, int count = 1, int SPR = 1);
 
@@ -28,7 +28,7 @@ public:
 	void setIndex(int);			
 	void next();				// duyệt các frame theo thứ tự mặc định
 	GVector3 getPosition();
-	void setPosition(int x, int y, int z = 0);
+	void setPosition(int x, int y, int z = 1);
 	void setPosition(GVector3 vector);
 	
 private:
