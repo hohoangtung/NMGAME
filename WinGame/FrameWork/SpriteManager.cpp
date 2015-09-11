@@ -7,7 +7,6 @@ SpriteManager::SpriteManager(void)
 	
 }
 
-
 SpriteManager::~SpriteManager(void)
 {
 	if (_listSprite.empty() == false)
@@ -16,18 +15,17 @@ SpriteManager::~SpriteManager(void)
 
 void SpriteManager::loadResource(LPD3DXSPRITE spriteHandle)
 {
-	//Sprite* sp = new Sprite(spriteHandle, filePath, countFrame, FrameperRow)
-	// this->_listSprite.add(pair(eID::OBJECT, sp));
-
+	Sprite* sp = new Sprite(spriteHandle, L"Flower.png", 4, 4);
+	this->_listSprite.insert(pair<eID, Sprite>(eID::FLOWER, *sp));
 }
 Sprite* SpriteManager::getSprite(eID id)
 {
-	//return new sprite with copy constructor.
-	// not return reference.
+	Sprite it = this->_listSprite.find(id)->second;
+	return new Sprite(it);
 }
 void SpriteManager::releaseSprite(eID id)
 {
-	//remove sprite from memorry
+	this->_listSprite.erase(id);
 }
 SpriteManager* SpriteManager::getInstance()
 {
