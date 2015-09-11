@@ -15,7 +15,7 @@ void Game::exit()
 	isExit = 1;
 }
 // Tạm để đây để test sprite. Có thể ssau này bỏ vô class 
-static LPD3DXSPRITE g_spritehandle = nullptr;
+//static LPD3DXSPRITE g_spritehandle = nullptr;
 Sprite *p;	// for test
 
 Game::~Game(void)
@@ -30,6 +30,7 @@ Game::Game(HINSTANCE hInstance, LPWSTR name, int width, int height, int fps, int
 	_gametime = GameTime::getInstance();
 	_devicemanager = DeviceManager::getInstance();
 	_input = InputController::getInstance();
+	_spriteHandle = NULL;
 }
 
 void Game::init()
@@ -40,11 +41,12 @@ void Game::init()
 	_input->init(wnd_Instance->getWnd(), wnd_Instance->gethInstance());
 	this->_frameRate = 1000.0f / wnd_Instance->getFrameRate();	 //1000/30 = 33 milisecond
 
-	D3DXCreateSprite(_devicemanager->getDevice(), &g_spritehandle);
-	p = new Sprite(g_spritehandle,L"Flower.png",4, 4);
+	D3DXCreateSprite(_devicemanager->getDevice(), &this->_spriteHandle);
+	p = new Sprite(this->_spriteHandle,L"Flower.png",4, 4);
 
 	_oldTime = _gametime->getTotalGameTime();
 	_deltaTime = 0.0f;
+	this->loadResource(this->_spriteHandle);
 }
 
 static StopWatch *sw = new StopWatch();	// test
@@ -95,11 +97,12 @@ void Game::render()		// call once per frame
 void Game::draw(float deltatime)
 {
 	// should go to another classs to manage
-	g_spritehandle->Begin(D3DXSPRITE_ALPHABLEND);
-	p->render(g_spritehandle);
+	this->_spriteHandle->Begin(D3DXSPRITE_ALPHABLEND);
+	p->render(_spriteHandle);
+
 	//g_spritehandle->Flush();
 	p->next();
-	g_spritehandle->End();
+	_spriteHandle->End();
 	// ----
 }
 void Game::updateInput(float deltatime)
@@ -108,6 +111,11 @@ void Game::updateInput(float deltatime)
 	// override this for effection
 }
 void Game::update(float deltatime)
+{
+	// do nothing.
+	// override this for effection
+}
+void Game::loadResource(LPD3DXSPRITE spriteHandle)
 {
 	// do nothing.
 	// override this for effection

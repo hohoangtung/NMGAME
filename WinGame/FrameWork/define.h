@@ -12,6 +12,11 @@
 #include <exception>
 using namespace std;
 
+enum eID
+{
+
+};
+
 typedef D3DXVECTOR3 GVector3;
 typedef D3DXVECTOR2 GVector2;
 
