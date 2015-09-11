@@ -46,7 +46,10 @@ void Game::init()
 
 	_oldTime = _gametime->getTotalGameTime();
 	_deltaTime = 0.0f;
-	this->loadResource(this->_spriteHandle);
+
+	// load resource
+	this->loadResource();
+
 }
 
 static StopWatch *sw = new StopWatch();	// test
@@ -87,24 +90,17 @@ void Game::render()		// call once per frame
 		// main game's logic
 		updateInput(time);
 		update(time);
-		draw(time);
+		draw();
 	}
 	device->getDevice()->EndScene();
 	device->present();
 
 }
 
-void Game::draw(float deltatime)
+void Game::draw()
 {
-	// should go to another classs to manage
-	this->_spriteHandle->Begin(D3DXSPRITE_ALPHABLEND);
-	p->render(_spriteHandle);
-
-	//g_spritehandle->Flush();
-	p->next();
-	_spriteHandle->End();
-	// ----
 }
+
 void Game::updateInput(float deltatime)
 {
 	// do nothing.
@@ -115,7 +111,7 @@ void Game::update(float deltatime)
 	// do nothing.
 	// override this for effection
 }
-void Game::loadResource(LPD3DXSPRITE spriteHandle)
+void Game::loadResource()
 {
 	// do nothing.
 	// override this for effection

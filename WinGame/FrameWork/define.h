@@ -14,7 +14,7 @@ using namespace std;
 
 enum eID
 {
-
+	FLOWER,
 };
 
 typedef D3DXVECTOR3 GVector3;
