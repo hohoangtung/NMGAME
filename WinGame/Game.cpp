@@ -3,7 +3,7 @@
 #include <string>
 using namespace std;
 US_FRAMEWORK
-
+#include "FrameWork\SpriteManager.h"
 #if _DEBUG
 #include "debug.h"	// for print to output. call: __debugoutput()
 #endif // _DEBUG
@@ -17,7 +17,7 @@ void Game::exit()
 // Tạm để đây để test sprite. Có thể ssau này bỏ vô class 
 //static LPD3DXSPRITE g_spritehandle = nullptr;
 Sprite *p;	// for test
-
+Sprite *p2;
 Game::~Game(void)
 {
 	// Do nothing. Use release instead
@@ -42,11 +42,15 @@ void Game::init()
 	this->_frameRate = 1000.0f / wnd_Instance->getFrameRate();	 //1000/30 = 33 milisecond
 
 	D3DXCreateSprite(_devicemanager->getDevice(), &this->_spriteHandle);
-	p = new Sprite(this->_spriteHandle,L"Flower.png",4, 4);
+	this->loadResource(this->_spriteHandle);
 
+	//p = new Sprite(this->_spriteHandle,L"Flower.png",4, 4);
+	p = SpriteManager::getInstance()->getSprite(eID::FLOWER);
+	p2 = SpriteManager::getInstance()->getSprite(eID::FLOWER);
+	SpriteManager::getInstance()->releaseSprite(eID::FLOWER);
+	p2->setPosition(200,200);
 	_oldTime = _gametime->getTotalGameTime();
 	_deltaTime = 0.0f;
-	this->loadResource(this->_spriteHandle);
 }
 
 static StopWatch *sw = new StopWatch();	// test
@@ -99,9 +103,11 @@ void Game::draw(float deltatime)
 	// should go to another classs to manage
 	this->_spriteHandle->Begin(D3DXSPRITE_ALPHABLEND);
 	p->render(_spriteHandle);
-
+	p2->render(_spriteHandle);
 	//g_spritehandle->Flush();
 	p->next();
+	p2->next();
+	
 	_spriteHandle->End();
 	// ----
 }
@@ -119,6 +125,7 @@ void Game::loadResource(LPD3DXSPRITE spriteHandle)
 {
 	// do nothing.
 	// override this for effection
+	//SpriteManager::getInstance()->loadResource(spriteHandle); // => use in derive class instead
 }
 void Game::release()
 {

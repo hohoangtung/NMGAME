@@ -21,10 +21,9 @@ public:
 	// SPR: số frame trên một dòng
 	Sprite(LPD3DXSPRITE spriteHandle, LPWSTR filePath, int count = 1, int SPR = 1);
 	//Sprite(int width, int height, int count = 1, int SPR = 1);
-
 	~Sprite();
 	void render(LPD3DXSPRITE spriteHandle);							// Vẽ hình
-	
+	void release();
 	void setIndex(int);			
 	void next();				// duyệt các frame theo thứ tự mặc định
 	GVector3 getPosition();
@@ -46,7 +45,7 @@ private:
 
 	// Chứa cặp X, Y là toạ độ theo index của một frame so với hình lớn
 	GVector2	_curFrame;			
-	void setCurrentFrame();
+	void setCurrentFrame();			// đừng care. chỉ để cho đoạn code gọn
 
 	int		_frameWidth;			// Chiều rộng của một frame hình
 	int		_frameHeight;			// Chiều cao của một frame hình

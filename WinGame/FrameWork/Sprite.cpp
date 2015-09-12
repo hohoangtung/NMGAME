@@ -28,7 +28,10 @@ Sprite::Sprite(LPD3DXSPRITE spriteHandle, LPWSTR filePath, int count, int SPR)
 
 	this->setFrameRect();
 }
-
+void Sprite::release()
+{
+	this->_Texture.release();
+}
 void Sprite::render(LPD3DXSPRITE spriteHandle)
 {
 	/// view port and transform to decac vector
@@ -37,7 +40,7 @@ void Sprite::render(LPD3DXSPRITE spriteHandle)
 	//D3DXMatrixIdentity(&mt);	// ma trận đơn vị
 	//mt._22 = -1.0f;
 	//mt._41 = 400;
-	//mt._42 = 400;
+	//mt._42 = 400; => view port position
 	//D3DXVECTOR4 vp_pos;
 	//D3DXVec3Transform(&vp_pos, &_position, &mt);
 
@@ -53,7 +56,7 @@ void Sprite::render(LPD3DXSPRITE spriteHandle)
 	_Texture.render(
 		spriteHandle,
 		&_frameRect,
-		NULL,
+		NULL,		//=>
 		&_position);
 	return;
 }

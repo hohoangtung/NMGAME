@@ -3,6 +3,7 @@
 BaseObject::BaseObject(eID id)
 {
 	_sprite = SpriteManager::getInstance()->getSprite(id);
+	
 }
 
 BaseObject::~BaseObject()

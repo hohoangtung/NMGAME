@@ -4,13 +4,13 @@ US_FRAMEWORK
 Texture::Texture(void)
 {
 	_color = C_WHITE;
-	_texture = nullptr;
+	_texture = nullptr;		// nullptr have the same meaning NULL.
 }
-
 
 Texture::~Texture(void)
 {
-	_texture->Release();
+	//_texture->Release();
+	// do no thing. use release instead.
 }
 
 HRESULT Texture::loadFromFile(LPD3DXSPRITE spriteHandle, LPWSTR filePath, D3DXCOLOR color)
@@ -46,7 +46,10 @@ HRESULT Texture::loadFromFile(LPD3DXSPRITE spriteHandle, LPWSTR filePath, D3DXCO
 
 	return result;
 }
-
+void Texture::release()
+{
+	this->_texture->Release();
+}
 void Texture::render(LPD3DXSPRITE spriteHandle, const RECT* rect, const GVector3* center, const GVector3* position)
 {
 	spriteHandle->Draw(
