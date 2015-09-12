@@ -50,6 +50,8 @@
 #include "FrameWork\GameTime.h"
 #include "FrameWork\StopWatch.h"
 #include "FrameWork\InputController.h"
+#include "FrameWork\Managers\SceneManager.h"
+#include "objects\PlayScene.h"
 
 NS_FRAMEWORK
 NS_FRAMEWORK_BEGIN
@@ -68,8 +70,9 @@ public:
 	
 	void virtual updateInput(float deltatime);	// update input, include played objects and menu button
 	void virtual update(float deltatime);		// update your objects
-	void virtual draw(float deltatime);			// draw your objects
-		
+	void virtual draw();						// draw your objects
+	void virtual loadResource();
+
 	void run();
 	void render();		
 	static void exit();			// exit the game. call: Game::exit()
@@ -78,6 +81,8 @@ protected:
 	pGameTime _gametime;		
 	pDeviceManager _devicemanager;
 	pInputController _input;
+	LPD3DXSPRITE _spriteHandle;
+private:
 	float _frameRate;			// time for 1 frame, milisecond
 	float _oldTime;
 	float _deltaTime;

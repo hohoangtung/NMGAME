@@ -41,12 +41,15 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
-/Debug
-/WinGame/Debug
-/WinGame.opensdf
-/WinGame.sdf
 /.vs/WinGame/v14
 /Debug
 /WinGame/Debug
 /WinGame.opensdf
 /WinGame.sdf
+WinGame/WinGame.vcxproj
+*.filters
+*.sln
+
+WinGame/WinGame.vcxproj
+WinGame.v12.suo
+WinGame/WinGame.vcxproj

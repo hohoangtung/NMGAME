@@ -11,12 +11,14 @@ Sprite::~Sprite()
 }
 Sprite::Sprite(LPD3DXSPRITE spriteHandle, LPWSTR filePath, int count, int SPR)
 {
+	_origin = GVector2(0.5f, 0.5f);
+	_scale = GVector2(1.0f, 1.0f);
 
 	this->_count = count;
 	this->_spriteperrow = SPR;
 	this->_rowCount = count / SPR;
 
-	this->_position = D3DXVECTOR3(0, 0, 1);
+	this->_position = GVector2(0, 0);
 	this->setIndex(0);
 	
 	auto rs = this->_Texture.loadFromFile(spriteHandle, filePath);
@@ -28,15 +30,35 @@ Sprite::Sprite(LPD3DXSPRITE spriteHandle, LPWSTR filePath, int count, int SPR)
 
 	this->setFrameRect();
 }
-
+void Sprite::release()
+{
+	this->_Texture.release();
+}
 void Sprite::render(LPD3DXSPRITE spriteHandle)
 {
 	_Texture.render(
 		spriteHandle,
 		&_frameRect,
-		NULL,
-		&_position);
+		_position,
+		_scale,
+		_rotate,
+		_origin
+		);
+
 	return;
+}
+
+void Sprite::render(LPD3DXSPRITE spriteHandle, Viewport* viewport)
+{
+	_Texture.render(
+		spriteHandle,
+		&_frameRect,
+		*viewport,
+		_position,
+		_scale,
+		_rotate,
+		_origin
+		);
 }
 
 void Sprite::setIndex(int index)
@@ -71,7 +93,7 @@ void Sprite::setPosition(int x, int y, int z)
 
 void Sprite::setPosition(GVector3 vector)
 {
-	this->_position = vector;
+	this->_position = GVector2(vector.x, vector.y);
 
 	this->_bound.left = _position.x;   // dựa vào hệ toạ độ top left làm gốc. Chưa biết hệ DECAC có đúng hay không
 	this->_bound.top = _position.y;
@@ -79,12 +101,92 @@ void Sprite::setPosition(GVector3 vector)
 	this->_bound.bottom = _bound.right + this->_frameHeight;
 }
 
+void Sprite::setPositionX(float x)
+{
+	if (x != _position.x)
+		_position.x = x;
+}
+
+void Sprite::setPositionY(float y)
+{
+	if (y != _position.y)
+		_position.y = y;
+}
+
+GVector2 Sprite::getScale()
+{
+	return _scale;
+}
+
+void Sprite::setScale(GVector2 scale)
+{
+	if (scale == _scale)
+		return;
+
+	_scale = scale;
+}
+
+void Sprite::setScale(float scale)
+{
+	if (scale != _scale.x || scale != _scale.y)
+	{
+		_scale.x = scale;
+		_scale.y = scale;
+	}
+}
+
+void Sprite::setScaleX(float sx)
+{
+	if (sx != _scale.x)
+		_scale.x = sx;
+}
+
+void Sprite::setScaleY(float sy)
+{
+	if (sy != _scale.y)
+		_scale.y = sy;
+}
+
+float Sprite::getRotate()
+{
+	return _rotate;
+}
+
+void Sprite::setRotate(float degree)
+{
+	if (degree == _rotate)
+		return;
+
+	_rotate = degree;
+}
+
+GVector2 Sprite::getOrigin()
+{
+	return _origin;
+}
+
+void Sprite::setOrigin(GVector2 origin)
+{
+	if (origin != _origin)
+		_origin = origin;
+}
+
 void Sprite::next()
 {
 	this->setIndex(this->_index + 1);
 }
 
-GVector3 Sprite::getPosition()
+GVector2 Sprite::getPosition()
 {
 	return _position;
+}
+
+float Sprite::getPositionX()
+{
+	return _position.x;
+}
+
+float Sprite::getPositionY()
+{
+	return _position.y;
 }
