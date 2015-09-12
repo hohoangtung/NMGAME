@@ -15,13 +15,15 @@ SpriteManager::~SpriteManager(void)
 
 void SpriteManager::loadResource(LPD3DXSPRITE spriteHandle)
 {
-	Sprite* sp = new Sprite(spriteHandle, L"Flower.png", 4, 4);
-	this->_listSprite.insert(pair<eID, Sprite>(eID::FLOWER, *sp));
+	//Sprite* sp = new Sprite(spriteHandle, L"Flower.png", 4, 4);
+	//this->_listSprite.insert(pair<eID, Sprite>(eID::FLOWER, *sp));
+	_spriteHandle = spriteHandle;
 }
 Sprite* SpriteManager::getSprite(eID id)
 {
-	Sprite it = this->_listSprite.find(id)->second;
-	return new Sprite(it);
+	//Sprite it = this->_listSprite.find(id)->second;
+	//return new Sprite(it);
+	return new Sprite(_spriteHandle, L"Flower.png", 4, 4);
 }
 void SpriteManager::releaseSprite(eID id)
 {

@@ -49,7 +49,6 @@ void Game::init()
 
 	// load resource
 	this->loadResource();
-
 }
 
 static StopWatch *sw = new StopWatch();	// test
