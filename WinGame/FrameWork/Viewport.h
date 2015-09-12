@@ -17,6 +17,8 @@ public:
 	float getWidth();
 	float getHeight();
 
+	GVector3 getPositionInViewport(GVector3* position);
+
 private:
 	GVector2 _positionWorld;
 	float _width;

@@ -74,12 +74,12 @@ void Texture::render(LPD3DXSPRITE spriteHandle, RECT * srcRect, GVector2 positio
 
 	D3DXMatrixTransformation2D(
 		&matTransformed,						// ma tran ket qua sau transform
-		&position,						// goc toa do / diem neo
+		&position,								// goc toa do / diem neo
 		0.0f,									
 		&scale,									// ti le scale
-		&position,						// goc toa do / diem neo
+		&position,								// goc toa do / diem neo
 		D3DXToRadian(rotate),					// góc xoay theo radian
-		0										// vi trí, bên d??i c?p nh?t v? trí r?i
+		0										// vi trí
 		);
 
 	matFinal = matTransformed * matOld;
@@ -99,49 +99,10 @@ void Texture::render(LPD3DXSPRITE spriteHandle, RECT * srcRect, GVector2 positio
 
 void Texture::render(LPD3DXSPRITE spriteHandle, RECT * srcRect, Viewport viewport, GVector2 position, GVector2 scale, float rotate, GVector2 origin, int zIndex)
 {
-	D3DXMATRIX matFinal;
-	D3DXMATRIX matTransformed;
-	D3DXMATRIX matOld;
+	GVector3 positionViewport;
+	positionViewport = viewport.getPositionInViewport(&GVector3(position.x, position.y, zIndex));
 
-	// world position to viewport
-	D3DXMATRIX mt;
-	D3DXMatrixIdentity(&mt);
-	mt._22 = -1.0f;
-	mt._41 = (-1) * viewport.getPositionWorld().x;
-	mt._42 = viewport.getPositionWorld().y;
-	D3DXVECTOR4 positionViewport;
-	D3DXVec3Transform(&positionViewport, &GVector3(position.x, position.y, zIndex), &mt);
-
-	// origin in position
-	GVector3 center = GVector3(abs(srcRect->right - srcRect->left) * origin.x, abs(srcRect->top - srcRect->bottom) * origin.x, zIndex);
-	GVector2 originPosition = GVector2(positionViewport.x, positionViewport.y);
-
-	// get matrix texture
-	spriteHandle->GetTransform(&matOld);
-
-	D3DXMatrixTransformation2D(
-		&matTransformed,						// ma tran ket qua sau transform
-		&originPosition,						// goc toa do / diem neo
-		0.0f,
-		&scale,									// ti le scale
-		&originPosition,						// goc toa do / diem neo
-		D3DXToRadian(rotate),					// góc xoay theo radian
-		0										// vi trí, bên d??i c?p nh?t v? trí r?i
-		);
-
-	matFinal = matTransformed * matOld;
-
-	//set matrix transformed
-	spriteHandle->SetTransform(&matFinal);
-
-	spriteHandle->Draw(
-		this->_texture,
-		srcRect,
-		&center,
-		&GVector3(positionViewport.x, positionViewport.y, zIndex),
-		_color);
-
-	spriteHandle->SetTransform(&matOld);
+	render(spriteHandle, srcRect, GVector2(positionViewport.x, positionViewport.y), scale, rotate, origin, positionViewport.z);
 }
 
 void Texture::setColor(D3DXCOLOR color)

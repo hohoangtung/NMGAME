@@ -28,5 +28,11 @@ typedef D3DXVECTOR2 GVector2;
 
 #define US_FRAMEWORK		using namespace FrameWork;
 
+#define SAFE_DELETE(p) \
+if(p) \
+{\
+	delete (p); \
+	p = nullptr; \
+} \
 
 #endif // !__NS_FRAMEWORK__

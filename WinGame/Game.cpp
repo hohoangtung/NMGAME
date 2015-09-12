@@ -42,7 +42,7 @@ void Game::init()
 	this->_frameRate = 1000.0f / wnd_Instance->getFrameRate();	 //1000/30 = 33 milisecond
 
 	D3DXCreateSprite(_devicemanager->getDevice(), &this->_spriteHandle);
-	p = new Sprite(this->_spriteHandle,L"Flower.png",4, 4);
+	//p = new Sprite(this->_spriteHandle,L"Flower.png",4, 4);
 
 	_oldTime = _gametime->getTotalGameTime();
 	_deltaTime = 0.0f;

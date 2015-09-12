@@ -6,8 +6,8 @@
 		if Texture instance is deleted by destructor, LPDIRECT3DTEXTURE9 is kept in memory => LEAK MEMORY
 		call release before delete to avoid LEAK
 */
-#ifndef __TEXTURE_H__
-#define __TEXTURE_H__
+#ifndef __texture_H__
+#define __texture_H__
 
 #include "define.h"
 #include "DeviceManager.h"
@@ -83,5 +83,5 @@ typedef Texture* pTexture;
 
 NS_FRAMEWORK_END
 
-#endif // !__TEXTURE_H__
+#endif // !__texture_H__
 
