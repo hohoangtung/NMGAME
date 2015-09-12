@@ -26,6 +26,8 @@ public:
 
 	~SpriteManager(void);
 private:
+	LPD3DXSPRITE _spriteHandle;
+
 	SpriteManager(void);
 	static SpriteManager* _instance;
 	map<eID, Sprite*> _listSprite;

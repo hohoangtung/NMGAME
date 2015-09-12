@@ -1,4 +1,4 @@
-/*
+﻿/*
 	HOW TO USE
 	the Texture is used in Sprite and SpriteManager.
 	you dont have to use Texture manually, just use Sprite or SpriteManager.
@@ -11,6 +11,8 @@
 
 #include "define.h"
 #include "DeviceManager.h"
+#include "Viewport.h"
+
 NS_FRAMEWORK
 NS_FRAMEWORK_BEGIN
 
@@ -43,6 +45,28 @@ public:
 		@postion: position to draw
 	*/
 	void render(LPD3DXSPRITE spriteHandle, const RECT* rect, const GVector3* center, const GVector3* position);
+	
+	/*
+	render texture với các tham số tranform, gốc tọa độ top-left
+		@position: vị trí
+		@scale: 
+		@rotate: góc xoay theo số độ (0-360)
+		@origin: điểm neo để transform
+		@zIndex: độ sâu
+	*/
+	void render(LPD3DXSPRITE spriteHandle, RECT* srcRect, GVector2 position, GVector2 scale, float rotate, GVector2 origin, int zIndex = 1);
+	
+	/*
+	render texture với các tham số tranform, trong viewport
+		@viewport: 
+		@position: vị trí
+		@scale:
+		@rotate: góc xoay theo số độ (0-360)
+		@origin: điểm neo để transform
+		@zIndex: độ sâu
+	*/
+	void render(LPD3DXSPRITE spriteHandle, RECT* srcRect, Viewport viewport, GVector2 position, GVector2 scale, float rotate, GVector2 origin, int zIndex = 1);
+
 	void setColor(D3DXCOLOR);
 	// get width of image
 	int getWidth();
