@@ -21,6 +21,7 @@ public:
 	// count: số frame ảnh trên một file
 	// SPR: số frame trên một dòng
 	Sprite(LPD3DXSPRITE spriteHandle, LPWSTR filePath, int count = 1, int SPR = 1);
+	void release();
 	//Sprite(int width, int height, int count = 1, int SPR = 1);
 	~Sprite();
 	void render(LPD3DXSPRITE spriteHandle);							// Vẽ hình
