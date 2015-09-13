@@ -18,6 +18,7 @@ public:
 
 	virtual void update(float deltatime) = 0;
 	virtual void draw(LPD3DXSPRITE) = 0;
+	virtual void release() = 0;
 protected:
 	Sprite* _sprite;
 };

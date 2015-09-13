@@ -24,6 +24,7 @@ Sprite::Sprite(LPD3DXSPRITE spriteHandle, LPWSTR filePath, int totalFrames, int 
 	float h = _texture.getHeight() * cols / totalFrames;
 
 	_animation = new Animation(totalFrames, cols, w, h);
+	this->updateBounding();
 }
 
 void Sprite::release()
@@ -76,6 +77,7 @@ void Sprite::setPosition(GVector3 vector)
 void Sprite::setPosition(GVector2 position)
 {
 	this->_position = GVector2(position.x, position.y);
+	this->updateBounding();
 }
 
 void Sprite::setPositionX(float x)

@@ -2,8 +2,7 @@
 
 Scene::Scene()
 {
-	//600 là chi?u cao màn hình, ?? t?m
-	_viewport = new Viewport(0, 600);
+
 }
 
 Scene::~Scene()

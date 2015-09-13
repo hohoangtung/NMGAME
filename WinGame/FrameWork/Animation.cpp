@@ -1,5 +1,5 @@
-#include "Animation.h"
-
+﻿#include "Animation.h"
+#include "..\debug.h"
 Animation::Animation(int totals, int cols, int frameW, int frameH)
 {
 	_totalFrames = totals;
@@ -87,9 +87,9 @@ void Animation::update(float dt)
 	if (_timer >= _timeAnimate)
 	{
 		this->nextFrame();
-		_timer = 0;
+		//_timer = 0;
+		_timer -= _timeAnimate;  // không thể gán bằng 0. vì như vậy là làm tròn. sẽ có sai số
 	}
-	
 }
 
 void Animation::setTimeAnimate(float time)
