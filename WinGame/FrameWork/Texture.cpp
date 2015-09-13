@@ -60,6 +60,51 @@ void Texture::render(LPD3DXSPRITE spriteHandle, const RECT* rect, const GVector3
 		_color);
 }
 
+void Texture::render(LPD3DXSPRITE spriteHandle, RECT * srcRect, GVector2 position, GVector2 scale, float rotate, GVector2 origin, int zIndex)
+{
+	D3DXMATRIX matFinal;
+	D3DXMATRIX matTransformed;
+	D3DXMATRIX matOld;
+
+	// origin in position
+	GVector3 center = GVector3(abs(srcRect->right - srcRect->left) * origin.x, abs(srcRect->top - srcRect->bottom) * origin.x, zIndex);
+	
+	// get matrix texture
+	spriteHandle->GetTransform(&matOld);
+
+	D3DXMatrixTransformation2D(
+		&matTransformed,						// ma tran ket qua sau transform
+		&position,								// goc toa do / diem neo
+		0.0f,									
+		&scale,									// ti le scale
+		&position,								// goc toa do / diem neo
+		D3DXToRadian(rotate),					// góc xoay theo radian
+		0										// vi trí
+		);
+
+	matFinal = matTransformed * matOld;
+
+	//set matrix transformed
+	spriteHandle->SetTransform(&matFinal);
+
+	spriteHandle->Draw(
+		this->_texture,
+		srcRect,
+		&center,
+		&GVector3(position.x, position.y, zIndex),
+		_color);
+
+	spriteHandle->SetTransform(&matOld);
+}
+
+void Texture::render(LPD3DXSPRITE spriteHandle, RECT * srcRect, Viewport viewport, GVector2 position, GVector2 scale, float rotate, GVector2 origin, int zIndex)
+{
+	GVector3 positionViewport;
+	positionViewport = viewport.getPositionInViewport(&GVector3(position.x, position.y, zIndex));
+
+	render(spriteHandle, srcRect, GVector2(positionViewport.x, positionViewport.y), scale, rotate, origin, positionViewport.z);
+}
+
 void Texture::setColor(D3DXCOLOR color)
 {
 	this->_color = color;
