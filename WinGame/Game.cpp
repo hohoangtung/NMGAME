@@ -42,12 +42,12 @@ void Game::init()
 	this->_frameRate = 1000.0f / wnd_Instance->getFrameRate();	 //1000/30 = 33 milisecond
 
 	D3DXCreateSprite(_devicemanager->getDevice(), &this->_spriteHandle);
-	this->loadResource(this->_spriteHandle);
+	this->loadResource();
 
 	//p = new Sprite(this->_spriteHandle,L"Flower.png",4, 4);
 	p = SpriteManager::getInstance()->getSprite(eID::FLOWER);
 	p2 = SpriteManager::getInstance()->getSprite(eID::FLOWER);
-	SpriteManager::getInstance()->releaseSprite(eID::FLOWER);
+	//SpriteManager::getInstance()->releaseSprite(eID::FLOWER);
 	p2->setPosition(200,200);
 	_oldTime = _gametime->getTotalGameTime();
 	_deltaTime = 0.0f;

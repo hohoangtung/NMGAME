@@ -1,4 +1,4 @@
-#include "ContraGame.h"
+﻿#include "ContraGame.h"
 
 ContraGame::ContraGame(HINSTANCE hInstance, LPWSTR title) : Game(hInstance, title)
 {
@@ -12,7 +12,6 @@ ContraGame::~ContraGame()
 void ContraGame::init()
 {
 	Game::init();
-
 	// init game
 	SceneManager::getInstance()->addScene(new PlayScene());
 }
@@ -46,6 +45,7 @@ void ContraGame::draw()
 
 void ContraGame::loadResource()
 {
+	// Game::init đã gọi hàm này rồi nên không cần gọi lại ContraGame::loadResource
 	// load resource
 	SpriteManager::getInstance()->loadResource(_spriteHandle);
 }
