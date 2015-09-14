@@ -1,6 +1,7 @@
-﻿#include "Game.h"
+﻿#include <string>
+#include "Game.h"
 #include "FrameWork\Event.h"
-#include <string>
+
 using namespace std;
 US_FRAMEWORK
 
@@ -14,9 +15,6 @@ void Game::exit()
 {
 	isExit = 1;
 }
-// Tạm để đây để test sprite. Có thể ssau này bỏ vô class 
-//static LPD3DXSPRITE g_spritehandle = nullptr;
-Sprite *p;	// for test
 
 Game::~Game(void)
 {
@@ -44,14 +42,10 @@ void Game::init()
 	D3DXCreateSprite(_devicemanager->getDevice(), &this->_spriteHandle);
 	this->loadResource();
 
-	//p = new Sprite(this->_spriteHandle,L"Flower.png",4, 4);
-	p = SpriteManager::getInstance()->getSprite(eID::FLOWER);
-
 	_oldTime = _gametime->getTotalGameTime();
 	_deltaTime = 0.0f;
 }
 
-static StopWatch *sw = new StopWatch();	// test
 void Game::run()
 {
 	MSG msg;
@@ -63,10 +57,11 @@ void Game::run()
 				isExit = 1;
 			TranslateMessage(&msg);
 			DispatchMessage(&msg);
-		}		// dont mention it.  see ebook if you want more info
+		}														// dont mention it.  see ebook if you want more info
 
-		_gametime->updateGameTime();				// gametime isn't run if dont call updateGameTime
+		_gametime->updateGameTime();							// gametime isn't run if dont call updateGameTime
 		_deltaTime = _gametime->getTotalGameTime() - _oldTime;
+
 		if (_deltaTime > _frameRate)
 		{
 			_oldTime += _frameRate;
@@ -74,26 +69,28 @@ void Game::run()
 			this->render();
 		}
 		else
-			Sleep(_frameRate - _deltaTime);			//sleep every frame for high performance
+			Sleep(_frameRate - _deltaTime);						//sleep every frame for high performance
 	}
 }
-void Game::render()		// call once per frame
+void Game::render()												// call once per frame
 {
 	// should go to another place
 	auto device = _devicemanager->getInstance();
 	float time = _gametime->getElapsedGameTime();
+
 	if (device->getDevice()->BeginScene() != DI_OK)
 		return;
-	device->clearScreen();
-	{
-		// main game's logic
-		updateInput(time);
-		update(time);
-		draw();
-	}
-	device->getDevice()->EndScene();
-	device->present();
 
+	device->clearScreen();
+
+	// main game's logic
+	updateInput(time);
+	update(time);
+	draw();
+
+	device->getDevice()->EndScene();
+
+	device->present();
 }
 
 void Game::draw()

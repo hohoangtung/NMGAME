@@ -63,7 +63,9 @@ void SpriteManager::loadResource(LPD3DXSPRITE spriteHandle)
 	sp = new Sprite(spriteHandle, L"mario.png", 5, 5);
 	this->_listSprite.insert(pair<eID, Sprite*>(eID::MARIO, sp));
 
-
+	// test
+	//Sprite* bill = new Sprite(spriteHandle, L"ContraSheet1.bmp");
+	//this->_listSprite.insert(pair<eID, Sprite*>(eID::BILL, bill));
 }
 Sprite* SpriteManager::getSprite(eID id)
 {

@@ -2,6 +2,9 @@
 #define __ANIMATION_H__
 
 #include "define.h"
+#include "Sprite.h"
+
+US_FRAMEWORK
 
 class Animation
 {
@@ -103,6 +106,8 @@ private:
 
 	void setFrameRect();
 	void setCurrentFrame();
+
+	Sprite* _spriteSheet;
 };
 
 #endif // !__ANIMATION_H__

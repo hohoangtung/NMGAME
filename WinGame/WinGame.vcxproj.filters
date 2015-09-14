@@ -93,6 +93,15 @@
     <ClCompile Include="objects\IComponent.cpp">
       <Filter>Source Files\objects</Filter>
     </ClCompile>
+    <ClCompile Include="FrameWork\Text.cpp">
+      <Filter>Source Files\FrameWork</Filter>
+    </ClCompile>
+    <ClCompile Include="FrameWork\TextBitmap.cpp">
+      <Filter>Source Files\FrameWork</Filter>
+    </ClCompile>
+    <ClCompile Include="FrameWork\Transformable.cpp">
+      <Filter>Source Files\FrameWork</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FrameWork\Sprite.h">
@@ -160,6 +169,15 @@
     </ClInclude>
     <ClInclude Include="objects\mario.h">
       <Filter>Header Files\objects</Filter>
+    </ClInclude>
+    <ClInclude Include="FrameWork\Text.h">
+      <Filter>Header Files\FrameWork</Filter>
+    </ClInclude>
+    <ClInclude Include="FrameWork\TextBitmap.h">
+      <Filter>Header Files\FrameWork</Filter>
+    </ClInclude>
+    <ClInclude Include="FrameWork\Transformable.h">
+      <Filter>Header Files\FrameWork</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

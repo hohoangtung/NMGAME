@@ -22,10 +22,10 @@ public:
 	void init()
 	{
 		_sprite = SpriteManager::getInstance()->getSprite(eID::MARIO);
-		this->_sprite->getAnimation()->createAnimate(0, 2, 0.08f);
+		//this->_sprite->getAnimation()->createAnimate(0, 2, 0.08f);
 		this->_sprite->setPosition(300, 500);
 		GVector2 v(0, -10);
-		GVector2 a(0, -50);
+		GVector2 a(0, -70);
 		this->_listComponent.push_back(new Movement(v, a, this->_sprite));
 		this->_listComponent_.insert(pair<string, IComponent*>("Movement", new Movement(v, v, this->_sprite)));
 	
@@ -51,8 +51,10 @@ public:
 			GVector2 v = move->getVelocity();
 			move->setVelocity(GVector2(-v.x, -v.y));
 		}
+		//this->_sprite->setIndex(++i % 3); // test
+
 		// or some other logic here
-		this->_sprite->update(deltatime);
+		//this->_sprite->update(deltatime);
 	}
 	void draw(LPD3DXSPRITE spritehandle)
 	{
@@ -66,7 +68,7 @@ public:
 		return _listComponent_.find(componentName)->second;
 	}
 private:
-
+	int i;
 	vector<IComponent*> _listComponent;
 	map <string, IComponent*> _listComponent_;// nên 
 	StopWatch *stopwatch;

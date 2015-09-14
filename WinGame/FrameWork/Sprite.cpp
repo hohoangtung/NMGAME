@@ -1,10 +1,14 @@
-﻿#include "Sprite.h"
+﻿#define _USE_MATH_DEFINES
+
+#include "Sprite.h"
+#include <math.h>
+#include "../debug.h"
 
 US_FRAMEWORK
 
 Sprite::~Sprite()
 {
-	
+
 }
 
 Sprite::Sprite(LPD3DXSPRITE spriteHandle, LPWSTR filePath, int totalFrames, int cols)
@@ -13,31 +17,31 @@ Sprite::Sprite(LPD3DXSPRITE spriteHandle, LPWSTR filePath, int totalFrames, int 
 	_scale = GVector2(1.0f, 1.0f);
 	_zIndex = 1;
 	_rotate = 0.0f;
-	_velocity = GVector2(0, 0);
-	_accelerate = GVector2(0, 0);
 
 	auto rs = _texture.loadFromFile(spriteHandle, filePath);
 	if (rs != D3D_OK)
 		throw;
 
-	float w = _texture.getWidth() / cols;
-	float h = _texture.getHeight() * cols / totalFrames;
+	_totalFrames = totalFrames;
+	_columns = cols;
+	_frameWidth = _texture.getWidth() / cols;
+	_frameHeight = _texture.getHeight() * cols / totalFrames;
+	_index = 0;
+	_currentFrame = GVector2(0, 0);
 
-	_animation = new Animation(totalFrames, cols, w, h);
+	this->setIndex(0);
 	this->updateBounding();
 }
 
 void Sprite::release()
 {
 	this->_texture.release();
-
-	SAFE_DELETE(_animation);
 }
 void Sprite::render(LPD3DXSPRITE spriteHandle)
 {
 	_texture.render(
 		spriteHandle,
-		&_animation->getFrameRect(),
+		&_frameRect,
 		_position,
 		_scale,
 		_rotate,
@@ -52,7 +56,7 @@ void Sprite::render(LPD3DXSPRITE spriteHandle, Viewport* viewport)
 {
 	_texture.render(
 		spriteHandle,
-		&_animation->getFrameRect(),
+		&_frameRect,
 		*viewport,
 		_position,
 		_scale,
@@ -76,7 +80,7 @@ void Sprite::setPosition(GVector3 vector)
 
 void Sprite::setPosition(GVector2 position)
 {
-	this->_position = position;
+	this->_position = GVector2(position.x, position.y);
 	this->updateBounding();
 }
 
@@ -94,11 +98,6 @@ void Sprite::setPositionY(float y)
 		_position.y = y;
 
 	this->updateBounding();
-}
-
-GVector2 Sprite::getScale()
-{
-	return _scale;
 }
 
 void Sprite::setScale(GVector2 scale)
@@ -130,22 +129,12 @@ void Sprite::setScaleY(float sy)
 		_scale.y = sy;
 }
 
-float Sprite::getRotate()
-{
-	return _rotate;
-}
-
 void Sprite::setRotate(float degree)
 {
 	if (degree == _rotate)
 		return;
 
 	_rotate = degree;
-}
-
-GVector2 Sprite::getOrigin()
-{
-	return _origin;
 }
 
 void Sprite::setOrigin(GVector2 origin)
@@ -160,103 +149,83 @@ void Sprite::setZIndex(int z)
 		_zIndex = z;
 }
 
-int Sprite::getZIndex()
-{
-	return _zIndex;
-}
-
-void Sprite::update(float dt)
-{
-	//_velocity += _accelerate * dt / 1000;
-	//_position += _velocity * dt / 1000;//
-
-	//update animation
-	_animation->update(dt);
-}
-
 RECT Sprite::getBounding()
 {
 	return _bound;
 }
 
-void Sprite::setVelocity(GVector2 vel)
+void Sprite::setFrameRect(RECT rect)
 {
-	if (_velocity != vel)
-		_velocity = vel;
+	_frameRect = rect;
 }
 
-void Sprite::setVelocity(float x, float y)
+void Sprite::setFrameRect(float top, float right, float bottom, float left)
 {
-	if (_velocity.x != x || _velocity.y != y)
-	{
-		_velocity.x = x;
-		_velocity.y = y;
-	}
+	_frameRect.top = top;
+	_frameRect.right = right;
+	_frameRect.left = left;
+	_frameRect.bottom = bottom;
 }
 
-void Sprite::setVelocityX(float velX)
+void Sprite::setFrameRect(float x, float y, int width, int height)
 {
-	if (_velocity.x != velX)
-		_velocity.x = velX;
+	_frameRect.top = y;
+	_frameRect.right = x + width;
+	_frameRect.left = x;
+	_frameRect.bottom = y + height;
 }
 
-void Sprite::setVelocityY(float velY)
+RECT Sprite::getFrameRect()
 {
-	if (_velocity.y != velY)
-		_velocity.y = velY;
+	return _frameRect;
 }
 
-void Sprite::setAccelerate(GVector2 acc)
+void Sprite::nextFrame()
 {
-	if (_accelerate != acc)
-		_accelerate = acc;
+	if (_totalFrames <= 1)
+		return;
+
+	this->setIndex(_index + 1);
 }
 
-void Sprite::setAccelerate(float x, float y)
+void Sprite::setIndex(int index)
 {
-	if (_accelerate.x != x || _accelerate.y != y)
-	{
-		_accelerate.x = x;
-		_accelerate.y = y;
-	}
+	if (_index != index)
+		_index = index;
+
+	this->setCurrentFrame();
 }
 
-void Sprite::setAccelerateX(float accX)
+void Sprite::setFrameRect()
 {
-	if (_accelerate.x != accX)
-		_accelerate.x = accX;
+	this->_frameRect.left = (long)_currentFrame.x * _frameWidth;
+	this->_frameRect.right = _frameRect.left + _frameWidth;
+	this->_frameRect.top = (long)_currentFrame.y * _frameHeight;
+	this->_frameRect.bottom = _frameRect.top + _frameHeight;
 }
 
-void Sprite::setAccelerateY(float accY)
+void Sprite::setCurrentFrame()
 {
-	if (_accelerate.y != accY)
-		_accelerate.y = accY;
-}
+	if (_index >= _totalFrames)
+		_index = _index % _totalFrames;
 
-Animation * Sprite::getAnimation()
-{
-	return _animation;
+	__debugoutput(_index);
+
+	this->_currentFrame.x = _index % _columns;
+	this->_currentFrame.y = _index / _columns;
+
+	this->setFrameRect();
 }
 
 void Sprite::updateBounding()
 {
-	this->_bound.left = _position.x - _animation->getFrameWidth() * _origin.x;
-	this->_bound.right = _bound.left + _animation->getFrameWidth();
-	this->_bound.top = _position.y + _animation->getFrameHeight() * _origin.y;
-	this->_bound.bottom = _bound.right + _animation->getFrameHeight();
-}
+	float scaleW = _frameWidth * _scale.x;
+	float scaleH = _frameHeight * _scale.y;
 
-GVector2 Sprite::getPosition()
-{
-	return _position;
-}
+	this->_bound.left = _position.x - scaleW * _origin.x;
+	this->_bound.bottom = _position.y - scaleH * _origin.y;
+	this->_bound.right = _bound.left + scaleW;
+	this->_bound.top = _bound.bottom + scaleH;
 
-float Sprite::getPositionX()
-{
-	return _position.x;
-}
-
-float Sprite::getPositionY()
-{
-	return _position.y;
+	//rotate...
 }

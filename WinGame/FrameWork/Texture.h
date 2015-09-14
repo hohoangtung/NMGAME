@@ -16,8 +16,6 @@
 NS_FRAMEWORK
 NS_FRAMEWORK_BEGIN
 
-#define C_WHITE D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f)
-
 class Texture
 {
 public:
@@ -33,7 +31,7 @@ public:
 		@filePath: the path of file
 		@color: back color
 	*/
-	HRESULT loadFromFile(LPD3DXSPRITE spriteHandle, LPWSTR filePath, D3DXCOLOR color = C_WHITE);
+	HRESULT loadFromFile(LPD3DXSPRITE spriteHandle, LPWSTR filePath, D3DXCOLOR color = C_WHITE, D3DXCOLOR colorkey = COLOR_KEY);
 
 	/*
 		draw LPDIRECT3DTEXTURE9 to screen, directX manage draw to buffer, we dont care about buffer anymore.
