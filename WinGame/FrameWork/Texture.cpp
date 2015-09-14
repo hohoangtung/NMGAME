@@ -13,7 +13,7 @@ Texture::~Texture(void)
 	// do no thing. use release instead.
 }
 
-HRESULT Texture::loadFromFile(LPD3DXSPRITE spriteHandle, LPWSTR filePath, D3DXCOLOR color)
+HRESULT Texture::loadFromFile(LPD3DXSPRITE spriteHandle, LPWSTR filePath, D3DXCOLOR color, D3DXCOLOR colorkey)
 {
 	HRESULT			result;
 
@@ -37,7 +37,7 @@ HRESULT Texture::loadFromFile(LPD3DXSPRITE spriteHandle, LPWSTR filePath, D3DXCO
 		D3DPOOL_DEFAULT,
 		D3DX_DEFAULT,
 		D3DX_DEFAULT,
-		color,
+		colorkey,
 		&this->_imageInfo,
 		nullptr,
 		&this->_texture);

@@ -1,5 +1,4 @@
-﻿
-#ifndef __GAMETIME_H__
+﻿#ifndef __GAMETIME_H__
 #define __GAMETIME_H__
 
 #include "define.h"

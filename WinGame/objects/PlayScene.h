@@ -7,6 +7,7 @@
 #include "../FrameWork/SpriteManager.h"
 #include "../FrameWork/Managers/SceneManager.h"
 #include "BaseObject.h"
+#include "../FrameWork/Text.h"
 
 using namespace std;
 US_FRAMEWORK;
@@ -25,6 +26,7 @@ public:
 
 private:
 	Sprite* sprite;
+	Text* _text;
 	vector<BaseObject*> _listobject;
 };
 

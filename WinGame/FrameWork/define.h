@@ -1,20 +1,25 @@
-
-
-
 #ifndef __NS_FRAMEWORK__
-
 #define __NS_FRAMEWORK__
+
 #include <d3d9.h>		// d3d9.lib
 #include <d3dx9.h>		// d3dx9.lib
 #include <dinput.h>		// dinput8.lib, dxguid.lib
 
 #include <windows.h>
 #include <exception>
+
 using namespace std;
+
+#define WINDOW_WIDTH 800
+#define WINDOW_HEIGHT 600
+
+#define C_WHITE D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f)				// màu tr?ng
+#define COLOR_KEY D3DXCOLOR(1.0f, 0.0f, 1.0f, 1.0f)				// màu khi mà load hình nó b? qua > trong su?t
 
 enum eID
 {
-	FLOWER
+	FLOWER,
+	BILL
 };
 
 typedef D3DXVECTOR3 GVector3;
