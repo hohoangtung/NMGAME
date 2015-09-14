@@ -23,7 +23,10 @@ public:
 	void draw(LPD3DXSPRITE spriteHandle) override;
 	void release() override;
 
+	void setViewport(Viewport* viewport);
+	static Viewport* getViewport();
 private:
+	static Viewport* _viewport;
 	Sprite* sprite;
 	vector<BaseObject*> _listobject;
 };

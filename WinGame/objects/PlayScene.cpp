@@ -1,12 +1,25 @@
 #include "PlayScene.h"
-
+#include "Mario.h"
+Viewport* PlayScene::_viewport = new Viewport(0, 600);
 PlayScene::PlayScene()
 {
-	_viewport = new Viewport(0,600);
+	//_viewport = new Viewport(0,600);
 }
 
 PlayScene::~PlayScene()
 {
+	delete _viewport;
+	_viewport = nullptr;
+}
+void PlayScene::setViewport(Viewport * viewport)
+{
+	if (_viewport != viewport)
+		_viewport = viewport;
+}
+
+Viewport * PlayScene::getViewport()
+{
+	return _viewport;
 }
 
 bool PlayScene::init()
@@ -18,6 +31,9 @@ bool PlayScene::init()
 	sprite->setAccelerateY(-10);
 
 	//_listobject.push_back(new OBJECT());
+	auto mario = new Mario();
+	mario->init();
+	_listobject.push_back(mario);
 
 	return true;
 }

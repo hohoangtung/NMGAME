@@ -76,7 +76,7 @@ void Sprite::setPosition(GVector3 vector)
 
 void Sprite::setPosition(GVector2 position)
 {
-	this->_position = GVector2(position.x, position.y);
+	this->_position = position;
 	this->updateBounding();
 }
 
@@ -167,8 +167,8 @@ int Sprite::getZIndex()
 
 void Sprite::update(float dt)
 {
-	_velocity += _accelerate * dt / 1000;
-	_position += _velocity * dt / 1000;
+	//_velocity += _accelerate * dt / 1000;
+	//_position += _velocity * dt / 1000;//
 
 	//update animation
 	_animation->update(dt);
