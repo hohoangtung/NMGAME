@@ -1,5 +1,5 @@
-#ifndef _RUNNINGSOLDER_H
-#define _Soldier_H
+#ifndef _RUNNINGSOLDIER_H
+#define _RUNNINGSOLDIER_H
 
 #include "BaseObject.h"
 #include "IComponent.h"
