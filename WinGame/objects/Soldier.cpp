@@ -9,14 +9,14 @@ void Soldier::init()
 	GVector2 a(0, 0);
 	this->_listComponent.push_back(new Movement(a, v, this->_sprite));
 	this->_listComponent_.insert(pair<string, IComponent*>("Movement", new Movement(a, v, this->_sprite)));
-	_animation = new Animation(this->_sprite, 0.2f);
-	_animation->addFrameRect(SpriteManager::getInstance()->getSourceRect(eID::SOLDIER, "run_03"));
-	_animation->addFrameRect(SpriteManager::getInstance()->getSourceRect(eID::SOLDIER, "run_02"));
-	_animation->addFrameRect(SpriteManager::getInstance()->getSourceRect(eID::SOLDIER, "run_01"));
-	//_animation->addFrameRect(SpriteManager::getInstance()->getSourceRect(eID::SOLDIER, "run_04"));
-	//_animation->addFrameRect(SpriteManager::getInstance()->getSourceRect(eID::SOLDIER, "run_05"));
-	//_animation->addFrameRect(SpriteManager::getInstance()->getSourceRect(eID::SOLDIER, "run_06"));
+	_animation = new Animation(this->_sprite, 0.3f);
 	//_animation->addFrameRect(SpriteManager::getInstance()->getSourceRect(eID::SOLDIER, "run_07"));
+	_animation->addFrameRect(SpriteManager::getInstance()->getSourceRect(eID::SOLDIER, "run_01"));
+	_animation->addFrameRect(SpriteManager::getInstance()->getSourceRect(eID::SOLDIER, "run_02"));
+	_animation->addFrameRect(SpriteManager::getInstance()->getSourceRect(eID::SOLDIER, "run_03"));
+	_animation->addFrameRect(SpriteManager::getInstance()->getSourceRect(eID::SOLDIER, "run_04"));
+	_animation->addFrameRect(SpriteManager::getInstance()->getSourceRect(eID::SOLDIER, "run_05"));
+	_animation->addFrameRect(SpriteManager::getInstance()->getSourceRect(eID::SOLDIER, "run_06"));
 	_animation->setPosition(this->_sprite->getPosition());
 	_stopwatch = new StopWatch();
 }

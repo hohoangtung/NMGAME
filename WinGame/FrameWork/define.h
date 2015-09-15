@@ -24,7 +24,7 @@ enum eID
 	FLOWER,
 	BILL,
 	MARIO,
-	RUNNINGSOLDIER
+	SOLDIER
 };
 enum eStatus
 {

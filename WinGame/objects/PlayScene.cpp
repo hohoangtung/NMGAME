@@ -3,7 +3,7 @@
 #include "../FrameWork/Animation.h"
 
 #include "Mario.h"
-#include "RunningSoldier.h"
+#include "Soldier.h"
 Viewport* PlayScene::_viewport = new Viewport(0, 600);
 PlayScene::PlayScene()
 {
@@ -58,12 +58,11 @@ bool PlayScene::init()
     // auto mario = new Mario();
 	// mario->init();
 	// _listobject.push_back(mario);
-	sprite = SpriteManager::getInstance()->getSprite(eID::RUNNINGSOLDIER);
 	// sprite->setPosition(GVector3(400, 500, 1));
 	// sprite->setOrigin(GVector2(1.0f, 1.0f));
-	auto runningSoldier = new RunningSoldier();
-	runningSoldier->init();
-	_listobject.push_back(runningSoldier);
+	auto soldier = new Soldier();
+	soldier->init();
+	_listobject.push_back(soldier);
 	_text = new Text(L"Arial", "", 10, 25);
 
 	return true;
