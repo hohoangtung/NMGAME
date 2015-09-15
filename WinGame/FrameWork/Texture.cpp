@@ -101,7 +101,7 @@ void Texture::render(LPD3DXSPRITE spriteHandle, RECT * srcRect, Viewport viewpor
 {
 	GVector3 positionViewport;
 	positionViewport = viewport.getPositionInViewport(&GVector3(position.x, position.y, zIndex));
-
+	
 	render(spriteHandle, srcRect, GVector2(positionViewport.x, positionViewport.y), scale, rotate, origin, positionViewport.z);
 }
 

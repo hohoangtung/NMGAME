@@ -1,4 +1,4 @@
-
+﻿
 #ifndef __BASEOBJECT_H__
 #define __BASEOBJECT_H__
 #include "..\FrameWork\define.h"
@@ -15,7 +15,7 @@ class BaseObject
 public:
 	BaseObject(eID id);
 	virtual ~BaseObject();
-	
+
 	virtual void init() = 0;
 	virtual void update(float deltatime) = 0;
 	virtual void draw(LPD3DXSPRITE) = 0;
@@ -26,6 +26,8 @@ public:
 	virtual void setStatus(eStatus status);
 protected:
 	Sprite* _sprite;
+	// nếu muốn dùng animation thì class kế thừa khai báo animation
+	// khởi tạo anition thì reference đến sprite
 	eID _id;
 	eStatus _status;
 };

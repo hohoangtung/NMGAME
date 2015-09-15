@@ -1,5 +1,7 @@
-#ifndef __NS_FRAMEWORK__
+ï»¿#ifndef __NS_FRAMEWORK__
 #define __NS_FRAMEWORK__
+
+#define _USE_MATH_DEFINES
 
 #include <d3d9.h>		// d3d9.lib
 #include <d3dx9.h>		// d3dx9.lib
@@ -7,14 +9,15 @@
 
 #include <windows.h>
 #include <exception>
+#include <math.h>
 
 using namespace std;
 
 #define WINDOW_WIDTH 800
 #define WINDOW_HEIGHT 600
 
-#define C_WHITE D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f)				// màu tr?ng
-#define COLOR_KEY D3DXCOLOR(1.0f, 0.0f, 1.0f, 1.0f)				// màu khi mà load hình nó b? qua > trong su?t
+#define C_WHITE D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f)				// mÃ u tráº¯nng
+#define COLOR_KEY D3DXCOLOR(1.0f, 0.0f, 1.0f, 1.0f)				// mÃ u khi mÃ  load hÃ¬nh nÃ³ bá» qua > trong suá»‘t
 
 enum eID
 {
