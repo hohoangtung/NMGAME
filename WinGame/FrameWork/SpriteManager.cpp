@@ -60,9 +60,12 @@ void SpriteManager::loadResource(LPD3DXSPRITE spriteHandle)
 	// this->_listSprite.insert(pair<eID, Sprite*>(eID::ENUMOBJECT, sp));
 	Sprite* sp = new Sprite(spriteHandle, L"Flower.png", 4, 4);
 	this->_listSprite.insert(pair<eID, Sprite*>(eID::FLOWER, sp));
+	sp = new Sprite(spriteHandle, L"mario.png", 5, 5);
+	this->_listSprite.insert(pair<eID, Sprite*>(eID::MARIO, sp));
 
-	Sprite* bill = new Sprite(spriteHandle, L"ContraSheet1.bmp");
-	this->_listSprite.insert(pair<eID, Sprite*>(eID::BILL, bill));
+	// test
+	//Sprite* bill = new Sprite(spriteHandle, L"ContraSheet1.bmp");
+	//this->_listSprite.insert(pair<eID, Sprite*>(eID::BILL, bill));
 }
 Sprite* SpriteManager::getSprite(eID id)
 {

@@ -16,11 +16,8 @@ public:
 	void virtual draw(LPD3DXSPRITE spriteHandle) = 0;
 	void virtual release() = 0;
 
-	void setViewport(Viewport* viewport);
-	Viewport* getViewport();
 
 protected:
-	Viewport* _viewport;
 
 private:
 

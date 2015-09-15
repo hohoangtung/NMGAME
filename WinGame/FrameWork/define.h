@@ -19,9 +19,13 @@ using namespace std;
 enum eID
 {
 	FLOWER,
-	BILL
+	BILL,
+	MARIO
 };
-
+enum eStatus
+{
+	NORMAL
+};
 typedef D3DXVECTOR3 GVector3;
 typedef D3DXVECTOR2 GVector2;
 

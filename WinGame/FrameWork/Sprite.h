@@ -88,12 +88,6 @@ public:
 private:
 	Texture				_texture;
 
-	GVector2			_position;				// không được gán trực tiếp mà phải gọi setPosition();
-	GVector2			_scale;
-	float				_rotate;				// theo độ 0-360
-	GVector2			_origin;				// gốc của sprite, dùng để xoay, scale (anchor: điểm neo)
-	int					_zIndex;
-
 	RECT				_bound;
 
 	int					_totalFrames;					// tổng số frame

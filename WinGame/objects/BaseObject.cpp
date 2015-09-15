@@ -2,10 +2,25 @@
 #include "BaseObject.h"
 BaseObject::BaseObject(eID id)
 {
-	_sprite = SpriteManager::getInstance()->getSprite(id);
-	
+	this->_id = id;
+	this->setStatus(eStatus::NORMAL);
 }
 
 BaseObject::~BaseObject()
 {
+}
+
+eID BaseObject::getId()
+{
+	return this->_id;
+}
+
+eStatus BaseObject::getStatus()
+{
+	return this->_status;
+}
+
+void BaseObject::setStatus(eStatus status)
+{
+	this->_status = status;
 }

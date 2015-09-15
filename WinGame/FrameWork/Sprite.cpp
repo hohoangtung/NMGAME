@@ -8,7 +8,7 @@ US_FRAMEWORK
 
 Sprite::~Sprite()
 {
-	
+
 }
 
 Sprite::Sprite(LPD3DXSPRITE spriteHandle, LPWSTR filePath, int totalFrames, int cols)
@@ -28,7 +28,7 @@ Sprite::Sprite(LPD3DXSPRITE spriteHandle, LPWSTR filePath, int totalFrames, int 
 	_frameHeight = _texture.getHeight() * cols / totalFrames;
 	_index = 0;
 	_currentFrame = GVector2(0, 0);
-	
+
 	this->setIndex(0);
 	this->updateBounding();
 }
@@ -190,7 +190,7 @@ void Sprite::nextFrame()
 
 void Sprite::setIndex(int index)
 {
-	if(_index != index)
+	if (_index != index)
 		_index = index;
 
 	this->setCurrentFrame();
@@ -210,7 +210,7 @@ void Sprite::setCurrentFrame()
 		_index = _index % _totalFrames;
 
 	__debugoutput(_index);
-	
+
 	this->_currentFrame.x = _index % _columns;
 	this->_currentFrame.y = _index / _columns;
 

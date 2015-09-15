@@ -15,12 +15,19 @@ class BaseObject
 public:
 	BaseObject(eID id);
 	virtual ~BaseObject();
-
+	
+	virtual void init() = 0;
 	virtual void update(float deltatime) = 0;
 	virtual void draw(LPD3DXSPRITE) = 0;
 	virtual void release() = 0;
+
+	eID getId();
+	eStatus getStatus();
+	virtual void setStatus(eStatus status);
 protected:
 	Sprite* _sprite;
+	eID _id;
+	eStatus _status;
 };
 /*
 
