@@ -2,6 +2,7 @@
 #include "../debug.h"
 
 #include "Mario.h"
+#include "RunningSoldier.h"
 Viewport* PlayScene::_viewport = new Viewport(0, 600);
 PlayScene::PlayScene()
 {
@@ -26,15 +27,20 @@ Viewport * PlayScene::getViewport()
 
 bool PlayScene::init()
 {
-	sprite = SpriteManager::getInstance()->getSprite(eID::FLOWER);
+	/*sprite = SpriteManager::getInstance()->getSprite(eID::FLOWER);
 	sprite->setPosition(GVector3(400, 500, 1));
-	//sprite->setOrigin(GVector2(1.0f, 1.0f));
+	sprite->setOrigin(GVector2(1.0f, 1.0f));*/
 
 	//_listobject.push_back(new OBJECT());
-	auto mario = new Mario();
-	mario->init();
-	_listobject.push_back(mario);
-
+    // auto mario = new Mario();
+	// mario->init();
+	// _listobject.push_back(mario);
+	sprite = SpriteManager::getInstance()->getSprite(eID::RUNNINGSOLDIER);
+	// sprite->setPosition(GVector3(400, 500, 1));
+	// sprite->setOrigin(GVector2(1.0f, 1.0f));
+	auto runningSoldier = new RunningSoldier();
+	runningSoldier->init();
+	_listobject.push_back(runningSoldier);
 	_text = new Text(L"Arial", "", 10, 25);
 
 	return true;

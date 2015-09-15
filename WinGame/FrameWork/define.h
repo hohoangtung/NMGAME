@@ -20,7 +20,8 @@ enum eID
 {
 	FLOWER,
 	BILL,
-	MARIO
+	MARIO,
+	RUNNINGSOLDIER
 };
 enum eStatus
 {
