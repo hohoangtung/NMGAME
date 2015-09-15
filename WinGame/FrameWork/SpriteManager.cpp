@@ -63,15 +63,42 @@ void SpriteManager::loadResource(LPD3DXSPRITE spriteHandle)
 	sp = new Sprite(spriteHandle, L"mario.png", 5, 5);
 	this->_listSprite.insert(pair<eID, Sprite*>(eID::MARIO, sp));
 
-	// test
-	//Sprite* bill = new Sprite(spriteHandle, L"ContraSheet1.bmp");
-	//this->_listSprite.insert(pair<eID, Sprite*>(eID::BILL, bill));
+	Sprite* bill = new Sprite(spriteHandle, L"Resources\\bill_animation.png");
+	this->_listSprite.insert(pair<eID, Sprite*>(eID::BILL, bill));
+
+	this->loadSpriteInfo(eID::BILL, "Resources\\bill_animation.txt");
 }
 Sprite* SpriteManager::getSprite(eID id)
 {
 	Sprite *it = this->_listSprite.find(id)->second;
 	return new Sprite(*it);			// get the copy version of Sprite
 }
+
+RECT SpriteManager::getSourceRect(eID id, string name)
+{
+	return _sourceRectList[id][name];
+}
+
+void SpriteManager::loadSpriteInfo(eID id, const char* fileInfoPath)
+{
+	FILE* file;
+	file = fopen(fileInfoPath, "r");
+
+	if (file)
+	{
+		while (!feof(file))
+		{
+			RECT rect;
+			char name[100];
+			fgets(name, 100, file);
+
+			fscanf(file, "%s %d %d %d %d", &name, &rect.left, &rect.top, &rect.right, &rect.bottom);
+
+			_sourceRectList[id][name] = rect;
+		}
+	}
+}
+
 void SpriteManager::releaseSprite(eID id)
 {
 	Sprite *it = this->_listSprite.find(id)->second;

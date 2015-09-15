@@ -62,7 +62,7 @@ void Game::run()
 		_gametime->updateGameTime();							// gametime isn't run if dont call updateGameTime
 		_deltaTime = _gametime->getTotalGameTime() - _oldTime;
 
-		if (_deltaTime > _frameRate)
+		if (_deltaTime >= _frameRate)
 		{
 			_oldTime += _frameRate;
 			_input->update();

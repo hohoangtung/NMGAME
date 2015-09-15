@@ -1,40 +1,45 @@
 ﻿#include "Animation.h"
 #include "..\debug.h"
-Animation::Animation(int totals, int cols, int frameW, int frameH)
+
+Animation::Animation(Sprite * spriteSheet, float timeAnimate)
 {
-	_totalFrames = totals;
-	_columns = cols;
-	_frameWidth = frameW;
-	_frameHeight = frameH;
+	_spriteSheet = spriteSheet;
+	_timeAnimate = timeAnimate;
+
+	_canAnimate = true;
+	_totalFrames = 0;
+	_index = 0;
 	_timer = 0;
-	_timeAnimate = 0;
-	_startFrame = 0;
-	_endFrame = totals - 1;
 
-	this->setIndex(_startFrame);
+	this->setIndex(0);
+}
 
-	if(_totalFrames <= 1)
-		_canAnimate = false;
-	else
-		_canAnimate = true;
+Animation::Animation(Sprite * spriteSheet, int totalFrames, int cols, float timeAnimate)
+{
+	_spriteSheet = spriteSheet;
+	_timeAnimate = timeAnimate;
+	_canAnimate = true;
+	_totalFrames = totalFrames;
+	_index = 0;
+	_timer = 0;
+
+	int frameW = spriteSheet->getTextureWidth() / cols;
+	int frameH = spriteSheet->getTextureHeight() * cols / totalFrames;
+
+	for (int i = 0; i < totalFrames; i++)
+	{
+		int x = i % cols;
+		int y = i / cols;
+
+		this->addFrameRect(x * frameW, y * frameH, frameW, frameH);
+	}
+
+	_currentRect = _frameRectList[_index];
 }
 
 Animation::~Animation()
 {
-}
-
-void Animation::createAnimate(int startFrame, int endFrame, float timeAnimate)
-{
-	_startFrame = startFrame;
-	_endFrame = endFrame;
-	_timeAnimate = timeAnimate;
-
-	this->setIndex(_startFrame);
-
-	if (_endFrame - _startFrame <= 0)
-		_canAnimate = false;
-	else
-		_canAnimate = true;
+	// dont release sprite
 }
 
 void Animation::nextFrame()
@@ -42,40 +47,17 @@ void Animation::nextFrame()
 	this->setIndex(_index + 1);
 }
 
-int Animation::getCurrentFrame()
-{
-	return _index;
-}
-
 void Animation::setIndex(int index)
 {
+	if (index == _index || _totalFrames == 0)
+		return;
+
 	_index = index;
 
-	this->setCurrentFrame();
-}
+	if (_index >= _totalFrames)
+		_index = _index % _totalFrames;
 
-void Animation::setCurrentFrame()
-{
-	if (_index > _endFrame)
-		_index = _index % (_endFrame - _startFrame + 1);
-
-	this->_currentFrame.x = _index % _columns;
-	this->_currentFrame.y = _index / _totalFrames;
-
-	this->setFrameRect();
-}
-
-void Animation::setFrameRect()
-{
-	this->_frameRect.left = (long)_currentFrame.x * _frameWidth;
-	this->_frameRect.right = _frameRect.left + _frameWidth;
-	this->_frameRect.top = (long)_currentFrame.y * _frameHeight;
-	this->_frameRect.bottom = _frameRect.top + _frameHeight;
-}
-
-RECT Animation::getFrameRect()
-{
-	return _frameRect;
+	_currentRect = _frameRectList[_index];
 }
 
 void Animation::update(float dt)
@@ -87,8 +69,7 @@ void Animation::update(float dt)
 	if (_timer >= _timeAnimate)
 	{
 		this->nextFrame();
-		//_timer = 0;
-		_timer -= _timeAnimate;  // không thể gán bằng 0. vì như vậy là làm tròn. sẽ có sai số
+		_timer -= _timeAnimate;				// không thể gán bằng 0. vì như vậy là làm tròn. sẽ có sai số
 	}
 }
 
@@ -100,16 +81,6 @@ void Animation::setTimeAnimate(float time)
 float Animation::getTimeAnimate()
 {
 	return _timeAnimate;
-}
-
-int Animation::getFrameWidth()
-{
-	return _frameWidth;
-}
-
-int Animation::getFrameHeight()
-{
-	return _frameHeight;
 }
 
 void Animation::start()
@@ -128,4 +99,82 @@ void Animation::canAnimate(bool can)
 {
 	if (_canAnimate != can)
 		_canAnimate = can;
+}
+
+void Animation::addFrameRect(RECT rect)
+{
+	_frameRectList.push_back(rect);
+	_totalFrames = _frameRectList.size();
+}
+
+void Animation::addFrameRect(float left, float top, int width, int height)
+{
+	RECT rect;
+	rect.left = left;
+	rect.top = top;
+	rect.right = left + width;
+	rect.bottom = top + height;
+
+	this->addFrameRect(rect);
+}
+
+void Animation::addFrameRect(float left, float top, float right, float bottom)
+{
+	RECT rect;
+	rect.left = left;
+	rect.top = top;
+	rect.right = right;
+	rect.bottom = bottom;
+
+	this->addFrameRect(rect);
+}
+
+void Animation::draw(LPD3DXSPRITE spriteHandle, Viewport * viewport)
+{
+	_spriteSheet->setFrameRect(_currentRect);
+	_spriteSheet->render(spriteHandle, viewport);
+}
+
+void Animation::setPosition(GVector2 position)
+{
+	Transformable::setPosition(position);
+
+	_spriteSheet->setPosition(_position);
+}
+
+void Animation::setOrigin(GVector2 origin)
+{
+	Transformable::setOrigin(origin);
+
+	_spriteSheet->setOrigin(origin);
+}
+
+void Animation::createAnimationFromFile(const char* filePath)
+{
+	FILE *myFile;
+	myFile = fopen(filePath, "r");
+
+	if (myFile)
+	{
+		while (!feof(myFile))
+		{
+			int left, top, bottom, right;
+			RECT rect;
+			char s[100];
+
+			left = 0;
+			top = 0;
+			bottom = 0;
+			right = 0;
+
+			//fscanf(myFile, "%s", &s);
+			
+			//fscanf(myFile, "%d %d %d %d", &left, &top, &bottom, &right);
+
+			rect.left = left;
+			rect.top = top;
+			rect.right = right;
+			rect.right = right;
+		}
+	}
 }

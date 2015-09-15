@@ -8,6 +8,7 @@
 #include "../FrameWork/Managers/SceneManager.h"
 #include "BaseObject.h"
 #include "../FrameWork/Text.h"
+#include "../FrameWork/Animation.h"
 
 using namespace std;
 US_FRAMEWORK;
@@ -31,6 +32,7 @@ private:
 	Sprite* sprite;
 	Text* _text;
 	vector<BaseObject*> _listobject;
+	Animation* _animation;
 };
 
 #endif // !__PLAY_SCENE_H__

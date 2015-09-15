@@ -85,6 +85,18 @@ public:
 	*/
 	int getFrameHeight();
 
+	/*
+	Lấy chiều ngang của nguyên tấm hình
+	*/
+	int getTextureWidth();
+
+	/*
+	Lấy chiều dọc của nguyên tấm hình
+	*/
+	int getTextureHeight();
+
+	void drawBounding(bool draw);
+
 private:
 	Texture				_texture;
 
@@ -98,10 +110,18 @@ private:
 	RECT				_frameRect;
 	int					_frameWidth;
 	int					_frameHeight;
+	int					_textureWidth;
+	int					_textureHeight;
 
 	void setFrameRect();
 	void setCurrentFrame();
 	void updateBounding();
+
+	GVector2 rotatePointAroundOrigin(GVector2 point, float angle, GVector2 origin);
+
+	//surface để vẽ bounding
+	LPDIRECT3DSURFACE9	_surface;
+	bool				_isDrawBounding;
 };
 
 NS_FRAMEWORK_END

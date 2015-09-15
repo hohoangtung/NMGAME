@@ -1,32 +1,36 @@
 ﻿#ifndef __ANIMATION_H__
 #define __ANIMATION_H__
 
+#include <vector>
 #include "define.h"
 #include "Sprite.h"
+#include "Transformable.h"
+#include <iostream>
+#include <fstream>
 
 US_FRAMEWORK
 
-class Animation
+class Animation : public Transformable
 {
 public:
 	~Animation();
 
 	/*
-	Tạo animation cho sprite, dùng getFrameRect() cho Sprite vẽ frame hiện tại
-		@totals: tổng số frame
-		@cols: số cột
-		@frameW: chiều ngang của mỗi frame hình
-		@frameH: chiều dọc của mỗi frame hình
+	Tạo animation với sprite sheet
+		@spriteSheet: spritesheet của chuyển động
+		@timeAnimate: thời gian chuyển từng frame
+	Sau khi tạo bằng contructor này phải addFrameRect nó mới có frame để chuyển động.
 	*/
-	Animation(int totals, int cols, int frameW, int frameH);
+	Animation(Sprite* spriteSheet, float timeAnimate = 0.0f);
 
 	/*
-	Tạo animation cho srpite với frame bắt đầu và kết thúc cụ thể, chuyển động sẽ chạy từ startFrame->endFrame
-		@startFrame: thứ tự frame bắt đầu (tính từ 0)
-		@endFrame: thứ tự frame kết thúc
-		@timeAnimate: thời gian chuyển mỗi frame hình
+	Tạo aniation với spritesheet có frame đều nhau
+		@spriteSheet: spritesheet của chuyển động
+		@totalFrames: tổng số frame
+		@cols: số cột
+		@timeAnimate: thời gian chuyển từng frame
 	*/
-	void createAnimate(int startFrame, int endFrame, float timeAnimate);
+	Animation(Sprite* spriteSheet, int totalFrames, int cols, float timeAnimate = 0.0f);
 
 	/*
 	Chuyển qua frame kế tiếp
@@ -34,24 +38,19 @@ public:
 	void nextFrame();
 
 	/*
-	Lấy số thứ tự frame hiện tại
-	*/
-	int getCurrentFrame();
-
-	/*
 	Truyền thứ tự frame cụ thể
 	*/
 	void setIndex(int index);
 	
 	/*
-	Lấy thông tin RECT frame hiện tại
-	*/
-	RECT getFrameRect();
-
-	/*
 	Update animation
 	*/
 	void update(float dt);
+
+	/*
+	Vẽ chuyển động
+	*/
+	void draw(LPD3DXSPRITE spriteHandle, Viewport* viewport);
 
 	/*
 	Đặt thời gian chuyển frame
@@ -65,16 +64,6 @@ public:
 	float getTimeAnimate();
 
 	/*
-	Lấy chiều ngang của frame
-	*/
-	int getFrameWidth();
-
-	/*
-	Lấy chiều dọc của frame
-	*/
-	int getFrameHeight();
-
-	/*
 	Bắt đầu chuyển frame
 	*/
 	void start();
@@ -86,28 +75,28 @@ public:
 
 	void canAnimate(bool can);
 
+	void addFrameRect(RECT rect);
+	void addFrameRect(float left, float top, int width, int height);
+	void addFrameRect(float left, float top, float right, float bottom);
+
+	void setPosition(GVector2 position);
+	void setOrigin(GVector2 origin);
+
+	void createAnimationFromFile(const char* filePath);
+
 private:
-	int _totalFrames;					// tổng số frame
-	int _startFrame;					// frame bắt đầu
-	int _endFrame;						// frame kết thúc
-	int _columns;						// số cột
-	int _index;
-	GVector2 _currentFrame;				// frame hiện tại
+	int						_index;									// số thứ tự frame
+	int						_totalFrames;
 
-	int _frameWidth;
-	int _frameHeight;
+	float					_timeAnimate;							// thời gian chuyển giữa các frame
+	float					_timer;
 
-	float _timeAnimate;					// thời gian chuyển giữa các frame
-	float _timer;
+	bool					_canAnimate;
 
-	RECT	_frameRect;
-
-	bool _canAnimate;
-
-	void setFrameRect();
-	void setCurrentFrame();
-
-	Sprite* _spriteSheet;
+	Sprite*					_spriteSheet;							// ref to object's sprite
+	vector<RECT>			_frameRectList;
+	string					_nameAnimation;
+	RECT					_currentRect;
 };
 
 #endif // !__ANIMATION_H__

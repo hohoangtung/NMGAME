@@ -125,3 +125,8 @@ int Transformable::getZIndex()
 {
 	return _zIndex;
 }
+
+GVector2 Transformable::getAnchorPoint()
+{
+	return _anchorPoint;
+}
