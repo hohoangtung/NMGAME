@@ -1,14 +1,11 @@
-﻿#define _USE_MATH_DEFINES
-
-#include "Sprite.h"
-#include <math.h>
+﻿#include "Sprite.h"
 #include "../debug.h"
 
 US_FRAMEWORK
 
 Sprite::~Sprite()
 {
-	
+	this->_surface->Release();
 }
 
 Sprite::Sprite(LPD3DXSPRITE spriteHandle, LPWSTR filePath, int totalFrames, int cols)
@@ -24,19 +21,35 @@ Sprite::Sprite(LPD3DXSPRITE spriteHandle, LPWSTR filePath, int totalFrames, int 
 
 	_totalFrames = totalFrames;
 	_columns = cols;
-	_frameWidth = _texture.getWidth() / cols;
-	_frameHeight = _texture.getHeight() * cols / totalFrames;
+	_textureWidth = _texture.getWidth();
+	_textureHeight = _texture.getHeight();
+	_frameWidth = _textureWidth / cols;
+	_frameHeight = _textureHeight * cols / totalFrames;
 	_index = 0;
 	_currentFrame = GVector2(0, 0);
 	
 	this->setIndex(0);
 	this->updateBounding();
+
+	_isDrawBounding = false;
+	_surface = nullptr;
+
+	//create surface
+	DeviceManager::getInstance()->getDevice()->CreateOffscreenPlainSurface(
+		WINDOW_WIDTH,
+		WINDOW_HEIGHT,
+		D3DFMT_X8R8G8B8,
+		D3DPOOL_DEFAULT,
+		&_surface,
+		NULL
+		);
 }
 
 void Sprite::release()
 {
 	this->_texture.release();
 }
+
 void Sprite::render(LPD3DXSPRITE spriteHandle)
 {
 	_texture.render(
@@ -63,6 +76,28 @@ void Sprite::render(LPD3DXSPRITE spriteHandle, Viewport* viewport)
 		_rotate,
 		_origin,
 		_zIndex
+		);
+
+	//Vẽ bounding để xem
+	if (_surface == nullptr || _isDrawBounding == false)
+	{
+		return;
+	}
+
+	RECT r;
+	r.top = WINDOW_HEIGHT - _bound.top; 
+	r.left = _bound.left;
+	r.bottom = WINDOW_HEIGHT - _bound.bottom;
+	r.right = _bound.right;
+
+	DeviceManager::getInstance()->getDevice()->ColorFill(_surface, NULL, D3DXCOLOR(1.0f, 0.0f, 1.0f, 1.0f));
+
+	DeviceManager::getInstance()->getDevice()->StretchRect(
+		_surface,
+		NULL, 
+		DeviceManager::getInstance()->getSurface(),
+		&r,
+		D3DTEXF_NONE
 		);
 }
 
@@ -106,6 +141,8 @@ void Sprite::setScale(GVector2 scale)
 		return;
 
 	_scale = scale;
+
+	this->updateBounding();
 }
 
 void Sprite::setScale(float scale)
@@ -115,18 +152,24 @@ void Sprite::setScale(float scale)
 		_scale.x = scale;
 		_scale.y = scale;
 	}
+
+	this->updateBounding();
 }
 
 void Sprite::setScaleX(float sx)
 {
 	if (sx != _scale.x)
 		_scale.x = sx;
+
+	this->updateBounding();
 }
 
 void Sprite::setScaleY(float sy)
 {
 	if (sy != _scale.y)
 		_scale.y = sy;
+
+	this->updateBounding();
 }
 
 void Sprite::setRotate(float degree)
@@ -135,12 +178,17 @@ void Sprite::setRotate(float degree)
 		return;
 
 	_rotate = degree;
+	this->updateBounding();
 }
 
 void Sprite::setOrigin(GVector2 origin)
 {
 	if (origin != _origin)
 		_origin = origin;
+
+	_anchorPoint = GVector2(_bound.left + _frameWidth * _scale.x * _origin.x, _bound.bottom + _frameHeight * _scale.x * _origin.y);
+
+	this->updateBounding();
 }
 
 void Sprite::setZIndex(int z)
@@ -165,6 +213,9 @@ void Sprite::setFrameRect(float top, float right, float bottom, float left)
 	_frameRect.right = right;
 	_frameRect.left = left;
 	_frameRect.bottom = bottom;
+
+	_frameWidth = abs(_frameRect.left - _frameRect.right);
+	_frameHeight = abs(_frameRect.top - _frameRect.bottom);
 }
 
 void Sprite::setFrameRect(float x, float y, int width, int height)
@@ -173,6 +224,9 @@ void Sprite::setFrameRect(float x, float y, int width, int height)
 	_frameRect.right = x + width;
 	_frameRect.left = x;
 	_frameRect.bottom = y + height;
+
+	_frameWidth = width;
+	_frameHeight = height;
 }
 
 RECT Sprite::getFrameRect()
@@ -196,6 +250,22 @@ void Sprite::setIndex(int index)
 	this->setCurrentFrame();
 }
 
+int Sprite::getTextureWidth()
+{
+	return _textureWidth;
+}
+
+int Sprite::getTextureHeight()
+{
+	return _textureHeight;
+}
+
+void Sprite::drawBounding(bool draw)
+{
+	if (draw != _isDrawBounding)
+		_isDrawBounding = draw;
+}
+
 void Sprite::setFrameRect()
 {
 	this->_frameRect.left = (long)_currentFrame.x * _frameWidth;
@@ -209,8 +279,6 @@ void Sprite::setCurrentFrame()
 	if (_index >= _totalFrames)
 		_index = _index % _totalFrames;
 
-	__debugoutput(_index);
-	
 	this->_currentFrame.x = _index % _columns;
 	this->_currentFrame.y = _index / _columns;
 
@@ -227,5 +295,52 @@ void Sprite::updateBounding()
 	this->_bound.right = _bound.left + scaleW;
 	this->_bound.top = _bound.bottom + scaleH;
 
-	//rotate...
+	// 4 điểm của hcn
+	GVector2 p1 = GVector2(_bound.left, _bound.top);
+	GVector2 p2 = GVector2(_bound.right, _bound.top);
+	GVector2 p3 = GVector2(_bound.right, _bound.bottom);
+	GVector2 p4 = GVector2(_bound.left, _bound.bottom);
+	_anchorPoint = GVector2(_bound.left + scaleW * _origin.x, _bound.bottom + scaleH * _origin.y);
+
+	//rotate 4 điểm
+	p1 = rotatePointAroundOrigin(p1, _rotate, _anchorPoint);
+	p2 = rotatePointAroundOrigin(p2, _rotate, _anchorPoint);
+	p3 = rotatePointAroundOrigin(p3, _rotate, _anchorPoint);
+	p4 = rotatePointAroundOrigin(p4, _rotate, _anchorPoint);
+
+	_bound.left = min(min(p1.x, p2.x), min(p3.x,p4.x));
+	_bound.top = max(max(p1.y, p2.y), max(p3.y, p4.y));
+	_bound.right = max(max(p1.x, p2.x), max(p3.x, p4.x));
+	_bound.bottom = min(min(p1.y, p2.y), min(p3.y, p4.y));
+}
+
+GVector2 Sprite::rotatePointAroundOrigin(GVector2 point, float angle, GVector2 origin)
+{
+	// nhân ma trận xoay
+	/*
+		x' = x.cos(t) - y.sin(t)
+		y' = x.sin(t) + y.cos(t)
+
+	t là góc quay theo radian
+	vậy quanh quanh 1 điểm mình dời về góc rồi quay xong dời lại
+	*/
+
+	GVector2 newPoint;
+	//trừ vì sprite xoay với cái này lệch 90*
+	float rad = -angle * (M_PI / 180);
+
+	float _sin = sin(rad);
+	float _cos = cos(rad);
+
+	//dời điểm về góc
+	point -= origin;
+
+	//xoay
+	newPoint.x = point.x * _cos - point.y * _sin;
+	newPoint.y = point.x * _sin + point.y * _cos;
+
+	//dời về chổ cũ
+	newPoint += origin;
+
+	return newPoint;
 }

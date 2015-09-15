@@ -85,14 +85,20 @@ public:
 	*/
 	int getFrameHeight();
 
+	/*
+	Lấy chiều ngang của nguyên tấm hình
+	*/
+	int getTextureWidth();
+
+	/*
+	Lấy chiều dọc của nguyên tấm hình
+	*/
+	int getTextureHeight();
+
+	void drawBounding(bool draw);
+
 private:
 	Texture				_texture;
-
-	GVector2			_position;				// không được gán trực tiếp mà phải gọi setPosition();
-	GVector2			_scale;
-	float				_rotate;				// theo độ 0-360
-	GVector2			_origin;				// gốc của sprite, dùng để xoay, scale (anchor: điểm neo)
-	int					_zIndex;
 
 	RECT				_bound;
 
@@ -104,10 +110,18 @@ private:
 	RECT				_frameRect;
 	int					_frameWidth;
 	int					_frameHeight;
+	int					_textureWidth;
+	int					_textureHeight;
 
 	void setFrameRect();
 	void setCurrentFrame();
 	void updateBounding();
+
+	GVector2 rotatePointAroundOrigin(GVector2 point, float angle, GVector2 origin);
+
+	//surface để vẽ bounding
+	LPDIRECT3DSURFACE9	_surface;
+	bool				_isDrawBounding;
 };
 
 NS_FRAMEWORK_END

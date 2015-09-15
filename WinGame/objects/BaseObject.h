@@ -1,4 +1,4 @@
-
+﻿
 #ifndef __BASEOBJECT_H__
 #define __BASEOBJECT_H__
 #include "..\FrameWork\define.h"
@@ -21,6 +21,8 @@ public:
 	virtual void release() = 0;
 protected:
 	Sprite* _sprite;
+	// nếu muốn dùng animation thì class kế thừa khai báo animation
+	// khởi tạo anition thì reference đến sprite
 };
 /*
 
