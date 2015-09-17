@@ -4,6 +4,8 @@
 
 #include "Mario.h"
 #include "Soldier.h"
+#include "Falcon.h"
+
 Viewport* PlayScene::_viewport = new Viewport(0, 600);
 PlayScene::PlayScene()
 {
@@ -60,9 +62,15 @@ bool PlayScene::init()
 	// _listobject.push_back(mario);
 	// sprite->setPosition(GVector3(400, 500, 1));
 	// sprite->setOrigin(GVector2(1.0f, 1.0f));
+
 	auto soldier = new Soldier();
 	soldier->init();
 	_listobject.push_back(soldier);
+
+	auto falcon = new Falcon();
+	falcon->init();
+	_listobject.push_back(falcon);
+
 	_text = new Text(L"Arial", "", 10, 25);
 
 	return true;
