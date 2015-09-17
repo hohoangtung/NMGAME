@@ -24,8 +24,7 @@ public:
 
 private:
 	int i;
-	vector<IComponent*> _listComponent;
-	map<string, IComponent*> _listComponent_;
+	map<string, IComponent*> _listComponent;
 	StopWatch* _stopwatch;
 	Animation* _animation;
 };

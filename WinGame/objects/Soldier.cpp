@@ -7,9 +7,8 @@ void Soldier::init()
 	this->_sprite->setPosition(700, 500);
 	GVector2 v(-10, 0);
 	GVector2 a(0, 0);
-	this->_listComponent.push_back(new Movement(a, v, this->_sprite));
-	this->_listComponent_.insert(pair<string, IComponent*>("Movement", new Movement(a, v, this->_sprite)));
-	_animation = new Animation(this->_sprite, 0.3f);
+	this->_listComponent.insert(pair<string, IComponent*>("Movement", new Movement(a, v, this->_sprite)));
+	_animation = new Animation(this->_sprite, 0.15f);
 	//_animation->addFrameRect(SpriteManager::getInstance()->getSourceRect(eID::SOLDIER, "run_07"));
 	_animation->addFrameRect(SpriteManager::getInstance()->getSourceRect(eID::SOLDIER, "run_01"));
 	_animation->addFrameRect(SpriteManager::getInstance()->getSourceRect(eID::SOLDIER, "run_02"));
@@ -34,16 +33,12 @@ void Soldier::release()
 
 IComponent* Soldier::getComponent(string componentName)
 {
-	return _listComponent_.find(componentName)->second;
+	return _listComponent.find(componentName)->second;
 }
 
 void Soldier::update(float deltatime)
 {
-	for (auto component : _listComponent)
-	{
-		component->update(deltatime);
-	}
-	for (auto it : _listComponent_)
+	for (auto it : _listComponent)
 	{
 		it.second->update(deltatime);
 	}
