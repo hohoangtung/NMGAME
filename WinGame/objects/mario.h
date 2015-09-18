@@ -22,7 +22,7 @@ public:
 	void init()
 	{
 		_sprite = SpriteManager::getInstance()->getSprite(eID::MARIO);
-		//this->_sprite->getAnimation()->createAnimate(0, 2, 0.08f);
+		// this->_sprite->getAnimation()->createAnimate(0, 2, 0.08f);
 		this->_sprite->setPosition(300, 500);
 		GVector2 v(0, -10);
 		GVector2 a(0, -70);
