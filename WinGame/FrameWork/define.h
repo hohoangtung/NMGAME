@@ -24,7 +24,9 @@ enum eID
 	FLOWER,
 	BILL,
 	MARIO,
-	REDCANNON
+	REDCANNON,
+	SOLDIER,
+	FALCON
 };
 enum eStatus
 {

@@ -4,6 +4,9 @@
 
 #include "Mario.h"
 #include "RedCannon.h"
+#include "Soldier.h"
+#include "Falcon.h"
+
 Viewport* PlayScene::_viewport = new Viewport(0, 600);
 PlayScene::PlayScene()
 {
@@ -28,10 +31,10 @@ Viewport * PlayScene::getViewport()
 
 bool PlayScene::init()
 {
+    
 	sprite = SpriteManager::getInstance()->getSprite(eID::BILL);
-	//sprite->setFrameRect(7.0f, 56.0f, 51.0f, 43.0f);
-	sprite->setScale(2.0f);
-	sprite->drawBounding(true);
+	sprite->setFrameRect(7.0f, 56.0f, 51.0f, 43.0f);
+	
 	//_animation = new Animation(SpriteManager::getInstance()->getSprite(eID::BILL), 0.1f);
 	//_animation->addFrameRect("", 169.0f, 134.0f, 186.0f, 167.0f);
 	//_animation->addFrameRect("", 190.0f, 137.0f, 211.0f, 167.0f);
@@ -46,7 +49,7 @@ bool PlayScene::init()
 	_animation->addFrameRect(SpriteManager::getInstance()->getSourceRect(eID::BILL, "run_04"));
 	_animation->addFrameRect(SpriteManager::getInstance()->getSourceRect(eID::BILL, "run_05"));
 	_animation->addFrameRect(SpriteManager::getInstance()->getSourceRect(eID::BILL, "run_06"));
-	//_animation->createAnimationFromFile("Resources\\test_animation.txt");
+	_animation->createAnimationFromFile("Resources\\test_animation.txt");
 
 	_animation->setPosition(GVector2(200, 100));
 
@@ -55,6 +58,19 @@ bool PlayScene::init()
 	//sprite->setRotate(30);
 
 	//_listobject.push_back(new OBJECT());
+    // auto mario = new Mario();
+	// mario->init();
+	// _listobject.push_back(mario);
+	// sprite->setPosition(GVector3(400, 500, 1));
+	// sprite->setOrigin(GVector2(1.0f, 1.0f));
+
+	auto soldier = new Soldier();
+	soldier->init();
+	_listobject.push_back(soldier);
+
+	auto falcon = new Falcon();
+	falcon->init();
+	_listobject.push_back(falcon);
 	auto mario = new Mario();
 	mario->init();
 	_listobject.push_back(mario);
@@ -72,7 +88,7 @@ void PlayScene::updateInput(float dt)
 	for each (IControlable* obj in _listControlObject)
 	{
 		obj->updateInput(dt);
-	}
+}
 }
 
 void PlayScene::update(float dt)
@@ -87,7 +103,7 @@ void PlayScene::update(float dt)
 	_animation->update(dt);
 
 	char str[100];
-	sprintf(str, "delta time: %f", dt);
+	// sprintf(str, "delta time: %f", dt);
 
 	_text->setText(str);
 
