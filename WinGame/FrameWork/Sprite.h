@@ -64,7 +64,7 @@ public:
 	void setFrameRect(float top, float right, float bottom, float left);
 	void setFrameRect(float x, float y, int width, int height);
 	RECT getFrameRect();
-	RECT getFrameRectByIndex(int index); // test
+	RECT getFrameRectByIndex(int index);
 	/*
 	Chuyển qua frame kế tiếp
 	*/

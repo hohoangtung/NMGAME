@@ -5,58 +5,15 @@
 #include "..\FrameWork\Animation.h"
 #include "..\FrameWork\InputController.h"
 #include "BaseObject.h"
-#include <olebind.h>
+#include "IComponent.h"
 
 #define BILL_MOVE_SPEED 50
-#define BILL_JUMP_VEL 150
+#define BILL_JUMP_VEL 200
 #define BILL_ACC_MOVE 300
 #define TEST_LAND 200
 #define GRAVITY 50
 
-enum eGravityStatus
-{
-	FALLING__DOWN,
-	SHALLOWED
-};
-
-class Gravity : public IComponent
-{
-public:
-	// khởi tạo trọng lực của đối tượng, tham chiếu đến movement conponent của đối tượng
-	Gravity(GVector2 gravity, Movement *movement)
-	{
-		this->_gravity = gravity;
-		this->_refmovement = movement;
-		this->_status = FALLING__DOWN;
-	}
-	// khi muốn nhảy. set lại status cho gravity là FALLING_DOWN
-	// khi va chạm với đất set lại status cho gravity là  SHALLOWED
-	void setStatus(eGravityStatus status)
-	{
-		this->_status = status;
-	}
-	void update(float deltatime)
-	{
-		switch (_status)
-		{
-		case FALLING__DOWN:
-			this->_additionalVeloc += this->_gravity * deltatime / 1000;
-			break;
-		case SHALLOWED:
-			this->_additionalVeloc = GVector2(0.0f, 0.0f);
-		default:
-			break;
-		}
-		auto veloc = this->_refmovement->getVelocity();
-		this->_refmovement->setVelocity(veloc + _additionalVeloc);
-	}
-private:
-	GVector2 _gravity;
-	GVector2 _additionalVeloc;
-	Movement* _refmovement;
-	eGravityStatus _status;
-};
-
+[event_receiver(native)]
 class Bill : public BaseObject, public IControlable
 {
 public:
@@ -71,11 +28,11 @@ public:
 
 	void setPosition(float x, float y);
 
-	static void onKeyPressed(KeyEventArg* key_event);
+	void onKeyPressed(KeyEventArg* key_event);
 	void onKeyReleased(KeyEventArg* key_event);
 
 private:
-	map<eStatus, Animation*> _animations;
+	map<int, Animation*> _animations;
 	map<string, IComponent*> _componentList;
 
 	void standing();
@@ -84,7 +41,18 @@ private:
 	void jump();
 	void layDown();
 
+	void setState(int state);
+	void addState(int state);
+	void removeState(int state);
+	bool isInState(int state);
+	int getState();
+	int _state;
+
 	GVector2 getVelocity();
+	void updateStatus(float dt);
+
+	int _currentAnimateState;
+	void updateCurrentState();
 };
 
 #endif // !__BILL_H__

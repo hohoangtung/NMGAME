@@ -31,12 +31,22 @@ enum eID
 
 enum eStatus
 {
-	NORMAL,
-	MOVING_LEFT,
-	MOVING_RIGHT,
-	JUMPING,
-	LAYING_DOWN
-	RUNNING,
+	NORMAL			= 0,				// 00000 = 0
+	MOVING_LEFT		= 1,				// 00001 = 2^0
+	MOVING_RIGHT	= 2,				// 00010 = 2^1
+	JUMPING			= 4,				// 00100 = 2^2
+	LAYING_DOWN		= 8,				// 01000 = 2^3
+	RUNNING			= 16,				// 10000 = 2^4
+	LOOKING_UP		= 32,				// 2^5
+	SHOOTING		= 64				// 2^6
+};
+
+enum eDirection
+{
+	TOP				= 1,
+	BOTTOM			= 2,
+	LEFT			= 4,
+	RIGHT			= 8
 };
 
 typedef D3DXVECTOR3 GVector3;

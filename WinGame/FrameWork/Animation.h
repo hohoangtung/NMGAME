@@ -78,6 +78,12 @@ public:
 	void addFrameRect(float left, float top, int width, int height);
 	void addFrameRect(float left, float top, float right, float bottom);
 
+	void setPosition(GVector2 p)
+	{ 
+		// không làm gì TT.TT
+		// để tạm ở đây cho hết lỗi, nếu setPosition thì set ở sprite reference tới
+	}
+
 private:
 	int						_index;									// số thứ tự frame
 	int						_totalFrames;
@@ -91,8 +97,6 @@ private:
 	vector<RECT>			_frameRectList;
 	string					_nameAnimation;
 	RECT					_currentRect;
-
-	void updateTransform();
 };
 
 #endif // !__ANIMATION_H__

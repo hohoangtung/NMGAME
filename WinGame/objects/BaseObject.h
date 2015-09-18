@@ -34,12 +34,26 @@ public:
 	eID getId();
 	eStatus getStatus();
 	virtual void setStatus(eStatus status);
+	
+	void virtual setPosition(GVector3 vector);
+	void virtual setPosition(float x, float y, float z);
+	void virtual setPosition(GVector2 position);
+	void virtual setPosition(float x, float y);
+	void virtual setPositionX(float x);
+	void virtual setPositionY(float y);
+
+	void virtual updateTransform();
+
+	Sprite* getSprite();
+
 protected:
 	Sprite* _sprite;
 	// nếu muốn dùng animation thì class kế thừa khai báo animation
 	// khởi tạo anition thì reference đến sprite
 	eID _id;
 	eStatus _status;
+
+	
 };
 /*
 

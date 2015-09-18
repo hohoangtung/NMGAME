@@ -138,7 +138,3 @@ void Animation::draw(LPD3DXSPRITE spriteHandle, Viewport * viewport)
 	_spriteSheet->setFrameRect(_currentRect);
 	_spriteSheet->render(spriteHandle, viewport);
 }
-
-void Animation::updateTransform()
-{
-}

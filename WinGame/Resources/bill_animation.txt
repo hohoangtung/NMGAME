@@ -18,3 +18,8 @@ run_shot_up_03	164	67	182	101
 run_shot_down_01	185	67	205	101
 run_shot_down_02	208	67	227	101
 run_shot_down_03	231	67	250	101
+shot_up_01	52	20	65	64
+shot_up_02	68	20	81	64
+run_shot_01	156	190	180	223
+run_shot_02	185	190	207	223
+run_shot_03	211	190	235	223

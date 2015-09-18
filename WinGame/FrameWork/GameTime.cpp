@@ -69,11 +69,6 @@ void GameTime::updateGameTime()
 
 float GameTime::getElapsedGameTime()
 {
-	if (_elapsedGameTime.getMiliSeconds() > 1000 / 30)
-	{
-		return 1000 / 30;
-	}
-
 	return this->_elapsedGameTime.getMiliSeconds();
 }
 float GameTime::getTotalGameTime()

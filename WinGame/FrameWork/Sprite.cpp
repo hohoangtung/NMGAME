@@ -242,6 +242,7 @@ RECT Sprite::getFrameRect()
 {
 	return _frameRect;
 }
+
 RECT Sprite::getFrameRectByIndex(int index)
 {
 	index = index % _totalFrames;
@@ -252,6 +253,7 @@ RECT Sprite::getFrameRectByIndex(int index)
 	rect.bottom = _frameRect.top + _frameHeight;
 	return rect;
 }
+
 void Sprite::nextFrame()
 {
 	if (_totalFrames <= 1)
