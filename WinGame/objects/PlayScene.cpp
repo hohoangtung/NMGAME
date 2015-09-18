@@ -3,7 +3,10 @@
 #include "../FrameWork/Animation.h"
 
 #include "Mario.h"
+#include "RedCannon.h"
 #include "Soldier.h"
+#include "Falcon.h"
+
 Viewport* PlayScene::_viewport = new Viewport(0, 600);
 PlayScene::PlayScene()
 {
@@ -60,9 +63,21 @@ bool PlayScene::init()
 	// _listobject.push_back(mario);
 	// sprite->setPosition(GVector3(400, 500, 1));
 	// sprite->setOrigin(GVector2(1.0f, 1.0f));
+
 	auto soldier = new Soldier();
 	soldier->init();
 	_listobject.push_back(soldier);
+
+	auto falcon = new Falcon();
+	falcon->init();
+	_listobject.push_back(falcon);
+	auto mario = new Mario();
+	mario->init();
+	_listobject.push_back(mario);
+	_listControlObject.push_back(mario);
+
+	auto redcannon = new RedCannon(GVector2(500, 500));
+	_listobject.push_back(redcannon);
 	_text = new Text(L"Arial", "", 10, 25);
 
 	return true;
@@ -70,11 +85,15 @@ bool PlayScene::init()
 
 void PlayScene::updateInput(float dt)
 {
-	
+	for each (IControlable* obj in _listControlObject)
+	{
+		obj->updateInput(dt);
+}
 }
 
 void PlayScene::update(float dt)
 {
+
 	//test
 	//sprite->setPositionX(sprite->getPosition().x + 1);
 	//sprite->nextFrame();
@@ -86,10 +105,9 @@ void PlayScene::update(float dt)
 	char str[100];
 	// sprintf(str, "delta time: %f", dt);
 
-	//_text->setText(str);
+	_text->setText(str);
 
 	sprite->nextFrame();
-	__debugoutput(dt / 1000);
 
 	//sprite->setRotate(sprite->getRotate() + 10);
 	//_viewport->setPositionWorld(GVector2(_viewport->getPositionWorld().x + 2, _viewport->getPositionWorld().y));

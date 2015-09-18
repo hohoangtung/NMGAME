@@ -60,15 +60,24 @@ void SpriteManager::loadResource(LPD3DXSPRITE spriteHandle)
 	// this->_listSprite.insert(pair<eID, Sprite*>(eID::ENUMOBJECT, sp));
 	Sprite* sp = new Sprite(spriteHandle, L"Flower.png", 4, 4);
 	this->_listSprite.insert(pair<eID, Sprite*>(eID::FLOWER, sp));
+
 	sp = new Sprite(spriteHandle, L"mario.png", 5, 5);
 	this->_listSprite.insert(pair<eID, Sprite*>(eID::MARIO, sp));
+
 	sp = new Sprite(spriteHandle, L"Resources\\Soldier.png");
 	this->_listSprite.insert(pair<eID, Sprite*>(eID::SOLDIER, sp));
 	this->loadSpriteInfo(eID::SOLDIER, "Resources\\soldier_animation.txt");
 
+	sp = new Sprite(spriteHandle, L"Resources\\Falcon.png");
+	this->_listSprite.insert(pair<eID, Sprite*>(eID::FALCON, sp));
+	this->loadSpriteInfo(eID::FALCON, "Resources\\falcon_animation.txt");
+
+	sp = new Sprite(spriteHandle, L"Resources\\Cannon.png", 9, 9);
+	//this->_listSprite.insert(pair<eID, Sprite*>(eID::REDCANON, sp));
+	this->_listSprite[eID::REDCANNON] = sp;
+
 	Sprite* bill = new Sprite(spriteHandle, L"Resources\\bill_animation.png");
 	this->_listSprite.insert(pair<eID, Sprite*>(eID::BILL, bill));
-
 	this->loadSpriteInfo(eID::BILL, "Resources\\bill_animation.txt");
 }
 Sprite* SpriteManager::getSprite(eID id)

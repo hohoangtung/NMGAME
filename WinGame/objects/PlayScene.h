@@ -32,6 +32,7 @@ private:
 	Sprite* sprite;
 	Text* _text;
 	vector<BaseObject*> _listobject;
+	vector<IControlable*> _listControlObject;
 	Animation* _animation;
 };
 
