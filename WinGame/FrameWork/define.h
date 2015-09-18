@@ -23,11 +23,14 @@ enum eID
 {
 	FLOWER,
 	BILL,
-	MARIO
+	MARIO,
+	REDCANNON
 };
 enum eStatus
 {
-	NORMAL
+	NORMAL,
+	RUNNING,
+	JUMPING
 };
 typedef D3DXVECTOR3 GVector3;
 typedef D3DXVECTOR2 GVector2;

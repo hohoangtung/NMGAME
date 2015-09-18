@@ -3,6 +3,7 @@
 #include "../FrameWork/Animation.h"
 
 #include "Mario.h"
+#include "RedCannon.h"
 Viewport* PlayScene::_viewport = new Viewport(0, 600);
 PlayScene::PlayScene()
 {
@@ -29,7 +30,8 @@ bool PlayScene::init()
 {
 	sprite = SpriteManager::getInstance()->getSprite(eID::BILL);
 	//sprite->setFrameRect(7.0f, 56.0f, 51.0f, 43.0f);
-	
+	sprite->setScale(2.0f);
+	sprite->drawBounding(true);
 	//_animation = new Animation(SpriteManager::getInstance()->getSprite(eID::BILL), 0.1f);
 	//_animation->addFrameRect("", 169.0f, 134.0f, 186.0f, 167.0f);
 	//_animation->addFrameRect("", 190.0f, 137.0f, 211.0f, 167.0f);
@@ -56,7 +58,10 @@ bool PlayScene::init()
 	auto mario = new Mario();
 	mario->init();
 	_listobject.push_back(mario);
+	_listControlObject.push_back(mario);
 
+	auto redcannon = new RedCannon(GVector2(500, 500));
+	_listobject.push_back(redcannon);
 	_text = new Text(L"Arial", "", 10, 25);
 
 	return true;
@@ -64,11 +69,15 @@ bool PlayScene::init()
 
 void PlayScene::updateInput(float dt)
 {
-	
+	for each (IControlable* obj in _listControlObject)
+	{
+		obj->updateInput(dt);
+	}
 }
 
 void PlayScene::update(float dt)
 {
+
 	//test
 	//sprite->setPositionX(sprite->getPosition().x + 1);
 	//sprite->nextFrame();
@@ -80,10 +89,9 @@ void PlayScene::update(float dt)
 	char str[100];
 	sprintf(str, "delta time: %f", dt);
 
-	//_text->setText(str);
+	_text->setText(str);
 
 	sprite->nextFrame();
-	__debugoutput(dt / 1000);
 
 	//sprite->setRotate(sprite->getRotate() + 10);
 	//_viewport->setPositionWorld(GVector2(_viewport->getPositionWorld().x + 2, _viewport->getPositionWorld().y));

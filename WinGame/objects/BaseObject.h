@@ -4,12 +4,21 @@
 #include "..\FrameWork\define.h"
 #include "..\FrameWork\SpriteManager.h"
 #include "..\FrameWork\Sprite.h"
+#include "..\FrameWork\InputController.h"
+
 US_FRAMEWORK
 class IControlable
 {
 public:
+	IControlable()
+	{
+		_input = InputController::getInstance();
+	}
 	virtual void updateInput(float deltatime) = 0;
+protected:
+	InputController* _input;
 };
+
 class BaseObject
 {
 public:
