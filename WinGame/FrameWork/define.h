@@ -23,7 +23,10 @@ enum eID
 {
 	FLOWER,
 	BILL,
-	MARIO
+	MARIO,
+	REDCANNON,
+	SOLDIER,
+	FALCON
 };
 
 enum eStatus
@@ -33,6 +36,7 @@ enum eStatus
 	MOVING_RIGHT,
 	JUMPING,
 	LAYING_DOWN
+	RUNNING,
 };
 
 typedef D3DXVECTOR3 GVector3;

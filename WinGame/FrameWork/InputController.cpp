@@ -37,8 +37,8 @@ void InputController::release()
 
 bool InputController::init(HWND hWnd, HINSTANCE hinstance)
 {
-	_keydownQueue.clear();
-	_keyupQueue.clear();
+	//_keydownQueue.clear();
+	//_keyupQueue.clear();
 	this->_hWnd = hWnd;
 	HRESULT rs;
 	rs = DirectInput8Create(
@@ -58,7 +58,7 @@ bool InputController::init(HWND hWnd, HINSTANCE hinstance)
 	if (rs != DI_OK)
 		return false;
 
-	rs = _keyboard->SetCooperativeLevel(hWnd, DISCL_FOREGROUND | DISCL_NONEXCLUSIVE);
+	rs = _keyboard->SetCooperativeLevel(hWnd, DISCL_BACKGROUND | DISCL_NONEXCLUSIVE);
 	if (rs != DI_OK)
 		return false;
 
@@ -106,11 +106,17 @@ void InputController::update()
 		keystate = _keyEvents[i].dwData;
 		if ((keystate & 0x80) > 0)
 		{
-  			_keyPressed.fireEvent(new KeyEventArg(keycode));		// active event key pressed
+			KeyEventArg* arg = new KeyEventArg(keycode);
+			_keyPressed.fireEvent(arg);
+			__raise __eventkeyPressed(arg);
+			delete arg;
 		}
 		else
 		{
-			_keyReleased.fireEvent(new KeyEventArg(keycode));		// active event key released
+			KeyEventArg* arg = new KeyEventArg(keycode);
+			_keyReleased.fireEvent(arg);
+			__raise __eventkeyReleased(arg);
+			delete arg;
 		}
 	}
 }

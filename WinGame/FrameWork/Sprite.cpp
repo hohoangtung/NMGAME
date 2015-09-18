@@ -242,7 +242,16 @@ RECT Sprite::getFrameRect()
 {
 	return _frameRect;
 }
-
+RECT Sprite::getFrameRectByIndex(int index)
+{
+	index = index % _totalFrames;
+	RECT rect;
+	rect.left = (long)_currentFrame.x * _frameWidth;
+	rect.right = _frameRect.left + _frameWidth;
+	rect.top = (long)_currentFrame.y * _frameHeight;
+	rect.bottom = _frameRect.top + _frameHeight;
+	return rect;
+}
 void Sprite::nextFrame()
 {
 	if (_totalFrames <= 1)

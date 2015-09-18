@@ -39,7 +39,7 @@
 #include <vector>
 using namespace std;
 #include "define.h"
-
+#include <functional>
 NS_FRAMEWORK
 NS_FRAMEWORK_BEGIN
 class EventArg;
@@ -53,7 +53,6 @@ public:
 	virtual void fireEvent(EventArg* e);			// active an event - kích hoạt sự kiện
 	void operator+= (EventFunction pFunction);	// regist an action - đăng kí sự kiện
 	void operator-= (EventFunction pFucntion);	// remove an action - huỷ sự kiện
-
 private:
 	vector<EventFunction> _listaction;
 };

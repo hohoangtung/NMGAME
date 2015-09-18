@@ -48,10 +48,17 @@ typedef LPDIRECTINPUT			pGInput;
 typedef LPDIRECTINPUTDEVICE8	pGKeyboard;
 
 typedef void(*KeyEvent)(int);
-class KeyEventArg;
+class KeyEventArg : public EventArg
+{
+	// Dont need any private or protected.
+public:
+	KeyEventArg(int keycode){ _key = keycode; }
+	int _key;
+};
+
+[event_source(native)]
 class InputController
 {
-
 public:
 	~InputController();
 
@@ -66,12 +73,17 @@ public:
 
 	Event _keyPressed;
 	Event _keyReleased;
+
+	// dùng marco __event thì có thể trỏ được đến các hàm thành viên của các lớp. nhưng cách sử dụng phức tạp hơn
+	__event void __eventkeyPressed(KeyEventArg* e);
+	__event void __eventkeyReleased(KeyEventArg* e);
+
 private:
 
 	static InputController* _instance;
 
-	vector<KeyEvent> _keydownQueue;			// list action for keydown.
-	vector<KeyEvent> _keyupQueue;			// list action for keyup
+	//vector<KeyEvent> _keydownQueue;			// list action for keydown.
+	//vector<KeyEvent> _keyupQueue;			// list action for keyup				
 	pGInput		_input;
 	pGKeyboard	_keyboard;
 	BYTE		_keyBuffer[256];			// BYTE = unsigned char
@@ -84,13 +96,7 @@ private:
 };
 typedef InputController *pInputController;
 
-class KeyEventArg : public EventArg
-{
-// Dont need any private or protected.
-public:
-	KeyEventArg(int keycode){ _key = keycode; }
-	int _key;
-};
+
 NS_FRAMEWORK_END
 US_FRAMEWORK
 

@@ -45,7 +45,7 @@ void Game::init()
 	_oldTime = _gametime->getTotalGameTime();
 	_deltaTime = 0.0f;
 }
-
+double lag = 0.0;
 void Game::run()
 {
 	MSG msg;
@@ -57,8 +57,8 @@ void Game::run()
 				isExit = 1;
 			TranslateMessage(&msg);
 			DispatchMessage(&msg);
-		}														// dont mention it.  see ebook if you want more info
-		
+		}										// dont mention it.  see ebook if you want more info
+
 		_gametime->updateGameTime();							// gametime isn't run if dont call updateGameTime
 		_deltaTime = _gametime->getTotalGameTime() - _oldTime;
 
@@ -74,13 +74,22 @@ void Game::run()
 }
 void Game::render()												// call once per frame
 {
-	// should go to another place
+	// kiểm tra nếu cửa sổ đang focus không phải game thì không cập nhật
+	if (GetActiveWindow() != this->wnd_Instance->getWnd())
+		return;
 	auto device = _devicemanager->getInstance();
 	float time = _gametime->getElapsedGameTime();
 
+	// để xử lý kéo cửa sổ không vị dồn frame
+	// vì chỉ là thủ thuật set cứng thời gian
+	// nên bất kỳ đối tượng nào không update theo thời gian thì khi kéo cửa sổ sẽ bị dồn frame
+	if (time > this->_frameRate * 2)
+	{
+		time = _frameRate;
+	}
+
 	if (device->getDevice()->BeginScene() != DI_OK)
 		return;
-
 	device->clearScreen();
 
 	// main game's logic
