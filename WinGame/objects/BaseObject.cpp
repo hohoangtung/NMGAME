@@ -22,5 +22,6 @@ eStatus BaseObject::getStatus()
 
 void BaseObject::setStatus(eStatus status)
 {
-	this->_status = status;
+	if(_status != status)
+		this->_status = status;
 }

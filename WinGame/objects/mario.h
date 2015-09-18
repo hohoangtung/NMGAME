@@ -1,6 +1,6 @@
 ﻿
-#ifndef __BILL_H__
-#define __BILL_H__
+#ifndef __MARIO_H__
+#define __MARIO_H__
 #include "BaseObject.h"
 #include "PlayScene.h"
 #include "IComponent.h"
@@ -74,4 +74,4 @@ private:
 	StopWatch *stopwatch;
 };
 
-#endif // !__BILL_H__
+#endif // !__MARIO_H__

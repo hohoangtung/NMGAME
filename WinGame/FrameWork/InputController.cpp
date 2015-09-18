@@ -84,6 +84,11 @@ bool InputController::init(HWND hWnd, HINSTANCE hinstance)
 
 void InputController::update()
 {
+	for (int i = 0; i < 256; i++)
+	{
+		_previousKeyBuffer[i] = ((_keyBuffer[i] & 0x80) > 0);
+	}
+
 	// collect state of all of keys.
 	_keyboard->GetDeviceState(sizeof(this->_keyBuffer), _keyBuffer);
 	if (isKeyDown(DIK_ESCAPE))
@@ -113,4 +118,14 @@ void InputController::update()
 int InputController::isKeyDown(int keycode)
 {
 	return ((_keyBuffer[keycode] & 0x80) > 0);
+}
+
+bool InputController::isKeyPressed(int keycode)
+{
+	return isKeyDown(keycode) && !(_previousKeyBuffer[keycode]);
+}
+
+bool InputController::isKeyRelease(int keycode)
+{
+	return !isKeyDown(keycode) && (_previousKeyBuffer[keycode]);
 }

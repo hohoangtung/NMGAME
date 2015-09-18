@@ -58,7 +58,7 @@ void Game::run()
 			TranslateMessage(&msg);
 			DispatchMessage(&msg);
 		}														// dont mention it.  see ebook if you want more info
-
+		
 		_gametime->updateGameTime();							// gametime isn't run if dont call updateGameTime
 		_deltaTime = _gametime->getTotalGameTime() - _oldTime;
 

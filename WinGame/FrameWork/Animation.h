@@ -5,12 +5,11 @@
 #include "define.h"
 #include "Sprite.h"
 #include "Transformable.h"
-#include <iostream>
-#include <fstream>
+#include "..\objects\IComponent.h"
 
 US_FRAMEWORK
 
-class Animation : public Transformable
+class Animation : public IComponent
 {
 public:
 	~Animation();
@@ -79,11 +78,6 @@ public:
 	void addFrameRect(float left, float top, int width, int height);
 	void addFrameRect(float left, float top, float right, float bottom);
 
-	void setPosition(GVector2 position);
-	void setOrigin(GVector2 origin);
-
-	void createAnimationFromFile(const char* filePath);
-
 private:
 	int						_index;									// số thứ tự frame
 	int						_totalFrames;
@@ -97,6 +91,8 @@ private:
 	vector<RECT>			_frameRectList;
 	string					_nameAnimation;
 	RECT					_currentRect;
+
+	void updateTransform();
 };
 
 #endif // !__ANIMATION_H__

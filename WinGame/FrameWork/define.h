@@ -25,10 +25,16 @@ enum eID
 	BILL,
 	MARIO
 };
+
 enum eStatus
 {
-	NORMAL
+	NORMAL,
+	MOVING_LEFT,
+	MOVING_RIGHT,
+	JUMPING,
+	LAYING_DOWN
 };
+
 typedef D3DXVECTOR3 GVector3;
 typedef D3DXVECTOR2 GVector2;
 

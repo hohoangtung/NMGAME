@@ -23,7 +23,7 @@ float Transformable::getPositionY()
 	return _position.y;
 }
 
-void Transformable::setPosition(int x, int y, int z)
+void Transformable::setPosition(float x, float y, float z)
 {
 	GVector3 v(x, y, z);
 	this->setPosition(v);
@@ -39,7 +39,7 @@ void Transformable::setPosition(GVector2 position)
 	this->_position = GVector2(position.x, position.y);
 }
 
-void Transformable::setPosition(int x, int y)
+void Transformable::setPosition(float x, float y)
 {
 	this->setPositionX(x);
 	this->setPositionY(y);

@@ -41,7 +41,7 @@ public:
 	*/
 	void render(LPD3DXSPRITE spriteHandle, Viewport* viewport);
 
-	void setPosition(int x, int y, int z = 1);
+	void setPosition(float x, float y, float z = 1);
 	void setPosition(GVector3 vector);
 	void setPosition(GVector2 position);
 	void setPositionX(float x);

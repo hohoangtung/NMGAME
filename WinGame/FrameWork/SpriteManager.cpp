@@ -97,6 +97,8 @@ void SpriteManager::loadSpriteInfo(eID id, const char* fileInfoPath)
 			_sourceRectList[id][name] = rect;
 		}
 	}
+
+	fclose(file);
 }
 
 void SpriteManager::releaseSprite(eID id)

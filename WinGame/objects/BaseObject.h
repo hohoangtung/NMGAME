@@ -4,13 +4,16 @@
 #include "..\FrameWork\define.h"
 #include "..\FrameWork\SpriteManager.h"
 #include "..\FrameWork\Sprite.h"
+#include "..\FrameWork\Viewport.h"
+
 US_FRAMEWORK
 class IControlable
 {
 public:
 	virtual void updateInput(float deltatime) = 0;
 };
-class BaseObject
+
+class BaseObject : public Transformable
 {
 public:
 	BaseObject(eID id);
@@ -18,7 +21,7 @@ public:
 
 	virtual void init() = 0;
 	virtual void update(float deltatime) = 0;
-	virtual void draw(LPD3DXSPRITE) = 0;
+	virtual void draw(LPD3DXSPRITE, Viewport*) = 0;
 	virtual void release() = 0;
 
 	eID getId();

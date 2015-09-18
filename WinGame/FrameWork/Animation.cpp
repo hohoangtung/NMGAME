@@ -103,6 +103,10 @@ void Animation::canAnimate(bool can)
 
 void Animation::addFrameRect(RECT rect)
 {
+	//nếu là rect đầu tiên thì set current luôn
+	if (_frameRectList.empty())
+		_currentRect = rect;
+
 	_frameRectList.push_back(rect);
 	_totalFrames = _frameRectList.size();
 }
@@ -135,46 +139,6 @@ void Animation::draw(LPD3DXSPRITE spriteHandle, Viewport * viewport)
 	_spriteSheet->render(spriteHandle, viewport);
 }
 
-void Animation::setPosition(GVector2 position)
+void Animation::updateTransform()
 {
-	Transformable::setPosition(position);
-
-	_spriteSheet->setPosition(_position);
-}
-
-void Animation::setOrigin(GVector2 origin)
-{
-	Transformable::setOrigin(origin);
-
-	_spriteSheet->setOrigin(origin);
-}
-
-void Animation::createAnimationFromFile(const char* filePath)
-{
-	FILE *myFile;
-	myFile = fopen(filePath, "r");
-
-	if (myFile)
-	{
-		while (!feof(myFile))
-		{
-			int left, top, bottom, right;
-			RECT rect;
-			char s[100];
-
-			left = 0;
-			top = 0;
-			bottom = 0;
-			right = 0;
-
-			//fscanf(myFile, "%s", &s);
-			
-			//fscanf(myFile, "%d %d %d %d", &left, &top, &bottom, &right);
-
-			rect.left = left;
-			rect.top = top;
-			rect.right = right;
-			rect.right = right;
-		}
-	}
 }
