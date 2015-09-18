@@ -77,7 +77,7 @@ void SpriteManager::loadResource(LPD3DXSPRITE spriteHandle)
 	this->_listSprite[eID::REDCANNON] = sp;
 
 	Sprite* bill = new Sprite(spriteHandle, L"Resources\\bill_animation.png");
-	this->_listSprite.insert(pair<eID, Sprite*>(eID::BILL, bill));
+	this->_listSprite[eID::BILL] = bill;
 	this->loadSpriteInfo(eID::BILL, "Resources\\bill_animation.txt");
 }
 Sprite* SpriteManager::getSprite(eID id)

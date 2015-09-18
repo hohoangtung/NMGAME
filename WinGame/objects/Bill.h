@@ -41,18 +41,16 @@ private:
 	void jump();
 	void layDown();
 
-	void setState(int state);
-	void addState(int state);
-	void removeState(int state);
-	bool isInState(int state);
-	int getState();
-	int _state;
-
+	//void setState(int state);
+	void addStatus(eStatus status);
+	void removeStatus(eStatus status);
+	bool isInStatus(eStatus status);
+	
 	GVector2 getVelocity();
 	void updateStatus(float dt);
 
-	int _currentAnimateState;
-	void updateCurrentState();
+	eStatus _currentAnimateIndex;
+	void updateCurrentAnimateIndex();
 };
 
 #endif // !__BILL_H__

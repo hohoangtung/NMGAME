@@ -1,4 +1,4 @@
-#include "Bill.h"
+﻿#include "Bill.h"
 
 Bill::Bill() : BaseObject(eID::BILL)
 {
@@ -6,6 +6,19 @@ Bill::Bill() : BaseObject(eID::BILL)
 
 Bill::~Bill()
 {
+	for (auto it = _animations.begin(); it != _animations.end(); it++)
+	{
+		SAFE_DELETE(it->second);
+	}
+	_animations.clear();
+
+	for (auto it = _componentList.begin(); it != _componentList.end(); it++)
+	{
+		SAFE_DELETE(it->second);
+	}
+	_componentList.clear();
+
+	SAFE_DELETE(_sprite);
 }
 
 void Bill::init()
@@ -97,7 +110,6 @@ void Bill::init()
 	_sprite->setOrigin(GVector2(0.5f, 0.0f));
 
 	this->setStatus(eStatus::NORMAL);
-	this->setState(eStatus::NORMAL);
 }
 
 void Bill::update(float deltatime)
@@ -109,17 +121,17 @@ void Bill::update(float deltatime)
 		auto gravity = (Gravity*)this->_componentList["Gravity"];
 		gravity->setStatus(eGravityStatus::SHALLOWED);
 
-		this->setState(this->getState() & ~eStatus::JUMPING);
+		this->removeStatus(eStatus::JUMPING);
 		this->standing();
 	}
 
 	this->updateStatus(deltatime);
 
-	this->updateCurrentState();
+	this->updateCurrentAnimateIndex();
 
-	_animations[_currentAnimateState]->update(deltatime);
+	_animations[_currentAnimateIndex]->update(deltatime);
 
-	// update component ?? sau c�ng ?? s?a b�n tr�n sau ?� n� c?p nh?t ?�ng
+	// update component để sau cùng để sửa bên trên sau đó nó cập nhật đúng
 	for (auto it = _componentList.begin(); it != _componentList.end(); it++)
 	{
 		it->second->update(deltatime);
@@ -133,7 +145,7 @@ void Bill::updateInput(float dt)
 
 void Bill::draw(LPD3DXSPRITE spriteHandle, Viewport* viewport)
 {
-	_animations[_currentAnimateState]->draw(spriteHandle, viewport);
+	_animations[_currentAnimateIndex]->draw(spriteHandle, viewport);
 }
 
 void Bill::release()
@@ -158,33 +170,33 @@ void Bill::onKeyPressed(KeyEventArg* key_event)
 	}
 	case DIK_LEFT:
 	{
-		this->removeState(eStatus::LAYING_DOWN);
-		this->removeState(eStatus::MOVING_RIGHT);
-		this->setState(this->getState() | eStatus::MOVING_LEFT);
+		this->removeStatus(eStatus::LAYING_DOWN);
+		this->removeStatus(eStatus::MOVING_RIGHT);
+		this->addStatus(eStatus::MOVING_LEFT);
 
 		break;
 	}
 	case DIK_RIGHT:
 	{
-		this->removeState(eStatus::LAYING_DOWN);
-		this->removeState(eStatus::MOVING_LEFT);
-		this->setState(this->getState() | eStatus::MOVING_RIGHT);
+		this->removeStatus(eStatus::LAYING_DOWN);
+		this->removeStatus(eStatus::MOVING_LEFT);
+		this->addStatus(eStatus::MOVING_RIGHT);
 
 		break;
 	}
 	case DIK_DOWN:
 	{
-		this->setState(this->getState() | eStatus::LAYING_DOWN);
+		this->addStatus(eStatus::LAYING_DOWN);
 		break;
 	}
 	case DIK_UP:
 	{
-		this->setState(this->getState() | eStatus::LOOKING_UP);
+		this->addStatus(eStatus::LOOKING_UP);
 		break;
 	}
 	case DIK_X:
 	{
-		this->addState(eStatus::SHOOTING);
+		this->addStatus(eStatus::SHOOTING);
 		break;
 	}
 	default:
@@ -198,27 +210,27 @@ void Bill::onKeyReleased(KeyEventArg * key_event)
 	{
 	case DIK_RIGHT:
 	{
-		this->setState(this->getState() & ~eStatus::MOVING_RIGHT);
+		this->removeStatus(eStatus::MOVING_RIGHT);
 		break;
 	}
 	case DIK_LEFT:
 	{
-		this->setState(this->getState() & ~eStatus::MOVING_LEFT);
+		this->removeStatus(eStatus::MOVING_LEFT);
 		break;
 	}
 	case DIK_DOWN:
 	{
-		this->removeState(eStatus::LAYING_DOWN);
+		this->removeStatus(eStatus::LAYING_DOWN);
 		break;
 	}
 	case DIK_UP:
 	{
-		this->removeState(eStatus::LOOKING_UP);
+		this->removeStatus(eStatus::LOOKING_UP);
 		break;
 	}
 	case DIK_X:
 	{
-		this->removeState(eStatus::SHOOTING);
+		this->removeStatus(eStatus::SHOOTING);
 		break;
 	}
 	default:
@@ -250,10 +262,10 @@ void Bill::moveRight()
 
 void Bill::jump()
 {
-	if ((this->getState() & eStatus::JUMPING) == eStatus::JUMPING)
+	if ((this->getStatus() & eStatus::JUMPING) == eStatus::JUMPING)
 		return;
 
-	this->setState(this->getState() | eStatus::JUMPING);
+	this->setStatus(eStatus(this->getStatus() | eStatus::JUMPING));
 
 	auto move = (Movement*)this->_componentList["Movement"];
 	move->setVelocity(GVector2(move->getVelocity().x, BILL_JUMP_VEL));
@@ -268,30 +280,19 @@ void Bill::layDown()
 	move->setVelocity(GVector2(0, move->getVelocity().y));
 }
 
-void Bill::setState(int state)
+void Bill::addStatus(eStatus status)
 {
-	if (_state != state)
-		_state = state;
+	this->setStatus(eStatus(this->getStatus() | status));
 }
 
-void Bill::addState(int state)
+void Bill::removeStatus(eStatus status)
 {
-	this->setState(this->getState() | state);
+	this->setStatus(eStatus(this->getStatus() & ~status));
 }
 
-void Bill::removeState(int state)
+bool Bill::isInStatus(eStatus status)
 {
-	this->setState(this->getState() & ~state);
-}
-
-bool Bill::isInState(int state)
-{
-	return (this->getState() & state) == state;
-}
-
-int Bill::getState()
-{
-	return _state;
+	return (this->getStatus() & status) == status;
 }
 
 GVector2 Bill::getVelocity()
@@ -302,40 +303,40 @@ GVector2 Bill::getVelocity()
 
 void Bill::updateStatus(float dt)
 {
-	if ((this->getState() & eStatus::MOVING_LEFT) == eStatus::MOVING_LEFT)
+	if ((this->getStatus() & eStatus::MOVING_LEFT) == eStatus::MOVING_LEFT)
 	{
 		this->moveLeft();
 	}
-	else if ((this->getState() & eStatus::MOVING_RIGHT) == eStatus::MOVING_RIGHT)
+	else if ((this->getStatus() & eStatus::MOVING_RIGHT) == eStatus::MOVING_RIGHT)
 	{
 		this->moveRight();
 	}
-	else if ((this->getState() & eStatus::LAYING_DOWN) == eStatus::LAYING_DOWN)
+	else if ((this->getStatus() & eStatus::LAYING_DOWN) == eStatus::LAYING_DOWN)
 	{
 		this->layDown();
 	}
-	else if ((this->getState() & eStatus::JUMPING) != eStatus::JUMPING)
+	else if ((this->getStatus() & eStatus::JUMPING) != eStatus::JUMPING)
 	{
 		this->standing();
 	}
 }
 
-void Bill::updateCurrentState()
+void Bill::updateCurrentAnimateIndex()
 {
-	if (this->isInState(eStatus::JUMPING))
+	if (this->isInStatus(eStatus::JUMPING))
 	{
-		_currentAnimateState = eStatus::JUMPING;
+		_currentAnimateIndex = eStatus::JUMPING;
 	}
-	else if (this->isInState(eStatus::SHOOTING) && (this->isInState(eStatus::LOOKING_UP) || this->isInState(eStatus::LAYING_DOWN))&& (this->isInState(eStatus::MOVING_LEFT) || this->isInState(eStatus::MOVING_RIGHT)))
+	else if (this->isInStatus(eStatus::SHOOTING) && (this->isInStatus(eStatus::LOOKING_UP) || this->isInStatus(eStatus::LAYING_DOWN))&& (this->isInStatus(eStatus::MOVING_LEFT) || this->isInStatus(eStatus::MOVING_RIGHT)))
 	{
-		_currentAnimateState = _state & ~eStatus::SHOOTING;
+		_currentAnimateIndex = (eStatus)(this->getStatus() & ~eStatus::SHOOTING);
 	}
-	else if (this->isInState(eStatus::LAYING_DOWN) && this->isInState(eStatus::SHOOTING))
+	else if (this->isInStatus(eStatus::LAYING_DOWN) && this->isInStatus(eStatus::SHOOTING))
 	{
-		_currentAnimateState = eStatus::LAYING_DOWN;
+		_currentAnimateIndex = eStatus::LAYING_DOWN;
 	}
 	else
 	{
-		_currentAnimateState = _state;
+		_currentAnimateIndex = this->getStatus();
 	}
 }
