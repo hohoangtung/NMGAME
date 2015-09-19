@@ -133,6 +133,24 @@ void Animation::addFrameRect(float left, float top, float right, float bottom)
 	this->addFrameRect(rect);
 }
 
+void Animation::addFrameRect(eID id, char* firstRectName, ...)
+{
+	va_list vl;
+	char* name;
+
+	va_start(vl, firstRectName);
+
+	name = firstRectName;
+
+	while (name != NULL)
+	{
+		this->addFrameRect(SpriteManager::getInstance()->getSourceRect(eID::BILL, name));
+		name = va_arg(vl, char*);
+	}
+
+	va_end(vl);
+}
+
 void Animation::draw(LPD3DXSPRITE spriteHandle, Viewport * viewport)
 {
 	_spriteSheet->setFrameRect(_currentRect);

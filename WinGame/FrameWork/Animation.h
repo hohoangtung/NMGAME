@@ -2,10 +2,11 @@
 #define __ANIMATION_H__
 
 #include <vector>
+#include <stdarg.h>
 #include "define.h"
 #include "Sprite.h"
-#include "Transformable.h"
 #include "..\objects\IComponent.h"
+#include "SpriteManager.h"
 
 US_FRAMEWORK
 
@@ -77,6 +78,14 @@ public:
 	void addFrameRect(RECT rect);
 	void addFrameRect(float left, float top, int width, int height);
 	void addFrameRect(float left, float top, float right, float bottom);
+
+	/*
+	Tạo nhiều framerect liên tiếp nhau, không giới hạn tham số
+		@id: ID của sprite
+		@firstRectName,...: các tên của frame rect
+	Sau khi truyền xong các tên, kết thúc PHẢI bằng NULL để xác định được kết thúc.
+	*/
+	void addFrameRect(eID id, char* firstRectName, ...);
 
 	void setPosition(GVector2 p)
 	{ 

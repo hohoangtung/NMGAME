@@ -30,81 +30,47 @@ void Bill::init()
 	_componentList["Movement"] = new Movement(GVector2(0, 0), GVector2(0, 0), _sprite);
 	_componentList["Gravity"] = new Gravity(GVector2(0, - GRAVITY), (Movement*)_componentList["Movement"]);
 
-	_animations[eStatus::NORMAL] = new Animation(_sprite, 0.25f);
-	_animations[eStatus::NORMAL]->addFrameRect(SpriteManager::getInstance()->getSourceRect(this->getId(), "normal_01"));
+	_animations[eStatus::NORMAL] = new Animation(_sprite, 0.1f);
+	_animations[eStatus::NORMAL]->addFrameRect(eID::BILL, "normal_01", NULL);
 	
-	_animations[eStatus::NORMAL | eStatus::SHOOTING] = new Animation(_sprite, 0.25f);
-	_animations[eStatus::NORMAL | eStatus::SHOOTING]->addFrameRect(SpriteManager::getInstance()->getSourceRect(this->getId(), "normal_01"));
-	_animations[eStatus::NORMAL | eStatus::SHOOTING]->addFrameRect(SpriteManager::getInstance()->getSourceRect(this->getId(), "normal_02"));
+	_animations[eStatus::NORMAL | eStatus::SHOOTING] = new Animation(_sprite, 0.1f);
+	_animations[eStatus::NORMAL | eStatus::SHOOTING]->addFrameRect(eID::BILL, "normal_01", "normal_02", NULL);
 
 	_animations[eStatus::MOVING_RIGHT] = new Animation(_sprite, 0.1f);
-	_animations[eStatus::MOVING_RIGHT]->addFrameRect(SpriteManager::getInstance()->getSourceRect(eID::BILL, "run_01"));
-	_animations[eStatus::MOVING_RIGHT]->addFrameRect(SpriteManager::getInstance()->getSourceRect(eID::BILL, "run_02"));
-	_animations[eStatus::MOVING_RIGHT]->addFrameRect(SpriteManager::getInstance()->getSourceRect(eID::BILL, "run_03"));
-	_animations[eStatus::MOVING_RIGHT]->addFrameRect(SpriteManager::getInstance()->getSourceRect(eID::BILL, "run_04"));
-	_animations[eStatus::MOVING_RIGHT]->addFrameRect(SpriteManager::getInstance()->getSourceRect(eID::BILL, "run_05"));
-	_animations[eStatus::MOVING_RIGHT]->addFrameRect(SpriteManager::getInstance()->getSourceRect(eID::BILL, "run_06"));
+	_animations[eStatus::MOVING_RIGHT]->addFrameRect(eID::BILL, "run_01", "run_02", "run_03", "run_04", "run_05", "run_06", NULL);
 
 	_animations[eStatus::MOVING_LEFT] = new Animation(_sprite, 0.1f);
-	_animations[eStatus::MOVING_LEFT]->addFrameRect(SpriteManager::getInstance()->getSourceRect(eID::BILL, "run_01"));
-	_animations[eStatus::MOVING_LEFT]->addFrameRect(SpriteManager::getInstance()->getSourceRect(eID::BILL, "run_02"));
-	_animations[eStatus::MOVING_LEFT]->addFrameRect(SpriteManager::getInstance()->getSourceRect(eID::BILL, "run_03"));
-	_animations[eStatus::MOVING_LEFT]->addFrameRect(SpriteManager::getInstance()->getSourceRect(eID::BILL, "run_04"));
-	_animations[eStatus::MOVING_LEFT]->addFrameRect(SpriteManager::getInstance()->getSourceRect(eID::BILL, "run_05"));
-	_animations[eStatus::MOVING_LEFT]->addFrameRect(SpriteManager::getInstance()->getSourceRect(eID::BILL, "run_06"));
+	_animations[eStatus::MOVING_LEFT]->addFrameRect(eID::BILL, "run_01", "run_02", "run_03", "run_04", "run_05", "run_06", NULL);
 
 	_animations[eStatus::JUMPING] = new Animation(_sprite, 0.1f);
-	_animations[eStatus::JUMPING]->addFrameRect(SpriteManager::getInstance()->getSourceRect(eID::BILL, "jump_01"));
-	_animations[eStatus::JUMPING]->addFrameRect(SpriteManager::getInstance()->getSourceRect(eID::BILL, "jump_02"));
-	_animations[eStatus::JUMPING]->addFrameRect(SpriteManager::getInstance()->getSourceRect(eID::BILL, "jump_03"));
+	_animations[eStatus::JUMPING]->addFrameRect(eID::BILL, "jump_01", "jump_02", "jump_03", NULL);
 
 	_animations[eStatus::LAYING_DOWN] = new Animation(_sprite, 0.1f);
-	_animations[eStatus::LAYING_DOWN]->addFrameRect(SpriteManager::getInstance()->getSourceRect(eID::BILL, "lay_down_01"));
+	_animations[eStatus::LAYING_DOWN]->addFrameRect(eID::BILL, "lay_down_01", NULL);
 
 	_animations[eStatus::LOOKING_UP] = new Animation(_sprite, 0.1f);
-	_animations[eStatus::LOOKING_UP]->addFrameRect(SpriteManager::getInstance()->getSourceRect(eID::BILL, "shot_up_01"));
+	_animations[eStatus::LOOKING_UP]->addFrameRect(eID::BILL, "shot_up_01", NULL);
 
 	_animations[eStatus::LOOKING_UP | eStatus::SHOOTING] = new Animation(_sprite, 0.1f);
-	_animations[eStatus::LOOKING_UP | eStatus::SHOOTING]->addFrameRect(SpriteManager::getInstance()->getSourceRect(eID::BILL, "shot_up_01"));
-	_animations[eStatus::LOOKING_UP | eStatus::SHOOTING]->addFrameRect(SpriteManager::getInstance()->getSourceRect(eID::BILL, "shot_up_02"));
-
+	_animations[eStatus::LOOKING_UP | eStatus::SHOOTING]->addFrameRect(eID::BILL, "shot_up_01", "shot_up_02" , NULL);
 
 	_animations[eStatus::LOOKING_UP | eStatus::MOVING_RIGHT] = new Animation(_sprite, 0.1f);
-	_animations[eStatus::LOOKING_UP | eStatus::MOVING_RIGHT]->addFrameRect(SpriteManager::getInstance()->getSourceRect(eID::BILL, "run_shot_up_01"));
-	_animations[eStatus::LOOKING_UP | eStatus::MOVING_RIGHT]->addFrameRect(SpriteManager::getInstance()->getSourceRect(eID::BILL, "run_shot_up_02"));
-	_animations[eStatus::LOOKING_UP | eStatus::MOVING_RIGHT]->addFrameRect(SpriteManager::getInstance()->getSourceRect(eID::BILL, "run_shot_up_03"));
+	_animations[eStatus::LOOKING_UP | eStatus::MOVING_RIGHT]->addFrameRect(eID::BILL, "run_shot_up_01", "run_shot_up_02", "run_shot_up_03", NULL);
 
 	_animations[eStatus::LAYING_DOWN | eStatus::MOVING_RIGHT] = new Animation(_sprite, 0.1f);
-	_animations[eStatus::LAYING_DOWN | eStatus::MOVING_RIGHT]->addFrameRect(SpriteManager::getInstance()->getSourceRect(eID::BILL, "run_shot_down_01"));
-	_animations[eStatus::LAYING_DOWN | eStatus::MOVING_RIGHT]->addFrameRect(SpriteManager::getInstance()->getSourceRect(eID::BILL, "run_shot_down_02"));
-	_animations[eStatus::LAYING_DOWN | eStatus::MOVING_RIGHT]->addFrameRect(SpriteManager::getInstance()->getSourceRect(eID::BILL, "run_shot_down_03"));
-
+	_animations[eStatus::LAYING_DOWN | eStatus::MOVING_RIGHT]->addFrameRect(eID::BILL, "run_shot_down_01", "run_shot_down_02", "run_shot_down_03", NULL);
 
 	_animations[eStatus::LOOKING_UP | eStatus::MOVING_LEFT] = new Animation(_sprite, 0.1f);
-	_animations[eStatus::LOOKING_UP | eStatus::MOVING_LEFT]->addFrameRect(SpriteManager::getInstance()->getSourceRect(eID::BILL, "run_shot_up_01"));
-	_animations[eStatus::LOOKING_UP | eStatus::MOVING_LEFT]->addFrameRect(SpriteManager::getInstance()->getSourceRect(eID::BILL, "run_shot_up_02"));
-	_animations[eStatus::LOOKING_UP | eStatus::MOVING_LEFT]->addFrameRect(SpriteManager::getInstance()->getSourceRect(eID::BILL, "run_shot_up_03"));
+	_animations[eStatus::LOOKING_UP | eStatus::MOVING_LEFT]->addFrameRect(eID::BILL, "run_shot_up_01", "run_shot_up_02", "run_shot_up_03", NULL);
 
 	_animations[eStatus::LAYING_DOWN | eStatus::MOVING_LEFT] = new Animation(_sprite, 0.1f);
-	_animations[eStatus::LAYING_DOWN | eStatus::MOVING_LEFT]->addFrameRect(SpriteManager::getInstance()->getSourceRect(eID::BILL, "run_shot_down_01"));
-	_animations[eStatus::LAYING_DOWN | eStatus::MOVING_LEFT]->addFrameRect(SpriteManager::getInstance()->getSourceRect(eID::BILL, "run_shot_down_02"));
-	_animations[eStatus::LAYING_DOWN | eStatus::MOVING_LEFT]->addFrameRect(SpriteManager::getInstance()->getSourceRect(eID::BILL, "run_shot_down_03"));
+	_animations[eStatus::LAYING_DOWN | eStatus::MOVING_LEFT]->addFrameRect(eID::BILL, "run_shot_down_01", "run_shot_down_02", "run_shot_down_03", NULL);
 
 	_animations[eStatus::SHOOTING | eStatus::MOVING_LEFT] = new Animation(_sprite, 0.1f);
-	_animations[eStatus::SHOOTING | eStatus::MOVING_LEFT]->addFrameRect(SpriteManager::getInstance()->getSourceRect(eID::BILL, "run_shot_01"));
-	_animations[eStatus::SHOOTING | eStatus::MOVING_LEFT]->addFrameRect(SpriteManager::getInstance()->getSourceRect(eID::BILL, "run_shot_02"));
-	_animations[eStatus::SHOOTING | eStatus::MOVING_LEFT]->addFrameRect(SpriteManager::getInstance()->getSourceRect(eID::BILL, "run_shot_03"));
-	_animations[eStatus::SHOOTING | eStatus::MOVING_LEFT]->addFrameRect(SpriteManager::getInstance()->getSourceRect(eID::BILL, "run_shot_01"));
-	_animations[eStatus::SHOOTING | eStatus::MOVING_LEFT]->addFrameRect(SpriteManager::getInstance()->getSourceRect(eID::BILL, "run_shot_02"));
-	_animations[eStatus::SHOOTING | eStatus::MOVING_LEFT]->addFrameRect(SpriteManager::getInstance()->getSourceRect(eID::BILL, "run_shot_03"));
+	_animations[eStatus::SHOOTING | eStatus::MOVING_LEFT]->addFrameRect(eID::BILL, "run_shot_01", "run_shot_02", "run_shot_03", "run_shot_01", "run_shot_02", "run_shot_03", NULL);
 
 	_animations[eStatus::SHOOTING | eStatus::MOVING_RIGHT] = new Animation(_sprite, 0.1f);
-	_animations[eStatus::SHOOTING | eStatus::MOVING_RIGHT]->addFrameRect(SpriteManager::getInstance()->getSourceRect(eID::BILL, "run_shot_01"));
-	_animations[eStatus::SHOOTING | eStatus::MOVING_RIGHT]->addFrameRect(SpriteManager::getInstance()->getSourceRect(eID::BILL, "run_shot_02"));
-	_animations[eStatus::SHOOTING | eStatus::MOVING_RIGHT]->addFrameRect(SpriteManager::getInstance()->getSourceRect(eID::BILL, "run_shot_03"));
-	_animations[eStatus::SHOOTING | eStatus::MOVING_RIGHT]->addFrameRect(SpriteManager::getInstance()->getSourceRect(eID::BILL, "run_shot_01"));
-	_animations[eStatus::SHOOTING | eStatus::MOVING_RIGHT]->addFrameRect(SpriteManager::getInstance()->getSourceRect(eID::BILL, "run_shot_02"));
-	_animations[eStatus::SHOOTING | eStatus::MOVING_RIGHT]->addFrameRect(SpriteManager::getInstance()->getSourceRect(eID::BILL, "run_shot_03"));
+	_animations[eStatus::SHOOTING | eStatus::MOVING_RIGHT]->addFrameRect(eID::BILL, "run_shot_01", "run_shot_02", "run_shot_03", "run_shot_01", "run_shot_02", "run_shot_03", NULL);
 
 	_sprite->drawBounding(false);
 	_sprite->setOrigin(GVector2(0.5f, 0.0f));
