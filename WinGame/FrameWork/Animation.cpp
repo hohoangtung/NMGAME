@@ -144,7 +144,7 @@ void Animation::addFrameRect(eID id, char* firstRectName, ...)
 
 	while (name != NULL)
 	{
-		this->addFrameRect(SpriteManager::getInstance()->getSourceRect(eID::BILL, name));
+		this->addFrameRect(SpriteManager::getInstance()->getSourceRect(id, name));
 		name = va_arg(vl, char*);
 	}
 
