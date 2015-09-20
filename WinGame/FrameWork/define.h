@@ -30,15 +30,22 @@ enum eID
 	AIRCRAFT,
 	EXPLOSION,
 };
+
 enum eStatus
 {
-	NORMAL = 1,
-	RUNNING = 2,
-	JUMPING = 4,
-	DESTROY = 8,
-	BURST = 16,
-	EXPLORE = 32,
+	NORMAL			= 0,					// 00000 = 0
+	MOVING_LEFT		= (1 << 0),				// 00001 = 2^0
+	MOVING_RIGHT	= (1 << 1),				// 00010 = 2^1
+	JUMPING			= (1 << 2),				// 00100 = 2^2
+	LAYING_DOWN		= (1 << 3),				// 01000 = 2^3
+	RUNNING			= (1 << 4),				// 10000 = 2^4
+	LOOKING_UP		= (1 << 5),				// 2^5
+	SHOOTING		= (1 << 6),
+	DESTROY			= (1 << 7),
+	BURST			= (1 << 8),
+	EXPLORE			= (1 << 9)
 };
+
 typedef D3DXVECTOR3 GVector3;
 typedef D3DXVECTOR2 GVector2;
 #define VECTOR2ZERO GVector2(0.0f, 0.0f)

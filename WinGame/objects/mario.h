@@ -1,11 +1,12 @@
 ﻿
 #ifndef __MARIO_H__
 #define __MARIO_H__
-#include "BaseObject.h"
-#include "IComponent.h"
+
 #include "..\FrameWork\StopWatch.h"
 #include "..\FrameWork\Event.h"
 #include "..\debug.h"
+#include "BaseObject.h"
+#include "IComponent.h"
 #include "PlayScene.h"
 #include <map>
 

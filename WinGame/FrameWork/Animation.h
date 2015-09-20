@@ -2,15 +2,15 @@
 #define __ANIMATION_H__
 
 #include <vector>
+#include <stdarg.h>
 #include "define.h"
 #include "Sprite.h"
-#include "Transformable.h"
-#include <iostream>
-#include <fstream>
+#include "..\objects\IComponent.h"
+#include "SpriteManager.h"
 
 US_FRAMEWORK
 
-class Animation : public Transformable
+class Animation : public IComponent
 {
 public:
 	~Animation();
@@ -84,10 +84,19 @@ public:
 	void addFrameRect(float left, float top, int width, int height);
 	void addFrameRect(float left, float top, float right, float bottom);
 
-	void setPosition(GVector2 position);
-	void setOrigin(GVector2 origin);
+	/*
+	Tạo nhiều framerect liên tiếp nhau, không giới hạn tham số
+		@id: ID của sprite
+		@firstRectName,...: các tên của frame rect
+	Sau khi truyền xong các tên, kết thúc PHẢI bằng NULL để xác định được kết thúc.
+	*/
+	void addFrameRect(eID id, char* firstRectName, ...);
 
-	void createAnimationFromFile(const char* filePath);
+	void setPosition(GVector2 p)
+	{ 
+		// không làm gì TT.TT
+		// để tạm ở đây cho hết lỗi, nếu setPosition thì set ở sprite reference tới
+	}
 
 private:
 	int						_index;									// số thứ tự frame

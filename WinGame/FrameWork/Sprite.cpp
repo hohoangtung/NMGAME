@@ -82,7 +82,7 @@ void Sprite::render(LPD3DXSPRITE spriteHandle, Viewport* viewport)
 	if (_surface == nullptr || _isDrawBounding == false)
 	{
 		return;
-}
+	}
 
 	RECT r;
 	r.top = WINDOW_HEIGHT - _bound.top; 
@@ -101,7 +101,7 @@ void Sprite::render(LPD3DXSPRITE spriteHandle, Viewport* viewport)
 		);
 }
 
-void Sprite::setPosition(int x, int y, int z)
+void Sprite::setPosition(float x, float y, float z)
 {
 	GVector3 v(x, y, z);
 	this->setPosition(v);
@@ -205,6 +205,11 @@ RECT Sprite::getBounding()
 void Sprite::setFrameRect(RECT rect)
 {
 	_frameRect = rect;
+
+	_frameWidth = abs(_frameRect.left - _frameRect.right);
+	_frameHeight = abs(_frameRect.top - _frameRect.bottom);
+
+	this->updateBounding();
 }
 
 void Sprite::setFrameRect(float top, float right, float bottom, float left)
@@ -216,6 +221,8 @@ void Sprite::setFrameRect(float top, float right, float bottom, float left)
 
 	_frameWidth = abs(_frameRect.left - _frameRect.right);
 	_frameHeight = abs(_frameRect.top - _frameRect.bottom);
+
+	this->updateBounding();
 }
 
 void Sprite::setFrameRect(float x, float y, int width, int height)
@@ -227,12 +234,15 @@ void Sprite::setFrameRect(float x, float y, int width, int height)
 
 	_frameWidth = width;
 	_frameHeight = height;
+
+	this->updateBounding();
 }
 
 RECT Sprite::getFrameRect()
 {
 	return _frameRect;
 }
+
 RECT Sprite::getFrameRectByIndex(int index)
 {
 	index = index % _totalFrames;
@@ -243,6 +253,7 @@ RECT Sprite::getFrameRectByIndex(int index)
 	rect.bottom = _frameRect.top + _frameHeight;
 	return rect;
 }
+
 void Sprite::nextFrame()
 {
 	if (_totalFrames <= 1)

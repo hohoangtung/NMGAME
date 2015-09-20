@@ -41,7 +41,7 @@ public:
 	*/
 	void render(LPD3DXSPRITE spriteHandle, Viewport* viewport);
 
-	void setPosition(int x, int y, int z = 1);
+	void setPosition(float x, float y, float z = 1);
 	void setPosition(GVector3 vector);
 	void setPosition(GVector2 position);
 	void setPositionX(float x);
@@ -64,7 +64,7 @@ public:
 	void setFrameRect(float top, float right, float bottom, float left);
 	void setFrameRect(float x, float y, int width, int height);
 	RECT getFrameRect();
-	RECT getFrameRectByIndex(int index); // test
+	RECT getFrameRectByIndex(int index);
 	/*
 	Chuyển qua frame kế tiếp
 	*/

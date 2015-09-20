@@ -68,8 +68,9 @@ public:
 	bool	init(HWND, HINSTANCE);			// should be called in game::init()
 	void	update();						// should be called in main game loop
 	int		isKeyDown(int keycode);			// check if keycode is down.
+	bool	isKeyPressed(int keycode);
+	bool	isKeyRelease(int keycode);
 
-	// dùng lớp event này chỉ có thể trỏ được đến các hàm toàn cục hoặc hàm thành viên static
 	Event _keyPressed;
 	Event _keyReleased;
 
@@ -90,6 +91,8 @@ private:
 	DIDEVICEOBJECTDATA _keyEvents[KEYBOARD_BUFFER_SIZE];
 
 	InputController();
+
+	bool		_previousKeyBuffer[256];
 };
 typedef InputController *pInputController;
 

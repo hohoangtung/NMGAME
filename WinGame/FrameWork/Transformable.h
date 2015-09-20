@@ -14,9 +14,9 @@ public:
 	float virtual getPositionY();
 
 	void virtual setPosition(GVector3 vector);
-	void virtual setPosition(int x, int y, int z);
+	void virtual setPosition(float x, float y, float z);
 	void virtual setPosition(GVector2 position);
-	void virtual setPosition(int x, int y);
+	void virtual setPosition(float x, float y);
 	void virtual setPositionX(float x);
 	void virtual setPositionY(float y);
 

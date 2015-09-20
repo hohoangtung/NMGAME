@@ -106,7 +106,7 @@ void Game::render()												// call once per frame
 	updateInput(time);
 	update(time);
 	draw();
-	
+
 	device->getDevice()->EndScene();
 
 	device->present();

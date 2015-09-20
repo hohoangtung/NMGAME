@@ -85,7 +85,7 @@ void SpriteManager::loadResource(LPD3DXSPRITE spriteHandle)
 	this->loadSpriteInfo(eID::EXPLOSION, "Resources\\explosion_animation.txt");
 
 	Sprite* bill = new Sprite(spriteHandle, L"Resources\\bill_animation.png");
-	this->_listSprite.insert(pair<eID, Sprite*>(eID::BILL, bill));
+	this->_listSprite[eID::BILL] = bill;
 	this->loadSpriteInfo(eID::BILL, "Resources\\bill_animation.txt");
 }
 Sprite* SpriteManager::getSprite(eID id)
@@ -117,6 +117,8 @@ void SpriteManager::loadSpriteInfo(eID id, const char* fileInfoPath)
 			_sourceRectList[id][name] = rect;
 		}
 	}
+
+	fclose(file);
 }
 
 void SpriteManager::releaseSprite(eID id)
