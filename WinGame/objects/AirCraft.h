@@ -40,7 +40,7 @@ public:
 
 	void init() override;
 	void update(float deltatime) override;
-	void draw(LPD3DXSPRITE) override;
+	void draw(LPD3DXSPRITE, Viewport*) override;
 	void release() override;
 	void updateInput(float deltatime) override;
 

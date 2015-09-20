@@ -51,9 +51,9 @@ void Explosion::setPosition(GVector2 position)
 	this->_sprite->setPosition(position);
 }
 
-void Explosion::draw(LPD3DXSPRITE spriteHandle)
+void Explosion::draw(LPD3DXSPRITE spriteHandle, Viewport* viewport)
 {
-	this->_animation->draw(spriteHandle, PlayScene::getViewport());
+	this->_animation->draw(spriteHandle, viewport);
 }
 void Explosion::release()
 {

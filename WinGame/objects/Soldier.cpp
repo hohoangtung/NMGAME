@@ -20,10 +20,10 @@ void Soldier::init()
 	_stopwatch = new StopWatch();
 }
 
-void Soldier::draw(LPD3DXSPRITE spritehandle)
+void Soldier::draw(LPD3DXSPRITE spritehandle, Viewport* viewport)
 {
 	this->_sprite->render(spritehandle, PlayScene::getViewport());
-	_animation->draw(spritehandle, PlayScene::getViewport());
+	_animation->draw(spritehandle, viewport);
 }
 
 void Soldier::release()

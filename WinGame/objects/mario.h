@@ -29,7 +29,7 @@ public:
 	void init();
 	void updateInput(float deltatime);
 	void update(float deltatime);
-	void draw(LPD3DXSPRITE spritehandle);
+	void draw(LPD3DXSPRITE spritehandle, Viewport*);
 	void release();
 	IComponent* getComponent(string componentName);
 private:

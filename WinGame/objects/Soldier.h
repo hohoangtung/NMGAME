@@ -17,7 +17,7 @@ public:
 
 	void init();
 	void update(float);
-	void draw(LPD3DXSPRITE);
+	void draw(LPD3DXSPRITE, Viewport*);
 	void release();
 
 	IComponent* getComponent(string);

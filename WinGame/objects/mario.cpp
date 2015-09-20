@@ -109,10 +109,10 @@ const int Mario::_runanimation[3] = { 0, 1, 2 };
 			break;
 		}
 	}
-	void Mario::draw(LPD3DXSPRITE spritehandle)
+	void Mario::draw(LPD3DXSPRITE spritehandle, Viewport* viewport)
 	{
 		// View port để chuyển hệ toạ độ như toạ độ đê-cac.
-		this->_sprite->render(spritehandle, PlayScene::getViewport());
+		this->_sprite->render(spritehandle, viewport);
 
 	}
 	void Mario::release()

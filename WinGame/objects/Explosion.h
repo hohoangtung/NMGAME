@@ -15,7 +15,7 @@ public:
 
 	void init();
 	void update(float deltatime);
-	void draw(LPD3DXSPRITE);
+	void draw(LPD3DXSPRITE, Viewport*);
 	void release();
 
 	void setPosition(GVector2 position);

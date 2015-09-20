@@ -125,18 +125,18 @@ int AirCraft::getType()
 	return _type;
 }
 
-void AirCraft::draw(LPD3DXSPRITE spriteHandle)
+void AirCraft::draw(LPD3DXSPRITE spriteHandle, Viewport* viewport)
 {
 	if (this->_status & (eStatus::NORMAL | eStatus::EXPLORE))
 	{
-		this->_sprite->render(spriteHandle, PlayScene::getViewport());
+		this->_sprite->render(spriteHandle, viewport);
 		if (_animation->isAnimate())
-			_animation->draw(spriteHandle, PlayScene::getViewport());
+			_animation->draw(spriteHandle, viewport);
 	}
 	if (this->_status == eStatus::BURST)
 	{
 		if (_explosion != NULL)
-			_explosion->draw(spriteHandle);
+			_explosion->draw(spriteHandle, viewport);
 	}
 }
 void AirCraft::release()
@@ -146,7 +146,8 @@ void AirCraft::release()
 		delete component.second;
 	}
 	_listComponent.clear();
-	this->_explosion->release();
+	if (this->_explosion != NULL)
+		this->_explosion->release();
 	SAFE_DELETE(this->_explosion);
 	SAFE_DELETE(this->_sprite);
 }

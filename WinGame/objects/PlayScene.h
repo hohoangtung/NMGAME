@@ -11,6 +11,7 @@
 #include "../debug.h"
 
 #include "BaseObject.h"
+#include "Bill.h"
 #include "Mario.h"
 #include "RedCannon.h"
 #include "Soldier.h"

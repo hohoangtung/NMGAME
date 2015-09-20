@@ -14,9 +14,9 @@ void RedCannon::init()
 {
 
 }
-void RedCannon::draw(LPD3DXSPRITE spriteHandle)
+void RedCannon::draw(LPD3DXSPRITE spriteHandle, Viewport* viewport)
 {
-	this->_sprite->render(spriteHandle);
+	this->_sprite->render(spriteHandle, viewport);
 }
 void RedCannon::update(float deltatime)
 {

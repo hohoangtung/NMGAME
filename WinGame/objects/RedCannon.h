@@ -12,7 +12,7 @@ public:
 	void init();
 	void update(float deltatime);
 
-	void draw(LPD3DXSPRITE spriteHandle);
+	void draw(LPD3DXSPRITE spriteHandle, Viewport*);
 	void release() {}
 private:
 

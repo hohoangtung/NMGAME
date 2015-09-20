@@ -27,8 +27,8 @@ Viewport * PlayScene::getViewport()
 bool PlayScene::init()
 {
     
-	sprite = SpriteManager::getInstance()->getSprite(eID::BILL);
-	
+	//sprite = SpriteManager::getInstance()->getSprite(eID::BILL);
+	//
 	//auto soldier = new Soldier();
 	//soldier->init();
 	//_listobject.push_back(soldier);
@@ -67,7 +67,7 @@ void PlayScene::updateInput(float dt)
 	for each (IControlable* obj in _listControlObject)
 	{
 		obj->updateInput(dt);
-}
+	}
 }
 
 void PlayScene::update(float dt)
