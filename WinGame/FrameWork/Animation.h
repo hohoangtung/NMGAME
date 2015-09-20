@@ -43,6 +43,11 @@ public:
 	void setIndex(int index);
 	
 	/*
+	Lấy giá trị index hiện tại
+	*/
+	int getIndex();
+
+	/*
 	Update animation
 	*/
 	void update(float dt);
@@ -74,7 +79,7 @@ public:
 	void stop();
 
 	void canAnimate(bool can);
-
+	bool isAnimate();
 	void addFrameRect(RECT rect);
 	void addFrameRect(float left, float top, int width, int height);
 	void addFrameRect(float left, float top, float right, float bottom);

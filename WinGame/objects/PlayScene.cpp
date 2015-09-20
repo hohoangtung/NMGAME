@@ -1,11 +1,5 @@
 #include "PlayScene.h"
-#include "../debug.h"
-#include "../FrameWork/Animation.h"
 
-#include "Mario.h"
-#include "RedCannon.h"
-#include "Soldier.h"
-#include "Falcon.h"
 
 Viewport* PlayScene::_viewport = new Viewport(0, 600);
 PlayScene::PlayScene()
@@ -79,6 +73,11 @@ bool PlayScene::init()
 	auto redcannon = new RedCannon(GVector2(500, 500));
 	_listobject.push_back(redcannon);
 	_text = new Text(L"Arial", "", 10, 25);
+
+	auto aircraft = new AirCraft(START_POSITION, HORIZONTAL_VELOC, AIRCRAFT_AMPLITUDE, AIRCRAFT_FREQUENCY, eAirCraftType::I);
+	aircraft->init();
+	_listobject.push_back(aircraft);
+	_listControlObject.push_back(aircraft);
 
 	return true;
 }

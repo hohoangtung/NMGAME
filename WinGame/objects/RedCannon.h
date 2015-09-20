@@ -3,27 +3,16 @@
 #define __REDCANNON_H__
 
 #include "BaseObject.h"
+#include "..\Game.h"
 class RedCannon : public BaseObject
 {
 public:
-	RedCannon(GVector2 position) : BaseObject(eID::REDCANNON)
-	{
-		this->_sprite = SpriteManager::getInstance()->getSprite(eID::REDCANNON);
-		this->_sprite->setPosition(position);
-	}
-	~RedCannon(){}
-	void init()
-	{
-	
-	}
-	void update(float deltatime) 
-	{
-		this->_sprite->nextFrame();
-	}
-	void draw(LPD3DXSPRITE spriteHandle)
-	{
-		this->_sprite->render(spriteHandle);
-	}
+	RedCannon(GVector2 position);
+	~RedCannon();
+	void init();
+	void update(float deltatime);
+
+	void draw(LPD3DXSPRITE spriteHandle);
 	void release() {}
 private:
 

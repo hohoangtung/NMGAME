@@ -76,6 +76,7 @@ public:
 	void run();
 	void render();		
 	static void exit();			// exit the game. call: Game::exit()
+	static Graphics* getWindow();
 protected:
 	pGraphics wnd_Instance;		// for init window. 
 	pGameTime _gametime;		
@@ -83,10 +84,10 @@ protected:
 	pInputController _input;
 	LPD3DXSPRITE _spriteHandle;
 private:
+	static Graphics *hWindow;
 	float _frameRate;			// time for 1 frame, milisecond
 	float _oldTime;
 	float _deltaTime;
-
 };
 
 typedef Game* pGame;

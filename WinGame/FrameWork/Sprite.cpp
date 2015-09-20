@@ -5,7 +5,7 @@ US_FRAMEWORK
 
 Sprite::~Sprite()
 {
-	this->_surface->Release();
+//	this->_surface->Release();
 }
 
 Sprite::Sprite(LPD3DXSPRITE spriteHandle, LPWSTR filePath, int totalFrames, int cols)

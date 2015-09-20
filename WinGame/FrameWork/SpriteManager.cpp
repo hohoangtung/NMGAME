@@ -75,6 +75,14 @@ void SpriteManager::loadResource(LPD3DXSPRITE spriteHandle)
 	sp = new Sprite(spriteHandle, L"Resources\\Cannon.png", 9, 9);
 	//this->_listSprite.insert(pair<eID, Sprite*>(eID::REDCANON, sp));
 	this->_listSprite[eID::REDCANNON] = sp;
+	
+	sp = new Sprite(spriteHandle, L"Resources\\aircraft.png", 10, 10);
+	this->_listSprite[eID::AIRCRAFT] = sp;
+	this->loadSpriteInfo(eID::AIRCRAFT, "Resources\\aircraft_animation.txt");
+
+	sp = new Sprite(spriteHandle, L"Resources\\explosion.png");
+	this->_listSprite[eID::EXPLOSION] = sp;
+	this->loadSpriteInfo(eID::EXPLOSION, "Resources\\explosion_animation.txt");
 
 	Sprite* bill = new Sprite(spriteHandle, L"Resources\\bill_animation.png");
 	this->_listSprite.insert(pair<eID, Sprite*>(eID::BILL, bill));

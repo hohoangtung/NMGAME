@@ -26,17 +26,22 @@ enum eID
 	MARIO,
 	REDCANNON,
 	SOLDIER,
-	FALCON
+	FALCON,
+	AIRCRAFT,
+	EXPLOSION,
 };
 enum eStatus
 {
-	NORMAL,
-	RUNNING,
-	JUMPING
+	NORMAL = 1,
+	RUNNING = 2,
+	JUMPING = 4,
+	DESTROY = 8,
+	BURST = 16,
+	EXPLORE = 32,
 };
 typedef D3DXVECTOR3 GVector3;
 typedef D3DXVECTOR2 GVector2;
-
+#define VECTOR2ZERO GVector2(0.0f, 0.0f)
 #define NS_FRAMEWORK		namespace FrameWork
 
 #define NS_FRAMEWORK_BEGIN	{
