@@ -127,11 +127,12 @@ int AirCraft::getType()
 
 void AirCraft::draw(LPD3DXSPRITE spriteHandle, Viewport* viewport)
 {
-	if (this->_status & (eStatus::NORMAL | eStatus::EXPLORE))
+	if ((_status & (NORMAL | EXPLORE))==_status)
 	{
-		this->_sprite->render(spriteHandle, viewport);
 		if (_animation->isAnimate())
 			_animation->draw(spriteHandle, viewport);
+		else
+			this->_sprite->render(spriteHandle, viewport);
 	}
 	if (this->_status == eStatus::BURST)
 	{
