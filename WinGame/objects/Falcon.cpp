@@ -23,10 +23,10 @@ void Falcon::init()
 }
 
 
-void Falcon::draw(LPD3DXSPRITE spritehandle)
+void Falcon::draw(LPD3DXSPRITE spritehandle, Viewport* viewport)
 {
-	this->_sprite->render(spritehandle, PlayScene::getViewport());
-	_animation->draw(spritehandle, PlayScene::getViewport());
+	this->_sprite->render(spritehandle, viewport);
+	_animation->draw(spritehandle, viewport);
 }
 
 void Falcon::release()

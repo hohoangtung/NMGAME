@@ -5,6 +5,7 @@
 #include "..\FrameWork\SpriteManager.h"
 #include "..\FrameWork\Sprite.h"
 #include "..\FrameWork\InputController.h"
+#include "..\FrameWork\Viewport.h"
 
 US_FRAMEWORK
 class IControlable
@@ -19,7 +20,7 @@ protected:
 	InputController* _input;
 };
 
-class BaseObject
+class BaseObject : public Transformable
 {
 public:
 	BaseObject(eID id);
@@ -27,18 +28,32 @@ public:
 
 	virtual void init() = 0;
 	virtual void update(float deltatime) = 0;
-	virtual void draw(LPD3DXSPRITE) = 0;
+	virtual void draw(LPD3DXSPRITE, Viewport*) = 0;
 	virtual void release() = 0;
 
 	eID getId();
 	eStatus getStatus();
 	virtual void setStatus(eStatus status);
+	
+	void virtual setPosition(GVector3 vector);
+	void virtual setPosition(float x, float y, float z);
+	void virtual setPosition(GVector2 position);
+	void virtual setPosition(float x, float y);
+	void virtual setPositionX(float x);
+	void virtual setPositionY(float y);
+
+	void virtual updateTransform();
+
+	Sprite* getSprite();
+
 protected:
 	Sprite* _sprite;
 	// nếu muốn dùng animation thì class kế thừa khai báo animation
 	// khởi tạo anition thì reference đến sprite
 	eID _id;
 	eStatus _status;
+
+	
 };
 /*
 

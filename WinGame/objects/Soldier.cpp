@@ -30,19 +30,16 @@ void Soldier::init()
 
 	this->_animations.insert(pair<eStatus, Animation*>(RUNNING, runningAnimation));
 	this->_animations.insert(pair<eStatus, Animation*>(JUMPING, jumpingAnimation));
-	this->_animations.insert(pair<eStatus, Animation*>(FALLING, jumpingAnimation));
 	this->_animations.insert(pair<eStatus, Animation*>(SHOOTING, shootingAnimation));
-	this->_animations.insert(pair<eStatus, Animation*>(LYING, lyingAnimation));
-	this->_animations.insert(pair<eStatus, Animation*>(DYING, dyingAnimation));
 
-	this->setStatus(DYING);
+	this->setStatus(SHOOTING);
 	_stopwatch = new StopWatch();
 }
 
-void Soldier::draw(LPD3DXSPRITE spritehandle)
+void Soldier::draw(LPD3DXSPRITE spritehandle, Viewport* viewport)
 {
 	this->_sprite->render(spritehandle, PlayScene::getViewport());
-	_animations[this->getStatus()]->draw(spritehandle, PlayScene::getViewport());
+	_animations[this->getStatus()]->draw(spritehandle, viewport);
 }
 
 void Soldier::release()
@@ -65,25 +62,25 @@ void Soldier::update(float deltatime)
 		movement->setVelocity(GVector2(-10, 0));
 		gravity->setStatus(SHALLOWED);
 		break;
-	case JUMPING:
-		gravity->setStatus(FALLING__DOWN);
-		movement->setVelocity(GVector2(movement->getVelocity().x * 3, 60));
-		this->setStatus(FALLING);
+	//case JUMPING:
+	//	gravity->setStatus(FALLING__DOWN);
+	//	movement->setVelocity(GVector2(movement->getVelocity().x * 3, 60));
+	//	this->setStatus(FALLING);
 		break;
-	case FALLING:
-		break;
+	//case FALLING:
+	//	break;
 	case SHOOTING:
 		gravity->setStatus(SHALLOWED);
 		movement->setVelocity(GVector2(0, 0));
 		break;
-	case LYING:
+	case LAYING_DOWN:
 		gravity->setStatus(SHALLOWED);
 		movement->setVelocity(GVector2(0, 0));
 		break;
-	case DYING:
-		gravity->setStatus(FALLING__DOWN);
-		movement->setVelocity(GVector2(0, 60));
-		break;
+	//case DYING:
+	//	gravity->setStatus(FALLING__DOWN);
+	//	movement->setVelocity(GVector2(0, 60));
+	//	break;
 	}
 	for (auto it : _listComponent)
 	{
