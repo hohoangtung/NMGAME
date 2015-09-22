@@ -32,7 +32,11 @@ enum eStatus
 {
 	NORMAL,
 	RUNNING,
-	JUMPING
+	JUMPING,
+	FALLING,
+	LYING,
+	SHOOTING,
+	DYING,
 };
 typedef D3DXVECTOR3 GVector3;
 typedef D3DXVECTOR2 GVector2;

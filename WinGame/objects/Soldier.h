@@ -25,7 +25,8 @@ public:
 private:
 	int i;
 	map<string, IComponent*> _listComponent;
-	StopWatch* _stopwatch;
-	Animation* _animation;
+	map<eStatus, Animation*> _animations;
+	StopWatch *_stopwatch;
+	// Animation* _animation;
 };
 #endif
