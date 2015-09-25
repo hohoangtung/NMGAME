@@ -23,56 +23,69 @@ eStatus BaseObject::getStatus()
 void BaseObject::setStatus(eStatus status)
 {
 	if(_status != status)
-		this->_status = status;
+		_status = status;
 }
 
 void BaseObject::setPosition(GVector3 vector)
 {
 	Transformable::setPosition(vector);
-	this->updateTransform();
+	_sprite->setPosition(_position);
 }
 
 void BaseObject::setPosition(float x, float y, float z)
 {
 	Transformable::setPosition(x, y, z);
 
-	this->updateTransform();
+	_sprite->setPosition(_position);
 }
 
 void BaseObject::setPosition(GVector2 position)
 {
 	Transformable::setPosition(position);
 
-	this->updateTransform();
+	_sprite->setPosition(_position);
 }
 
 void BaseObject::setPosition(float x, float y)
 {
 	Transformable::setPosition(x, y);
 
-	this->updateTransform();
+	_sprite->setPosition(_position);
 }
 
 void BaseObject::setPositionX(float x)
 {
 	Transformable::setPositionX(x);
 
-	this->updateTransform();
+	_sprite->setPosition(_position);
 }
 
 void BaseObject::setPositionY(float y)
 {
 	Transformable::setPositionY(y);
 
-	this->updateTransform();
+	_sprite->setPosition(_position);
 }
 
-void BaseObject::updateTransform()
+void BaseObject::setOrigin(GVector2 origin)
 {
+	Transformable::setOrigin(origin);
+
 	_sprite->setOrigin(_origin);
-	_sprite->setPosition(_position);
-	_sprite->setScale(_scale);
+}
+
+void BaseObject::setRotate(float degree)
+{
+	Transformable::setRotate(degree);
+
 	_sprite->setRotate(_rotate);
+}
+
+void BaseObject::setZIndex(int z)
+{
+	Transformable::setZIndex(z);
+
+	_sprite->setZIndex(_zIndex);
 }
 
 Sprite * BaseObject::getSprite()

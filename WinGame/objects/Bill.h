@@ -26,7 +26,7 @@ public:
 	void draw(LPD3DXSPRITE spriteHandle, Viewport* viewport);
 	void release();
 
-	void setPosition(float x, float y);
+	//void setPosition(float x, float y);
 
 	void onKeyPressed(KeyEventArg* key_event);
 	void onKeyReleased(KeyEventArg* key_event);

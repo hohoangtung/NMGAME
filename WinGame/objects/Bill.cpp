@@ -72,7 +72,7 @@ void Bill::init()
 	_animations[eStatus::SHOOTING | eStatus::MOVING_RIGHT] = new Animation(_sprite, 0.1f);
 	_animations[eStatus::SHOOTING | eStatus::MOVING_RIGHT]->addFrameRect(eID::BILL, "run_shot_01", "run_shot_02", "run_shot_03", "run_shot_01", "run_shot_02", "run_shot_03", NULL);
 
-	_sprite->drawBounding(false);
+	_sprite->drawBounding(true);
 	_sprite->setOrigin(GVector2(0.5f, 0.0f));
 
 	this->setStatus(eStatus::NORMAL);
@@ -120,10 +120,10 @@ void Bill::release()
 	_animations.clear();
 }
 
-void Bill::setPosition(float x, float y)
-{
-	_sprite->setPosition(x, y);
-}
+//void Bill::setPosition(float x, float y)
+//{
+//	_sprite->setPosition(x, y);
+//}
 
 void Bill::onKeyPressed(KeyEventArg* key_event)
 {

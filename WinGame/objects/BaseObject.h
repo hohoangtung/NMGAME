@@ -42,7 +42,9 @@ public:
 	void virtual setPositionX(float x);
 	void virtual setPositionY(float y);
 
-	void virtual updateTransform();
+	void virtual setOrigin(GVector2 origin);
+	void virtual setRotate(float degree);
+	void virtual setZIndex(int z);
 
 	Sprite* getSprite();
 
