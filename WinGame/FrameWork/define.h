@@ -34,6 +34,7 @@ enum eID
 
 enum eStatus
 {
+
 	NORMAL			= 0,					// 00000 = 0	
 	MOVING_LEFT		= (1 << 0),				// 00001 = 2^0
 	MOVING_RIGHT	= (1 << 1),				// 00010 = 2^1
