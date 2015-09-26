@@ -29,6 +29,7 @@ enum eID
 	FALCON,
 	AIRCRAFT,
 	EXPLOSION,
+	MAPSTAGE1
 };
 
 enum eStatus

@@ -59,6 +59,8 @@ bool PlayScene::init()
 	_listobject.push_back(aircraft);
 	_listControlObject.push_back(aircraft);
 
+	background = new Map();
+	background->init("Resources//Map//map_index.txt");
 	return true;
 }
 
@@ -95,7 +97,7 @@ void PlayScene::draw(LPD3DXSPRITE spriteHandle)
 {
 	//sprite->render(spriteHandle, _viewport);
 	_text->draw();
-
+	background->draw(spriteHandle);
 	for each (auto object in _listobject)
 	{
 		object->draw(spriteHandle, _viewport);

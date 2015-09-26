@@ -9,6 +9,7 @@
 #include "../FrameWork/Text.h"
 #include "../FrameWork/Animation.h"
 #include "../debug.h"
+#include "../Map/Map.h"
 
 #include "BaseObject.h"
 #include "Bill.h"
@@ -41,6 +42,7 @@ private:
 	vector<BaseObject*> _listobject;
 	vector<IControlable*> _listControlObject;
 	Animation* _animation;
+	Map* background;
 };
 
 #endif // !__PLAY_SCENE_H__
