@@ -1,14 +1,16 @@
 #include "Soldier.h"
 
+bool jumped = false;
 void Soldier::init()
 {
 	_sprite = SpriteManager::getInstance()->getSprite(eID::SOLDIER);
 	_sprite->setFrameRect(0, 0, 32.0f, 16.0f);
-	this->_sprite->setPosition(700, 500);
-	GVector2 v(-10, 0);
+	this->_sprite->setPosition(600, 500);
+	// this->setPosition(100, 100);
+	GVector2 v(-20, 0);
 	GVector2 a(0, 0);
 	this->_listComponent.insert(pair<string, IComponent*>("Movement", new Movement(a, v, this->_sprite)));
-	this->_listComponent.insert(pair<string, IComponent*>("Gravity", new Gravity(GVector2(0, -5), (Movement*)(this->getComponent("Movement")))));
+	this->_listComponent.insert(pair<string, IComponent*>("Gravity", new Gravity(GVector2(0, -120), (Movement*)(this->getComponent("Movement")))));
 	Animation *runningAnimation = new Animation(this->_sprite, 0.15f);
 	//_animation->addFrameRect(SpriteManager::getInstance()->getSourceRect(eID::SOLDIER, "run_07"));
 	runningAnimation->addFrameRect(SpriteManager::getInstance()->getSourceRect(eID::SOLDIER, "run_01"));
@@ -32,7 +34,6 @@ void Soldier::init()
 	this->_animations.insert(pair<eStatus, Animation*>(JUMPING, jumpingAnimation));
 	this->_animations.insert(pair<eStatus, Animation*>(SHOOTING, shootingAnimation));
 
-	this->setStatus(SHOOTING);
 	_stopwatch = new StopWatch();
 }
 
@@ -59,13 +60,20 @@ void Soldier::update(float deltatime)
 	switch (this->getStatus())
 	{
 	case RUNNING:
-		movement->setVelocity(GVector2(-10, 0));
+		movement->setVelocity(GVector2(-30, 0));
 		gravity->setStatus(SHALLOWED);
+		if (this->_sprite->getPositionX() < 500 && !jumped){
+			jumped = true;
+			movement->setVelocity(GVector2(movement->getVelocity().x, 60));
+			this->setStatus(JUMPING);
+		}
 		break;
-	//case JUMPING:
-	//	gravity->setStatus(FALLING__DOWN);
-	//	movement->setVelocity(GVector2(movement->getVelocity().x * 3, 60));
-	//	this->setStatus(FALLING);
+	case JUMPING:
+		gravity->setStatus(FALLING__DOWN);
+		if (this->_sprite->getPositionY() < 400) {
+			this->_sprite->setPositionY(400);
+			this->setStatus(RUNNING);
+		}
 		break;
 	//case FALLING:
 	//	break;

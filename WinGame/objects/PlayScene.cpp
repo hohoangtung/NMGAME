@@ -59,6 +59,9 @@ bool PlayScene::init()
 	_listobject.push_back(aircraft);
 	_listControlObject.push_back(aircraft);
 
+	auto soldier = new Soldier();
+	soldier->init();
+	_listobject.push_back(soldier);
 	return true;
 }
 

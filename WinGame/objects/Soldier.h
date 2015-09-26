@@ -1,18 +1,19 @@
 #ifndef _RUNNINGSOLDIER_H
 #define _RUNNINGSOLDIER_H
 
-#include "BaseObject.h"
+#include "BaseEnemy.h"
 #include "IComponent.h"
 #include "PlayScene.h"
 #include "../FrameWork/Animation.h"
 #include "../FrameWork/StopWatch.h"
 #include <map>
+
 using namespace std;
 
-class Soldier : public BaseObject
+class Soldier : public BaseEnemy
 {
 public:
-	Soldier() : BaseObject(eID::SOLDIER){}
+	Soldier() : BaseEnemy(eID::SOLDIER){ this->setStatus(RUNNING); }
 	~Soldier() {};
 
 	void init();
@@ -23,7 +24,6 @@ public:
 	IComponent* getComponent(string);
 
 private:
-	int i;
 	map<string, IComponent*> _listComponent;
 	map<eStatus, Animation*> _animations;
 	StopWatch *_stopwatch;
