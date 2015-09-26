@@ -31,6 +31,18 @@
     <Filter Include="Source Files\FrameWork\Manager">
       <UniqueIdentifier>{0e918bd2-fdcc-451e-a4dc-57c6c199d613}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource Files\Resources">
+      <UniqueIdentifier>{192ea8b8-3f10-4221-9d59-bbcb5a11f582}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Map">
+      <UniqueIdentifier>{13316571-e426-40e6-a6ea-a90b3633e20d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Map">
+      <UniqueIdentifier>{be883ad2-453a-4cbd-b330-b8060d19cda9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Class Diagram">
+      <UniqueIdentifier>{50c0356a-fd2a-4a41-a8fd-dd6c80d86f55}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -101,6 +113,30 @@
     </ClCompile>
     <ClCompile Include="FrameWork\Transformable.cpp">
       <Filter>Source Files\FrameWork</Filter>
+    </ClCompile>
+    <ClCompile Include="objects\RedCannon.cpp">
+      <Filter>Source Files\objects</Filter>
+    </ClCompile>
+    <ClCompile Include="objects\Soldier.cpp">
+      <Filter>Source Files\objects</Filter>
+    </ClCompile>
+    <ClCompile Include="objects\Falcon.cpp">
+      <Filter>Source Files\objects</Filter>
+    </ClCompile>
+    <ClCompile Include="objects\mario.cpp">
+      <Filter>Source Files\objects</Filter>
+    </ClCompile>
+    <ClCompile Include="objects\Explosion.cpp">
+      <Filter>Source Files\objects</Filter>
+    </ClCompile>
+    <ClCompile Include="objects\AirCraft.cpp">
+      <Filter>Source Files\objects</Filter>
+    </ClCompile>
+    <ClCompile Include="objects\Bill.cpp">
+      <Filter>Source Files\objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Map\Map.cpp">
+      <Filter>Source Files\Map</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -179,6 +215,27 @@
     <ClInclude Include="FrameWork\Transformable.h">
       <Filter>Header Files\FrameWork</Filter>
     </ClInclude>
+    <ClInclude Include="objects\RedCannon.h">
+      <Filter>Header Files\objects</Filter>
+    </ClInclude>
+    <ClInclude Include="objects\Falcon.h">
+      <Filter>Header Files\objects</Filter>
+    </ClInclude>
+    <ClInclude Include="objects\Soldier.h">
+      <Filter>Header Files\objects</Filter>
+    </ClInclude>
+    <ClInclude Include="objects\AirCraft.h">
+      <Filter>Header Files\objects</Filter>
+    </ClInclude>
+    <ClInclude Include="objects\Explosion.h">
+      <Filter>Header Files\objects</Filter>
+    </ClInclude>
+    <ClInclude Include="objects\Bill.h">
+      <Filter>Header Files\objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Map\Map.h">
+      <Filter>Header Files\Map</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Flower.png">
@@ -187,8 +244,44 @@
     <Image Include="mario.png">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="Resources\Cannon.png">
+      <Filter>Resource Files\Resources</Filter>
+    </Image>
+    <Image Include="Resources\Wall_turret.png">
+      <Filter>Resource Files\Resources</Filter>
+    </Image>
+    <Image Include="Resources\bill_animation.png">
+      <Filter>Resource Files\Resources</Filter>
+    </Image>
+    <Image Include="Resources\Falcon.png">
+      <Filter>Resource Files\Resources</Filter>
+    </Image>
+    <Image Include="Resources\Soldier.png">
+      <Filter>Resource Files\Resources</Filter>
+    </Image>
+    <Image Include="Resources\aircraft.png">
+      <Filter>Resource Files\Resources</Filter>
+    </Image>
+    <Image Include="Resources\Explosion.png">
+      <Filter>Resource Files\Resources</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Readme.txt" />
+    <Text Include="Resources\falcon_animation.txt">
+      <Filter>Resource Files\Resources</Filter>
+    </Text>
+    <Text Include="Resources\soldier_animation.txt">
+      <Filter>Resource Files\Resources</Filter>
+    </Text>
+    <Text Include="Resources\bill_animation.txt">
+      <Filter>Resource Files\Resources</Filter>
+    </Text>
+    <Text Include="Resources\aircraft_animation.txt">
+      <Filter>Resource Files\Resources</Filter>
+    </Text>
+    <Text Include="Resources\explosion_animation.txt">
+      <Filter>Resource Files\Resources</Filter>
+    </Text>
   </ItemGroup>
 </Project>
