@@ -10,6 +10,8 @@
 
 using namespace std;
 
+#define SOLDIER_SPEED 60
+
 class Soldier : public BaseEnemy
 {
 public:
@@ -27,6 +29,6 @@ private:
 	map<string, IComponent*> _listComponent;
 	map<eStatus, Animation*> _animations;
 	StopWatch *_stopwatch;
-	// Animation* _animation;
+	void changeDirection();
 };
 #endif

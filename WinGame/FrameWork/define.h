@@ -44,7 +44,8 @@ enum eStatus
 	SHOOTING		= (1 << 6),
 	DESTROY			= (1 << 7),
 	BURST			= (1 << 8),
-	EXPLORE			= (1 << 9)
+	EXPLORE			= (1 << 9),
+	DYING			= (1 << 10),
 };
 
 typedef D3DXVECTOR3 GVector3;
