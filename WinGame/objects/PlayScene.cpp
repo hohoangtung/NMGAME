@@ -62,6 +62,11 @@ bool PlayScene::init()
 	auto soldier = new Soldier();
 	soldier->init();
 	_listobject.push_back(soldier);
+
+	auto rifleman = new Rifleman();
+	rifleman->setStatus(NORMAL);
+	rifleman->init();
+	_listobject.push_back(rifleman);
 	return true;
 }
 

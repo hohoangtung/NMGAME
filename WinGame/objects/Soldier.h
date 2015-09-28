@@ -11,11 +11,13 @@
 using namespace std;
 
 #define SOLDIER_SPEED 60
+#define SOLDIER_HITPOINT 1
+#define SOLDIER_SCORE 100
 
 class Soldier : public BaseEnemy
 {
 public:
-	Soldier() : BaseEnemy(eID::SOLDIER){ this->setStatus(RUNNING); }
+	Soldier() : BaseEnemy(eID::SOLDIER) { this->setStatus(RUNNING); }
 	~Soldier() {};
 
 	void init();
@@ -27,7 +29,7 @@ public:
 
 private:
 	map<string, IComponent*> _listComponent;
-	map<eStatus, Animation*> _animations;
+	map<int, Animation*> _animations;
 	StopWatch *_stopwatch;
 	void changeDirection();
 };

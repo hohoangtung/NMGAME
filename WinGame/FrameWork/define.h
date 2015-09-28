@@ -29,6 +29,7 @@ enum eID
 	FALCON,
 	AIRCRAFT,
 	EXPLOSION,
+	RIFLEMAN,
 };
 
 enum eStatus
@@ -46,6 +47,10 @@ enum eStatus
 	BURST			= (1 << 8),
 	EXPLORE			= (1 << 9),
 	DYING			= (1 << 10),
+	AIMING_UP		= (1 << 11),
+	AIMING_DOWN		= (1 << 12),
+	HIDING			= (1 << 13),
+	EXPOSING		= (1 << 14),
 };
 
 typedef D3DXVECTOR3 GVector3;

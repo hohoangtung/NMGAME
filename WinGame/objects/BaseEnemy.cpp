@@ -1,13 +1,13 @@
 #include "BaseEnemy.h"
 
-int BaseEnemy::getHealth() 
+int BaseEnemy::getHitpoint() 
 {
-	return _health;
+	return _hitpoint;
 }
 
-void BaseEnemy::setHealth(int health)
+void BaseEnemy::setHitpoint(int hitpoint)
 {
-	_health = health;
+	_hitpoint = hitpoint;
 }
 
 void BaseEnemy::setScore(int score)

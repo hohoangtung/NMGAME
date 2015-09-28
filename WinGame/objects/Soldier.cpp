@@ -9,6 +9,10 @@ void Soldier::init()
 	// this->setPosition(100, 100);
 	GVector2 v(-SOLDIER_SPEED, 0);
 	GVector2 a(0, 0);
+
+	this->setHitpoint(SOLDIER_HITPOINT);
+	this->setScore(SOLDIER_SCORE);
+
 	this->_listComponent.insert(pair<string, IComponent*>("Movement", new Movement(a, v, this->_sprite)));
 	this->_listComponent.insert(pair<string, IComponent*>("Gravity", new Gravity(GVector2(0, -120), (Movement*)(this->getComponent("Movement")))));
 
