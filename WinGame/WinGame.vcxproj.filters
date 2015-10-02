@@ -19,17 +19,23 @@
     <Filter Include="Source Files\FrameWork">
       <UniqueIdentifier>{3ecbc792-ccd9-4be3-b29a-f0e0a44bdba1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\objects">
-      <UniqueIdentifier>{e0cfbdf4-66a3-4bad-9de6-b017daf66f45}</UniqueIdentifier>
+    <Filter Include="Header Files\Objects">
+      <UniqueIdentifier>{c20d800e-335e-47a9-9154-89f6a19860a4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\objects">
-      <UniqueIdentifier>{4aaef560-ab20-450a-b769-e790c66e6bc2}</UniqueIdentifier>
+    <Filter Include="Source Files\Objects">
+      <UniqueIdentifier>{37d451bb-82dd-409d-b92d-32deebf860d2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\FrameWork\Manager">
-      <UniqueIdentifier>{8f00bf5c-3947-4d78-8a8b-35633717155d}</UniqueIdentifier>
+    <Filter Include="Header Files\FrameWork\Managers">
+      <UniqueIdentifier>{1134ef7d-3444-4639-99de-a95ca08cadcc}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\FrameWork\Manager">
-      <UniqueIdentifier>{0e918bd2-fdcc-451e-a4dc-57c6c199d613}</UniqueIdentifier>
+    <Filter Include="Source Files\FrameWork\Managers">
+      <UniqueIdentifier>{d5796f74-fceb-4283-bd89-6162e5e5b1b4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Objects\GameObjects">
+      <UniqueIdentifier>{58724a95-584b-46e8-9312-c7910da91d1d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Objects\GameObjects">
+      <UniqueIdentifier>{577704fe-4bbd-4b33-8fa0-9820c80b92a2}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -63,35 +69,32 @@
     <ClCompile Include="FrameWork\InputController.cpp">
       <Filter>Source Files\FrameWork</Filter>
     </ClCompile>
+    <ClCompile Include="objects\BaseObject.cpp">
+      <Filter>Source Files\Objects</Filter>
+    </ClCompile>
     <ClCompile Include="FrameWork\Event.cpp">
       <Filter>Source Files\FrameWork</Filter>
     </ClCompile>
     <ClCompile Include="FrameWork\SpriteManager.cpp">
       <Filter>Source Files\FrameWork</Filter>
     </ClCompile>
-    <ClCompile Include="objects\BaseObject.cpp">
-      <Filter>Source Files\objects</Filter>
+    <ClCompile Include="FrameWork\Managers\SceneManager.cpp">
+      <Filter>Source Files\FrameWork\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="objects\Scene.cpp">
+      <Filter>Source Files\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="objects\PlayScene.cpp">
+      <Filter>Source Files\Objects</Filter>
     </ClCompile>
     <ClCompile Include="ContraGame.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="objects\PlayScene.cpp">
-      <Filter>Source Files\objects</Filter>
-    </ClCompile>
-    <ClCompile Include="objects\Scene.cpp">
-      <Filter>Source Files\objects</Filter>
-    </ClCompile>
-    <ClCompile Include="FrameWork\Managers\SceneManager.cpp">
-      <Filter>Source Files\FrameWork\Manager</Filter>
-    </ClCompile>
-    <ClCompile Include="FrameWork\Animation.cpp">
-      <Filter>Source Files\FrameWork</Filter>
-    </ClCompile>
     <ClCompile Include="FrameWork\Viewport.cpp">
       <Filter>Source Files\FrameWork</Filter>
     </ClCompile>
-    <ClCompile Include="objects\IComponent.cpp">
-      <Filter>Source Files\objects</Filter>
+    <ClCompile Include="FrameWork\Animation.cpp">
+      <Filter>Source Files\FrameWork</Filter>
     </ClCompile>
     <ClCompile Include="FrameWork\Text.cpp">
       <Filter>Source Files\FrameWork</Filter>
@@ -101,6 +104,24 @@
     </ClCompile>
     <ClCompile Include="FrameWork\Transformable.cpp">
       <Filter>Source Files\FrameWork</Filter>
+    </ClCompile>
+    <ClCompile Include="objects\IComponent.cpp">
+      <Filter>Source Files\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="objects\Bill.cpp">
+      <Filter>Source Files\Objects\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="objects\Falcon.cpp">
+      <Filter>Source Files\Objects\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="objects\RedCannon.cpp">
+      <Filter>Source Files\Objects\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="objects\Soldier.cpp">
+      <Filter>Source Files\Objects\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="objects\CollisionBody.cpp">
+      <Filter>Source Files\Objects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -134,41 +155,32 @@
     <ClInclude Include="FrameWork\define.h">
       <Filter>Header Files\FrameWork</Filter>
     </ClInclude>
+    <ClInclude Include="objects\BaseObject.h">
+      <Filter>Header Files\Objects</Filter>
+    </ClInclude>
     <ClInclude Include="FrameWork\Event.h">
       <Filter>Header Files\FrameWork</Filter>
-    </ClInclude>
-    <ClInclude Include="debug.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="FrameWork\SpriteManager.h">
       <Filter>Header Files\FrameWork</Filter>
     </ClInclude>
-    <ClInclude Include="objects\BaseObject.h">
-      <Filter>Header Files\objects</Filter>
+    <ClInclude Include="FrameWork\Managers\SceneManager.h">
+      <Filter>Header Files\FrameWork\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="objects\Scene.h">
+      <Filter>Header Files\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="objects\PlayScene.h">
+      <Filter>Header Files\Objects</Filter>
     </ClInclude>
     <ClInclude Include="ContraGame.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="objects\PlayScene.h">
-      <Filter>Header Files\objects</Filter>
-    </ClInclude>
-    <ClInclude Include="objects\Scene.h">
-      <Filter>Header Files\objects</Filter>
-    </ClInclude>
-    <ClInclude Include="FrameWork\Managers\SceneManager.h">
-      <Filter>Header Files\FrameWork\Manager</Filter>
-    </ClInclude>
-    <ClInclude Include="FrameWork\Animation.h">
-      <Filter>Header Files\FrameWork</Filter>
-    </ClInclude>
     <ClInclude Include="FrameWork\Viewport.h">
       <Filter>Header Files\FrameWork</Filter>
     </ClInclude>
-    <ClInclude Include="objects\IComponent.h">
-      <Filter>Header Files\objects</Filter>
-    </ClInclude>
-    <ClInclude Include="objects\mario.h">
-      <Filter>Header Files\objects</Filter>
+    <ClInclude Include="FrameWork\Animation.h">
+      <Filter>Header Files\FrameWork</Filter>
     </ClInclude>
     <ClInclude Include="FrameWork\Text.h">
       <Filter>Header Files\FrameWork</Filter>
@@ -179,12 +191,30 @@
     <ClInclude Include="FrameWork\Transformable.h">
       <Filter>Header Files\FrameWork</Filter>
     </ClInclude>
+    <ClInclude Include="objects\mario.h">
+      <Filter>Header Files\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="objects\IComponent.h">
+      <Filter>Header Files\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="objects\Bill.h">
+      <Filter>Header Files\Objects\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="objects\Falcon.h">
+      <Filter>Header Files\Objects\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="objects\RedCannon.h">
+      <Filter>Header Files\Objects\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="objects\Soldier.h">
+      <Filter>Header Files\Objects\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="objects\CollisionBody.h">
+      <Filter>Header Files\Objects</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Flower.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="mario.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -19,13 +19,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>v140</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>v140</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -41,8 +41,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>E:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;$(IncludePath)</IncludePath>
-    <LibraryPath>E:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Lib\x86;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -55,7 +55,7 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
     </ClCompile>
     <Link>
@@ -92,28 +92,65 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ContraGame.cpp" />
+    <ClCompile Include="FrameWork\Animation.cpp" />
     <ClCompile Include="FrameWork\DeviceManager.cpp" />
+    <ClCompile Include="FrameWork\Event.cpp" />
     <ClCompile Include="FrameWork\GameTime.cpp" />
     <ClCompile Include="FrameWork\Graphics.cpp" />
     <ClCompile Include="FrameWork\InputController.cpp" />
+    <ClCompile Include="FrameWork\Managers\SceneManager.cpp" />
+    <ClCompile Include="FrameWork\Transformable.cpp" />
     <ClCompile Include="FrameWork\Sprite.cpp" />
+    <ClCompile Include="FrameWork\SpriteManager.cpp" />
     <ClCompile Include="FrameWork\StopWatch.cpp" />
+    <ClCompile Include="FrameWork\Text.cpp" />
+    <ClCompile Include="FrameWork\TextBitmap.cpp" />
     <ClCompile Include="FrameWork\Texture.cpp" />
     <ClCompile Include="FrameWork\TimeSpan.cpp" />
+    <ClCompile Include="FrameWork\Viewport.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="objects\BaseObject.cpp" />
+    <ClCompile Include="objects\Bill.cpp" />
+    <ClCompile Include="objects\CollisionBody.cpp" />
+    <ClCompile Include="objects\Falcon.cpp" />
+    <ClCompile Include="objects\IComponent.cpp" />
+    <ClCompile Include="objects\PlayScene.cpp" />
+    <ClCompile Include="objects\RedCannon.cpp" />
+    <ClCompile Include="objects\Scene.cpp" />
+    <ClCompile Include="objects\Soldier.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ContraGame.h" />
+    <ClInclude Include="FrameWork\Animation.h" />
     <ClInclude Include="FrameWork\define.h" />
     <ClInclude Include="FrameWork\DeviceManager.h" />
+    <ClInclude Include="FrameWork\Event.h" />
     <ClInclude Include="FrameWork\GameTime.h" />
     <ClInclude Include="FrameWork\Graphics.h" />
     <ClInclude Include="FrameWork\InputController.h" />
+    <ClInclude Include="FrameWork\Managers\SceneManager.h" />
+    <ClInclude Include="FrameWork\Transformable.h" />
     <ClInclude Include="FrameWork\Sprite.h" />
+    <ClInclude Include="FrameWork\SpriteManager.h" />
     <ClInclude Include="FrameWork\StopWatch.h" />
+    <ClInclude Include="FrameWork\Text.h" />
+    <ClInclude Include="FrameWork\TextBitmap.h" />
     <ClInclude Include="FrameWork\Texture.h" />
     <ClInclude Include="FrameWork\TimeSpan.h" />
+    <ClInclude Include="FrameWork\Viewport.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="objects\BaseObject.h" />
+    <ClInclude Include="objects\Bill.h" />
+    <ClInclude Include="objects\CollisionBody.h" />
+    <ClInclude Include="objects\Falcon.h" />
+    <ClInclude Include="objects\IComponent.h" />
+    <ClInclude Include="objects\mario.h" />
+    <ClInclude Include="objects\PlayScene.h" />
+    <ClInclude Include="objects\RedCannon.h" />
+    <ClInclude Include="objects\Scene.h" />
+    <ClInclude Include="objects\Soldier.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Flower.png">
