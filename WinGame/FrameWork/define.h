@@ -26,7 +26,8 @@ enum eID
 	MARIO,
 	REDCANNON,
 	SOLDIER,
-	FALCON
+	FALCON,
+	BOX
 };
 
 enum eStatus
@@ -43,6 +44,7 @@ enum eStatus
 
 enum eDirection
 {
+	NONE			= 0,
 	TOP				= 1,
 	BOTTOM			= 2,
 	LEFT			= 4,
@@ -66,5 +68,6 @@ if(p) \
 	delete (p); \
 	p = nullptr; \
 } \
+
 
 #endif // !__NS_FRAMEWORK__

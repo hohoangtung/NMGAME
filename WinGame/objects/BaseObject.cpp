@@ -92,3 +92,18 @@ Sprite * BaseObject::getSprite()
 {
 	return _sprite;
 }
+
+float BaseObject::checkCollision(BaseObject * object, float dt)
+{
+	return 0.0f;
+}
+
+float BaseObject::checkCollision(BaseObject * object, eDirection & direction)
+{
+	return 0.0f;
+}
+
+GVector2 BaseObject::getVelocity()
+{
+	return GVector2(0, 0);
+}

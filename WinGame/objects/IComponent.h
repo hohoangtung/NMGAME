@@ -3,6 +3,8 @@
 #define __ICOMPONENT_H__
 #include "..\FrameWork\define.h"
 #include "..\FrameWork\Sprite.h"
+#include "BaseObject.h"
+
 US_FRAMEWORK // = using namespace framework
 
 
@@ -55,6 +57,7 @@ enum eGravityStatus
 	FALLING__DOWN,
 	SHALLOWED
 };
+
 class Gravity : public IComponent
 {
 public:
@@ -73,4 +76,5 @@ private:
 	Movement* _refmovement;
 	eGravityStatus _status;
 };
+
 #endif // !__ICOMPONENT_H__

@@ -1,4 +1,4 @@
-
+﻿
 #include "IComponent.h"
 
 #pragma region Movement

@@ -29,6 +29,10 @@ void Bill::init()
 	_sprite = SpriteManager::getInstance()->getSprite(eID::BILL);
 	_componentList["Movement"] = new Movement(GVector2(0, 0), GVector2(0, 0), _sprite);
 	_componentList["Gravity"] = new Gravity(GVector2(0, - GRAVITY), (Movement*)_componentList["Movement"]);
+	_componentList["CollisionBody"] = new CollisionBody(this);
+
+	__hook(&CollisionBody::onCollisionBegin, (CollisionBody*)_componentList["CollisionBody"], &Bill::onCollisionBegin);
+	__hook(&CollisionBody::onCollisionEnd, (CollisionBody*)_componentList["CollisionBody"], &Bill::onCollisionEnd);
 
 	_animations[eStatus::NORMAL] = new Animation(_sprite, 0.1f);
 	_animations[eStatus::NORMAL]->addFrameRect(eID::BILL, "normal_01", NULL);
@@ -75,6 +79,8 @@ void Bill::init()
 	_sprite->drawBounding(true);
 	_sprite->setOrigin(GVector2(0.5f, 0.0f));
 
+	_sideCollide = false;
+
 	this->setStatus(eStatus::NORMAL);
 }
 
@@ -116,7 +122,7 @@ void Bill::draw(LPD3DXSPRITE spriteHandle, Viewport* viewport)
 
 void Bill::release()
 {
-	_sprite->release();
+	//_sprite->release();
 	_animations.clear();
 }
 
@@ -204,6 +210,42 @@ void Bill::onKeyReleased(KeyEventArg * key_event)
 	}
 }
 
+void Bill::onCollisionBegin(CollisionEventArg * collision_event)
+{
+	if (collision_event->_otherObject->getId() == eID::BOX)
+	{
+		if (collision_event->_sideCollision == eDirection::TOP)
+		{
+			auto gravity = (Gravity*)this->_componentList["Gravity"];
+			gravity->setStatus(eGravityStatus::SHALLOWED);
+
+			this->removeStatus(eStatus::JUMPING);
+			this->standing();
+		}
+		else if (collision_event->_sideCollision == eDirection::LEFT || collision_event->_sideCollision == eDirection::RIGHT)
+		{
+			// không cho nó di chuyển
+		}
+	}
+}
+
+void Bill::onCollisionEnd(CollisionEventArg * collision_event)
+{
+	if (collision_event->_otherObject->getId() == eID::BOX)
+	{
+		auto gravity = (Gravity*)this->_componentList["Gravity"];
+		gravity->setStatus(eGravityStatus::FALLING__DOWN);
+	}
+}
+
+float Bill::checkCollision(BaseObject * object, float dt)
+{
+	auto collisionBody = (CollisionBody*)_componentList["CollisionBody"];
+	collisionBody->checkCollision(object, dt);
+
+	return 0.0f;
+}
+
 void Bill::standing()
 {
 	auto move = (Movement*)this->_componentList["Movement"];
@@ -238,6 +280,7 @@ void Bill::jump()
 
 	auto g = (Gravity*)this->_componentList["Gravity"];
 	g->setStatus(eGravityStatus::FALLING__DOWN);
+
 }
 
 void Bill::layDown()
