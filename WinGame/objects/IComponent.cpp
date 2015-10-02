@@ -43,7 +43,7 @@ void Gravity::update(float deltatime)
 	switch (_status)
 	{
 	case FALLING__DOWN:
-		this->_additionalVeloc = this->_gravity * deltatime / 1000;
+		this->_additionalVeloc += this->_gravity * deltatime / 1000;
 		break;
 	case SHALLOWED:
 		this->_additionalVeloc = VECTOR2ZERO;

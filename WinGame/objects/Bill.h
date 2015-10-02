@@ -12,7 +12,7 @@
 #define BILL_JUMP_VEL 200
 #define BILL_ACC_MOVE 300
 #define TEST_LAND 200
-#define GRAVITY 50
+#define GRAVITY 100
 
 [event_receiver(native)]
 class Bill : public BaseObject, public IControlable
