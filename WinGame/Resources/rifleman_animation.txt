@@ -1,0 +1,9 @@
+frame_name	left	top	right	bottom
+normal_01	0	0	23	38
+shoot_01	26	0	49	38
+aim_up_01	52	0	69	38
+shoot_up_01	72	0	89	38
+aim_down_01	92	0	115	38
+hide_01		118	0	125	38	
+expose_01	128	0	150	38
+expose_02	153	0	176	38

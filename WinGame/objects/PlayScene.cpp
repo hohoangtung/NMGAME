@@ -1,12 +1,5 @@
 #include "PlayScene.h"
-#include "../debug.h"
-#include "../FrameWork/Animation.h"
 
-#include "Mario.h"
-#include "RedCannon.h"
-#include "Soldier.h"
-#include "Falcon.h"
-#include "Bill.h"
 
 Viewport* PlayScene::_viewport = new Viewport(0, WINDOW_HEIGHT);
 
@@ -34,8 +27,8 @@ Viewport * PlayScene::getViewport()
 bool PlayScene::init()
 {
     
-	sprite = SpriteManager::getInstance()->getSprite(eID::BILL);
-
+	//sprite = SpriteManager::getInstance()->getSprite(eID::BILL);
+	//
 	//auto soldier = new Soldier();
 	//soldier->init();
 	//_listobject.push_back(soldier);
@@ -71,6 +64,19 @@ bool PlayScene::init()
 
 	_text = new Text(L"Arial", "", 10, 25);
 
+	auto aircraft = new AirCraft(START_POSITION, HORIZONTAL_VELOC, AIRCRAFT_AMPLITUDE, AIRCRAFT_FREQUENCY, eAirCraftType::I);
+	aircraft->init();
+	_listobject.push_back(aircraft);
+	_listControlObject.push_back(aircraft);
+
+	auto soldier = new Soldier();
+	soldier->init();
+	_listobject.push_back(soldier);
+
+	auto rifleman = new Rifleman();
+	rifleman->setStatus(NORMAL);
+	rifleman->init();
+	_listobject.push_back(rifleman);
 	return true;
 }
 

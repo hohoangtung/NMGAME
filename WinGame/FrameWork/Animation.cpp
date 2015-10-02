@@ -46,7 +46,11 @@ void Animation::nextFrame()
 {
 	this->setIndex(_index + 1);
 }
-
+int Animation::getIndex()
+{
+	// 7ung -> use in Explostion::update
+	return _index;
+}
 void Animation::setIndex(int index)
 {
 	if (index == _index || _totalFrames == 0)
@@ -100,7 +104,11 @@ void Animation::canAnimate(bool can)
 	if (_canAnimate != can)
 		_canAnimate = can;
 }
-
+bool Animation::isAnimate()
+{
+	// 7ung => use in AirCraft::draw
+	return _canAnimate;
+}
 void Animation::addFrameRect(RECT rect)
 {
 	//nếu là rect đầu tiên thì set current luôn

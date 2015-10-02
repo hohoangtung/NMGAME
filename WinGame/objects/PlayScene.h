@@ -6,12 +6,20 @@
 #include "../FrameWork/Sprite.h"
 #include "../FrameWork/SpriteManager.h"
 #include "../FrameWork/Managers/SceneManager.h"
-#include "BaseObject.h"
 #include "../FrameWork/Text.h"
 #include "../FrameWork/Animation.h"
+#include "../debug.h"
 
+#include "BaseObject.h"
+#include "Bill.h"
+#include "Mario.h"
+#include "RedCannon.h"
+#include "Soldier.h"
+#include "Falcon.h"
+#include "AirCraft.h"
+#include "Rifleman.h"
 using namespace std;
-US_FRAMEWORK;
+US_FRAMEWORK
 
 class PlayScene : public Scene
 {

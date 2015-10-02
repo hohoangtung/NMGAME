@@ -10,7 +10,11 @@ US_FRAMEWORK
 #endif // _DEBUG
 
 int Game::isExit = 0;
-
+Graphics* Game::hWindow = NULL;
+Graphics* Game::getWindow()
+{
+	return hWindow;
+}
 void Game::exit()
 {
 	isExit = 1;
@@ -24,7 +28,8 @@ Game::~Game(void)
 
 Game::Game(HINSTANCE hInstance, LPWSTR name, int width, int height, int fps, int isFullScreen)
 {
-	this->wnd_Instance = new Graphics(hInstance, name, width, height, fps, isFullScreen);
+	//this->wnd_Instance = new Graphics(hInstance, name, width, height, fps, isFullScreen);
+	hWindow = new Graphics(hInstance, name, width, height, fps, isFullScreen);
 	_gametime = GameTime::getInstance();
 	_devicemanager = DeviceManager::getInstance();
 	_input = InputController::getInstance();
@@ -33,11 +38,16 @@ Game::Game(HINSTANCE hInstance, LPWSTR name, int width, int height, int fps, int
 
 void Game::init()
 {
-	wnd_Instance->initWindow();
+	//wnd_Instance->initWindow();
+	if (hWindow == NULL)
+		throw;
+	hWindow->initWindow();
 	_gametime->init();
-	_devicemanager->Init(*wnd_Instance);
-	_input->init(wnd_Instance->getWnd(), wnd_Instance->gethInstance());
-	this->_frameRate = 1000.0f / wnd_Instance->getFrameRate();	 //1000/30 = 33 milisecond
+	_devicemanager->Init(*hWindow);
+	//_devicemanager->Init(*wnd_Instance);
+	_input->init(hWindow->getWnd(), hWindow->gethInstance());
+	//_input->init(wnd_Instance->getWnd(), wnd_Instance->gethInstance());
+	this->_frameRate = 1000.0f / hWindow->getFrameRate();	 //1000/30 = 33 milisecond
 
 	D3DXCreateSprite(_devicemanager->getDevice(), &this->_spriteHandle);
 	this->loadResource();
@@ -75,7 +85,7 @@ void Game::run()
 void Game::render()												// call once per frame
 {
 	// kiểm tra nếu cửa sổ đang focus không phải game thì không cập nhật
-	if (GetActiveWindow() != this->wnd_Instance->getWnd())
+	if (GetActiveWindow() != hWindow->getWnd())
 		return;
 	auto device = _devicemanager->getInstance();
 	float time = _gametime->getElapsedGameTime();
