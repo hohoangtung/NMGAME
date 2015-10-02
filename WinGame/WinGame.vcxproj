@@ -1,0 +1,177 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{9B105AC7-30BC-4976-B319-1807AF1BC26B}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>WinGame</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <IncludePath>E:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;$(IncludePath)</IncludePath>
+    <LibraryPath>E:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Lib\x86;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <IncludePath>E:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;$(IncludePath)</IncludePath>
+    <LibraryPath>E:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Lib\x86;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>d3d9.lib;d3dx9.lib;dinput8.lib;dxguid.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <PreBuildEvent>
+      <Command>
+      </Command>
+    </PreBuildEvent>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>d3d9.lib;d3dx9.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="ContraGame.cpp" />
+    <ClCompile Include="FrameWork\Animation.cpp" />
+    <ClCompile Include="FrameWork\DeviceManager.cpp" />
+    <ClCompile Include="FrameWork\Event.cpp" />
+    <ClCompile Include="FrameWork\GameTime.cpp" />
+    <ClCompile Include="FrameWork\Graphics.cpp" />
+    <ClCompile Include="FrameWork\InputController.cpp" />
+    <ClCompile Include="FrameWork\Managers\SceneManager.cpp" />
+    <ClCompile Include="FrameWork\Transformable.cpp" />
+    <ClCompile Include="FrameWork\Sprite.cpp" />
+    <ClCompile Include="FrameWork\SpriteManager.cpp" />
+    <ClCompile Include="FrameWork\StopWatch.cpp" />
+    <ClCompile Include="FrameWork\Text.cpp" />
+    <ClCompile Include="FrameWork\TextBitmap.cpp" />
+    <ClCompile Include="FrameWork\Texture.cpp" />
+    <ClCompile Include="FrameWork\TimeSpan.cpp" />
+    <ClCompile Include="FrameWork\Viewport.cpp" />
+    <ClCompile Include="Game.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Map\Map.cpp" />
+    <ClCompile Include="objects\AirCraft.cpp" />
+    <ClCompile Include="objects\BaseEnemy.cpp" />
+    <ClCompile Include="objects\BaseObject.cpp" />
+    <ClCompile Include="objects\Bill.cpp" />
+    <ClCompile Include="objects\CollisionBody.cpp" />
+    <ClCompile Include="objects\Explosion.cpp" />
+    <ClCompile Include="objects\Falcon.cpp" />
+    <ClCompile Include="objects\IComponent.cpp" />
+    <ClCompile Include="objects\mario.cpp" />
+    <ClCompile Include="objects\PlayScene.cpp" />
+    <ClCompile Include="objects\RedCannon.cpp" />
+    <ClCompile Include="objects\Rifleman.cpp" />
+    <ClCompile Include="objects\Scene.cpp" />
+    <ClCompile Include="objects\Soldier.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ContraGame.h" />
+    <ClInclude Include="FrameWork\Animation.h" />
+    <ClInclude Include="FrameWork\define.h" />
+    <ClInclude Include="FrameWork\DeviceManager.h" />
+    <ClInclude Include="FrameWork\Event.h" />
+    <ClInclude Include="FrameWork\GameTime.h" />
+    <ClInclude Include="FrameWork\Graphics.h" />
+    <ClInclude Include="FrameWork\InputController.h" />
+    <ClInclude Include="FrameWork\Managers\SceneManager.h" />
+    <ClInclude Include="FrameWork\Transformable.h" />
+    <ClInclude Include="FrameWork\Sprite.h" />
+    <ClInclude Include="FrameWork\SpriteManager.h" />
+    <ClInclude Include="FrameWork\StopWatch.h" />
+    <ClInclude Include="FrameWork\Text.h" />
+    <ClInclude Include="FrameWork\TextBitmap.h" />
+    <ClInclude Include="FrameWork\Texture.h" />
+    <ClInclude Include="FrameWork\TimeSpan.h" />
+    <ClInclude Include="FrameWork\Viewport.h" />
+    <ClInclude Include="Game.h" />
+    <ClInclude Include="Map\Map.h" />
+    <ClInclude Include="objects\AirCraft.h" />
+    <ClInclude Include="objects\BaseEnemy.h" />
+    <ClInclude Include="objects\BaseObject.h" />
+    <ClInclude Include="objects\Bill.h" />
+    <ClInclude Include="objects\CollisionBody.h" />
+    <ClInclude Include="objects\Explosion.h" />
+    <ClInclude Include="objects\Falcon.h" />
+    <ClInclude Include="objects\IComponent.h" />
+    <ClInclude Include="objects\mario.h" />
+    <ClInclude Include="objects\PlayScene.h" />
+    <ClInclude Include="objects\RedCannon.h" />
+    <ClInclude Include="objects\Rifleman.h" />
+    <ClInclude Include="objects\Scene.h" />
+    <ClInclude Include="objects\Soldier.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Flower.png">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Readme.txt" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

@@ -2,6 +2,7 @@
 
 Transformable::Transformable()
 {
+	_scale = GVector2(1.0f, 1.0f);
 }
 
 Transformable::~Transformable()

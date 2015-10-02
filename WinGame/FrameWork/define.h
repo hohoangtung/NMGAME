@@ -29,6 +29,8 @@ enum eID
 	FALCON,
 	AIRCRAFT,
 	EXPLOSION,
+	RIFLEMAN,
+	BOX,
 	MAPSTAGE1
 };
 
@@ -45,7 +47,21 @@ enum eStatus
 	SHOOTING		= (1 << 6),
 	DESTROY			= (1 << 7),
 	BURST			= (1 << 8),
-	EXPLORE			= (1 << 9)
+	EXPLORE			= (1 << 9),
+	DYING			= (1 << 10),
+	AIMING_UP		= (1 << 11),
+	AIMING_DOWN		= (1 << 12),
+	HIDING			= (1 << 13),
+	EXPOSING		= (1 << 14),
+};
+
+enum eDirection
+{
+	NONE			= 0,
+	TOP				= 1,
+	BOTTOM			= 2,
+	LEFT			= 4,
+	RIGHT			= 8
 };
 
 typedef D3DXVECTOR3 GVector3;
@@ -65,5 +81,6 @@ if(p) \
 	delete (p); \
 	p = nullptr; \
 } \
+
 
 #endif // !__NS_FRAMEWORK__

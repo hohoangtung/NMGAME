@@ -121,17 +121,19 @@ void Sprite::setPosition(GVector2 position)
 
 void Sprite::setPositionX(float x)
 {
-	if (x != _position.x)
-		_position.x = x;
-
+	if (x == _position.x)
+		return;
+	
+	_position.x = x;
 	this->updateBounding();
 }
 
 void Sprite::setPositionY(float y)
 {
-	if (y != _position.y)
-		_position.y = y;
+	if (y == _position.y)
+		return;
 
+	_position.y = y;
 	this->updateBounding();
 }
 
@@ -141,7 +143,6 @@ void Sprite::setScale(GVector2 scale)
 		return;
 
 	_scale = scale;
-
 	this->updateBounding();
 }
 
@@ -151,24 +152,25 @@ void Sprite::setScale(float scale)
 	{
 		_scale.x = scale;
 		_scale.y = scale;
+		this->updateBounding();
 	}
-
-	this->updateBounding();
 }
 
 void Sprite::setScaleX(float sx)
 {
-	if (sx != _scale.x)
-		_scale.x = sx;
+	if (sx == _scale.x)
+		return;
 
+	_scale.x = sx;
 	this->updateBounding();
 }
 
 void Sprite::setScaleY(float sy)
 {
-	if (sy != _scale.y)
-		_scale.y = sy;
+	if (sy == _scale.y)
+		return;
 
+	_scale.y = sy;
 	this->updateBounding();
 }
 
@@ -183,9 +185,10 @@ void Sprite::setRotate(float degree)
 
 void Sprite::setOrigin(GVector2 origin)
 {
-	if (origin != _origin)
-		_origin = origin;
-
+	if (origin == _origin)
+		return;
+	
+	_origin = origin;
 	_anchorPoint = GVector2(_bound.left + _frameWidth * _scale.x * _origin.x, _bound.bottom + _frameHeight * _scale.x * _origin.y);
 
 	this->updateBounding();

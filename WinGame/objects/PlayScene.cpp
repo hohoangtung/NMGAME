@@ -47,10 +47,20 @@ bool PlayScene::init()
 
 	auto bill = new Bill();
 	bill->init();
-	bill->setPosition(400, 200);
+	bill->setPosition(400, 500);
 
 	_listControlObject.push_back(bill);
 	_listobject.push_back(bill);
+
+	auto box1 = new MyBox(0);
+	box1->init();
+	box1->setPosition(400, 180);
+	_listobject.push_back(box1);
+
+	//auto box2 = new MyBox(1);
+	//box2->init();
+	//box2->setPosition(500, 400);
+	//_listobject.push_back(box2);
 
 	_text = new Text(L"Arial", "", 10, 25);
 
@@ -62,6 +72,11 @@ bool PlayScene::init()
 	auto soldier = new Soldier();
 	soldier->init();
 	_listobject.push_back(soldier);
+
+	auto rifleman = new Rifleman();
+	rifleman->setStatus(NORMAL);
+	rifleman->init();
+	_listobject.push_back(rifleman);
 	background = new Map();
 	background->init("Resources//Map//map_index.txt");
 	return true;
@@ -94,6 +109,8 @@ void PlayScene::update(float dt)
 	{
 		object->update(dt);
 	}
+
+	_listobject[0]->checkCollision(_listobject[1], dt);
 }
 
 void PlayScene::draw(LPD3DXSPRITE spriteHandle)

@@ -8,15 +8,15 @@ class BaseEnemy : public BaseObject
 public:
 	BaseEnemy(eID id) : BaseObject(id) {}
 	
-	int getHealth();
-	void setHealth(int);
+	int getHitpoint();
+	void setHitpoint(int);
     int getScore();
 	void setScore(int);
 
 	virtual ~BaseEnemy() {}
 
 private:
-	int _health;
+	int _hitpoint;
 	int _score;
 };
 #endif

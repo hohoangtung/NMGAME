@@ -35,16 +35,25 @@ public:
 	eStatus getStatus();
 	virtual void setStatus(eStatus status);
 	
-	void virtual setPosition(GVector3 vector);
-	void virtual setPosition(float x, float y, float z);
-	void virtual setPosition(GVector2 position);
-	void virtual setPosition(float x, float y);
-	void virtual setPositionX(float x);
-	void virtual setPositionY(float y);
+	virtual void setPosition(GVector3 vector);
+	virtual void setPosition(float x, float y, float z);
+	virtual void setPosition(GVector2 position);
+	virtual void setPosition(float x, float y);
+	virtual void setPositionX(float x);
+	virtual void setPositionY(float y);
 
-	void virtual updateTransform();
+	virtual void setOrigin(GVector2 origin);
+	virtual void setRotate(float degree);
+	virtual void setZIndex(int z);
 
 	Sprite* getSprite();
+
+	virtual float checkCollision(BaseObject* object, float dt);
+	virtual float checkCollision(BaseObject* object, eDirection& direction);
+
+	// vật nào cũng có vận tốc, mặc định là đứng yên sẽ return 0
+	// nếu vật có chuyển động phải override lại để lấy vận tốc.
+	virtual GVector2 getVelocity();
 
 protected:
 	Sprite* _sprite;

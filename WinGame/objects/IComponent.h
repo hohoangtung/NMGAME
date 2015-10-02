@@ -59,6 +59,7 @@ enum eGravityStatus
 	FALLING__DOWN,
 	SHALLOWED
 };
+
 class Gravity : public IComponent
 {
 public:

@@ -1,6 +1,11 @@
-
+﻿
 
 #include "Explosion.h"
+/*
+	Explosion dùng để tạo vụ nổ khi nhân vật hoặc đối tượng chết.
+	hiện tại có 2 kiểu nổ. (xem hình resource)
+	lớp nào chứa explosion nhớ quản lý huỷ đối tương này
+*/
 Explosion::Explosion(int type) : BaseObject(eID::EXPLOSION)
 {
 	this->_type = type;

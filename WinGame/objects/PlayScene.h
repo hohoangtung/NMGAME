@@ -18,6 +18,7 @@
 #include "Soldier.h"
 #include "Falcon.h"
 #include "AirCraft.h"
+#include "Rifleman.h"
 using namespace std;
 US_FRAMEWORK
 
