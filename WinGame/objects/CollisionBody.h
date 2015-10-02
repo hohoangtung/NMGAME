@@ -1,11 +1,32 @@
-#ifndef __COLLISION_BODY__
+﻿#ifndef __COLLISION_BODY__
 #define __COLLISION_BODY__
 
 #include "BaseObject.h"
 #include "IComponent.h"
 
 /*
-S? d?ng cho ??i t??ng mu?n x�t va ch?m
+by Luu The Vinh
+updated: 2/10/2015
+
+Sử dụng cho đối tượng muốn kt va chạm
+- Thêm nó như là một Component vào object
+- Có 2 Event là:
+	@onCollisionBegin: sẽ được gọi khi bắt đầu va chạm
+	@onCollisionEnd: sẽ được gọi khi kết thúc va chạm
+- Đối tượng sử dụng Collision body muốn dùng event thì gán 2 event trên để sử dụng
+	- Thêm [event_receiver(native)] vào trước class định nghĩa object
+	- Viết hàm có THAM SỐ như sau:
+		+ void onCollisionBegin(CollisionEventArg* collision_event);
+		+ void onCollisionEnd(CollisionEventArg* collision_event);
+	- Gán hàm cho Collision Body
+		+ __hook(&CollisionBody::onCollisionBegin, <collision body của object> , & <tên lớp>::<tên hàm>);
+	- Việc kiểm tra và sử lý va chạm cho đối tượng đó sẽ làm bên trong 2 hàm BEGIN và END.
+	- CollisionEventArg: 
+		+ Đối tượng va chạm với đối tượng hiện tại.
+		+ _sideCollision: phía va chạm của đối tượng kia.
+
+Tham khảo class Bill để xem chi tiết.
+Còn một số lỗi đang làm tiếp. :D
 */
 
 class CollisionEventArg : public EventArg
@@ -31,9 +52,9 @@ public:
 	~CollisionBody();
 
 	/*
-	ki?m tra va ch?m v?i object kh�c
-		@otherObject: ??i t??ng kt va ch?m v?i n�
-		@dt: delta time c?a c?a m?i frame
+	kiểm tra va chạm với object khác
+		@otherObject: object cần kt va chạm
+		@dt: delta time của mỗi frame
 	*/
 	void checkCollision(BaseObject* otherObject, float dt);
 	bool isColliding();
