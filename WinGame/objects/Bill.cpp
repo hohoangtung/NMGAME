@@ -28,7 +28,7 @@ void Bill::init()
 
 	_sprite = SpriteManager::getInstance()->getSprite(eID::BILL);
 	_componentList["Movement"] = new Movement(GVector2(0, 0), GVector2(0, 0), _sprite);
-	_componentList["Gravity"] = new Gravity(GVector2(0, - GRAVITY), (Movement*)_componentList["Movement"]);
+	_componentList["Gravity"] = new Gravity(GVector2(0, -GRAVITY), (Movement*)_componentList["Movement"]);
 	_componentList["CollisionBody"] = new CollisionBody(this);
 
 	__hook(&CollisionBody::onCollisionBegin, (CollisionBody*)_componentList["CollisionBody"], &Bill::onCollisionBegin);
@@ -125,11 +125,6 @@ void Bill::release()
 	//_sprite->release();
 	_animations.clear();
 }
-
-//void Bill::setPosition(float x, float y)
-//{
-//	_sprite->setPosition(x, y);
-//}
 
 void Bill::onKeyPressed(KeyEventArg* key_event)
 {

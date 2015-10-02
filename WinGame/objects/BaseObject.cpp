@@ -26,71 +26,119 @@ void BaseObject::setStatus(eStatus status)
 		_status = status;
 }
 
+GVector2 BaseObject::getPosition()
+{
+	return _sprite->getPosition();
+}
+
+float BaseObject::getPositionX()
+{
+	return _sprite->getPositionX();
+}
+
+float BaseObject::getPositionY()
+{
+	return _sprite->getPositionY();
+}
+
 void BaseObject::setPosition(GVector3 vector)
 {
-	Transformable::setPosition(vector);
-	_sprite->setPosition(_position);
+	_sprite->setPosition(vector);
 }
 
 void BaseObject::setPosition(float x, float y, float z)
 {
-	Transformable::setPosition(x, y, z);
-
-	_sprite->setPosition(_position);
+	_sprite->setPosition(x, y, z);
 }
 
 void BaseObject::setPosition(GVector2 position)
 {
-	Transformable::setPosition(position);
-
-	_sprite->setPosition(_position);
+	_sprite->setPosition(position);
 }
 
 void BaseObject::setPosition(float x, float y)
 {
-	Transformable::setPosition(x, y);
-
-	_sprite->setPosition(_position);
+	_sprite->setPosition(x, y);
 }
 
 void BaseObject::setPositionX(float x)
 {
-	Transformable::setPositionX(x);
-
-	_sprite->setPosition(_position);
+	_sprite->setPositionX(x);
 }
 
 void BaseObject::setPositionY(float y)
 {
-	Transformable::setPositionY(y);
+	_sprite->setPositionY(y);
+}
 
-	_sprite->setPosition(_position);
+GVector2 BaseObject::getScale()
+{
+	return _sprite->getScale();
+}
+
+void BaseObject::setScale(GVector2 scale)
+{
+	_sprite->setScale(scale);
+}
+
+void BaseObject::setScale(float scale)
+{
+	_sprite->setScale(scale);
+}
+
+void BaseObject::setScaleX(float sx)
+{
+	_sprite->setScaleX(sx);
+}
+
+void BaseObject::setScaleY(float sy)
+{
+	_sprite->setScaleY(sy);
+}
+
+GVector2 BaseObject::getOrigin()
+{
+	return _sprite->getOrigin();
 }
 
 void BaseObject::setOrigin(GVector2 origin)
 {
-	Transformable::setOrigin(origin);
+	_sprite->setOrigin(origin);
+}
 
-	_sprite->setOrigin(_origin);
+float BaseObject::getRotate()
+{
+	return _sprite->getRotate();
 }
 
 void BaseObject::setRotate(float degree)
 {
-	Transformable::setRotate(degree);
-
-	_sprite->setRotate(_rotate);
+	_sprite->setRotate(degree);
 }
 
 void BaseObject::setZIndex(int z)
 {
-	Transformable::setZIndex(z);
+	_sprite->setZIndex(z);
+}
 
-	_sprite->setZIndex(_zIndex);
+int BaseObject::getZIndex()
+{
+	return _sprite->getZIndex();
+}
+
+GVector2 BaseObject::getAnchorPoint()
+{
+	return _sprite->getAnchorPoint();
 }
 
 Sprite * BaseObject::getSprite()
 {
 	return _sprite;
+}
+
+RECT BaseObject::getBounding()
+{
+	return _sprite->getBounding();
 }
 
 float BaseObject::checkCollision(BaseObject * object, float dt)

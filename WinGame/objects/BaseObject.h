@@ -20,7 +20,7 @@ protected:
 	InputController* _input;
 };
 
-class BaseObject : public Transformable
+class BaseObject
 {
 public:
 	BaseObject(eID id);
@@ -34,19 +34,38 @@ public:
 	eID getId();
 	eStatus getStatus();
 	virtual void setStatus(eStatus status);
-	
+
+	virtual GVector2 getPosition();
+	virtual float getPositionX();
+	virtual float getPositionY();
+
 	virtual void setPosition(GVector3 vector);
-	virtual void setPosition(float x, float y, float z);
 	virtual void setPosition(GVector2 position);
+	virtual void setPosition(float x, float y, float z);
 	virtual void setPosition(float x, float y);
 	virtual void setPositionX(float x);
 	virtual void setPositionY(float y);
 
-	virtual void setOrigin(GVector2 origin);
+	virtual GVector2 getScale();
+	virtual void setScale(GVector2 scale);
+	virtual void setScale(float scale);
+	virtual void setScaleX(float sx);
+	virtual void setScaleY(float sy);
+
+	virtual float getRotate();
 	virtual void setRotate(float degree);
+
+	virtual GVector2 getOrigin();
+	virtual void setOrigin(GVector2 origin);
+
 	virtual void setZIndex(int z);
+	virtual int getZIndex();
+
+	virtual GVector2 getAnchorPoint();
 
 	Sprite* getSprite();
+
+	virtual RECT getBounding();
 
 	virtual float checkCollision(BaseObject* object, float dt);
 	virtual float checkCollision(BaseObject* object, eDirection& direction);
@@ -61,8 +80,6 @@ protected:
 	// khởi tạo anition thì reference đến sprite
 	eID _id;
 	eStatus _status;
-
-	
 };
 /*
 
