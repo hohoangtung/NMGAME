@@ -273,6 +273,16 @@ void Sprite::setIndex(int index)
 	this->setCurrentFrame();
 }
 
+int Sprite::getFrameWidth()
+{
+	return _frameWidth;
+}
+
+int Sprite::getFrameHeight()
+{
+	return _frameHeight;
+}
+
 int Sprite::getTextureWidth()
 {
 	return _textureWidth;

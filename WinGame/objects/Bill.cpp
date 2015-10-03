@@ -28,15 +28,14 @@ void Bill::init()
 
 
 	_sprite = SpriteManager::getInstance()->getSprite(eID::BILL);
-	auto movement = new Movement(VECTOR2ZERO, VECTOR2ZERO, _sprite);
-	auto collision = new CollisionBody(this);
+	_componentList["Movement"] = new Movement(GVector2(0, 0), GVector2(0, 0), _sprite);
+	_componentList["Gravity"] = new Gravity(GVector2(0, -GRAVITY), (Movement*)_componentList["Movement"]);
 
-	_componentList["Movement"] = movement;
-	_componentList["Gravity"] = new Gravity(GVector2(0, -GRAVITY), movement);
-	_componentList["CollisionBody"] = collision;
+	auto collisionBody = new CollisionBody(this);
+	_componentList["CollisionBody"] = collisionBody;
 
-	__hook(&CollisionBody::onCollisionBegin, collision, &Bill::onCollisionBegin);
-	__hook(&CollisionBody::onCollisionEnd, collision, &Bill::onCollisionEnd);
+	__hook(&CollisionBody::onCollisionBegin, collisionBody, &Bill::onCollisionBegin);
+	__hook(&CollisionBody::onCollisionEnd, collisionBody, &Bill::onCollisionEnd);
 
 	_animations[eStatus::NORMAL] = new Animation(_sprite, 0.1f);
 	_animations[eStatus::NORMAL]->addFrameRect(eID::BILL, "normal_01", NULL);
@@ -129,11 +128,6 @@ void Bill::release()
 	//_sprite->release();
 	_animations.clear();
 }
-
-//void Bill::setPosition(float x, float y)
-//{
-//	_sprite->setPosition(x, y);
-//}
 
 void Bill::onKeyPressed(KeyEventArg* key_event)
 {

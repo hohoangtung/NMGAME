@@ -18,10 +18,10 @@ void CollisionBody::checkCollision(BaseObject * otherObject, float dt)
 	if (time < 1.0f)
 	{
 		auto v = _target->getVelocity();
-		auto pos = _target->getSprite()->getPosition(); //chổ này nên _target->getPosition(); vì movement set posiion trên sprite -_-
+		auto pos = _target->getPosition();
 
 		_target->setPosition(pos.x + (v.x * dt / 1000) * time, pos.y + (v.y * dt / 1000)  * time);
-		_collidePosition = _target->getSprite()->getPosition();
+		_collidePosition = _target->getPosition();
 
 		CollisionEventArg* e = new CollisionEventArg(otherObject);
 		e->_sideCollision = direction;
@@ -32,7 +32,7 @@ void CollisionBody::checkCollision(BaseObject * otherObject, float dt)
 	else if(_isColliding)
 	{
 		float x, y;
-		if (!isColliding(_target->getSprite()->getBounding(), otherObject->getSprite()->getBounding()))
+		if (!isColliding(_target->getBounding(), otherObject->getBounding()))
 		{
 			CollisionEventArg* e = new CollisionEventArg(otherObject);
 			e->_sideCollision = eDirection::NONE;
@@ -42,7 +42,7 @@ void CollisionBody::checkCollision(BaseObject * otherObject, float dt)
 		}
 		else
 		{
-			//auto pos = _target->getSprite()->getPosition();
+			//auto pos = _target->getPosition();
 			//_target->setPosition(pos.x + x, pos.y + y);
 		}
 	}
@@ -50,8 +50,8 @@ void CollisionBody::checkCollision(BaseObject * otherObject, float dt)
 
 float CollisionBody::isCollide(BaseObject * otherSprite, eDirection & direction, float dt)
 {
-	RECT myRect = _target->getSprite()->getBounding();
-	RECT otherRect = otherSprite->getSprite()->getBounding();
+	RECT myRect = _target->getBounding();
+	RECT otherRect = otherSprite->getBounding();
 
 	// sử dụng Broadphase rect để kt vùng tiếp theo có va chạm ko
 	RECT broadphaseRect = getSweptBroadphaseRect(_target, dt);
@@ -137,7 +137,8 @@ float CollisionBody::isCollide(BaseObject * otherSprite, eDirection & direction,
 	{
 		// xét x
 		// khoảng cách gần nhất mà nhỏ hơn 0 nghĩa là thằng kia đang nằm bên trái object này => va chạm bên phải nó
-		if (_dxEntry < 0.0f)
+		//if (_dxEntry < 0.0f)
+		if(_dxExit < 0)
 		{
 			direction = eDirection::RIGHT;
 		}
@@ -149,7 +150,8 @@ float CollisionBody::isCollide(BaseObject * otherSprite, eDirection & direction,
 	else
 	{
 		// xét y
-		if (_dyEntry < 0.0f)
+		//if (_dyEntry <= 0.0f)
+		if(_dyExit < 0.0f)
 		{
 			direction = eDirection::TOP;
 		}
@@ -167,8 +169,8 @@ float CollisionBody::isCollide(BaseObject * otherSprite, eDirection & direction,
 bool CollisionBody::isColliding(BaseObject * otherObject, float & moveX, float & moveY, float dt)
 {
 	moveX = moveY = 0.0f;
-	auto myRect = _target->getSprite()->getBounding();
-	auto otherRect = otherObject->getSprite()->getBounding();
+	auto myRect = _target->getBounding();
+	auto otherRect = otherObject->getBounding();
 
 	float left = otherRect.left - myRect.right;
 	float top = otherRect.top - myRect.bottom;
@@ -210,7 +212,7 @@ RECT CollisionBody::getSweptBroadphaseRect(BaseObject* object, float dt)
 {
 	// vận tốc mỗi frame
 	auto velocity = GVector2(object->getVelocity().x / dt, object->getVelocity().y / dt);
-	auto myRect = object->getSprite()->getBounding();
+	auto myRect = object->getBounding();
 
 	RECT rect;
 	rect.top = velocity.y > 0 ? myRect.top + velocity.y : myRect.top;

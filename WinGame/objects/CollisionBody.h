@@ -57,6 +57,7 @@ public:
 		@dt: delta time của mỗi frame
 	*/
 	void checkCollision(BaseObject* otherObject, float dt);
+
 	bool isColliding();
 
 	void update(float dt);

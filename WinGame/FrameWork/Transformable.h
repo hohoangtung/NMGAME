@@ -9,31 +9,31 @@ public:
 	Transformable();
 	~Transformable();
 
-	GVector2 virtual getPosition();
-	float virtual getPositionX();
-	float virtual getPositionY();
+	virtual GVector2 getPosition();
+	virtual float getPositionX();
+	virtual float getPositionY();
 
-	void virtual setPosition(GVector3 vector);
-	void virtual setPosition(float x, float y, float z);
-	void virtual setPosition(GVector2 position);
-	void virtual setPosition(float x, float y);
-	void virtual setPositionX(float x);
-	void virtual setPositionY(float y);
+	virtual void setPosition(GVector3 vector);
+	virtual void setPosition(float x, float y, float z);
+	virtual void setPosition(GVector2 position);
+	virtual void setPosition(float x, float y);
+	virtual void setPositionX(float x);
+	virtual void setPositionY(float y);
 
-	GVector2 virtual getScale();
-	void virtual setScale(GVector2 scale);
-	void virtual setScale(float scale);
-	void virtual setScaleX(float sx);
-	void virtual setScaleY(float sy);
+	virtual GVector2 getScale();
+	virtual void setScale(GVector2 scale);
+	virtual void setScale(float scale);
+	virtual void setScaleX(float sx);
+	virtual void setScaleY(float sy);
 
-	float virtual getRotate();
-	void virtual setRotate(float degree);
+	virtual float getRotate();
+	virtual void setRotate(float degree);
 
-	GVector2 virtual getOrigin();
-	void virtual setOrigin(GVector2 origin);
+	virtual GVector2 getOrigin();
+	virtual void setOrigin(GVector2 origin);
 
-	void virtual setZIndex(int z);
-	int virtual getZIndex();
+	virtual void setZIndex(int z);
+	virtual int getZIndex();
 
 	GVector2 getAnchorPoint();
 
