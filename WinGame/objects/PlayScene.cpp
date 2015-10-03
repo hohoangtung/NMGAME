@@ -57,6 +57,9 @@ bool PlayScene::init()
 	box1->setPosition(400, 180);
 	_listobject.push_back(box1);
 
+	auto bridge = new Bridge(BRIDGE_POSITION);
+	bridge->init();
+	_listobject.push_back(bridge);
 	//auto box2 = new MyBox(1);
 	//box2->init();
 	//box2->setPosition(500, 400);
@@ -77,9 +80,6 @@ bool PlayScene::init()
 	rifleman->init();
 	_listobject.push_back(rifleman);
 
-	auto bridge = new Bridge();
-	bridge->init();
-	_listobject.push_back(bridge);
 
 
 	background = new Map();
@@ -116,6 +116,8 @@ void PlayScene::update(float dt)
 	}
 
 	_listobject[0]->checkCollision(_listobject[1], dt);
+	_listobject[0]->checkCollision(_listobject[2], dt);
+
 }
 
 void PlayScene::draw(LPD3DXSPRITE spriteHandle)

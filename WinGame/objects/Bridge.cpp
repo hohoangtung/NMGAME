@@ -7,24 +7,31 @@ int Bridge::_matrixIndex[2][MAX_WAVE * 2] =
 		{ 1, 4, 4, 4, 4, 4, 4, 5 },
 
 	};
-Bridge::Bridge() : BaseObject(eID::BRIDGE)
+Bridge::Bridge(GVector2 postion) : BaseObject(eID::BRIDGE)
 {
 	_sprite = SpriteManager::getInstance()->getSprite(eID::BRIDGE);
+	_transform = new Transformable();
+	_transform->setPosition(postion);
 }
 void Bridge::init()
 {
 	__hook(&InputController::__eventkeyReleased, _input, &Bridge::testExplose);
 	_stopwatch = new StopWatch();
-	_transform = new Transformable();
-	_transform->setPosition(200, 200);
+
 	_explode = new QuadExplose(_transform->getPosition());
 	_explode->init();
 	_wave = 0;
+
+	_listComponent["CollisionBody"] = new CollisionBody(this);
 }
 void Bridge::update(float deltatime)
 {
 	if (this->getStatus() == eStatus::BURST)
 		this->burst(deltatime);
+	for (auto component : _listComponent)
+	{
+		component.second->update(deltatime);
+	}
 }
 void Bridge::updateInput(float deltatime)
 {
@@ -43,12 +50,11 @@ void Bridge::burst(float deltatime)
 	if (_explode->getStatus() == DESTROY)
 	{
 		_explode->release();
-
 		if (_stopwatch->isStopWatch(DELAYTIME))
 		{
 			_wave++;
 			GVector2 pos = this->getPosition();
-			pos.x += 32 * _wave;			// HARD CODE
+			pos.x += this->_sprite->getFrameWidth() * 2 * this->_sprite->getScale().x * _wave;			// HARD CODE
 			_explode = new QuadExplose(pos);
 			_explode->init();
 			_stopwatch->restart();
@@ -89,6 +95,7 @@ void Bridge::draw(LPD3DXSPRITE spritehandle, Viewport* viewport)
 	{
 		_explode->draw(spritehandle, viewport);
 	}
+
 }
 void Bridge::release()
 {
@@ -102,7 +109,18 @@ GVector2 Bridge::getPosition()
 {
 	return	this->_transform->getPosition();
 }
-
+RECT Bridge::getBounding()
+{
+	RECT rect;
+	int framewidth = this->_sprite->getFrameWidth();
+	int frameheight = this->_sprite->getFrameHeight();
+	rect.left = this->getPosition().x - framewidth / 2;
+	rect.bottom = this->getPosition().y - frameheight - frameheight / 2;
+	rect.right = rect.left + framewidth * 2 * MAX_WAVE;
+	rect.top = rect.bottom + frameheight * 2;
+	rect.left += _wave * framewidth * 2;
+	return rect;
+}
 Bridge::~Bridge()
 {
 }
@@ -115,7 +133,6 @@ void Bridge::QuadExplose::init()
 {	
 	_timer = 0.0f;
 	auto pos = _transform->getPosition();
-
 	_explosion1 = new Explosion(2);
 	_explosion1->init();
 	_explosion1->setPosition(pos);
