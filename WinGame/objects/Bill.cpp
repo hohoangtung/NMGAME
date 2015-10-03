@@ -29,10 +29,12 @@ void Bill::init()
 	_sprite = SpriteManager::getInstance()->getSprite(eID::BILL);
 	_componentList["Movement"] = new Movement(GVector2(0, 0), GVector2(0, 0), _sprite);
 	_componentList["Gravity"] = new Gravity(GVector2(0, -GRAVITY), (Movement*)_componentList["Movement"]);
-	_componentList["CollisionBody"] = new CollisionBody(this);
+	
+	auto collisionBody = new CollisionBody(this);
+	_componentList["CollisionBody"] = collisionBody;
 
-	__hook(&CollisionBody::onCollisionBegin, (CollisionBody*)_componentList["CollisionBody"], &Bill::onCollisionBegin);
-	__hook(&CollisionBody::onCollisionEnd, (CollisionBody*)_componentList["CollisionBody"], &Bill::onCollisionEnd);
+	__hook(&CollisionBody::onCollisionBegin, collisionBody, &Bill::onCollisionBegin);
+	__hook(&CollisionBody::onCollisionEnd, collisionBody, &Bill::onCollisionEnd);
 
 	_animations[eStatus::NORMAL] = new Animation(_sprite, 0.1f);
 	_animations[eStatus::NORMAL]->addFrameRect(eID::BILL, "normal_01", NULL);
