@@ -44,6 +44,8 @@ void Explosion::init()
 
 void Explosion::update(float deltatime)
 {
+	if (this->getStatus() != eStatus::NORMAL)
+		return;
 	this->_animation->update(deltatime);
 	if (this->_animation->getIndex() == 5)
 	{
@@ -58,6 +60,8 @@ void Explosion::setPosition(GVector2 position)
 
 void Explosion::draw(LPD3DXSPRITE spriteHandle, Viewport* viewport)
 {
+	if (this->getStatus() != eStatus::NORMAL)
+		return;
 	this->_animation->draw(spriteHandle, viewport);
 }
 void Explosion::release()

@@ -116,6 +116,7 @@
     <ClCompile Include="objects\BaseEnemy.cpp" />
     <ClCompile Include="objects\BaseObject.cpp" />
     <ClCompile Include="objects\Bill.cpp" />
+    <ClCompile Include="objects\Bridge.cpp" />
     <ClCompile Include="objects\CollisionBody.cpp" />
     <ClCompile Include="objects\Explosion.cpp" />
     <ClCompile Include="objects\Falcon.cpp" />
@@ -152,6 +153,7 @@
     <ClInclude Include="objects\BaseEnemy.h" />
     <ClInclude Include="objects\BaseObject.h" />
     <ClInclude Include="objects\Bill.h" />
+    <ClInclude Include="objects\Bridge.h" />
     <ClInclude Include="objects\CollisionBody.h" />
     <ClInclude Include="objects\Explosion.h" />
     <ClInclude Include="objects\Falcon.h" />

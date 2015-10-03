@@ -95,6 +95,8 @@ void SpriteManager::loadResource(LPD3DXSPRITE spriteHandle)
 	this->_listSprite[eID::RIFLEMAN] = sp;
 	this->loadSpriteInfo(eID::RIFLEMAN, "Resources\\rifleman_animation.txt");
 
+	sp = new Sprite(spriteHandle, L"Resources\\bridge.png", 6, 3);
+	this->_listSprite[eID::BRIDGE] = sp;
 	//TEST
 	auto box = new Sprite(spriteHandle, L"Resources\\box.png", 2, 2);
 	_listSprite[eID::BOX] = box;

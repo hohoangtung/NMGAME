@@ -7,6 +7,7 @@ void Rifleman::init()
 	_sprite = SpriteManager::getInstance()->getSprite(eID::RIFLEMAN);
 	_sprite->setFrameRect(0, 0, 23, 38);
 	_sprite->setPosition(500, 400);
+	this->setStatus(NORMAL);
 
 	_animations[NORMAL] = new Animation(_sprite, 0.15f);
 	_animations[NORMAL]->addFrameRect(eID::RIFLEMAN, "normal_01", NULL);

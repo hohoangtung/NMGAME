@@ -147,6 +147,9 @@
     <ClCompile Include="objects\Explosion.cpp">
       <Filter>Source Files\Objects\GameObjects</Filter>
     </ClCompile>
+    <ClCompile Include="objects\Bridge.cpp">
+      <Filter>Source Files\Objects\GameObjects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FrameWork\Sprite.h">
@@ -249,6 +252,9 @@
       <Filter>Header Files\Map</Filter>
     </ClInclude>
     <ClInclude Include="objects\Explosion.h">
+      <Filter>Header Files\Objects\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="objects\Bridge.h">
       <Filter>Header Files\Objects\GameObjects</Filter>
     </ClInclude>
   </ItemGroup>

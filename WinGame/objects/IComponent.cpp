@@ -7,7 +7,7 @@ Movement::Movement(GVector2 accel, GVector2 veloc, Sprite* refSprite)
 	this->_accelerate = accel;
 	this->_velocity = veloc;
 	this->_refSprite = refSprite;
-
+	
 }
 void Movement::update(float deltatime)
 {

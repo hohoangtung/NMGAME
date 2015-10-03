@@ -74,9 +74,14 @@ bool PlayScene::init()
 	_listobject.push_back(soldier);
 
 	auto rifleman = new Rifleman();
-	rifleman->setStatus(NORMAL);
 	rifleman->init();
 	_listobject.push_back(rifleman);
+
+	auto bridge = new Bridge();
+	bridge->init();
+	_listobject.push_back(bridge);
+
+
 	background = new Map();
 	background->init("Resources//Map//map_index.txt");
 	return true;

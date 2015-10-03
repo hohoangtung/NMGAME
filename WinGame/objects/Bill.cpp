@@ -26,13 +26,17 @@ void Bill::init()
 	__hook(&InputController::__eventkeyPressed, _input, &Bill::onKeyPressed);
 	__hook(&InputController::__eventkeyReleased, _input, &Bill::onKeyReleased);
 
-	_sprite = SpriteManager::getInstance()->getSprite(eID::BILL);
-	_componentList["Movement"] = new Movement(GVector2(0, 0), GVector2(0, 0), _sprite);
-	_componentList["Gravity"] = new Gravity(GVector2(0, - GRAVITY), (Movement*)_componentList["Movement"]);
-	_componentList["CollisionBody"] = new CollisionBody(this);
 
-	__hook(&CollisionBody::onCollisionBegin, (CollisionBody*)_componentList["CollisionBody"], &Bill::onCollisionBegin);
-	__hook(&CollisionBody::onCollisionEnd, (CollisionBody*)_componentList["CollisionBody"], &Bill::onCollisionEnd);
+	_sprite = SpriteManager::getInstance()->getSprite(eID::BILL);
+	auto movement = new Movement(VECTOR2ZERO, VECTOR2ZERO, _sprite);
+	auto collision = new CollisionBody(this);
+
+	_componentList["Movement"] = movement;
+	_componentList["Gravity"] = new Gravity(GVector2(0, -GRAVITY), movement);
+	_componentList["CollisionBody"] = collision;
+
+	__hook(&CollisionBody::onCollisionBegin, collision, &Bill::onCollisionBegin);
+	__hook(&CollisionBody::onCollisionEnd, collision, &Bill::onCollisionEnd);
 
 	_animations[eStatus::NORMAL] = new Animation(_sprite, 0.1f);
 	_animations[eStatus::NORMAL]->addFrameRect(eID::BILL, "normal_01", NULL);
