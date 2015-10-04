@@ -3,6 +3,7 @@
 
 #include "BaseObject.h"
 #include "IComponent.h"
+#include <queue>
 
 /*
 by Luu The Vinh
@@ -58,7 +59,13 @@ public:
 	*/
 	void checkCollision(BaseObject* otherObject, float dt);
 
-	bool isColliding();
+	bool isColliding(BaseObject* otherObject);
+	
+	/*
+	set các object nào có thể va chạm vật lý, ở đây chỉ là dừng lại thôi.
+		@ids: ePhysicsBody của object, có thể OR nhiều cái
+	*/
+	void setPhysicsObjects(ePhysicsBody ids);
 
 	void update(float dt);
 
@@ -67,19 +74,19 @@ public:
 
 private:
 	BaseObject* _target;
+	ePhysicsBody _physicsObjects;
+
 	float _dxEntry, _dyEntry, _dxExit, _dyExit;
 	float _txEntry, _tyEntry, _txExit, _tyExit;
 
-	bool _isCollide;
-	bool _isColliding;
-	GVector2 _collidePosition;
-	eDirection _collideSide;
+	map<BaseObject*, bool> _listColliding;
 
 	float isCollide(BaseObject* otherObject, eDirection& direction, float dt);
 	bool isColliding(RECT myRect, RECT otherRect);
 	bool isColliding(BaseObject* otherObject, float& moveX, float& moveY, float dt);
 
 	RECT getSweptBroadphaseRect(BaseObject* object, float dt);
+	eDirection getSide(BaseObject* otherObject);
 };
 
 #endif // !__COLLISION_BODY__

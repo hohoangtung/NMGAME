@@ -40,12 +40,16 @@ public:
 private:
 	map<int, Animation*> _animations;
 	map<string, IComponent*> _componentList;
+	
+	float _movingSpeed;
 
 	void standing();
 	void moveLeft();
 	void moveRight();
 	void jump();
 	void layDown();
+	void falling();
+	list<bool> _canStand;
 
 	//void setState(int state);
 	void addStatus(eStatus status);
@@ -80,7 +84,9 @@ public:
 		_sprite = SpriteManager::getInstance()->getSprite(eID::BOX);
 		_sprite->setIndex(_index);
 
-		_componentList["CollisionBody"] = new CollisionBody(this);
+		this->setPhysicsBodyType(ePhysicsBody::LAND);
+
+		//_componentList["CollisionBody"] = new CollisionBody(this);
 
 		//if (_index == 1)
 		//{

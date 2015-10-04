@@ -52,6 +52,14 @@ enum eStatus
 	AIMING_DOWN		= (1 << 12),
 	HIDING			= (1 << 13),
 	EXPOSING		= (1 << 14),
+	FALLING			= (1 << 15)
+};
+
+enum ePhysicsBody
+{
+	NOTHING			= 0,
+	LAND			= (1 << 0),
+	MAN				= (1 << 1)
 };
 
 enum eDirection

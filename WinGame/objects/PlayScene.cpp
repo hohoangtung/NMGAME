@@ -59,7 +59,7 @@ bool PlayScene::init()
 
 	//auto box2 = new MyBox(1);
 	//box2->init();
-	//box2->setPosition(500, 400);
+	//box2->setPosition(500, 180);
 	//_listobject.push_back(box2);
 
 	_text = new Text(L"Arial", "", 10, 25);
@@ -109,6 +109,7 @@ void PlayScene::update(float dt)
 	}
 
 	_listobject[0]->checkCollision(_listobject[1], dt);
+	_listobject[0]->checkCollision(_listobject[2], dt);
 }
 
 void PlayScene::draw(LPD3DXSPRITE spriteHandle)
