@@ -73,6 +73,11 @@ void Bullet::release()
 {
 }
 
+int Bullet::getDamage()
+{
+	return _damage;
+}
+
 GVector2 Bullet::getVelocity()
 {
 	auto move = (Movement*)this->_componentList["Movement"];
