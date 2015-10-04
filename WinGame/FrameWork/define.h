@@ -55,7 +55,8 @@ enum eStatus
 	AIMING_DOWN		= (1 << 12),
 	HIDING			= (1 << 13),
 	EXPOSING		= (1 << 14),
-	FALLING			= (1 << 15)
+	FALLING			= (1 << 15),
+	HOLDING			= (1 << 16)
 };
 
 enum ePhysicsBody

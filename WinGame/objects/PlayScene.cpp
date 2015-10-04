@@ -57,9 +57,12 @@ bool PlayScene::init()
 	box1->setPosition(400, 180);
 	_listobject.push_back(box1);
 
-	auto bridge = new Bridge(BRIDGE_POSITION);
+	auto bridge = new Bridge(GVector2(150, 220));
 	bridge->init();
+	bridge->setPhysicsBodyType(ePhysicsBody::LAND);
+	//bridge->setPositionY(100);
 	_listobject.push_back(bridge);
+
 	//auto box2 = new MyBox(1);
 	//box2->init();
 	//box2->setPosition(500, 180);
@@ -117,7 +120,7 @@ void PlayScene::update(float dt)
 
 	_listobject[0]->checkCollision(_listobject[1], dt);
 	_listobject[0]->checkCollision(_listobject[2], dt);
-
+	_listobject[0]->checkCollision(_listobject[3], dt);
 }
 
 void PlayScene::draw(LPD3DXSPRITE spriteHandle)

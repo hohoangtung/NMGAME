@@ -9,10 +9,10 @@
 #include "CollisionBody.h"
 
 #define BILL_MOVE_SPEED 50
-#define BILL_JUMP_VEL 500
+#define BILL_JUMP_VEL 300
 #define BILL_ACC_MOVE 300
 #define TEST_LAND 200
-#define GRAVITY 800
+#define GRAVITY 500
 
 [event_receiver(native)]
 class Bill : public BaseObject, public IControlable

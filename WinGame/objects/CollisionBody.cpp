@@ -17,7 +17,7 @@ void CollisionBody::checkCollision(BaseObject * otherObject, float dt)
 
 	if (time < 1.0f)
 	{
-		if ((_physicsObjects & otherObject->getPhysicsBodyType()) == otherObject->getPhysicsBodyType())
+		if (otherObject->getPhysicsBodyType() != ePhysicsBody::NOTHING || (_physicsObjects & otherObject->getPhysicsBodyType()) == otherObject->getPhysicsBodyType())
 		{
 			auto v = _target->getVelocity();
 			auto pos = _target->getPosition();
@@ -55,7 +55,7 @@ void CollisionBody::checkCollision(BaseObject * otherObject, float dt)
 	{
 		if (isColliding(_target->getBounding(), otherObject->getBounding()))	// nếu đang va chạm thì set position nếu có
 		{
-			if ((_physicsObjects & otherObject->getPhysicsBodyType()) != otherObject->getPhysicsBodyType())
+			if (otherObject->getPhysicsBodyType() == ePhysicsBody::NOTHING || (_physicsObjects & otherObject->getPhysicsBodyType()) != otherObject->getPhysicsBodyType())
 				return;
 
 			auto position = _target->getPosition();
@@ -74,7 +74,7 @@ void CollisionBody::checkCollision(BaseObject * otherObject, float dt)
 			else if (side == eDirection::BOTTOM)
 			{
 				auto h = _target->getSprite()->getFrameHeight();
-				_target->setPositionY(otherObject->getBounding().bottom - _target->getOrigin().y * h);
+				_target->setPositionY(otherObject->getBounding().bottom - (1 - _target->getOrigin().y) * h);
 			}
 			else if (side == eDirection::RIGHT)
 			{

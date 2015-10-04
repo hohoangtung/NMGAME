@@ -70,7 +70,7 @@ void Bill::init()
 	_animations[eStatus::SHOOTING | eStatus::RUNNING] = new Animation(_sprite, 0.1f);
 	_animations[eStatus::SHOOTING | eStatus::RUNNING]->addFrameRect(eID::BILL, "run_shot_01", "run_shot_02", "run_shot_03", "run_shot_01", "run_shot_02", "run_shot_03", NULL);
 
-	_sprite->drawBounding(true);
+	_sprite->drawBounding(false);
 	this->setOrigin(GVector2(0.5f, 0.0f));
 
 	_sideCollide = false;
@@ -201,9 +201,9 @@ void Bill::onKeyReleased(KeyEventArg * key_event)
 
 void Bill::onCollisionBegin(CollisionEventArg * collision_event)
 {
-	if (collision_event->_otherObject->getId() == eID::BOX)
+	if (collision_event->_otherObject->getId() == eID::BOX || collision_event->_otherObject->getId() == eID::BRIDGE)
 	{
-		if (collision_event->_sideCollision == eDirection::TOP)
+		//if (collision_event->_sideCollision == eDirection::TOP)
 		{
 			auto gravity = (Gravity*)this->_componentList["Gravity"];
 			gravity->setStatus(eGravityStatus::SHALLOWED);
@@ -216,7 +216,7 @@ void Bill::onCollisionBegin(CollisionEventArg * collision_event)
 
 void Bill::onCollisionEnd(CollisionEventArg * collision_event)
 {
-	if (collision_event->_otherObject->getId() == eID::BOX)
+	if (collision_event->_otherObject->getId() == eID::BOX || collision_event->_otherObject->getId() == eID::BRIDGE)
 	{
 		//if (_canStand.size() > 0)
 			//_canStand.pop_front();
@@ -354,6 +354,11 @@ void Bill::updateCurrentAnimateIndex()
 	if ((_currentAnimateIndex & eStatus::FALLING) == eStatus::FALLING)
 	{
 		_currentAnimateIndex = (eStatus)(_currentAnimateIndex & ~(eStatus::FALLING));
+	}
+
+	if ((_currentAnimateIndex & eStatus::HOLDING) == eStatus::HOLDING)
+	{
+		_currentAnimateIndex = (eStatus)(_currentAnimateIndex & ~(eStatus::HOLDING));
 	}
 
 	if ((_currentAnimateIndex & eStatus::MOVING_LEFT) == eStatus::MOVING_LEFT || ((_currentAnimateIndex & eStatus::MOVING_RIGHT) == eStatus::MOVING_RIGHT))
