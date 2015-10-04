@@ -1,11 +1,11 @@
 #include "PlayScene.h"
 
 
-Viewport* PlayScene::_viewport = new Viewport(0, WINDOW_HEIGHT);
+//Viewport* PlayScene::_viewport = new Viewport(0, WINDOW_HEIGHT);
 
 PlayScene::PlayScene()
 {
-	//_viewport = new Viewport(0,600);
+	_viewport = new Viewport(0, WINDOW_HEIGHT, WINDOW_WIDTH, WINDOW_HEIGHT);
 }
 
 PlayScene::~PlayScene()
@@ -19,10 +19,10 @@ void PlayScene::setViewport(Viewport * viewport)
 		_viewport = viewport;
 }
 
-Viewport * PlayScene::getViewport()
-{
-	return _viewport;
-}
+//Viewport * PlayScene::getViewport()
+//{
+//	return _viewport;
+//}
 
 bool PlayScene::init()
 {

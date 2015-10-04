@@ -1,0 +1,2 @@
+frame_name	left	top	right	bottom
+normal_bullet	58	42	60	44

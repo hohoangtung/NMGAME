@@ -41,7 +41,7 @@ void Soldier::init()
 
 void Soldier::draw(LPD3DXSPRITE spritehandle, Viewport* viewport)
 {
-	this->_sprite->render(spritehandle, PlayScene::getViewport());
+	this->_sprite->render(spritehandle, viewport);
 	_animations[this->getStatus()]->draw(spritehandle, viewport);
 }
 

@@ -97,6 +97,24 @@ void Bill::update(float deltatime)
 
 	_animations[_currentAnimateIndex]->update(deltatime);
 
+	// bullet
+	for (auto it = _listBullets.begin(); it != _listBullets.end(); it++)
+	{
+		// tạm để cho nó hết màn hình nó xóa
+		(*it)->update(deltatime);
+		if ((*it)->getPositionX() < 0 || (*it)->getPositionX() > SceneManager::getInstance()->getCurrentScene()->getViewport()->getWidth() ||
+			(*it)->getPositionY() < 0 || (*it)->getPositionY() > SceneManager::getInstance()->getCurrentScene()->getViewport()->getHeight()
+			)
+		{
+			auto temp = it;
+			it++;
+			_listBullets.erase(temp);
+		}
+
+		if (_listBullets.size() <= 0)
+			break;
+	}
+
 	// update component để sau cùng để sửa bên trên sau đó nó cập nhật đúng
 	for (auto it = _componentList.begin(); it != _componentList.end(); it++)
 	{
@@ -112,12 +130,19 @@ void Bill::updateInput(float dt)
 void Bill::draw(LPD3DXSPRITE spriteHandle, Viewport* viewport)
 {
 	_animations[_currentAnimateIndex]->draw(spriteHandle, viewport);
+
+	for (auto it = _listBullets.begin(); it != _listBullets.end(); it++)
+	{
+		(*it)->draw(spriteHandle, viewport);
+	}
 }
 
 void Bill::release()
 {
 	//_sprite->release();
 	_animations.clear();
+
+	_listBullets.clear();
 }
 
 void Bill::onKeyPressed(KeyEventArg* key_event)
@@ -158,6 +183,10 @@ void Bill::onKeyPressed(KeyEventArg* key_event)
 	case DIK_X:
 	{
 		this->addStatus(eStatus::SHOOTING);
+
+		// shoot
+		this->shoot();
+
 		break;
 	}
 	default:
@@ -237,6 +266,11 @@ float Bill::checkCollision(BaseObject * object, float dt)
 	auto collisionBody = (CollisionBody*)_componentList["CollisionBody"];
 	collisionBody->checkCollision(object, dt);
 
+	for (auto it = _listBullets.begin(); it != _listBullets.end(); it++)
+	{
+		(*it)->checkCollision(object, dt);
+	}
+
 	return 0.0f;
 }
 
@@ -289,6 +323,12 @@ void Bill::layDown()
 void Bill::falling()
 {
 
+}
+
+void Bill::shoot()
+{
+	_listBullets.push_back(new Bullet(this->getPosition() + GVector2(0, this->getSprite()->getFrameHeight() / 2), this->getAimingDirection()));
+	_listBullets.back()->init();
 }
 
 void Bill::addStatus(eStatus status)
@@ -371,4 +411,29 @@ void Bill::updateCurrentAnimateIndex()
 	{
 		_currentAnimateIndex = eStatus::JUMPING;
 	}
+}
+
+eDirection Bill::getAimingDirection()
+{
+	eDirection direction;
+
+	if (this->getScale().x < 0)
+		direction = eDirection::LEFT;
+	else
+		direction = eDirection::RIGHT;
+
+	if (this->isInStatus(eStatus::LOOKING_UP))
+	{
+		if (_input->getInstance()->isKeyDown(DIK_LEFT) || _input->getInstance()->isKeyDown(DIK_RIGHT))
+			direction = (eDirection)(direction | eDirection::TOP);
+		else
+			direction = eDirection::TOP;
+	}
+	else if (this->isInStatus(eStatus::LAYING_DOWN))
+	{
+		if (_input->getInstance()->isKeyDown(DIK_LEFT) || _input->getInstance()->isKeyDown(DIK_RIGHT))
+			direction = (eDirection)(direction | eDirection::BOTTOM);
+	}
+
+	return direction;
 }

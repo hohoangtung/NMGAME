@@ -7,6 +7,8 @@
 #include "BaseObject.h"
 #include "IComponent.h"
 #include "CollisionBody.h"
+#include "Bullet.h"
+#include "../FrameWork/Managers/SceneManager.h"
 
 #define BILL_MOVE_SPEED 50
 #define BILL_JUMP_VEL 300
@@ -49,6 +51,7 @@ private:
 	void jump();
 	void layDown();
 	void falling();
+	void shoot();
 	list<bool> _canStand;
 
 	//void setState(int state);
@@ -63,6 +66,10 @@ private:
 	void updateCurrentAnimateIndex();
 
 	bool _sideCollide;
+
+	list<Bullet* > _listBullets;
+
+	eDirection getAimingDirection();
 };
 
 //TEST

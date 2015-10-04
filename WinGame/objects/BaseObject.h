@@ -68,7 +68,6 @@ public:
 	virtual RECT getBounding();
 
 	virtual float checkCollision(BaseObject* object, float dt);
-	virtual float checkCollision(BaseObject* object, eDirection& direction);
 
 	// vật nào cũng có vận tốc, mặc định là đứng yên sẽ return 0
 	// nếu vật có chuyển động phải override lại để lấy vận tốc.

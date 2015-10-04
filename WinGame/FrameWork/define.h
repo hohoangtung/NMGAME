@@ -33,7 +33,8 @@ enum eID
 	BOX,
 	BRIDGE,
 	QUADEXPLODE,
-	MAPSTAGE1
+	MAPSTAGE1,
+	BULLET
 };
 
 enum eStatus
@@ -73,6 +74,11 @@ enum eDirection
 	BOTTOM			= 2,
 	LEFT			= 4,
 	RIGHT			= 8
+};
+
+enum eBulletType
+{
+	NORMAL_BULLET,
 };
 
 typedef D3DXVECTOR3 GVector3;
