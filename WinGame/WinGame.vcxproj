@@ -19,7 +19,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v120</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
@@ -41,8 +41,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Lib\x86;$(LibraryPath)</LibraryPath>
+    <IncludePath>E:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;$(IncludePath)</IncludePath>
+    <LibraryPath>E:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -111,10 +111,12 @@
     <ClCompile Include="FrameWork\Viewport.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Map\Map.cpp" />
     <ClCompile Include="objects\AirCraft.cpp" />
     <ClCompile Include="objects\BaseEnemy.cpp" />
     <ClCompile Include="objects\BaseObject.cpp" />
     <ClCompile Include="objects\Bill.cpp" />
+    <ClCompile Include="objects\Bridge.cpp" />
     <ClCompile Include="objects\CollisionBody.cpp" />
     <ClCompile Include="objects\Explosion.cpp" />
     <ClCompile Include="objects\Falcon.cpp" />
@@ -146,10 +148,12 @@
     <ClInclude Include="FrameWork\TimeSpan.h" />
     <ClInclude Include="FrameWork\Viewport.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="Map\Map.h" />
     <ClInclude Include="objects\AirCraft.h" />
     <ClInclude Include="objects\BaseEnemy.h" />
     <ClInclude Include="objects\BaseObject.h" />
     <ClInclude Include="objects\Bill.h" />
+    <ClInclude Include="objects\Bridge.h" />
     <ClInclude Include="objects\CollisionBody.h" />
     <ClInclude Include="objects\Explosion.h" />
     <ClInclude Include="objects\Falcon.h" />

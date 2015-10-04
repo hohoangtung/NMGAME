@@ -6,7 +6,14 @@ void Rifleman::init()
 {
 	_sprite = SpriteManager::getInstance()->getSprite(eID::RIFLEMAN);
 	_sprite->setFrameRect(0, 0, 23, 38);
-	_sprite->setPosition(500, 400);
+	this->setPosition(500, 400);
+	this->setStatus(NORMAL);
+
+	auto collisionBody = new CollisionBody(this);
+	_listComponent["CollisionBody"] = collisionBody;
+
+	__hook(&CollisionBody::onCollisionBegin, collisionBody, &Rifleman::onCollisionBegin);
+	__hook(&CollisionBody::onCollisionEnd, collisionBody, &Rifleman::onCollisionEnd);
 
 	_animations[NORMAL] = new Animation(_sprite, 0.15f);
 	_animations[NORMAL]->addFrameRect(eID::RIFLEMAN, "normal_01", NULL);
@@ -121,3 +128,9 @@ void Rifleman::update(float deltatime)
 	}
 	_animations[this->getStatus()]->update(deltatime);
 }
+
+void Rifleman::setStatus(eStatus status) {
+	if (_status != status)
+		_status = status;
+}
+

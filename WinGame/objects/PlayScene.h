@@ -9,6 +9,7 @@
 #include "../FrameWork/Text.h"
 #include "../FrameWork/Animation.h"
 #include "../debug.h"
+#include "../Map/Map.h"
 
 #include "BaseObject.h"
 #include "Bill.h"
@@ -18,6 +19,7 @@
 #include "Falcon.h"
 #include "AirCraft.h"
 #include "Rifleman.h"
+#include "Bridge.h"
 using namespace std;
 US_FRAMEWORK
 
@@ -42,6 +44,7 @@ private:
 	vector<BaseObject*> _listobject;
 	vector<IControlable*> _listControlObject;
 	Animation* _animation;
+	Map* background;
 };
 
 #endif // !__PLAY_SCENE_H__

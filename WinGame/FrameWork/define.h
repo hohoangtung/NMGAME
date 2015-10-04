@@ -30,7 +30,10 @@ enum eID
 	AIRCRAFT,
 	EXPLOSION,
 	RIFLEMAN,
-	BOX
+	BOX,
+	BRIDGE,
+	QUADEXPLODE,
+	MAPSTAGE1
 };
 
 enum eStatus

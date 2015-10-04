@@ -1,6 +1,11 @@
-
+﻿
 
 #include "Explosion.h"
+/*
+	Explosion dùng để tạo vụ nổ khi nhân vật hoặc đối tượng chết.
+	hiện tại có 2 kiểu nổ. (xem hình resource)
+	lớp nào chứa explosion nhớ quản lý huỷ đối tương này
+*/
 Explosion::Explosion(int type) : BaseObject(eID::EXPLOSION)
 {
 	this->_type = type;
@@ -39,6 +44,8 @@ void Explosion::init()
 
 void Explosion::update(float deltatime)
 {
+	if (this->getStatus() != eStatus::NORMAL)
+		return;
 	this->_animation->update(deltatime);
 	if (this->_animation->getIndex() == 5)
 	{
@@ -53,6 +60,8 @@ void Explosion::setPosition(GVector2 position)
 
 void Explosion::draw(LPD3DXSPRITE spriteHandle, Viewport* viewport)
 {
+	if (this->getStatus() != eStatus::NORMAL)
+		return;
 	this->_animation->draw(spriteHandle, viewport);
 }
 void Explosion::release()
