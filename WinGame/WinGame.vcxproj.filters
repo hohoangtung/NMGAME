@@ -123,6 +123,21 @@
     <ClCompile Include="objects\CollisionBody.cpp">
       <Filter>Source Files\Objects</Filter>
     </ClCompile>
+    <ClCompile Include="objects\AirCraft.cpp">
+      <Filter>Source Files\Objects\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="objects\BaseEnemy.cpp">
+      <Filter>Source Files\Objects\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="objects\Explosion.cpp">
+      <Filter>Source Files\Objects\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="objects\mario.cpp">
+      <Filter>Source Files\Objects\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="objects\Rifleman.cpp">
+      <Filter>Source Files\Objects\GameObjects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FrameWork\Sprite.h">
@@ -211,6 +226,18 @@
     </ClInclude>
     <ClInclude Include="objects\CollisionBody.h">
       <Filter>Header Files\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="objects\Rifleman.h">
+      <Filter>Header Files\Objects\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="objects\Explosion.h">
+      <Filter>Header Files\Objects\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="objects\BaseEnemy.h">
+      <Filter>Header Files\Objects\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="objects\AirCraft.h">
+      <Filter>Header Files\Objects\GameObjects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
