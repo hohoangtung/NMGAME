@@ -6,6 +6,13 @@ Bullet::Bullet(GVector2 startPosition, eDirection dir) : BaseObject(eID::BULLET)
 	_direction = dir;
 }
 
+Bullet::Bullet(GVector2 startPosition, float degree) : BaseObject(eID::BULLET)
+{
+	_startPosition = startPosition;
+	_direction = eDirection::NONE;
+	_degree = degree;
+}
+
 Bullet::~Bullet()
 {
 }
@@ -21,30 +28,39 @@ void Bullet::init()
 
 	GVector2 veloc;
 
-	if ((_direction & eDirection::LEFT) == eDirection::LEFT)
+	if (_direction != eDirection::NONE)
 	{
-		veloc.x = - NORMAL_BULLET_SPEED;
-	}
-	else if ((_direction & eDirection::RIGHT) == eDirection::RIGHT)
-	{
-		veloc.x = NORMAL_BULLET_SPEED;
-	}
-	else
-	{
-		veloc.x = 0;
-	}
+		if ((_direction & eDirection::LEFT) == eDirection::LEFT)
+		{
+			veloc.x = -NORMAL_BULLET_SPEED;
+		}
+		else if ((_direction & eDirection::RIGHT) == eDirection::RIGHT)
+		{
+			veloc.x = NORMAL_BULLET_SPEED;
+		}
+		else
+		{
+			veloc.x = 0;
+		}
 
-	if ((_direction & eDirection::TOP) == eDirection::TOP)
-	{
-		veloc.y = NORMAL_BULLET_SPEED;
-	}
-	else if ((_direction & eDirection::BOTTOM) == eDirection::BOTTOM)
-	{
-		veloc.y = -NORMAL_BULLET_SPEED;
+		if ((_direction & eDirection::TOP) == eDirection::TOP)
+		{
+			veloc.y = NORMAL_BULLET_SPEED;
+		}
+		else if ((_direction & eDirection::BOTTOM) == eDirection::BOTTOM)
+		{
+			veloc.y = -NORMAL_BULLET_SPEED;
+		}
+		else
+		{
+			veloc.y = 0;
+		}
 	}
 	else
 	{
-		veloc.y = 0;
+		auto rad = _degree * M_PI / 180;
+		veloc.x = sin(rad) * NORMAL_BULLET_SPEED;
+		veloc.y = cos(rad) * NORMAL_BULLET_SPEED;
 	}
 
 	auto movement = new Movement(GVector2(0, 0), veloc, _sprite);

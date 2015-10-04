@@ -102,17 +102,17 @@ void Bill::update(float deltatime)
 	{
 		// tạm để cho nó hết màn hình nó xóa
 		(*it)->update(deltatime);
-		if ((*it)->getPositionX() < 0 || (*it)->getPositionX() > SceneManager::getInstance()->getCurrentScene()->getViewport()->getWidth() ||
-			(*it)->getPositionY() < 0 || (*it)->getPositionY() > SceneManager::getInstance()->getCurrentScene()->getViewport()->getHeight()
-			)
-		{
-			auto temp = it;
-			it++;
-			_listBullets.erase(temp);
-		}
+		//if ((*it)->getPositionX() < 0 || (*it)->getPositionX() > SceneManager::getInstance()->getCurrentScene()->getViewport()->getWidth() ||
+		//	(*it)->getPositionY() < 0 || (*it)->getPositionY() > SceneManager::getInstance()->getCurrentScene()->getViewport()->getHeight()
+		//	)
+		//{
+		//	auto temp = it;
+		//	it++;
+		//	_listBullets.erase(temp);
+		//}
 
-		if (_listBullets.size() <= 0)
-			break;
+		//if (_listBullets.size() <= 0)
+		//	break;
 	}
 
 	// update component để sau cùng để sửa bên trên sau đó nó cập nhật đúng
@@ -327,23 +327,58 @@ void Bill::falling()
 
 void Bill::shoot()
 {
-	_listBullets.push_back(new Bullet(this->getPosition() + GVector2(0, this->getSprite()->getFrameHeight() / 2), this->getAimingDirection()));
+	float angle = 0.0f;
+	auto direction = getAimingDirection();
+	auto pos = this->getPosition() + GVector2(0, this->getSprite()->getFrameHeight() / 2);
+
+	if (this->isInStatus(eStatus::LAYING_DOWN))
+	{
+		pos.y -= 5;
+	}
+	
+	if (direction == eDirection::TOP)
+	{
+		angle = 0.0f;
+		pos.x += 5.0f;
+		pos.y += this->getSprite()->getFrameHeight() / 2;
+	}
+	else if (direction == (eDirection::TOP | eDirection::RIGHT))
+	{
+		angle = 50.0f;
+		pos.x += this->getSprite()->getFrameWidth() / 2;
+		pos.y += 14;
+	}
+	else if (direction == (eDirection::TOP | eDirection::LEFT))
+	{
+		angle = -50.0f;
+		pos.x -= this->getSprite()->getFrameWidth() / 2;
+		pos.y += 14;
+	}
+	else if (direction == eDirection::LEFT)
+	{
+		angle = -90.0f;
+		pos.x -= this->getSprite()->getFrameWidth() / 2;
+		pos.y += 5;
+	}
+	else if (direction == eDirection::RIGHT)
+	{
+		angle = 90.0f;
+		pos.x += this->getSprite()->getFrameWidth() / 2;
+		pos.y += 5;
+	}
+	else if (direction == (eDirection::BOTTOM | eDirection::RIGHT))
+	{
+		angle = 130.0f;
+		pos.x += this->getSprite()->getFrameWidth() / 2;
+	}
+	else if (direction == (eDirection::BOTTOM | eDirection::LEFT))
+	{
+		angle = -130.0f;
+		pos.x -= this->getSprite()->getFrameWidth() / 2;
+	}
+		
+	_listBullets.push_back(new Bullet(pos, angle));
 	_listBullets.back()->init();
-}
-
-void Bill::addStatus(eStatus status)
-{
-	this->setStatus(eStatus(this->getStatus() | status));
-}
-
-void Bill::removeStatus(eStatus status)
-{
-	this->setStatus(eStatus(this->getStatus() & ~status));
-}
-
-bool Bill::isInStatus(eStatus status)
-{
-	return (this->getStatus() & status) == status;
 }
 
 GVector2 Bill::getVelocity()

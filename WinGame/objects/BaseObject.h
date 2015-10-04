@@ -34,6 +34,9 @@ public:
 	eID getId();
 	eStatus getStatus();
 	virtual void setStatus(eStatus status);
+	virtual void addStatus(eStatus status);
+	virtual void removeStatus(eStatus status);
+	virtual bool isInStatus(eStatus status);
 
 	virtual GVector2 getPosition();
 	virtual float getPositionX();
