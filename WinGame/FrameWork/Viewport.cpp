@@ -33,12 +33,12 @@ GVector2 Viewport::getPositionWorld()
 
 float Viewport::getWidth()
 {
-	return _height;
+	return _width;
 }
 
 float Viewport::getHeight()
 {
-	return _width;
+	return _height;
 }
 
 GVector3 Viewport::getPositionInViewport(GVector3* position)

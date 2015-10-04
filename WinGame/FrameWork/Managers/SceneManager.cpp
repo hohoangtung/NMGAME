@@ -81,3 +81,11 @@ void SceneManager::clearScenes()
 		_scenes.pop_back();
 	}
 }
+
+Scene * SceneManager::getCurrentScene()
+{
+	if (!_scenes.empty())
+		return _scenes.back();
+
+	return nullptr;
+}

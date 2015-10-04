@@ -36,9 +36,10 @@ public:
 	void release() override;
 
 	void setViewport(Viewport* viewport);
-	static Viewport* getViewport();
+	//static Viewport* getViewport();
+
 private:
-	static Viewport* _viewport;
+	//static Viewport* _viewport;
 	Sprite* sprite;
 	Text* _text;
 	vector<BaseObject*> _listobject;

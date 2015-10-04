@@ -2,6 +2,7 @@
 #define _BASE_ENEMY_H
 
 #include "BaseObject.h"
+#include "CollisionBody.h"
 
 class BaseEnemy : public BaseObject 
 {
@@ -12,6 +13,8 @@ public:
 	void setHitpoint(int);
     int getScore();
 	void setScore(int);
+	void onCollisionBegin(CollisionEventArg*);
+	void onCollisionEnd(CollisionEventArg*);
 
 	virtual ~BaseEnemy() {}
 

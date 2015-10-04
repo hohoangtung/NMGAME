@@ -7,12 +7,13 @@
 #include "BaseObject.h"
 #include "IComponent.h"
 #include "CollisionBody.h"
+#include "Bullet.h"
+#include "../FrameWork/Managers/SceneManager.h"
 
 #define BILL_MOVE_SPEED 50
-#define BILL_JUMP_VEL 500
-#define BILL_ACC_MOVE 300
+#define BILL_JUMP_VEL 300
 #define TEST_LAND 200
-#define GRAVITY 800
+#define GRAVITY 500
 
 [event_receiver(native)]
 class Bill : public BaseObject, public IControlable
@@ -40,18 +41,18 @@ public:
 private:
 	map<int, Animation*> _animations;
 	map<string, IComponent*> _componentList;
+	
+	float _movingSpeed;
 
 	void standing();
 	void moveLeft();
 	void moveRight();
 	void jump();
 	void layDown();
+	void falling();
+	void shoot();
+	list<bool> _canStand;
 
-	//void setState(int state);
-	void addStatus(eStatus status);
-	void removeStatus(eStatus status);
-	bool isInStatus(eStatus status);
-	
 	GVector2 getVelocity();
 	void updateStatus(float dt);
 
@@ -59,6 +60,10 @@ private:
 	void updateCurrentAnimateIndex();
 
 	bool _sideCollide;
+
+	list<Bullet* > _listBullets;
+
+	eDirection getAimingDirection();
 };
 
 //TEST
@@ -80,7 +85,9 @@ public:
 		_sprite = SpriteManager::getInstance()->getSprite(eID::BOX);
 		_sprite->setIndex(_index);
 
-		_componentList["CollisionBody"] = new CollisionBody(this);
+		this->setPhysicsBodyType(ePhysicsBody::LAND);
+
+		//_componentList["CollisionBody"] = new CollisionBody(this);
 
 		//if (_index == 1)
 		//{

@@ -5,8 +5,7 @@ void Soldier::init()
 {
 	_sprite = SpriteManager::getInstance()->getSprite(eID::SOLDIER);
 	_sprite->setFrameRect(0, 0, 32.0f, 16.0f);
-	this->_sprite->setPosition(600, 500);
-	// this->setPosition(100, 100);
+	this->setPosition(600, 500);
 	GVector2 v(-SOLDIER_SPEED, 0);
 	GVector2 a(0, 0);
 
@@ -15,6 +14,12 @@ void Soldier::init()
 
 	this->_listComponent.insert(pair<string, IComponent*>("Movement", new Movement(a, v, this->_sprite)));
 	this->_listComponent.insert(pair<string, IComponent*>("Gravity", new Gravity(GVector2(0, -120), (Movement*)(this->getComponent("Movement")))));
+
+	auto collisionBody = new CollisionBody(this);
+	_listComponent["CollisionBody"] = collisionBody;
+
+	__hook(&CollisionBody::onCollisionBegin, collisionBody, &Rifleman::onCollisionBegin);
+	__hook(&CollisionBody::onCollisionEnd, collisionBody, &Rifleman::onCollisionEnd);
 
 	_animations[RUNNING] = new Animation(_sprite, 0.15f);
 	_animations[RUNNING]->addFrameRect(eID::SOLDIER, "run_01", "run_02", "run_03", "run_04", "run_05", "run_06", NULL);
@@ -36,7 +41,7 @@ void Soldier::init()
 
 void Soldier::draw(LPD3DXSPRITE spritehandle, Viewport* viewport)
 {
-	this->_sprite->render(spritehandle, PlayScene::getViewport());
+	this->_sprite->render(spritehandle, viewport);
 	_animations[this->getStatus()]->draw(spritehandle, viewport);
 }
 

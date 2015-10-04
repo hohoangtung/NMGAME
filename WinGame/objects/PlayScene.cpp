@@ -1,11 +1,11 @@
 #include "PlayScene.h"
 
 
-Viewport* PlayScene::_viewport = new Viewport(0, WINDOW_HEIGHT);
+//Viewport* PlayScene::_viewport = new Viewport(0, WINDOW_HEIGHT);
 
 PlayScene::PlayScene()
 {
-	//_viewport = new Viewport(0,600);
+	_viewport = new Viewport(0, WINDOW_HEIGHT, WINDOW_WIDTH, WINDOW_HEIGHT);
 }
 
 PlayScene::~PlayScene()
@@ -19,10 +19,10 @@ void PlayScene::setViewport(Viewport * viewport)
 		_viewport = viewport;
 }
 
-Viewport * PlayScene::getViewport()
-{
-	return _viewport;
-}
+//Viewport * PlayScene::getViewport()
+//{
+//	return _viewport;
+//}
 
 bool PlayScene::init()
 {
@@ -57,12 +57,15 @@ bool PlayScene::init()
 	box1->setPosition(400, 180);
 	_listobject.push_back(box1);
 
-	auto bridge = new Bridge(BRIDGE_POSITION);
+	auto bridge = new Bridge(GVector2(150, 220));
 	bridge->init();
+	bridge->setPhysicsBodyType(ePhysicsBody::LAND);
+	//bridge->setPositionY(100);
 	_listobject.push_back(bridge);
+
 	//auto box2 = new MyBox(1);
 	//box2->init();
-	//box2->setPosition(500, 400);
+	//box2->setPosition(500, 180);
 	//_listobject.push_back(box2);
 
 	_text = new Text(L"Arial", "", 10, 25);
@@ -117,7 +120,7 @@ void PlayScene::update(float dt)
 
 	_listobject[0]->checkCollision(_listobject[1], dt);
 	_listobject[0]->checkCollision(_listobject[2], dt);
-
+	_listobject[0]->checkCollision(_listobject[3], dt);
 }
 
 void PlayScene::draw(LPD3DXSPRITE spriteHandle)

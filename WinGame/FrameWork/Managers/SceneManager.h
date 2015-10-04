@@ -21,6 +21,7 @@ public:
 	void removeScene();
 	void replaceScene(Scene* scene);
 	void clearScenes();
+	Scene* getCurrentScene();
 
 private:
 	SceneManager();

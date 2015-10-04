@@ -32,7 +32,8 @@ enum eID
 	BOX,
 	BRIDGE,
 	QUADEXPLODE,
-	MAPSTAGE1
+	MAPSTAGE1,
+	BULLET
 };
 
 enum eStatus
@@ -54,6 +55,15 @@ enum eStatus
 	AIMING_DOWN		= (1 << 12),
 	HIDING			= (1 << 13),
 	EXPOSING		= (1 << 14),
+	FALLING			= (1 << 15),
+	HOLDING			= (1 << 16)
+};
+
+enum ePhysicsBody
+{
+	NOTHING			= 0,
+	LAND			= (1 << 0),
+	MAN				= (1 << 1)
 };
 
 enum eDirection
@@ -63,6 +73,11 @@ enum eDirection
 	BOTTOM			= 2,
 	LEFT			= 4,
 	RIGHT			= 8
+};
+
+enum eBulletType
+{
+	NORMAL_BULLET,
 };
 
 typedef D3DXVECTOR3 GVector3;

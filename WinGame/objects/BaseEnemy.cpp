@@ -19,3 +19,11 @@ int BaseEnemy::getScore()
 {
 	return _score;
 }
+
+void BaseEnemy::onCollisionBegin(CollisionEventArg* collision_event) {
+
+}
+
+void BaseEnemy::onCollisionEnd(CollisionEventArg* collision_event) {
+
+}

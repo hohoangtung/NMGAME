@@ -34,6 +34,9 @@ public:
 	eID getId();
 	eStatus getStatus();
 	virtual void setStatus(eStatus status);
+	virtual void addStatus(eStatus status);
+	virtual void removeStatus(eStatus status);
+	virtual bool isInStatus(eStatus status);
 
 	virtual GVector2 getPosition();
 	virtual float getPositionX();
@@ -68,18 +71,20 @@ public:
 	virtual RECT getBounding();
 
 	virtual float checkCollision(BaseObject* object, float dt);
-	virtual float checkCollision(BaseObject* object, eDirection& direction);
 
 	// vật nào cũng có vận tốc, mặc định là đứng yên sẽ return 0
 	// nếu vật có chuyển động phải override lại để lấy vận tốc.
 	virtual GVector2 getVelocity();
 
+	virtual void setPhysicsBodyType(ePhysicsBody type);
+	virtual ePhysicsBody getPhysicsBodyType();
 protected:
 	Sprite* _sprite;
 	// nếu muốn dùng animation thì class kế thừa khai báo animation
 	// khởi tạo anition thì reference đến sprite
 	eID _id;
 	eStatus _status;
+	ePhysicsBody _physicsType;
 };
 /*
 

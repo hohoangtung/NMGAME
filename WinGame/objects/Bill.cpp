@@ -26,12 +26,16 @@ void Bill::init()
 	__hook(&InputController::__eventkeyPressed, _input, &Bill::onKeyPressed);
 	__hook(&InputController::__eventkeyReleased, _input, &Bill::onKeyReleased);
 
-
 	_sprite = SpriteManager::getInstance()->getSprite(eID::BILL);
-	_componentList["Movement"] = new Movement(GVector2(0, 0), GVector2(0, 0), _sprite);
-	_componentList["Gravity"] = new Gravity(GVector2(0, -GRAVITY), (Movement*)_componentList["Movement"]);
+	auto movement = new Movement(GVector2(0, 0), GVector2(0, 0), _sprite);
+	_componentList["Movement"] = movement;
+	//_componentList["Gravity"] = new Gravity(GVector2(0, -GRAVITY), movement);
+	_componentList["Gravity"] = new Gravity(GVector2(0, -GRAVITY), _sprite);	//test 7ung
 
+	this->setPhysicsBodyType(ePhysicsBody::MAN);				// set kiểu của object hiện tại
 	auto collisionBody = new CollisionBody(this);
+	collisionBody->setPhysicsObjects(ePhysicsBody::LAND);		// set kiểu mà nó va chạm vật lý dừng lại, mặc định ko dừng lại nhưng vẫn báo begin/end
+
 	_componentList["CollisionBody"] = collisionBody;
 
 	__hook(&CollisionBody::onCollisionBegin, collisionBody, &Bill::onCollisionBegin);
@@ -43,11 +47,8 @@ void Bill::init()
 	_animations[eStatus::NORMAL | eStatus::SHOOTING] = new Animation(_sprite, 0.1f);
 	_animations[eStatus::NORMAL | eStatus::SHOOTING]->addFrameRect(eID::BILL, "normal_01", "normal_02", NULL);
 
-	_animations[eStatus::MOVING_RIGHT] = new Animation(_sprite, 0.1f);
-	_animations[eStatus::MOVING_RIGHT]->addFrameRect(eID::BILL, "run_01", "run_02", "run_03", "run_04", "run_05", "run_06", NULL);
-
-	_animations[eStatus::MOVING_LEFT] = new Animation(_sprite, 0.1f);
-	_animations[eStatus::MOVING_LEFT]->addFrameRect(eID::BILL, "run_01", "run_02", "run_03", "run_04", "run_05", "run_06", NULL);
+	_animations[eStatus::RUNNING] = new Animation(_sprite, 0.1f);
+	_animations[eStatus::RUNNING]->addFrameRect(eID::BILL, "run_01", "run_02", "run_03", "run_04", "run_05", "run_06", NULL);
 
 	_animations[eStatus::JUMPING] = new Animation(_sprite, 0.1f);
 	_animations[eStatus::JUMPING]->addFrameRect(eID::BILL, "jump_01", "jump_02", "jump_03", NULL);
@@ -61,42 +62,33 @@ void Bill::init()
 	_animations[eStatus::LOOKING_UP | eStatus::SHOOTING] = new Animation(_sprite, 0.1f);
 	_animations[eStatus::LOOKING_UP | eStatus::SHOOTING]->addFrameRect(eID::BILL, "shot_up_01", "shot_up_02" , NULL);
 
-	_animations[eStatus::LOOKING_UP | eStatus::MOVING_RIGHT] = new Animation(_sprite, 0.1f);
-	_animations[eStatus::LOOKING_UP | eStatus::MOVING_RIGHT]->addFrameRect(eID::BILL, "run_shot_up_01", "run_shot_up_02", "run_shot_up_03", NULL);
+	_animations[eStatus::LOOKING_UP | eStatus::RUNNING] = new Animation(_sprite, 0.1f);
+	_animations[eStatus::LOOKING_UP | eStatus::RUNNING]->addFrameRect(eID::BILL, "run_shot_up_01", "run_shot_up_02", "run_shot_up_03", NULL);
 
-	_animations[eStatus::LAYING_DOWN | eStatus::MOVING_RIGHT] = new Animation(_sprite, 0.1f);
-	_animations[eStatus::LAYING_DOWN | eStatus::MOVING_RIGHT]->addFrameRect(eID::BILL, "run_shot_down_01", "run_shot_down_02", "run_shot_down_03", NULL);
+	_animations[eStatus::LAYING_DOWN | eStatus::RUNNING] = new Animation(_sprite, 0.1f);
+	_animations[eStatus::LAYING_DOWN | eStatus::RUNNING]->addFrameRect(eID::BILL, "run_shot_down_01", "run_shot_down_02", "run_shot_down_03", NULL);
 
-	_animations[eStatus::LOOKING_UP | eStatus::MOVING_LEFT] = new Animation(_sprite, 0.1f);
-	_animations[eStatus::LOOKING_UP | eStatus::MOVING_LEFT]->addFrameRect(eID::BILL, "run_shot_up_01", "run_shot_up_02", "run_shot_up_03", NULL);
+	_animations[eStatus::SHOOTING | eStatus::RUNNING] = new Animation(_sprite, 0.1f);
+	_animations[eStatus::SHOOTING | eStatus::RUNNING]->addFrameRect(eID::BILL, "run_shot_01", "run_shot_02", "run_shot_03", "run_shot_01", "run_shot_02", "run_shot_03", NULL);
 
-	_animations[eStatus::LAYING_DOWN | eStatus::MOVING_LEFT] = new Animation(_sprite, 0.1f);
-	_animations[eStatus::LAYING_DOWN | eStatus::MOVING_LEFT]->addFrameRect(eID::BILL, "run_shot_down_01", "run_shot_down_02", "run_shot_down_03", NULL);
-
-	_animations[eStatus::SHOOTING | eStatus::MOVING_LEFT] = new Animation(_sprite, 0.1f);
-	_animations[eStatus::SHOOTING | eStatus::MOVING_LEFT]->addFrameRect(eID::BILL, "run_shot_01", "run_shot_02", "run_shot_03", "run_shot_01", "run_shot_02", "run_shot_03", NULL);
-
-	_animations[eStatus::SHOOTING | eStatus::MOVING_RIGHT] = new Animation(_sprite, 0.1f);
-	_animations[eStatus::SHOOTING | eStatus::MOVING_RIGHT]->addFrameRect(eID::BILL, "run_shot_01", "run_shot_02", "run_shot_03", "run_shot_01", "run_shot_02", "run_shot_03", NULL);
-
-	_sprite->drawBounding(true);
-	_sprite->setOrigin(GVector2(0.5f, 0.0f));
+	_sprite->drawBounding(false);
+	this->setOrigin(GVector2(0.5f, 0.0f));
 
 	_sideCollide = false;
+	_movingSpeed = BILL_MOVE_SPEED;
 
-	this->setStatus(eStatus::NORMAL);
+	this->setStatus(eStatus::FALLING);
 }
 
 void Bill::update(float deltatime)
 {
-	if (_sprite->getPositionY() < TEST_LAND)
+	if (this->getPositionY() < TEST_LAND)
 	{
-		_sprite->setPositionY(TEST_LAND);
+		this->setPositionY(TEST_LAND);
 
 		auto gravity = (Gravity*)this->_componentList["Gravity"];
 		gravity->setStatus(eGravityStatus::SHALLOWED);
 
-		this->removeStatus(eStatus::JUMPING);
 		this->standing();
 	}
 
@@ -105,6 +97,24 @@ void Bill::update(float deltatime)
 	this->updateCurrentAnimateIndex();
 
 	_animations[_currentAnimateIndex]->update(deltatime);
+
+	// bullet
+	for (auto it = _listBullets.begin(); it != _listBullets.end(); it++)
+	{
+		// tạm để cho nó hết màn hình nó xóa
+		(*it)->update(deltatime);
+		//if ((*it)->getPositionX() < 0 || (*it)->getPositionX() > SceneManager::getInstance()->getCurrentScene()->getViewport()->getWidth() ||
+		//	(*it)->getPositionY() < 0 || (*it)->getPositionY() > SceneManager::getInstance()->getCurrentScene()->getViewport()->getHeight()
+		//	)
+		//{
+		//	auto temp = it;
+		//	it++;
+		//	_listBullets.erase(temp);
+		//}
+
+		//if (_listBullets.size() <= 0)
+		//	break;
+	}
 
 	// update component để sau cùng để sửa bên trên sau đó nó cập nhật đúng
 	for (auto it = _componentList.begin(); it != _componentList.end(); it++)
@@ -121,12 +131,19 @@ void Bill::updateInput(float dt)
 void Bill::draw(LPD3DXSPRITE spriteHandle, Viewport* viewport)
 {
 	_animations[_currentAnimateIndex]->draw(spriteHandle, viewport);
+
+	for (auto it = _listBullets.begin(); it != _listBullets.end(); it++)
+	{
+		(*it)->draw(spriteHandle, viewport);
+	}
 }
 
 void Bill::release()
 {
 	//_sprite->release();
 	_animations.clear();
+
+	_listBullets.clear();
 }
 
 void Bill::onKeyPressed(KeyEventArg* key_event)
@@ -167,6 +184,10 @@ void Bill::onKeyPressed(KeyEventArg* key_event)
 	case DIK_X:
 	{
 		this->addStatus(eStatus::SHOOTING);
+
+		// shoot
+		this->shoot();
+
 		break;
 	}
 	default:
@@ -210,29 +231,34 @@ void Bill::onKeyReleased(KeyEventArg * key_event)
 
 void Bill::onCollisionBegin(CollisionEventArg * collision_event)
 {
-	if (collision_event->_otherObject->getId() == eID::BOX)
+	if (collision_event->_otherObject->getId() == eID::BOX || collision_event->_otherObject->getId() == eID::BRIDGE)
 	{
-		if (collision_event->_sideCollision == eDirection::TOP)
+		//if (collision_event->_sideCollision == eDirection::TOP)
 		{
 			auto gravity = (Gravity*)this->_componentList["Gravity"]; 
 			gravity->setStatus(eGravityStatus::SHALLOWED);
-
-			this->removeStatus(eStatus::JUMPING);
+			
 			this->standing();
-		}
-		else if (collision_event->_sideCollision == eDirection::LEFT || collision_event->_sideCollision == eDirection::RIGHT)
-		{
-			// không cho nó di chuyển
+			//_canStand.push_back(true);
 		}
 	}
 }
 
 void Bill::onCollisionEnd(CollisionEventArg * collision_event)
 {
-	if (collision_event->_otherObject->getId() == eID::BOX)
+	if (collision_event->_otherObject->getId() == eID::BOX || collision_event->_otherObject->getId() == eID::BRIDGE)
 	{
-		auto gravity = (Gravity*)this->_componentList["Gravity"];
-		gravity->setStatus(eGravityStatus::FALLING__DOWN);
+		//if (_canStand.size() > 0)
+			//_canStand.pop_front();
+
+		//if(_canStand.size() == 0)
+		{
+			auto gravity = (Gravity*)this->_componentList["Gravity"];
+			gravity->setStatus(eGravityStatus::FALLING__DOWN);
+
+			if (!this->isInStatus(eStatus::JUMPING))
+				this->addStatus(eStatus::FALLING);
+		}
 	}
 }
 
@@ -241,6 +267,11 @@ float Bill::checkCollision(BaseObject * object, float dt)
 	auto collisionBody = (CollisionBody*)_componentList["CollisionBody"];
 	collisionBody->checkCollision(object, dt);
 
+	for (auto it = _listBullets.begin(); it != _listBullets.end(); it++)
+	{
+		(*it)->checkCollision(object, dt);
+	}
+
 	return 0.0f;
 }
 
@@ -248,22 +279,25 @@ void Bill::standing()
 {
 	auto move = (Movement*)this->_componentList["Movement"];
 	move->setVelocity(GVector2(0, 0));
+
+	this->removeStatus(eStatus::JUMPING);
+	this->removeStatus(eStatus::FALLING);
 }
 
 void Bill::moveLeft()
 {
-	_sprite->setScaleX(-1);
+	this->setScaleX(-1);
 
 	auto move = (Movement*)this->_componentList["Movement"];
-	move->setVelocity(GVector2(-BILL_MOVE_SPEED, move->getVelocity().y));
+	move->setVelocity(GVector2(-_movingSpeed, move->getVelocity().y));
 }
 
 void Bill::moveRight()
 {
-	_sprite->setScaleX(1);
+	this->setScaleX(1);
 
 	auto move = (Movement*)this->_componentList["Movement"];
-	move->setVelocity(GVector2(BILL_MOVE_SPEED, move->getVelocity().y));
+	move->setVelocity(GVector2(_movingSpeed, move->getVelocity().y));
 }
 
 void Bill::jump()
@@ -287,19 +321,65 @@ void Bill::layDown()
 	move->setVelocity(GVector2(0, move->getVelocity().y));
 }
 
-void Bill::addStatus(eStatus status)
+void Bill::falling()
 {
-	this->setStatus(eStatus(this->getStatus() | status));
+
 }
 
-void Bill::removeStatus(eStatus status)
+void Bill::shoot()
 {
-	this->setStatus(eStatus(this->getStatus() & ~status));
-}
+	float angle = 0.0f;
+	auto direction = getAimingDirection();
+	auto pos = this->getPosition() + GVector2(0, this->getSprite()->getFrameHeight() / 2);
 
-bool Bill::isInStatus(eStatus status)
-{
-	return (this->getStatus() & status) == status;
+	if (this->isInStatus(eStatus::LAYING_DOWN))
+	{
+		pos.y -= 5;
+	}
+	
+	if (direction == eDirection::TOP)
+	{
+		angle = 0.0f;
+		pos.x += 5.0f;
+		pos.y += this->getSprite()->getFrameHeight() / 2;
+	}
+	else if (direction == (eDirection::TOP | eDirection::RIGHT))
+	{
+		angle = 50.0f;
+		pos.x += this->getSprite()->getFrameWidth() / 2;
+		pos.y += 14;
+	}
+	else if (direction == (eDirection::TOP | eDirection::LEFT))
+	{
+		angle = -50.0f;
+		pos.x -= this->getSprite()->getFrameWidth() / 2;
+		pos.y += 14;
+	}
+	else if (direction == eDirection::LEFT)
+	{
+		angle = -90.0f;
+		pos.x -= this->getSprite()->getFrameWidth() / 2;
+		pos.y += 5;
+	}
+	else if (direction == eDirection::RIGHT)
+	{
+		angle = 90.0f;
+		pos.x += this->getSprite()->getFrameWidth() / 2;
+		pos.y += 5;
+	}
+	else if (direction == (eDirection::BOTTOM | eDirection::RIGHT))
+	{
+		angle = 130.0f;
+		pos.x += this->getSprite()->getFrameWidth() / 2;
+	}
+	else if (direction == (eDirection::BOTTOM | eDirection::LEFT))
+	{
+		angle = -130.0f;
+		pos.x -= this->getSprite()->getFrameWidth() / 2;
+	}
+		
+	_listBullets.push_back(new Bullet(pos, angle));
+	_listBullets.back()->init();
 }
 
 GVector2 Bill::getVelocity()
@@ -322,6 +402,10 @@ void Bill::updateStatus(float dt)
 	{
 		this->layDown();
 	}
+	else if ((this->getStatus() & eStatus::FALLING) == eStatus::FALLING)
+	{
+		this->falling();
+	}
 	else if ((this->getStatus() & eStatus::JUMPING) != eStatus::JUMPING)
 	{
 		this->standing();
@@ -330,13 +414,9 @@ void Bill::updateStatus(float dt)
 
 void Bill::updateCurrentAnimateIndex()
 {
-	if (this->isInStatus(eStatus::JUMPING))
+	if (this->isInStatus(eStatus::SHOOTING) && (this->isInStatus(eStatus::LOOKING_UP) || this->isInStatus(eStatus::LAYING_DOWN)) && (this->isInStatus(eStatus::MOVING_LEFT) || this->isInStatus(eStatus::MOVING_RIGHT)))
 	{
-		_currentAnimateIndex = eStatus::JUMPING;
-	}
-	else if (this->isInStatus(eStatus::SHOOTING) && (this->isInStatus(eStatus::LOOKING_UP) || this->isInStatus(eStatus::LAYING_DOWN))&& (this->isInStatus(eStatus::MOVING_LEFT) || this->isInStatus(eStatus::MOVING_RIGHT)))
-	{
-		_currentAnimateIndex = (eStatus)(this->getStatus() & ~eStatus::SHOOTING);
+		_currentAnimateIndex = (eStatus)(this->getStatus() & ~(eStatus::SHOOTING));
 	}
 	else if (this->isInStatus(eStatus::LAYING_DOWN) && this->isInStatus(eStatus::SHOOTING))
 	{
@@ -346,4 +426,50 @@ void Bill::updateCurrentAnimateIndex()
 	{
 		_currentAnimateIndex = this->getStatus();
 	}
+
+	if ((_currentAnimateIndex & eStatus::FALLING) == eStatus::FALLING)
+	{
+		_currentAnimateIndex = (eStatus)(_currentAnimateIndex & ~(eStatus::FALLING));
+	}
+
+	if ((_currentAnimateIndex & eStatus::HOLDING) == eStatus::HOLDING)
+	{
+		_currentAnimateIndex = (eStatus)(_currentAnimateIndex & ~(eStatus::HOLDING));
+	}
+
+	if ((_currentAnimateIndex & eStatus::MOVING_LEFT) == eStatus::MOVING_LEFT || ((_currentAnimateIndex & eStatus::MOVING_RIGHT) == eStatus::MOVING_RIGHT))
+	{
+		_currentAnimateIndex = (eStatus)(_currentAnimateIndex & ~(eStatus::MOVING_LEFT | MOVING_RIGHT));
+		_currentAnimateIndex = (eStatus)(_currentAnimateIndex | eStatus::RUNNING);
+	}
+
+	if ((_currentAnimateIndex & eStatus::JUMPING) == eStatus::JUMPING)
+	{
+		_currentAnimateIndex = eStatus::JUMPING;
+	}
+}
+
+eDirection Bill::getAimingDirection()
+{
+	eDirection direction;
+
+	if (this->getScale().x < 0)
+		direction = eDirection::LEFT;
+	else
+		direction = eDirection::RIGHT;
+
+	if (this->isInStatus(eStatus::LOOKING_UP))
+	{
+		if (_input->getInstance()->isKeyDown(DIK_LEFT) || _input->getInstance()->isKeyDown(DIK_RIGHT))
+			direction = (eDirection)(direction | eDirection::TOP);
+		else
+			direction = eDirection::TOP;
+	}
+	else if (this->isInStatus(eStatus::LAYING_DOWN))
+	{
+		if (_input->getInstance()->isKeyDown(DIK_LEFT) || _input->getInstance()->isKeyDown(DIK_RIGHT))
+			direction = (eDirection)(direction | eDirection::BOTTOM);
+	}
+
+	return direction;
 }

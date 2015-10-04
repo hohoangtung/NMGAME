@@ -4,6 +4,7 @@ BaseObject::BaseObject(eID id)
 {
 	this->_id = id;
 	this->setStatus(eStatus::NORMAL);
+	_physicsType = ePhysicsBody::NOTHING;
 }
 
 BaseObject::~BaseObject()
@@ -24,6 +25,21 @@ void BaseObject::setStatus(eStatus status)
 {
 	if(_status != status)
 		_status = status;
+}
+
+void BaseObject::addStatus(eStatus status)
+{
+	this->setStatus(eStatus(this->getStatus() | status));
+}
+
+void BaseObject::removeStatus(eStatus status)
+{
+	this->setStatus(eStatus(this->getStatus() & ~status));
+}
+
+bool BaseObject::isInStatus(eStatus status)
+{
+	return (this->getStatus() & status) == status;;
 }
 
 GVector2 BaseObject::getPosition()
@@ -146,12 +162,18 @@ float BaseObject::checkCollision(BaseObject * object, float dt)
 	return 0.0f;
 }
 
-float BaseObject::checkCollision(BaseObject * object, eDirection & direction)
-{
-	return 0.0f;
-}
-
 GVector2 BaseObject::getVelocity()
 {
 	return GVector2(0, 0);
+}
+
+void BaseObject::setPhysicsBodyType(ePhysicsBody type)
+{
+	if (type != _physicsType)
+		_physicsType = type;
+}
+
+ePhysicsBody BaseObject::getPhysicsBodyType()
+{
+	return _physicsType;
 }
