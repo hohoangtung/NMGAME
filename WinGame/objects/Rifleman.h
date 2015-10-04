@@ -2,6 +2,7 @@
 #define _RIFLEMAN_H
 
 #include "BaseEnemy.h"
+#include "CollisionBody.h"
 #include "../FrameWork/Animation.h"
 #include "../Framework/StopWatch.h"
 
@@ -23,6 +24,7 @@ public:
 	double getShootingAngle();
 	void setShootingAngle(double);
 
+	void setStatus(eStatus);
 	IComponent* getComponent(string);
 
 private:
