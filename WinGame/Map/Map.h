@@ -6,6 +6,9 @@
 #include "..\FrameWork\define.h"
 #include "..\FrameWork\SpriteManager.h"
 using namespace std;
+
+#define TILE_WIDTH	15
+#define TILE_HEIGHT 15
 US_FRAMEWORK
 
 class Map
