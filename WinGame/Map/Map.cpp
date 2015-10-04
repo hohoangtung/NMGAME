@@ -18,8 +18,8 @@ void Map::draw(LPD3DXSPRITE spriteHandle)
 	{
 		_sprite->setIndex(_mapIndex[i] - 1);
 		GVector2 pos;
-		pos.x = i % _width * TILE_WIDTH;
-		pos.y = i / _width * TILE_HEIGHT;
+		pos.x = (i % _width) * _framewidth;
+		pos.y = (i / _width) * _frameheight;
 		if (pos.x > WINDOW_WIDTH)
 			continue;
 		if (pos.y > WINDOW_HEIGHT)
@@ -32,6 +32,9 @@ void Map::draw(LPD3DXSPRITE spriteHandle)
 void Map::init(string filepath)
 {
 	_sprite = SpriteManager::getInstance()->getSprite(eID::MAPSTAGE1);
+	_sprite->setZIndex(0.0f);
+	this->_framewidth = _sprite->getFrameWidth();
+	this->_frameheight = _sprite->getFrameHeight();
 	FILE* file;
 	file = fopen(filepath.c_str(), "r");
 	

@@ -1,4 +1,4 @@
-
+﻿
 #ifndef __MAP_H__
 #define __MAP_H__
 #include <string>
@@ -7,8 +7,6 @@
 #include "..\FrameWork\SpriteManager.h"
 using namespace std;
 
-#define TILE_WIDTH	15
-#define TILE_HEIGHT 15
 US_FRAMEWORK
 
 class Map
@@ -21,9 +19,11 @@ public:
 
 private:
 	int* _mapIndex;
-	int _width;
-	int _height;
+	int _width;		// số tile chiều ngang
+	int _height;	// số tile chiều dọc
 	Sprite* _sprite;
+	int _framewidth;
+	int _frameheight;
 };
 
 

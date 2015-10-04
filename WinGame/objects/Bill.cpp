@@ -214,7 +214,7 @@ void Bill::onCollisionBegin(CollisionEventArg * collision_event)
 	{
 		if (collision_event->_sideCollision == eDirection::TOP)
 		{
-			auto gravity = (Gravity*)this->_componentList["Gravity"];
+			auto gravity = (Gravity*)this->_componentList["Gravity"]; 
 			gravity->setStatus(eGravityStatus::SHALLOWED);
 
 			this->removeStatus(eStatus::JUMPING);

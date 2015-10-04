@@ -19,8 +19,21 @@ void CollisionBody::checkCollision(BaseObject * otherObject, float dt)
 	{
 		auto v = _target->getVelocity();
 		auto pos = _target->getPosition();
-
-		_target->setPosition(pos.x + (v.x * dt / 1000) * time, pos.y + (v.y * dt / 1000)  * time);
+		if (_txEntry > _tyEntry)
+		{
+			// xử lý cản left và right
+			if (_txEntry < 1 && _txEntry > 0)
+				pos.x += _dxEntry;
+		}
+		else
+		{
+			// xử lý cản top và bot
+			if (_tyEntry < 1 && _tyEntry > 0)
+				pos.y += _dyEntry;
+		}
+		_target->setPosition(pos);
+		//_target->setPosition(pos.x + (v.x * dt / 1000) * time, pos.y + (v.y * dt / 1000)  * time);
+		/* thay vì gán bằng vận tốc thì mình đã tính được dx dy rồi nên xài nó luôn */ // 7ung
 		_collidePosition = _target->getPosition();
 
 		CollisionEventArg* e = new CollisionEventArg(otherObject);
@@ -37,25 +50,39 @@ void CollisionBody::checkCollision(BaseObject * otherObject, float dt)
 			CollisionEventArg* e = new CollisionEventArg(otherObject);
 			e->_sideCollision = eDirection::NONE;
 
-			__raise onCollisionEnd(e);
-			_isColliding = false;
+			//__raise onCollisionEnd(e);
+			//_isColliding = false;
 		}
 		else
 		{
-			//auto pos = _target->getPosition();
-			//_target->setPosition(pos.x + x, pos.y + y);
+			// 7ung
+			auto pos = _target->getPosition();
+			if (_txEntry > _tyEntry)
+			{
+				// xử lý chỉnh lại toạ độ left và right => còn lỗi. hình như dxentry tính không chính xác
+				if (_txEntry < 0 && _txEntry != -std::numeric_limits<float>::infinity())
+					pos.x += _dxEntry;
+			}
+			else
+			{
+				// xử lý chỉnh lại toạ độ top và bottom
+				if (_tyEntry < 0 && _tyEntry != -std::numeric_limits<float>::infinity())
+					pos.y += _dyEntry;
+			}
+			_target->setPosition(pos);
+			_collidePosition = _target->getPosition();
 		}
 	}
 }
 
 float CollisionBody::isCollide(BaseObject * otherSprite, eDirection & direction, float dt)
 {
-	RECT myRect = _target->getBounding();
+	RECT myRect = _target->getBounding();		
 	RECT otherRect = otherSprite->getBounding();
 
 	// sử dụng Broadphase rect để kt vùng tiếp theo có va chạm ko
-	RECT broadphaseRect = getSweptBroadphaseRect(_target, dt);
-	if (!isColliding(broadphaseRect, otherRect))
+	RECT broadphaseRect = getSweptBroadphaseRect(_target, dt);	// là bound của object được mở rộng ra thêm một phần bằng với vận tốc (dự đoán trước bound)
+	if (!isColliding(broadphaseRect, otherRect))				// kiểm tra tính chồng lắp của 2 hcn
 	{
 		direction = eDirection::NONE;
 		return 1.0f;
@@ -63,7 +90,8 @@ float CollisionBody::isCollide(BaseObject * otherSprite, eDirection & direction,
 
 	//SweptAABB
 	// vận tốc mỗi frame
-	GVector2 velocity = GVector2(_target->getVelocity().x / dt, _target->getVelocity().y / dt);
+	/* chỗ này thử đừng chia thời gian ??? */ //7ung
+	GVector2 velocity = GVector2(_target->getVelocity().x , _target->getVelocity().y);
 
 	// tìm khoảng cách giữa cạnh gần nhất, xa nhất 2 object dx, dy
 	// dx
@@ -211,7 +239,8 @@ bool CollisionBody::isColliding(RECT myRect, RECT otherRect)
 RECT CollisionBody::getSweptBroadphaseRect(BaseObject* object, float dt)
 {
 	// vận tốc mỗi frame
-	auto velocity = GVector2(object->getVelocity().x / dt, object->getVelocity().y / dt);
+	auto velocity = GVector2(object->getVelocity().x * dt / 1000, object->getVelocity().y * dt / 1000);
+	/* chỗ  nên này (* dt /1000) mới hợp lý ???  vì nó là dự đoán toạ đỗ trong frame mới*/ // 7ung
 	auto myRect = object->getBounding();
 
 	RECT rect;
