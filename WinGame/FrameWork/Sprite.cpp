@@ -1,5 +1,4 @@
 ﻿#include "Sprite.h"
-#include "../debug.h"
 
 US_FRAMEWORK
 

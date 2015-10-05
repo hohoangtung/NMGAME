@@ -25,6 +25,9 @@
     <Filter Include="Source Files\Objects">
       <UniqueIdentifier>{37d451bb-82dd-409d-b92d-32deebf860d2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\FrameWork\Managers">
+      <UniqueIdentifier>{1134ef7d-3444-4639-99de-a95ca08cadcc}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Source Files\FrameWork\Managers">
       <UniqueIdentifier>{d5796f74-fceb-4283-bd89-6162e5e5b1b4}</UniqueIdentifier>
     </Filter>
@@ -33,15 +36,6 @@
     </Filter>
     <Filter Include="Source Files\Objects\GameObjects">
       <UniqueIdentifier>{577704fe-4bbd-4b33-8fa0-9820c80b92a2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Managers">
-      <UniqueIdentifier>{1134ef7d-3444-4639-99de-a95ca08cadcc}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Map">
-      <UniqueIdentifier>{d4a27517-8574-448e-bca3-34b3fbd84b37}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Map">
-      <UniqueIdentifier>{f00709a2-6fb2-41fb-94cd-4da8e3cfb9ed}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -129,25 +123,28 @@
     <ClCompile Include="objects\CollisionBody.cpp">
       <Filter>Source Files\Objects</Filter>
     </ClCompile>
-    <ClCompile Include="objects\mario.cpp">
-      <Filter>Source Files\Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="objects\Rifleman.cpp">
-      <Filter>Source Files\Objects\GameObjects</Filter>
-    </ClCompile>
     <ClCompile Include="objects\AirCraft.cpp">
       <Filter>Source Files\Objects\GameObjects</Filter>
     </ClCompile>
     <ClCompile Include="objects\BaseEnemy.cpp">
-      <Filter>Source Files\Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="Map\Map.cpp">
-      <Filter>Source Files\Map</Filter>
+      <Filter>Source Files\Objects\GameObjects</Filter>
     </ClCompile>
     <ClCompile Include="objects\Explosion.cpp">
       <Filter>Source Files\Objects\GameObjects</Filter>
     </ClCompile>
+    <ClCompile Include="objects\mario.cpp">
+      <Filter>Source Files\Objects\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="objects\Rifleman.cpp">
+      <Filter>Source Files\Objects\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Map\Map.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="objects\Bridge.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="objects\Bullet.cpp">
       <Filter>Source Files\Objects\GameObjects</Filter>
     </ClCompile>
     <ClCompile Include="objects\Bullet.cpp">
@@ -195,7 +192,7 @@
       <Filter>Header Files\FrameWork</Filter>
     </ClInclude>
     <ClInclude Include="FrameWork\Managers\SceneManager.h">
-      <Filter>Header Files\Managers</Filter>
+      <Filter>Header Files\FrameWork\Managers</Filter>
     </ClInclude>
     <ClInclude Include="objects\Scene.h">
       <Filter>Header Files\Objects</Filter>
@@ -245,19 +242,22 @@
     <ClInclude Include="objects\Rifleman.h">
       <Filter>Header Files\Objects\GameObjects</Filter>
     </ClInclude>
-    <ClInclude Include="objects\AirCraft.h">
-      <Filter>Header Files\Objects\GameObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="objects\BaseEnemy.h">
-      <Filter>Header Files\Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="Map\Map.h">
-      <Filter>Header Files\Map</Filter>
-    </ClInclude>
     <ClInclude Include="objects\Explosion.h">
       <Filter>Header Files\Objects\GameObjects</Filter>
     </ClInclude>
+    <ClInclude Include="objects\BaseEnemy.h">
+      <Filter>Header Files\Objects\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="objects\AirCraft.h">
+      <Filter>Header Files\Objects\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Map\Map.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="objects\Bridge.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="objects\Bullet.h">
       <Filter>Header Files\Objects\GameObjects</Filter>
     </ClInclude>
     <ClInclude Include="objects\Bullet.h">

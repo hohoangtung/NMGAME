@@ -340,7 +340,7 @@ void Bill::shoot()
 	if (direction == eDirection::TOP)
 	{
 		angle = 0.0f;
-		pos.x += 5.0f;
+		pos.x += this->getScale().x < 0 ? -5 : 5;
 		pos.y += this->getSprite()->getFrameHeight() / 2;
 	}
 	else if (direction == (eDirection::TOP | eDirection::RIGHT))

@@ -19,26 +19,20 @@ void CollisionBody::checkCollision(BaseObject * otherObject, float dt)
 	{
 		if (otherObject->getPhysicsBodyType() != ePhysicsBody::NOTHING || (_physicsObjects & otherObject->getPhysicsBodyType()) == otherObject->getPhysicsBodyType())
 		{
-		auto v = _target->getVelocity();
-		auto pos = _target->getPosition();
-		if (_txEntry > _tyEntry)
-		{
-			// xử lý cản left và right
-			if (_txEntry < 1 && _txEntry > 0)
-				pos.x += _dxEntry;
-		}
-		else
-		{
-			// xử lý cản top và bot
-			if (_tyEntry < 1 && _tyEntry > 0)
-				pos.y += _dyEntry;
-			//__debugoutput(this->_dyEntry);
-		}
-		_target->setPosition(pos);
-		//_target->setPosition(pos.x + (v.x * dt / 1000) * time, pos.y + (v.y * dt / 1000)  * time);
-		/* thay vì gán bằng vận tốc thì mình đã tính được dx dy rồi nên xài nó luôn */ // 7ung
-		//_collidePosition = _target->getPosition();
-
+			auto v = _target->getVelocity();
+			auto pos = _target->getPosition();
+			if (_txEntry > _tyEntry)
+			{
+				// xử lý cản left và right
+				if (_txEntry < 1 && _txEntry > 0)
+					pos.x += _dxEntry;
+			}
+			else
+			{
+				// xử lý cản top và bot
+				if (_tyEntry < 1 && _tyEntry > 0)
+					pos.y += _dyEntry;
+			}
 			_target->setPosition(pos);
 
 			//_target->setPosition(pos.x + (v.x * dt / 1000) * time, pos.y + (v.y * dt / 1000)  * time);
@@ -72,35 +66,32 @@ void CollisionBody::checkCollision(BaseObject * otherObject, float dt)
 
 			auto position = _target->getPosition();
 			auto side = this->getSide(otherObject);
+
 			//OutputDebugString(L"X:");
 			//__debugoutput(this->_dxEntry);
 			//OutputDebugString(L"Y:");
 			//__debugoutput(this->_dyEntry);
+
 			if (side == eDirection::TOP)
 			{
-					auto h = _target->getSprite()->getFrameHeight();
-					_target->setPositionY(otherObject->getBounding().top + _target->getOrigin().y * h);
-					_target->setPositionY(_target->getPositionY() + _dyEntry);
+				auto h = _target->getSprite()->getFrameHeight();
+				_target->setPositionY(otherObject->getBounding().top + _target->getOrigin().y * h);
 			}
 			else if (side == eDirection::LEFT)
 			{
-					auto w = _target->getSprite()->getFrameWidth();
-					_target->setPositionX(otherObject->getBounding().left - _target->getOrigin().x * w);
-					//_target->setPositionX(_target->getPositionX() + _dEntry);
-
+				auto w = _target->getSprite()->getFrameWidth();
+				_target->setPositionX(otherObject->getBounding().left - _target->getOrigin().x * w);
 			}
 			else if (side == eDirection::BOTTOM)
 			{
-					auto h = _target->getSprite()->getFrameHeight();
-					_target->setPositionY(otherObject->getBounding().bottom - (1 - _target->getOrigin().y) * h );
-					//_target->setPositionY(_target->getPositionY() + _dyEntry);
+				auto h = _target->getSprite()->getFrameHeight();
+				_target->setPositionY(otherObject->getBounding().bottom - (1 - _target->getOrigin().y) * h);
 
 			}
 			else if (side == eDirection::RIGHT)
 			{
-					auto w = _target->getSprite()->getFrameWidth();
-					//_target->setPositionX(_target->getPositionX() + _dxEntry);
-					_target->setPositionX(otherObject->getBounding().right + _target->getOrigin().x * w );
+				auto w = _target->getSprite()->getFrameWidth();
+				_target->setPositionX(otherObject->getBounding().right + _target->getOrigin().x * w);
 			}
 		}
 		else // nếu ko va chạm nữa là kết thúc va chạm
@@ -130,9 +121,7 @@ float CollisionBody::isCollide(BaseObject * otherSprite, eDirection & direction,
 
 	//SweptAABB
 	// vận tốc mỗi frame
-	/* chỗ này thử đừng chia thời gian ??? */ //7ung
-	//GVector2 velocity = GVector2(_target->getVelocity().x * dt / 1000, _target->getVelocity().y * dt / 1000);
-	GVector2 velocity = GVector2(_target->getVelocity().x , _target->getVelocity().y );
+	GVector2 velocity = GVector2(_target->getVelocity().x * dt / 1000, _target->getVelocity().y * dt / 1000);
 
 	// tìm khoảng cách giữa cạnh gần nhất, xa nhất 2 object dx, dy
 	// dx
@@ -278,7 +267,6 @@ bool CollisionBody::isColliding(RECT myRect, RECT otherRect)
 RECT CollisionBody::getSweptBroadphaseRect(BaseObject* object, float dt)
 {
 	// vận tốc mỗi frame
-	//auto velocity = GVector2(object->getVelocity().x / dt, object->getVelocity().y / dt);
 	auto velocity = GVector2(object->getVelocity().x * dt / 1000, object->getVelocity().y * dt / 1000);
 	auto myRect = object->getBounding();
 
