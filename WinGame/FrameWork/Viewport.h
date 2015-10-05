@@ -21,7 +21,10 @@ public:
 	float getWidth();
 	float getHeight();
 
+	//7ung 05.10.2015
 	GVector3 getPositionInViewport(GVector3* position);
+	// kiểm tra hcn có nằm trong màn hình không.
+	bool	isContains(const RECT &rect);
 
 private:
 	GVector2 _positionWorld;

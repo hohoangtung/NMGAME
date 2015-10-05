@@ -1,7 +1,5 @@
 ﻿
 #include "Map.h"
-#include "..\debug.h"
-#include <ddraw.h>
 
 Map::Map()
 {
@@ -14,8 +12,14 @@ int i = 0;
 void Map::draw(LPD3DXSPRITE spriteHandle, Viewport* viewport)
 {
 	int lenght = _width * _height;
-	RECT rect;
-
+	RECT screenRect
+	{
+		viewport->getPositionWorld().x,
+		viewport->getPositionWorld().y,
+		viewport->getPositionWorld().x + viewport->getWidth(),
+		viewport->getPositionWorld().y - viewport->getHeight()
+	};
+	RECT bound;
 	for (int i = 0; i < lenght; i++)
 	{
 		_sprite->setIndex(_mapIndex[i] - 1);
@@ -25,11 +29,16 @@ void Map::draw(LPD3DXSPRITE spriteHandle, Viewport* viewport)
 		pos.y = (_height - (i / _width)) * (_frameheight - 0);		// nếu có viewport 
 		//pos.y = (i / _width) * (_frameheight - 1);				// không có viewport
 
-		if (pos.x > WINDOW_WIDTH)
-			continue;
-		if (pos.y > WINDOW_HEIGHT)
-			continue;
 		_sprite->setPosition(pos);
+		bound = _sprite->getBounding();
+		if (bound.right < screenRect.left)
+			continue;
+		if (bound.bottom > screenRect.top)
+			continue;
+		if (bound.left > screenRect.right)
+			continue;
+		if (bound.top < screenRect.bottom)
+			continue;
 		_sprite->render(spriteHandle, viewport);
 
 	}
@@ -39,7 +48,7 @@ void Map::init(string filepath)
 {
 	_sprite = SpriteManager::getInstance()->getSprite(eID::MAPSTAGE1);
 	_sprite->setZIndex(0.0f);
-
+	_sprite->setOrigin(VECTOR2ZERO);
 	this->_framewidth = _sprite->getFrameWidth();
 	this->_frameheight = _sprite->getFrameHeight();
 

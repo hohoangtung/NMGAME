@@ -10,7 +10,6 @@ Sprite::~Sprite()
 Sprite::Sprite(LPD3DXSPRITE spriteHandle, LPWSTR filePath, int totalFrames, int cols)
 {
 	_origin = GVector2(0.5f, 0.5f);
-	//_origin = VECTOR2ZERO;	// just for test
 	_scale = GVector2(1.0f, 1.0f);
 	_zIndex = 1;
 	_rotate = 0.0f;
@@ -250,10 +249,10 @@ RECT Sprite::getFrameRectByIndex(int index)
 {
 	index = index % _totalFrames;
 	RECT rect;
-	rect.left = (long)_currentFrame.x * _frameWidth;
-	rect.right = _frameRect.left + _frameWidth;
-	rect.top = (long)_currentFrame.y * _frameHeight;
-	rect.bottom = _frameRect.top + _frameHeight;
+	rect.left = (long)_currentFrame.x * _frameWidth + 1;
+	rect.right = _frameRect.left + _frameWidth - 1;
+	rect.top = (long)_currentFrame.y * _frameHeight + 1;
+	rect.bottom = _frameRect.top + _frameHeight - 1;
 	return rect;
 }
 

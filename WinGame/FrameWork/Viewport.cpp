@@ -55,3 +55,17 @@ GVector3 Viewport::getPositionInViewport(GVector3* position)
 
 	return GVector3(posViewport.x, posViewport.y, posViewport.z);
 }
+
+bool Viewport::isContains(const RECT &rect)
+{
+	if (rect.right < _positionWorld.x)
+		return false;
+	if (rect.bottom > _positionWorld.y)
+		return false;
+	if (rect.left > _positionWorld.x + _width)
+		return false;
+	if (rect.top < _positionWorld.y - _height)
+		return false;
+	return true;
+}
+

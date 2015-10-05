@@ -1,4 +1,4 @@
-#include "Texture.h"
+﻿#include "Texture.h"
 US_FRAMEWORK
 
 Texture::Texture(void)
@@ -78,8 +78,8 @@ void Texture::render(LPD3DXSPRITE spriteHandle, RECT * srcRect, GVector2 positio
 		0.0f,									
 		&scale,									// ti le scale
 		&position,								// goc toa do / diem neo
-		D3DXToRadian(rotate),					// g�c xoay theo radian
-		0										// vi tr�
+		D3DXToRadian(rotate),					// góc xoay theo radian
+		0										// vi trí
 		);
 
 	matFinal = matTransformed * matOld;
@@ -101,7 +101,8 @@ void Texture::render(LPD3DXSPRITE spriteHandle, RECT * srcRect, Viewport viewpor
 {
 	GVector3 positionViewport;
 	positionViewport = viewport.getPositionInViewport(&GVector3(position.x, position.y, zIndex));
-	render(spriteHandle, srcRect, GVector2(positionViewport.x, positionViewport.y), scale, rotate, origin, positionViewport.z);
+	// ver 05/10/2015 - 7ung : ép kiêu về int. để tránh trường hợp bị hụt pixel 
+	render(spriteHandle, srcRect, GVector2((int)positionViewport.x,(int) positionViewport.y), scale, rotate, origin, positionViewport.z);
 }
 
 void Texture::setColor(D3DXCOLOR color)
