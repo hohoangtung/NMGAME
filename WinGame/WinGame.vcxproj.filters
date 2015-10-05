@@ -147,6 +147,9 @@
     <ClCompile Include="objects\Bullet.cpp">
       <Filter>Source Files\Objects\GameObjects</Filter>
     </ClCompile>
+    <ClCompile Include="objects\Bullet.cpp">
+      <Filter>Source Files\Objects\GameObjects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FrameWork\Sprite.h">
@@ -253,6 +256,9 @@
     </ClInclude>
     <ClInclude Include="objects\Bridge.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="objects\Bullet.h">
+      <Filter>Header Files\Objects\GameObjects</Filter>
     </ClInclude>
     <ClInclude Include="objects\Bullet.h">
       <Filter>Header Files\Objects\GameObjects</Filter>

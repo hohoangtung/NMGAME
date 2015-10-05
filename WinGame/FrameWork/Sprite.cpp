@@ -231,9 +231,9 @@ void Sprite::setFrameRect(float top, float right, float bottom, float left)
 void Sprite::setFrameRect(float x, float y, int width, int height)
 {
 	_frameRect.top = y;
-	_frameRect.right = x + width;
+	_frameRect.right = x + width;	
 	_frameRect.left = x;
-	_frameRect.bottom = y + height;
+	_frameRect.bottom = y + height;	
 
 	_frameWidth = width;
 	_frameHeight = height;

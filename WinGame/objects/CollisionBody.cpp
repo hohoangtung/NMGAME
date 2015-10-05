@@ -1,5 +1,5 @@
 ﻿#include "CollisionBody.h"
-
+#include"..\debug.h"
 CollisionBody::CollisionBody(BaseObject * target)
 {
 	_target = target;
@@ -19,13 +19,24 @@ void CollisionBody::checkCollision(BaseObject * otherObject, float dt)
 	{
 		if (otherObject->getPhysicsBodyType() != ePhysicsBody::NOTHING || (_physicsObjects & otherObject->getPhysicsBodyType()) == otherObject->getPhysicsBodyType())
 		{
-			auto v = _target->getVelocity();
-			auto pos = _target->getPosition();
-
+		auto v = _target->getVelocity();
+		auto pos = _target->getPosition();
+		if (_txEntry > _tyEntry)
+		{
+			// xử lý cản left và right
 			if (_txEntry < 1 && _txEntry > 0)
 				pos.x += _dxEntry;
+		}
+		else
+		{
+			// xử lý cản top và bot
 			if (_tyEntry < 1 && _tyEntry > 0)
 				pos.y += _dyEntry;
+		}
+		_target->setPosition(pos);
+		//_target->setPosition(pos.x + (v.x * dt / 1000) * time, pos.y + (v.y * dt / 1000)  * time);
+		/* thay vì gán bằng vận tốc thì mình đã tính được dx dy rồi nên xài nó luôn */ // 7ung
+		//_collidePosition = _target->getPosition();
 
 			_target->setPosition(pos);
 
@@ -60,26 +71,35 @@ void CollisionBody::checkCollision(BaseObject * otherObject, float dt)
 
 			auto position = _target->getPosition();
 			auto side = this->getSide(otherObject);
-
+			OutputDebugString(L"X:");
+			__debugoutput(this->_dxEntry);
+			OutputDebugString(L"Y:");
+			__debugoutput(this->_dyEntry);
 			if (side == eDirection::TOP)
 			{
-				auto h = _target->getSprite()->getFrameHeight();
-				_target->setPositionY(otherObject->getBounding().top + _target->getOrigin().y * h);
+					auto h = _target->getSprite()->getFrameHeight();
+					_target->setPositionY(otherObject->getBounding().top + _target->getOrigin().y * h + 1);
+					//_target->setPositionY(_target->getPositionY() + _dyEntry);
 			}
 			else if (side == eDirection::LEFT)
 			{
-				auto w = _target->getSprite()->getFrameWidth();
-				_target->setPositionX(otherObject->getBounding().left - _target->getOrigin().x * w );
+					auto w = _target->getSprite()->getFrameWidth();
+					_target->setPositionX(otherObject->getBounding().left - _target->getOrigin().x * w - 1);
+					//_target->setPositionX(_target->getPositionX() + _dEntry);
+
 			}
 			else if (side == eDirection::BOTTOM)
 			{
-				auto h = _target->getSprite()->getFrameHeight();
-				_target->setPositionY(otherObject->getBounding().bottom - (1 - _target->getOrigin().y) * h);
+					auto h = _target->getSprite()->getFrameHeight();
+					_target->setPositionY(otherObject->getBounding().bottom - (1 - _target->getOrigin().y) * h - 1);
+					//_target->setPositionY(_target->getPositionY() + _dyEntry);
+
 			}
 			else if (side == eDirection::RIGHT)
 			{
-				auto w = _target->getSprite()->getFrameWidth();
-				_target->setPositionX(otherObject->getBounding().right + _target->getOrigin().x * w);
+					auto w = _target->getSprite()->getFrameWidth();
+					//_target->setPositionX(_target->getPositionX() + _dxEntry);
+					_target->setPositionX(otherObject->getBounding().right + _target->getOrigin().x * w + 1);
 			}
 		}
 		else // nếu ko va chạm nữa là kết thúc va chạm
@@ -100,8 +120,8 @@ float CollisionBody::isCollide(BaseObject * otherSprite, eDirection & direction,
 	RECT otherRect = otherSprite->getBounding();
 
 	// sử dụng Broadphase rect để kt vùng tiếp theo có va chạm ko
-	RECT broadphaseRect = getSweptBroadphaseRect(_target, dt);
-	if (!isColliding(broadphaseRect, otherRect))
+	RECT broadphaseRect = getSweptBroadphaseRect(_target, dt);	// là bound của object được mở rộng ra thêm một phần bằng với vận tốc (dự đoán trước bound)
+	if (!isColliding(broadphaseRect, otherRect))				// kiểm tra tính chồng lắp của 2 hcn
 	{
 		direction = eDirection::NONE;
 		return 1.0f;
@@ -109,7 +129,9 @@ float CollisionBody::isCollide(BaseObject * otherSprite, eDirection & direction,
 
 	//SweptAABB
 	// vận tốc mỗi frame
-	GVector2 velocity = GVector2(_target->getVelocity().x * dt / 1000, _target->getVelocity().y * dt / 1000);
+	/* chỗ này thử đừng chia thời gian ??? */ //7ung
+	//GVector2 velocity = GVector2(_target->getVelocity().x * dt / 1000, _target->getVelocity().y * dt / 1000);
+	GVector2 velocity = GVector2(_target->getVelocity().x , _target->getVelocity().y );
 
 	// tìm khoảng cách giữa cạnh gần nhất, xa nhất 2 object dx, dy
 	// dx
@@ -143,6 +165,7 @@ float CollisionBody::isCollide(BaseObject * otherSprite, eDirection & direction,
 		_txEntry = -std::numeric_limits<float>::infinity();
 		_txExit = std::numeric_limits<float>::infinity();
 	}
+
 	else
 	{
 		_txEntry = _dxEntry / velocity.x;

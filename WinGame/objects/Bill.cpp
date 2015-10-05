@@ -29,8 +29,9 @@ void Bill::init()
 	_sprite = SpriteManager::getInstance()->getSprite(eID::BILL);
 	auto movement = new Movement(GVector2(0, 0), GVector2(0, 0), _sprite);
 	_componentList["Movement"] = movement;
-	_componentList["Gravity"] = new Gravity(GVector2(0, -GRAVITY), movement);
-	
+	//_componentList["Gravity"] = new Gravity(GVector2(0, -GRAVITY), movement);
+	_componentList["Gravity"] = new Gravity(GVector2(0, -GRAVITY), _sprite);	//test 7ung
+
 	this->setPhysicsBodyType(ePhysicsBody::MAN);				// set kiểu của object hiện tại
 	auto collisionBody = new CollisionBody(this);
 	collisionBody->setPhysicsObjects(ePhysicsBody::LAND);		// set kiểu mà nó va chạm vật lý dừng lại, mặc định ko dừng lại nhưng vẫn báo begin/end
@@ -234,9 +235,9 @@ void Bill::onCollisionBegin(CollisionEventArg * collision_event)
 	{
 		//if (collision_event->_sideCollision == eDirection::TOP)
 		{
-			auto gravity = (Gravity*)this->_componentList["Gravity"];
+			auto gravity = (Gravity*)this->_componentList["Gravity"]; 
 			gravity->setStatus(eGravityStatus::SHALLOWED);
-
+			
 			this->standing();
 			//_canStand.push_back(true);
 		}
