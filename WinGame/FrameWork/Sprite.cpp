@@ -11,6 +11,7 @@ Sprite::~Sprite()
 Sprite::Sprite(LPD3DXSPRITE spriteHandle, LPWSTR filePath, int totalFrames, int cols)
 {
 	_origin = GVector2(0.5f, 0.5f);
+	//_origin = VECTOR2ZERO;	// just for test
 	_scale = GVector2(1.0f, 1.0f);
 	_zIndex = 1;
 	_rotate = 0.0f;

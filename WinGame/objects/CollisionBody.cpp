@@ -32,6 +32,7 @@ void CollisionBody::checkCollision(BaseObject * otherObject, float dt)
 			// xử lý cản top và bot
 			if (_tyEntry < 1 && _tyEntry > 0)
 				pos.y += _dyEntry;
+			//__debugoutput(this->_dyEntry);
 		}
 		_target->setPosition(pos);
 		//_target->setPosition(pos.x + (v.x * dt / 1000) * time, pos.y + (v.y * dt / 1000)  * time);
@@ -71,27 +72,27 @@ void CollisionBody::checkCollision(BaseObject * otherObject, float dt)
 
 			auto position = _target->getPosition();
 			auto side = this->getSide(otherObject);
-			OutputDebugString(L"X:");
-			__debugoutput(this->_dxEntry);
-			OutputDebugString(L"Y:");
-			__debugoutput(this->_dyEntry);
+			//OutputDebugString(L"X:");
+			//__debugoutput(this->_dxEntry);
+			//OutputDebugString(L"Y:");
+			//__debugoutput(this->_dyEntry);
 			if (side == eDirection::TOP)
 			{
 					auto h = _target->getSprite()->getFrameHeight();
-					_target->setPositionY(otherObject->getBounding().top + _target->getOrigin().y * h + 1);
-					//_target->setPositionY(_target->getPositionY() + _dyEntry);
+					_target->setPositionY(otherObject->getBounding().top + _target->getOrigin().y * h);
+					_target->setPositionY(_target->getPositionY() + _dyEntry);
 			}
 			else if (side == eDirection::LEFT)
 			{
 					auto w = _target->getSprite()->getFrameWidth();
-					_target->setPositionX(otherObject->getBounding().left - _target->getOrigin().x * w - 1);
+					_target->setPositionX(otherObject->getBounding().left - _target->getOrigin().x * w);
 					//_target->setPositionX(_target->getPositionX() + _dEntry);
 
 			}
 			else if (side == eDirection::BOTTOM)
 			{
 					auto h = _target->getSprite()->getFrameHeight();
-					_target->setPositionY(otherObject->getBounding().bottom - (1 - _target->getOrigin().y) * h - 1);
+					_target->setPositionY(otherObject->getBounding().bottom - (1 - _target->getOrigin().y) * h );
 					//_target->setPositionY(_target->getPositionY() + _dyEntry);
 
 			}
@@ -99,7 +100,7 @@ void CollisionBody::checkCollision(BaseObject * otherObject, float dt)
 			{
 					auto w = _target->getSprite()->getFrameWidth();
 					//_target->setPositionX(_target->getPositionX() + _dxEntry);
-					_target->setPositionX(otherObject->getBounding().right + _target->getOrigin().x * w + 1);
+					_target->setPositionX(otherObject->getBounding().right + _target->getOrigin().x * w );
 			}
 		}
 		else // nếu ko va chạm nữa là kết thúc va chạm

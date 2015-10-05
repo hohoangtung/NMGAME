@@ -233,7 +233,7 @@ void Bill::onCollisionBegin(CollisionEventArg * collision_event)
 {
 	if (collision_event->_otherObject->getId() == eID::BOX || collision_event->_otherObject->getId() == eID::BRIDGE)
 	{
-		//if (collision_event->_sideCollision == eDirection::TOP)
+		if (collision_event->_sideCollision == eDirection::TOP)
 		{
 			auto gravity = (Gravity*)this->_componentList["Gravity"]; 
 			gravity->setStatus(eGravityStatus::SHALLOWED);
