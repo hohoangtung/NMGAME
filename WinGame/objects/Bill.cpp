@@ -29,12 +29,11 @@ void Bill::init()
 	_sprite = SpriteManager::getInstance()->getSprite(eID::BILL);
 	auto movement = new Movement(GVector2(0, 0), GVector2(0, 0), _sprite);
 	_componentList["Movement"] = movement;
-	//_componentList["Gravity"] = new Gravity(GVector2(0, -GRAVITY), movement);
-	_componentList["Gravity"] = new Gravity(GVector2(0, -GRAVITY), _sprite);	//test 7ung
+	_componentList["Gravity"] = new Gravity(GVector2(0, -GRAVITY), movement);
+	//_componentList["Gravity"] = new Gravity(GVector2(0, -GRAVITY), _sprite);	//test 7ung // vinh: cái này nó làm cho sprite ko cập nhật đc velocity, kt va chạm ko đc
 
-	this->setPhysicsBodyType(ePhysicsBody::MAN);				// set kiểu của object hiện tại
 	auto collisionBody = new CollisionBody(this);
-	collisionBody->setPhysicsObjects(ePhysicsBody::LAND);		// set kiểu mà nó va chạm vật lý dừng lại, mặc định ko dừng lại nhưng vẫn báo begin/end
+	//collisionBody->setPhysicsObjects(ePhysicsBody::LAND);		// set kiểu mà nó va chạm vật lý dừng lại, mặc định ko dừng lại nhưng vẫn báo begin/end
 
 	_componentList["CollisionBody"] = collisionBody;
 
@@ -73,6 +72,7 @@ void Bill::init()
 
 	_sprite->drawBounding(false);
 	this->setOrigin(GVector2(0.5f, 0.0f));
+	this->setScale(SCALE_FACTOR);
 
 	_sideCollide = false;
 	_movingSpeed = BILL_MOVE_SPEED;
@@ -231,28 +231,39 @@ void Bill::onKeyReleased(KeyEventArg * key_event)
 
 void Bill::onCollisionBegin(CollisionEventArg * collision_event)
 {
-	if (collision_event->_otherObject->getId() == eID::BOX || collision_event->_otherObject->getId() == eID::BRIDGE)
-	{
-		if (collision_event->_sideCollision == eDirection::TOP)
-		{
-			auto gravity = (Gravity*)this->_componentList["Gravity"]; 
-			gravity->setStatus(eGravityStatus::SHALLOWED);
-			
-			this->standing();
-			//_canStand.push_back(true);
-		}
-	}
+
 }
 
 void Bill::onCollisionEnd(CollisionEventArg * collision_event)
 {
-	if (collision_event->_otherObject->getId() == eID::BOX || collision_event->_otherObject->getId() == eID::BRIDGE)
-	{
-		//if (_canStand.size() > 0)
-			//_canStand.pop_front();
 
-		//if(_canStand.size() == 0)
+}
+
+BaseObject* preObject;
+
+float Bill::checkCollision(BaseObject * object, float dt)
+{
+	auto collisionBody = (CollisionBody*)_componentList["CollisionBody"];
+
+	if (object->getId() == eID::BOX || object->getId() == eID::BRIDGE)
+	{
+		eDirection direction;
+		if (collisionBody->checkCollision(object, direction, dt))
 		{
+			if (direction == eDirection::TOP && this->getVelocity().y < 0)
+			{
+				auto gravity = (Gravity*)this->_componentList["Gravity"];
+				gravity->setStatus(eGravityStatus::SHALLOWED);
+
+				this->standing();
+
+				preObject = object;
+			}
+		}
+		else if(preObject == object)
+		{
+			preObject = nullptr;
+
 			auto gravity = (Gravity*)this->_componentList["Gravity"];
 			gravity->setStatus(eGravityStatus::FALLING__DOWN);
 
@@ -260,12 +271,11 @@ void Bill::onCollisionEnd(CollisionEventArg * collision_event)
 				this->addStatus(eStatus::FALLING);
 		}
 	}
-}
+	else
+	{
+		collisionBody->checkCollision(object, dt);
+	}
 
-float Bill::checkCollision(BaseObject * object, float dt)
-{
-	auto collisionBody = (CollisionBody*)_componentList["CollisionBody"];
-	collisionBody->checkCollision(object, dt);
 
 	for (auto it = _listBullets.begin(); it != _listBullets.end(); it++)
 	{
@@ -286,7 +296,8 @@ void Bill::standing()
 
 void Bill::moveLeft()
 {
-	this->setScaleX(-1);
+	if(this->getScale().x > 0)
+		this->setScaleX(this->getScale().x * (-1));
 
 	auto move = (Movement*)this->_componentList["Movement"];
 	move->setVelocity(GVector2(-_movingSpeed, move->getVelocity().y));
@@ -294,7 +305,8 @@ void Bill::moveLeft()
 
 void Bill::moveRight()
 {
-	this->setScaleX(1);
+	if (this->getScale().x < 0)
+		this->setScaleX(this->getScale().x * (-1));
 
 	auto move = (Movement*)this->_componentList["Movement"];
 	move->setVelocity(GVector2(_movingSpeed, move->getVelocity().y));
@@ -334,48 +346,50 @@ void Bill::shoot()
 
 	if (this->isInStatus(eStatus::LAYING_DOWN))
 	{
-		pos.y -= 5;
+		pos.y -= 5 * this->getScale().y;
 	}
 	
 	if (direction == eDirection::TOP)
 	{
 		angle = 0.0f;
-		pos.x += this->getScale().x < 0 ? -5 : 5;
-		pos.y += this->getSprite()->getFrameHeight() / 2;
+		pos.x += 5 * this->getScale().x;
+		pos.y += this->getSprite()->getFrameHeight() / 3;
 	}
 	else if (direction == (eDirection::TOP | eDirection::RIGHT))
 	{
-		angle = 50.0f;
-		pos.x += this->getSprite()->getFrameWidth() / 2;
-		pos.y += 14;
+		angle = 60.0f;
+		pos.x += this->getSprite()->getFrameWidth() / 3;
+		pos.y += 14 * this->getScale().y;
 	}
 	else if (direction == (eDirection::TOP | eDirection::LEFT))
 	{
-		angle = -50.0f;
-		pos.x -= this->getSprite()->getFrameWidth() / 2;
-		pos.y += 14;
+		angle = -60.0f;
+		pos.x -= this->getSprite()->getFrameWidth() / 3;
+		pos.y += 14 * this->getScale().y;
 	}
 	else if (direction == eDirection::LEFT)
 	{
 		angle = -90.0f;
-		pos.x -= this->getSprite()->getFrameWidth() / 2;
-		pos.y += 5;
+		pos.x -= this->getSprite()->getFrameWidth() / 3;
+		pos.y += 5 * this->getScale().y;
 	}
 	else if (direction == eDirection::RIGHT)
 	{
 		angle = 90.0f;
-		pos.x += this->getSprite()->getFrameWidth() / 2;
-		pos.y += 5;
+		pos.x += this->getSprite()->getFrameWidth() / 3;
+		pos.y += 5 * this->getScale().y;
 	}
 	else if (direction == (eDirection::BOTTOM | eDirection::RIGHT))
 	{
-		angle = 130.0f;
-		pos.x += this->getSprite()->getFrameWidth() / 2;
+		angle = 120.0f;
+		pos.x += this->getSprite()->getFrameWidth() / 3;
+		pos.y += 5 * this->getScale().y;
 	}
 	else if (direction == (eDirection::BOTTOM | eDirection::LEFT))
 	{
-		angle = -130.0f;
-		pos.x -= this->getSprite()->getFrameWidth() / 2;
+		angle = -120.0f;
+		pos.x -= this->getSprite()->getFrameWidth() / 3;
+		pos.y += 5 * this->getScale().y;
 	}
 		
 	_listBullets.push_back(new Bullet(pos, angle));

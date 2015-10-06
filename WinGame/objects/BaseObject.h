@@ -76,15 +76,16 @@ public:
 	// nếu vật có chuyển động phải override lại để lấy vận tốc.
 	virtual GVector2 getVelocity();
 
-	virtual void setPhysicsBodyType(ePhysicsBody type);
-	virtual ePhysicsBody getPhysicsBodyType();
+	virtual void setPhysicsBodySide(eDirection side);
+	virtual eDirection getPhysicsBodySide();
+
 protected:
 	Sprite* _sprite;
 	// nếu muốn dùng animation thì class kế thừa khai báo animation
 	// khởi tạo anition thì reference đến sprite
 	eID _id;
 	eStatus _status;
-	ePhysicsBody _physicsType;
+	eDirection _physicsSide;
 };
 /*
 

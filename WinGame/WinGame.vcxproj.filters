@@ -141,13 +141,13 @@
     <ClCompile Include="Map\Map.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="objects\Bridge.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="objects\Bullet.cpp">
       <Filter>Source Files\Objects\GameObjects</Filter>
     </ClCompile>
     <ClCompile Include="objects\Bullet.cpp">
+      <Filter>Source Files\Objects\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="objects\Bridge.cpp">
       <Filter>Source Files\Objects\GameObjects</Filter>
     </ClCompile>
   </ItemGroup>
@@ -254,13 +254,13 @@
     <ClInclude Include="Map\Map.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="objects\Bridge.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="objects\Bullet.h">
       <Filter>Header Files\Objects\GameObjects</Filter>
     </ClInclude>
     <ClInclude Include="objects\Bullet.h">
+      <Filter>Header Files\Objects\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="objects\Bridge.h">
       <Filter>Header Files\Objects\GameObjects</Filter>
     </ClInclude>
   </ItemGroup>

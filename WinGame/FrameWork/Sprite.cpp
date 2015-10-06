@@ -274,22 +274,22 @@ void Sprite::setIndex(int index)
 
 int Sprite::getFrameWidth()
 {
-	return _frameWidth;
+	return _frameWidth * abs(_scale.x);
 }
 
 int Sprite::getFrameHeight()
 {
-	return _frameHeight;
+	return _frameHeight * abs(_scale.y);
 }
 
 int Sprite::getTextureWidth()
 {
-	return _textureWidth;
+	return _textureWidth * abs(_scale.x);
 }
 
 int Sprite::getTextureHeight()
 {
-	return _textureHeight;
+	return _textureHeight * abs(_scale.y);
 }
 
 void Sprite::drawBounding(bool draw)
@@ -319,8 +319,8 @@ void Sprite::setCurrentFrame()
 
 void Sprite::updateBounding()
 {
-	float scaleW = _frameWidth * _scale.x;
-	float scaleH = _frameHeight * _scale.y;
+	float scaleW = _frameWidth * abs(_scale.x);
+	float scaleH = _frameHeight * abs(_scale.y);
 
 	this->_bound.left = _position.x - scaleW * _origin.x;
 	this->_bound.bottom = _position.y - scaleH * _origin.y;

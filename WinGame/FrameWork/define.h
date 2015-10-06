@@ -13,8 +13,9 @@
 
 using namespace std;
 
-#define WINDOW_WIDTH 800
-#define WINDOW_HEIGHT 600
+#define WINDOW_WIDTH 560
+#define WINDOW_HEIGHT 448
+#define SCALE_FACTOR 2.0f
 
 #define C_WHITE D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f)				// màu trắnng
 #define COLOR_KEY D3DXCOLOR(1.0f, 0.0f, 1.0f, 1.0f)				// màu khi mà load hình nó bỏ qua > trong suốt
@@ -62,9 +63,13 @@ enum eStatus
 enum ePhysicsBody
 {
 	NOTHING			= 0,
-	LAND			= (1 << 0),
-	MAN				= (1 << 1)
+	TOP_EDGE		= (1 << 0),
+	LEFT_EDGE		= (1 << 1),
+	RIGHT_EDGE		= (1 << 2),
+	BOTTOM_EDGE		= (1 << 3)
 };
+
+#define ALL_EDGES (TOP_EDGE | LEFT_EDGE | RIGHT_EDGE | BOTTOM_EDGE)
 
 enum eDirection
 {
@@ -74,6 +79,7 @@ enum eDirection
 	LEFT			= 4,
 	RIGHT			= 8
 };
+
 
 enum eBulletType
 {
