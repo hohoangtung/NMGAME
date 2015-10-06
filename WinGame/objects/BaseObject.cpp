@@ -4,7 +4,6 @@ BaseObject::BaseObject(eID id)
 {
 	this->_id = id;
 	this->setStatus(eStatus::NORMAL);
-	_physicsType = ePhysicsBody::NOTHING;
 }
 
 BaseObject::~BaseObject()
@@ -167,13 +166,13 @@ GVector2 BaseObject::getVelocity()
 	return GVector2(0, 0);
 }
 
-void BaseObject::setPhysicsBodyType(ePhysicsBody type)
+void BaseObject::setPhysicsBodySide(eDirection side)
 {
-	if (type != _physicsType)
-		_physicsType = type;
+	if (side != _physicsSide)
+		_physicsSide = side;
 }
 
-ePhysicsBody BaseObject::getPhysicsBodyType()
+eDirection BaseObject::getPhysicsBodySide()
 {
-	return _physicsType;
+	return _physicsSide;
 }

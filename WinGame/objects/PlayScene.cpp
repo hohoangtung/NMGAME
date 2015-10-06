@@ -59,10 +59,9 @@ bool PlayScene::init()
 	box1->setPosition(400, 180);
 	_listobject.push_back(box1);
 
-	auto bridge = new Bridge(GVector2(150, 300));
+	auto bridge = new Bridge(GVector2(150, 280));
 	bridge->init();
-	bridge->setPhysicsBodyType(ePhysicsBody::LAND);
-	//bridge->setPositionY(100);
+	bridge->setPhysicsBodySide(eDirection::TOP);
 	_listobject.push_back(bridge);
 
 	auto box2 = new MyBox(1);
@@ -119,21 +118,23 @@ void PlayScene::update(float dt)
 	{
 		object->update(dt);
 	}
-	_viewport->setPositionWorld(GVector2(_listobject[0]->getPositionX() - 200, _listobject[0]->getPositionY() + 200));
+	_viewport->setPositionWorld(
+		GVector2(max(_listobject[0]->getPositionX() - 200, 0), WINDOW_HEIGHT));
 	_listobject[0]->checkCollision(_listobject[1], dt);
 	_listobject[0]->checkCollision(_listobject[2], dt);
 	_listobject[0]->checkCollision(_listobject[3], dt);
 }
-
 void PlayScene::draw(LPD3DXSPRITE spriteHandle)
 {
 	//sprite->render(spriteHandle, _viewport);
-	_text->draw();
 	background->draw(spriteHandle, _viewport);
 	for each (auto object in _listobject)
 	{
 		object->draw(spriteHandle, _viewport);
 	}
+#if _DEBUG
+	_text->draw();
+#endif
 }
 
 void PlayScene::release()
