@@ -19,23 +19,8 @@ void CollisionBody::checkCollision(BaseObject * otherObject, float dt)
 	{
 		if (otherObject->getPhysicsBodySide() != eDirection::NONE || (direction & otherObject->getPhysicsBodySide()) == direction)
 		{
-			auto v = _target->getVelocity();
-			auto pos = _target->getPosition();
-			if (_txEntry > _tyEntry)
-			{
-				// xử lý cản left và right
-				if (_txEntry < 1 && _txEntry > 0)
-					pos.x += _dxEntry;
-			}
-			else
-			{
-				// xử lý cản top và bot
-				if (_tyEntry < 1 && _tyEntry > 0)
-					pos.y += _dyEntry;
-			}
-			_target->setPosition(pos);
-
-			//_target->setPosition(pos.x + (v.x * dt / 1000) * time, pos.y + (v.y * dt / 1000)  * time);
+			// cập nhật tọa độ
+			updateTargetPosition(otherObject, direction, true);
 		}
 
 		CollisionEventArg* e = new CollisionEventArg(otherObject);
@@ -59,40 +44,16 @@ void CollisionBody::checkCollision(BaseObject * otherObject, float dt)
 	}
 	else	// có trong list đã va chạm
 	{
-		if (isColliding(_target->getBounding(), otherObject->getBounding()))	// nếu đang va chạm thì set position nếu có
+		float moveX, moveY;
+		if (isColliding(otherObject, moveX, moveY, dt))		// kt va trạm lấy khoảng chồng lấp của 2 object
 		{
-			auto position = _target->getPosition();
 			auto side = this->getSide(otherObject);
 
 			if (otherObject->getPhysicsBodySide() == ePhysicsBody::NOTHING || (side & otherObject->getPhysicsBodySide()) != side)
 				return;
 
-			//OutputDebugString(L"X:");
-			//__debugoutput(this->_dxEntry);
-			//OutputDebugString(L"Y:");
-			//__debugoutput(this->_dyEntry);
-
-			if (side == eDirection::TOP && (side & otherObject->getPhysicsBodySide()) == side)
-			{
-				auto h = _target->getSprite()->getFrameHeight();
-				_target->setPositionY(otherObject->getBounding().top + _target->getOrigin().y * h);
-			}
-			else if (side == eDirection::LEFT && (side & otherObject->getPhysicsBodySide()) == side)
-			{
-				auto w = _target->getSprite()->getFrameWidth();
-				_target->setPositionX(otherObject->getBounding().left - _target->getOrigin().x * w);
-			}
-			else if (side == eDirection::BOTTOM && (side & otherObject->getPhysicsBodySide()) == side)
-			{
-				auto h = _target->getSprite()->getFrameHeight();
-				_target->setPositionY(otherObject->getBounding().bottom - (1 - _target->getOrigin().y) * h);
-
-			}
-			else if (side == eDirection::RIGHT && (side & otherObject->getPhysicsBodySide()) == side)
-			{
-				auto w = _target->getSprite()->getFrameWidth();
-				_target->setPositionX(otherObject->getBounding().right + _target->getOrigin().x * w);
-			}
+			// cập nhật tọa độ
+			updateTargetPosition(otherObject, side, false, GVector2(moveX, moveY));
 		}
 		else // nếu ko va chạm nữa là kết thúc va chạm
 		{
@@ -104,6 +65,43 @@ void CollisionBody::checkCollision(BaseObject * otherObject, float dt)
 		}
 	}
 	
+}
+
+bool CollisionBody::checkCollision(BaseObject * otherObject, eDirection & direction, float dt)
+{
+	float time = isCollide(otherObject, direction, dt);
+
+	if (time < 1.0f)
+	{
+		if (otherObject->getPhysicsBodySide() != eDirection::NONE || (direction & otherObject->getPhysicsBodySide()) == direction)
+		{
+			// cập nhật tọa độ
+			updateTargetPosition(otherObject, direction, true);
+		}
+
+		return true;
+	}
+	else
+	{
+		float moveX, moveY;
+		if (isColliding(otherObject, moveX, moveY, dt))
+		{
+			auto side = this->getSide(otherObject);
+			direction = side;
+
+			if (otherObject->getPhysicsBodySide() == ePhysicsBody::NOTHING || (side & otherObject->getPhysicsBodySide()) != side)
+				return true;
+
+			// cập nhật tọa độ
+			updateTargetPosition(otherObject, direction, false, GVector2(moveX, moveY));
+
+			return true;
+		}
+	}
+
+	direction = eDirection::NONE;
+
+	return false;
 }
 
 float CollisionBody::isCollide(BaseObject * otherSprite, eDirection & direction, float dt)
@@ -121,7 +119,14 @@ float CollisionBody::isCollide(BaseObject * otherSprite, eDirection & direction,
 
 	//SweptAABB
 	// vận tốc mỗi frame
-	GVector2 velocity = GVector2(_target->getVelocity().x * dt / 1000, _target->getVelocity().y * dt / 1000);
+	GVector2 otherVeloc = GVector2(otherSprite->getVelocity().x * dt / 1000, otherSprite->getVelocity().y * dt / 1000);
+	GVector2 myVelocity = GVector2(_target->getVelocity().x * dt / 1000, _target->getVelocity().y * dt / 1000);
+	GVector2 velocity = myVelocity;
+
+	if (otherVeloc != GVector2(0, 0))
+	{
+		velocity = otherVeloc - myVelocity;
+	}
 
 	// tìm khoảng cách giữa cạnh gần nhất, xa nhất 2 object dx, dy
 	// dx
@@ -243,7 +248,7 @@ bool CollisionBody::isColliding(BaseObject * otherObject, float & moveX, float &
 	// tính offset x, y để đi hết va chạm
 	// lấy khoảng cách nhỏ nhất
 	moveX = abs(left) < right ? left : right;
-	moveY = abs(top) < bottom ? top : bottom;
+	moveY = top < abs(bottom) ? top : bottom;
 
 	// chỉ lấy phần lấn vào nhỏ nhất
 	if (abs(moveX) < abs(moveY))
@@ -252,6 +257,51 @@ bool CollisionBody::isColliding(BaseObject * otherObject, float & moveX, float &
 		moveX = 0.0f;
 
 	return true;
+}
+
+void CollisionBody::updateTargetPosition(BaseObject* otherObject, eDirection direction, bool withVelocity, GVector2 move)
+{
+	if (withVelocity == true)
+	{
+		if (otherObject->getPhysicsBodySide() != eDirection::NONE || (direction & otherObject->getPhysicsBodySide()) == direction)
+		{
+			auto v = _target->getVelocity();
+			auto pos = _target->getPosition();
+			if (_txEntry > _tyEntry)
+			{
+				// xử lý cản left và right
+				if (_txEntry < 1 && _txEntry > 0)
+					pos.x += _dxEntry;
+			}
+			else
+			{
+				// xử lý cản top và bot
+				if (_tyEntry < 1 && _tyEntry > 0)
+					pos.y += _dyEntry;
+			}
+			_target->setPosition(pos);
+		}
+	}
+	else
+	{
+		if (move.y > 0 && (otherObject->getPhysicsBodySide() & eDirection::TOP) == eDirection::TOP && _target->getVelocity().y < 0)
+		{
+			_target->setPositionY(_target->getPositionY() + move.y);
+		}
+		else if (move.y < 0 && (otherObject->getPhysicsBodySide() & eDirection::BOTTOM) == eDirection::BOTTOM && _target->getVelocity().y > 0)
+		{
+			_target->setPositionY(_target->getPositionY() + move.y);
+		}
+
+		if (move.x > 0 && (otherObject->getPhysicsBodySide() & eDirection::RIGHT) == eDirection::RIGHT && _target->getVelocity().x < 0)
+		{
+			_target->setPositionX(_target->getPositionX() + move.x);
+		}
+		else if (move.x < 0 && (otherObject->getPhysicsBodySide() & eDirection::LEFT) == eDirection::LEFT && _target->getVelocity().x > 0)
+		{
+			_target->setPositionX(_target->getPositionX() + move.x);
+		}
+	}
 }
 
 bool CollisionBody::isColliding(RECT myRect, RECT otherRect)
@@ -347,36 +397,4 @@ void CollisionBody::setPhysicsObjects(ePhysicsBody ids)
 
 void CollisionBody::update(float dt)
 {
-	//for (auto it = _listColliding.begin(); it != _listColliding.end();)
-	//{
-	//	if (!isColliding(_target->getBounding(), it->first->getBounding()))
-	//	{
-	//		CollisionEventArg* e = new CollisionEventArg(it->first);
-	//		e->_sideCollision = this->getSide(it->first);
-
-	//		__raise onCollisionEnd(e);
-	//		_isColliding = false;
-
-	//		_listColliding.erase(it);
-	//		if (_listColliding.size() <= 0)
-	//			break;
-	//		
-	//		it = _listColliding.begin();
-	//	}
-	//	else
-	//	{
-	//		it++;
-	//	}
-	//}
-}
-
-bool CollisionBody::hasPhysicsSide(eDirection direction)
-{
-	return (_physicsCollisionSide & direction) == direction;
-}
-
-void CollisionBody::setPhysicsSide(eDirection sides)
-{
-	if(sides != _physicsCollisionSide)
-		_physicsCollisionSide = sides;
 }

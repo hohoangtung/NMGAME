@@ -53,11 +53,19 @@ public:
 	~CollisionBody();
 
 	/*
-	kiểm tra va chạm với object khác
+	kiểm tra va chạm với object khác, gọi event Begin, End.
 		@otherObject: object cần kt va chạm
 		@dt: delta time của mỗi frame
 	*/
 	void checkCollision(BaseObject* otherObject, float dt);
+
+	/*
+	kiểm tra va chạm với object khác lấy được hướng va chạm, KO  gọi event Begin, End.
+		@otherObject: object cần kt va chạm
+		@direction: lấy hướng va chạm của otherObject
+		@dt: delta time của mỗi frame
+	*/
+	bool checkCollision(BaseObject* otherObject, eDirection& direction, float dt);
 
 	bool isColliding(BaseObject* otherObject);
 	
@@ -72,13 +80,9 @@ public:
 	__event void onCollisionBegin(CollisionEventArg* e);
 	__event void onCollisionEnd(CollisionEventArg* e);
 
-	bool hasPhysicsSide(eDirection direction);
-	void setPhysicsSide(eDirection sides);
-
 private:
 	BaseObject* _target;
 	ePhysicsBody _physicsObjects;
-	eDirection _physicsCollisionSide;
 
 	float _dxEntry, _dyEntry, _dxExit, _dyExit;
 	float _txEntry, _tyEntry, _txExit, _tyExit;
@@ -88,6 +92,15 @@ private:
 	float isCollide(BaseObject* otherObject, eDirection& direction, float dt);
 	bool isColliding(RECT myRect, RECT otherRect);
 	bool isColliding(BaseObject* otherObject, float& moveX, float& moveY, float dt);
+
+	/*
+	Cập nhật target position khi va chạm
+		@otherObject: đối tượng va chạm
+		@direction: hướng bị va chạm của otherObject
+		@withVelocity: TRUE khi kt va chạm với vận tốc, tham số move ko cần. FALSE khi va chạm bằng kt RECT
+		@move: khoảng chồng lấp của 2 object.
+	*/
+	void updateTargetPosition(BaseObject* otherObject, eDirection direction, bool withVelocity, GVector2 move = GVector2(0, 0));
 
 	RECT getSweptBroadphaseRect(BaseObject* object, float dt);
 	eDirection getSide(BaseObject* otherObject);

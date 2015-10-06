@@ -25,6 +25,7 @@ void Bullet::init()
 	_sprite->setFrameRect(SpriteManager::getInstance()->getSourceRect(eID::BULLET, "normal_bullet"));
 
 	this->setPosition(_startPosition);
+	this->setScale(SCALE_FACTOR);
 
 	GVector2 veloc;
 

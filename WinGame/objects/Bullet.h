@@ -1,4 +1,4 @@
-#ifndef __BULLET_H__
+﻿#ifndef __BULLET_H__
 #define __BULLET_H__
 
 #include "BaseObject.h"
@@ -6,22 +6,22 @@
 #include "../FrameWork/define.h"
 #include "CollisionBody.h"
 
-#define NORMAL_BULLET_SPEED 200;
+#define NORMAL_BULLET_SPEED 400;
 
 class Bullet : public BaseObject
 {
 public:
 	/*
-	Kh?i t?o vi�n ??n
-		@startPosition: v? tr� b?t ??u
-		@dir: h??ng vi�n ??n
+	Khởi tạo viên đạn
+		@startPosition: vị trí bắt đầu
+		@dir: hướng viên đạn
 	*/
 	Bullet(GVector2 startPosition, eDirection dir);
 
 	/*
-	Kh?i t?o vi�n ??n
-		@startPosition: v? tr� b?t ??u
-		@degree: h??ng vi�n ??n theo ??, g?c l� h??ng 12h, theo chi?u kim ??ng h?.
+	Khởi tạo viên đạn
+		@startPosition: vị trí bắt đầu
+		@degree: hướng viên đạn theo độ, gốc là 12h, theo chiều kim đồng hồ
 	*/
 	Bullet(GVector2 startPosition, float degree);
 

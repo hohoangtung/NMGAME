@@ -59,9 +59,9 @@ bool PlayScene::init()
 	box1->setPosition(400, 180);
 	_listobject.push_back(box1);
 
-	auto bridge = new Bridge(GVector2(150, 300));
+	auto bridge = new Bridge(GVector2(150, 280));
 	bridge->init();
-	//bridge->setPositionY(100);
+	//bridge->setPhysicsBodySide(eDirection::TOP);
 	_listobject.push_back(bridge);
 
 	auto box2 = new MyBox(1);

@@ -10,10 +10,10 @@
 #include "Bullet.h"
 #include "../FrameWork/Managers/SceneManager.h"
 
-#define BILL_MOVE_SPEED 50
-#define BILL_JUMP_VEL 300
+#define BILL_MOVE_SPEED 120
+#define BILL_JUMP_VEL 450
 #define TEST_LAND 200
-#define GRAVITY 500
+#define GRAVITY 800
 
 [event_receiver(native)]
 class Bill : public BaseObject, public IControlable
@@ -85,7 +85,7 @@ public:
 		_sprite = SpriteManager::getInstance()->getSprite(eID::BOX);
 		_sprite->setIndex(_index);
 
-		this->setPhysicsBodySide(eDirection::TOP);
+		this->setPhysicsBodySide((eDirection)ALL_EDGES);
 
 		//_componentList["CollisionBody"] = new CollisionBody(this);
 

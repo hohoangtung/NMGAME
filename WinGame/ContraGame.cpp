@@ -1,6 +1,6 @@
 ﻿#include "ContraGame.h"
 
-ContraGame::ContraGame(HINSTANCE hInstance, LPWSTR title) : Game(hInstance, title)
+ContraGame::ContraGame(HINSTANCE hInstance, LPWSTR title) : Game(hInstance, title, WINDOW_WIDTH, WINDOW_HEIGHT)
 {
 
 }
