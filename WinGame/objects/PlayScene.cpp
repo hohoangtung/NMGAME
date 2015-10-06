@@ -61,7 +61,7 @@ bool PlayScene::init()
 
 	auto bridge = new Bridge(GVector2(150, 280));
 	bridge->init();
-	//bridge->setPhysicsBodySide(eDirection::TOP);
+	bridge->setPhysicsBodySide(eDirection::TOP);
 	_listobject.push_back(bridge);
 
 	auto box2 = new MyBox(1);

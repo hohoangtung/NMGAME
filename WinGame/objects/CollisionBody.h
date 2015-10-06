@@ -69,12 +69,6 @@ public:
 
 	bool isColliding(BaseObject* otherObject);
 	
-	/*
-	set các object nào có thể va chạm vật lý, ở đây chỉ là dừng lại thôi.
-		@ids: ePhysicsBody của object, có thể OR nhiều cái
-	*/
-	void setPhysicsObjects(ePhysicsBody ids);
-
 	void update(float dt);
 
 	__event void onCollisionBegin(CollisionEventArg* e);
@@ -82,7 +76,6 @@ public:
 
 private:
 	BaseObject* _target;
-	ePhysicsBody _physicsObjects;
 
 	float _dxEntry, _dyEntry, _dxExit, _dyExit;
 	float _txEntry, _tyEntry, _txExit, _tyExit;

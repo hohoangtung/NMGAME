@@ -3,7 +3,6 @@
 CollisionBody::CollisionBody(BaseObject * target)
 {
 	_target = target;
-	_physicsObjects = (ePhysicsBody)ALL_EDGES;
 }
 
 CollisionBody::~CollisionBody()
@@ -388,11 +387,6 @@ bool CollisionBody::isColliding(BaseObject* otherObject)
 		return true;
 	else
 		return false;
-}
-
-void CollisionBody::setPhysicsObjects(ePhysicsBody ids)
-{
-	_physicsObjects = ids;
 }
 
 void CollisionBody::update(float dt)
