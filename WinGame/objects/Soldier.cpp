@@ -15,7 +15,9 @@ void Soldier::init()
 	this->_listComponent.insert(pair<string, IComponent*>("Movement", new Movement(a, v, this->_sprite)));
 	this->_listComponent.insert(pair<string, IComponent*>("Gravity", new Gravity(GVector2(0, -120), (Movement*)(this->getComponent("Movement")))));
 
+	this->setPhysicsBodyType(ePhysicsBody::MAN);
 	auto collisionBody = new CollisionBody(this);
+	collisionBody->setPhysicsObjects(ePhysicsBody::LAND);
 	_listComponent["CollisionBody"] = collisionBody;
 
 	__hook(&CollisionBody::onCollisionBegin, collisionBody, &Rifleman::onCollisionBegin);
