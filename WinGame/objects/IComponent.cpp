@@ -40,18 +40,37 @@ GVector2 Movement::getVelocity()
 #pragma region Gravity
 void Gravity::update(float deltatime)
 {
-	switch (_status)
+	if (_refSprite == NULL)
 	{
-	case FALLING__DOWN:
-		this->_additionalVeloc = this->_gravity * deltatime / 1000;
-		break;
-	case SHALLOWED:
-		this->_additionalVeloc = VECTOR2ZERO;
-	default:
-		break;
+		switch (_status)
+		{
+		case FALLING__DOWN:
+			this->_additionalVeloc = this->_gravity * deltatime / 1000;
+			break;
+		case SHALLOWED:
+			this->_additionalVeloc = VECTOR2ZERO;
+		default:
+			break;
+		}
+		auto veloc = this->_refmovement->getVelocity();
+		this->_refmovement->setVelocity(veloc + _additionalVeloc);
 	}
-	auto veloc = this->_refmovement->getVelocity();
-	this->_refmovement->setVelocity(veloc + _additionalVeloc);
+	else // test 7ung
+	{
+		switch (_status)
+		{
+		case FALLING__DOWN:
+			this->_additionalVeloc += this->_gravity * deltatime / 1000;
+			break;
+		case SHALLOWED:
+			this->_additionalVeloc = VECTOR2ZERO;
+		default:
+			break;
+		}
+		auto pos = this->_refSprite->getPosition();
+		pos += _additionalVeloc  * deltatime / 1000;
+		this->_refSprite->setPosition(pos);
+	}
 }
 
 void Gravity::setStatus(eGravityStatus status)
@@ -67,6 +86,13 @@ Gravity::Gravity(GVector2 gravity, Movement *movement)
 	this->_gravity = gravity;
 	this->_refmovement = movement;
 	this->_status = FALLING__DOWN;
+}
+Gravity::Gravity(GVector2 gravity, Sprite *refSpite)
+{
+	this->_gravity = gravity;
+	this->_refSprite = refSpite;
+	this->_status = FALLING__DOWN;
+	_additionalVeloc = VECTOR2ZERO;
 }
 #pragma endregion
 

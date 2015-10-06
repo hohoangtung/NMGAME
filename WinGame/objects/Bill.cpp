@@ -29,8 +29,9 @@ void Bill::init()
 	_sprite = SpriteManager::getInstance()->getSprite(eID::BILL);
 	auto movement = new Movement(GVector2(0, 0), GVector2(0, 0), _sprite);
 	_componentList["Movement"] = movement;
-	_componentList["Gravity"] = new Gravity(GVector2(0, -GRAVITY), movement);
-	
+	//_componentList["Gravity"] = new Gravity(GVector2(0, -GRAVITY), movement);
+	_componentList["Gravity"] = new Gravity(GVector2(0, -GRAVITY), _sprite);	//test 7ung
+
 	this->setPhysicsBodyType(ePhysicsBody::MAN);				// set kiểu của object hiện tại
 	auto collisionBody = new CollisionBody(this);
 	collisionBody->setPhysicsObjects(ePhysicsBody::LAND);		// set kiểu mà nó va chạm vật lý dừng lại, mặc định ko dừng lại nhưng vẫn báo begin/end
@@ -102,17 +103,17 @@ void Bill::update(float deltatime)
 	{
 		// tạm để cho nó hết màn hình nó xóa
 		(*it)->update(deltatime);
-		if ((*it)->getPositionX() < 0 || (*it)->getPositionX() > SceneManager::getInstance()->getCurrentScene()->getViewport()->getWidth() ||
-			(*it)->getPositionY() < 0 || (*it)->getPositionY() > SceneManager::getInstance()->getCurrentScene()->getViewport()->getHeight()
-			)
-		{
-			auto temp = it;
-			it++;
-			_listBullets.erase(temp);
-		}
+		//if ((*it)->getPositionX() < 0 || (*it)->getPositionX() > SceneManager::getInstance()->getCurrentScene()->getViewport()->getWidth() ||
+		//	(*it)->getPositionY() < 0 || (*it)->getPositionY() > SceneManager::getInstance()->getCurrentScene()->getViewport()->getHeight()
+		//	)
+		//{
+		//	auto temp = it;
+		//	it++;
+		//	_listBullets.erase(temp);
+		//}
 
-		if (_listBullets.size() <= 0)
-			break;
+		//if (_listBullets.size() <= 0)
+		//	break;
 	}
 
 	// update component để sau cùng để sửa bên trên sau đó nó cập nhật đúng
@@ -232,11 +233,11 @@ void Bill::onCollisionBegin(CollisionEventArg * collision_event)
 {
 	if (collision_event->_otherObject->getId() == eID::BOX || collision_event->_otherObject->getId() == eID::BRIDGE)
 	{
-		//if (collision_event->_sideCollision == eDirection::TOP)
+		if (collision_event->_sideCollision == eDirection::TOP)
 		{
-			auto gravity = (Gravity*)this->_componentList["Gravity"];
+			auto gravity = (Gravity*)this->_componentList["Gravity"]; 
 			gravity->setStatus(eGravityStatus::SHALLOWED);
-
+			
 			this->standing();
 			//_canStand.push_back(true);
 		}
@@ -327,23 +328,58 @@ void Bill::falling()
 
 void Bill::shoot()
 {
-	_listBullets.push_back(new Bullet(this->getPosition() + GVector2(0, this->getSprite()->getFrameHeight() / 2), this->getAimingDirection()));
+	float angle = 0.0f;
+	auto direction = getAimingDirection();
+	auto pos = this->getPosition() + GVector2(0, this->getSprite()->getFrameHeight() / 2);
+
+	if (this->isInStatus(eStatus::LAYING_DOWN))
+	{
+		pos.y -= 5;
+	}
+	
+	if (direction == eDirection::TOP)
+	{
+		angle = 0.0f;
+		pos.x += this->getScale().x < 0 ? -5 : 5;
+		pos.y += this->getSprite()->getFrameHeight() / 2;
+	}
+	else if (direction == (eDirection::TOP | eDirection::RIGHT))
+	{
+		angle = 50.0f;
+		pos.x += this->getSprite()->getFrameWidth() / 2;
+		pos.y += 14;
+	}
+	else if (direction == (eDirection::TOP | eDirection::LEFT))
+	{
+		angle = -50.0f;
+		pos.x -= this->getSprite()->getFrameWidth() / 2;
+		pos.y += 14;
+	}
+	else if (direction == eDirection::LEFT)
+	{
+		angle = -90.0f;
+		pos.x -= this->getSprite()->getFrameWidth() / 2;
+		pos.y += 5;
+	}
+	else if (direction == eDirection::RIGHT)
+	{
+		angle = 90.0f;
+		pos.x += this->getSprite()->getFrameWidth() / 2;
+		pos.y += 5;
+	}
+	else if (direction == (eDirection::BOTTOM | eDirection::RIGHT))
+	{
+		angle = 130.0f;
+		pos.x += this->getSprite()->getFrameWidth() / 2;
+	}
+	else if (direction == (eDirection::BOTTOM | eDirection::LEFT))
+	{
+		angle = -130.0f;
+		pos.x -= this->getSprite()->getFrameWidth() / 2;
+	}
+		
+	_listBullets.push_back(new Bullet(pos, angle));
 	_listBullets.back()->init();
-}
-
-void Bill::addStatus(eStatus status)
-{
-	this->setStatus(eStatus(this->getStatus() | status));
-}
-
-void Bill::removeStatus(eStatus status)
-{
-	this->setStatus(eStatus(this->getStatus() & ~status));
-}
-
-bool Bill::isInStatus(eStatus status)
-{
-	return (this->getStatus() & status) == status;
 }
 
 GVector2 Bill::getVelocity()

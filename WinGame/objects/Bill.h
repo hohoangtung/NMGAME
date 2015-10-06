@@ -12,7 +12,6 @@
 
 #define BILL_MOVE_SPEED 50
 #define BILL_JUMP_VEL 300
-#define BILL_ACC_MOVE 300
 #define TEST_LAND 200
 #define GRAVITY 500
 
@@ -54,11 +53,6 @@ private:
 	void shoot();
 	list<bool> _canStand;
 
-	//void setState(int state);
-	void addStatus(eStatus status);
-	void removeStatus(eStatus status);
-	bool isInStatus(eStatus status);
-	
 	GVector2 getVelocity();
 	void updateStatus(float dt);
 

@@ -27,6 +27,21 @@ void BaseObject::setStatus(eStatus status)
 		_status = status;
 }
 
+void BaseObject::addStatus(eStatus status)
+{
+	this->setStatus(eStatus(this->getStatus() | status));
+}
+
+void BaseObject::removeStatus(eStatus status)
+{
+	this->setStatus(eStatus(this->getStatus() & ~status));
+}
+
+bool BaseObject::isInStatus(eStatus status)
+{
+	return (this->getStatus() & status) == status;;
+}
+
 GVector2 BaseObject::getPosition()
 {
 	return _sprite->getPosition();
