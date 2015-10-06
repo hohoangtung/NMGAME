@@ -1,5 +1,8 @@
 #include "BaseEnemy.h"
 
+
+BaseEnemy::BaseEnemy(eID id) : BaseObject(id) {}
+BaseEnemy::~BaseEnemy() {}
 int BaseEnemy::getHitpoint() 
 {
 	return _hitpoint;
@@ -18,12 +21,4 @@ void BaseEnemy::setScore(int score)
 int BaseEnemy::getScore()
 {
 	return _score;
-}
-
-void BaseEnemy::onCollisionBegin(CollisionEventArg* collision_event) {
-
-}
-
-void BaseEnemy::onCollisionEnd(CollisionEventArg* collision_event) {
-
 }

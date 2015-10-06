@@ -77,7 +77,9 @@ enum eDirection
 
 enum eBulletType
 {
-	NORMAL_BULLET,
+	BILL_BULLET		= 0,
+	ENEMY_BULLET	= (1 << 0),
+	NORMAL_BULLET   = (1 << 1),
 };
 
 typedef D3DXVECTOR3 GVector3;

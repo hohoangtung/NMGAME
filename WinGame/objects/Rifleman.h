@@ -3,6 +3,7 @@
 
 #include "BaseEnemy.h"
 #include "CollisionBody.h"
+#include "Bullet.h"
 #include "../FrameWork/Animation.h"
 #include "../Framework/StopWatch.h"
 
@@ -10,28 +11,39 @@ using namespace std;
 
 #define RIFLEMAN_HITPOINT 1
 #define RIFLEMAN_SCORE 500
+#define RIFLEMAN_SHOOTING_DELAY 1.0f
 
 class Rifleman : public BaseEnemy
 {
 public:
-	Rifleman() : BaseEnemy(eID::RIFLEMAN){ this->setStatus(NORMAL); }
-	~Rifleman() {};
+	Rifleman();
+	~Rifleman();
 
 	void init();
 	void update(float);
 	void draw(LPD3DXSPRITE, Viewport*);
 	void release();
-	double getShootingAngle();
+
+	float getShootingAngle();
 	void setShootingAngle(double);
 
+	void onCollisionBegin(CollisionEventArg*);
+	void onCollisionEnd(CollisionEventArg*);
+
+	void die();
+	void shoot();
+	
 	void setStatus(eStatus);
+	
 	IComponent* getComponent(string);
 
 private:
 	map<string, IComponent*> _listComponent;
 	map<int, Animation*> _animations;
-	double _shootingAngle;
+	float _shootingAngle;
 	StopWatch *_stopwatch;
+
+	list<Bullet*> _listBullets;
 
 	void addStatus(eStatus status);
 	void removeStatus(eStatus status);

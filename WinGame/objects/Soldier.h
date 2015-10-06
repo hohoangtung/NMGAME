@@ -17,13 +17,15 @@ using namespace std;
 class Soldier : public BaseEnemy
 {
 public:
-	Soldier() : BaseEnemy(eID::SOLDIER) { this->setStatus(RUNNING); }
-	~Soldier() {};
+	Soldier();
+	~Soldier();
 
 	void init();
 	void update(float);
 	void draw(LPD3DXSPRITE, Viewport*);
 	void release();
+	void onCollisionBegin(CollisionEventArg*);
+	void onCollisionEnd(CollisionEventArg*);
 
 	IComponent* getComponent(string);
 
