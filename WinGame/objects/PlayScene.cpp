@@ -27,7 +27,9 @@ void PlayScene::setViewport(Viewport * viewport)
 bool PlayScene::init()
 {
     
-	//sprite = SpriteManager::getInstance()->getSprite(eID::BILL);
+	//sprite = SpriteManager::getInstance()->getSprite(eID::MAPSTAGE1);
+	//sprite->setIndex(4);
+	//sprite->setPosition(50, 50);
 	//
 	//auto soldier = new Soldier();
 	//soldier->init();
@@ -57,7 +59,7 @@ bool PlayScene::init()
 	box1->setPosition(400, 180);
 	_listobject.push_back(box1);
 
-	auto bridge = new Bridge(GVector2(150, 220));
+	auto bridge = new Bridge(GVector2(150, 300));
 	bridge->init();
 	//bridge->setPositionY(100);
 	_listobject.push_back(bridge);
@@ -99,7 +101,7 @@ void PlayScene::updateInput(float dt)
 
 void PlayScene::update(float dt)
 {
-
+	
 	//test sprite
 	//sprite->setPositionX(sprite->getPosition().x + 1);
 	//sprite->nextFrame();
@@ -116,7 +118,7 @@ void PlayScene::update(float dt)
 	{
 		object->update(dt);
 	}
-
+	_viewport->setPositionWorld(GVector2(_listobject[0]->getPositionX() - 200, _listobject[0]->getPositionY() + 200));
 	_listobject[0]->checkCollision(_listobject[1], dt);
 	_listobject[0]->checkCollision(_listobject[2], dt);
 	_listobject[0]->checkCollision(_listobject[3], dt);
@@ -126,7 +128,7 @@ void PlayScene::draw(LPD3DXSPRITE spriteHandle)
 {
 	//sprite->render(spriteHandle, _viewport);
 	_text->draw();
-	background->draw(spriteHandle);
+	background->draw(spriteHandle, _viewport);
 	for each (auto object in _listobject)
 	{
 		object->draw(spriteHandle, _viewport);

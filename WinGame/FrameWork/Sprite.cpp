@@ -1,5 +1,4 @@
 ﻿#include "Sprite.h"
-#include "../debug.h"
 
 US_FRAMEWORK
 
@@ -250,10 +249,10 @@ RECT Sprite::getFrameRectByIndex(int index)
 {
 	index = index % _totalFrames;
 	RECT rect;
-	rect.left = (long)_currentFrame.x * _frameWidth;
-	rect.right = _frameRect.left + _frameWidth;
-	rect.top = (long)_currentFrame.y * _frameHeight;
-	rect.bottom = _frameRect.top + _frameHeight;
+	rect.left = (long)_currentFrame.x * _frameWidth + 1;
+	rect.right = _frameRect.left + _frameWidth - 1;
+	rect.top = (long)_currentFrame.y * _frameHeight + 1;
+	rect.bottom = _frameRect.top + _frameHeight - 1;
 	return rect;
 }
 

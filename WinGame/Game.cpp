@@ -101,7 +101,6 @@ void Game::render()												// call once per frame
 	if (device->getDevice()->BeginScene() != DI_OK)
 		return;
 	device->clearScreen();
-
 	// main game's logic
 	updateInput(time);
 	update(time);

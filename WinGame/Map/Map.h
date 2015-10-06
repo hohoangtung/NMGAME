@@ -1,6 +1,6 @@
 ﻿
 #ifndef __MAP_H__
-#define __MAP_H__
+#define __MAP_H__6
 #include <string>
 #include <vector>
 #include "..\FrameWork\define.h"
@@ -13,7 +13,7 @@ class Map
 {
 public:
 	void init(string filepath);
-	void draw(LPD3DXSPRITE);
+	void draw(LPD3DXSPRITE, Viewport*);
 	Map();
 	~Map();
 
@@ -24,6 +24,7 @@ private:
 	Sprite* _sprite;
 	int _framewidth;
 	int _frameheight;
+	
 };
 
 
