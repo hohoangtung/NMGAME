@@ -11,12 +11,10 @@ void Rifleman::init()
 	_sprite->setFrameRect(0, 0, 23, 38);
 	this->setPosition(500, 300);
 	this->setStatus(NORMAL);
-	this->setScale(2);
+	this->setScale(SCALE_FACTOR);
 
 	auto collisionBody = new CollisionBody(this);
 	_listComponent["CollisionBody"] = collisionBody;
-	this->setPhysicsBodyType(ePhysicsBody::MAN);
-	collisionBody->setPhysicsObjects(ePhysicsBody::LAND);
 
 	__hook(&CollisionBody::onCollisionBegin, collisionBody, &Rifleman::onCollisionBegin);
 	__hook(&CollisionBody::onCollisionEnd, collisionBody, &Rifleman::onCollisionEnd);
@@ -98,32 +96,32 @@ void Rifleman::update(float deltatime)
 {
 	if (_shootingAngle >= 70 && _shootingAngle <= 110)
 	{
-		this->setScaleX(-2);
+		this->setScaleX(-SCALE_FACTOR);
 		this->setStatus(NORMAL);
 	}
 	else if (_shootingAngle >= 0 && _shootingAngle < 70)
 	{
-		this->setScaleX(-2);
+		this->setScaleX(-SCALE_FACTOR);
 		this->setStatus(AIMING_UP);
 	}
 	else if (_shootingAngle < 0 && _shootingAngle >= -70) 
 	{
-		this->setScaleX(2);
+		this->setScaleX(SCALE_FACTOR);
 		this->setStatus(AIMING_UP);
 	}
 	else if (_shootingAngle < -70 && _shootingAngle >= -110)
 	{
-		this->setScaleX(2);
+		this->setScaleX(SCALE_FACTOR);
 		this->setStatus(NORMAL);
 	}
 	else if (_shootingAngle < -110 && _shootingAngle >= -180)
 	{
-		this->setScaleX(2);
+		this->setScaleX(SCALE_FACTOR);
 		this->setStatus(AIMING_DOWN);
 	}
 	else if (_shootingAngle >= 110 && _shootingAngle < 180)
 	{
-		this->setScaleX(-2);
+		this->setScaleX(-SCALE_FACTOR);
 		this->setStatus(AIMING_DOWN);
 	}
 	if (shooting == 1 && !this->isInStatus(SHOOTING))
