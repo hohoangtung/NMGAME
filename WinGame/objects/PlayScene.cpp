@@ -124,16 +124,17 @@ void PlayScene::update(float dt)
 	_listobject[0]->checkCollision(_listobject[2], dt);
 	_listobject[0]->checkCollision(_listobject[3], dt);
 }
-
 void PlayScene::draw(LPD3DXSPRITE spriteHandle)
 {
 	//sprite->render(spriteHandle, _viewport);
-	_text->draw();
 	background->draw(spriteHandle, _viewport);
 	for each (auto object in _listobject)
 	{
 		object->draw(spriteHandle, _viewport);
 	}
+#if _DEBUG
+	_text->draw();
+#endif
 }
 
 void PlayScene::release()

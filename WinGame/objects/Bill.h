@@ -10,8 +10,8 @@
 #include "Bullet.h"
 #include "../FrameWork/Managers/SceneManager.h"
 
-#define BILL_MOVE_SPEED 50
-#define BILL_JUMP_VEL 300
+#define BILL_MOVE_SPEED 100
+#define BILL_JUMP_VEL 450
 #define TEST_LAND 200
 #define GRAVITY 500
 
