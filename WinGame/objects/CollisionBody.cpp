@@ -3,7 +3,7 @@
 CollisionBody::CollisionBody(BaseObject * target)
 {
 	_target = target;
-	_physicsObjects = ePhysicsBody::NOTHING;
+	_physicsObjects = (ePhysicsBody)ALL_EDGES;
 }
 
 CollisionBody::~CollisionBody()
@@ -17,7 +17,7 @@ void CollisionBody::checkCollision(BaseObject * otherObject, float dt)
 
 	if (time < 1.0f)
 	{
-		if (otherObject->getPhysicsBodyType() != ePhysicsBody::NOTHING || (_physicsObjects & otherObject->getPhysicsBodyType()) == otherObject->getPhysicsBodyType())
+		if (otherObject->getPhysicsBodySide() != eDirection::NONE || (direction & otherObject->getPhysicsBodySide()) == direction)
 		{
 			auto v = _target->getVelocity();
 			auto pos = _target->getPosition();
@@ -61,34 +61,34 @@ void CollisionBody::checkCollision(BaseObject * otherObject, float dt)
 	{
 		if (isColliding(_target->getBounding(), otherObject->getBounding()))	// nếu đang va chạm thì set position nếu có
 		{
-			if (otherObject->getPhysicsBodyType() == ePhysicsBody::NOTHING || (_physicsObjects & otherObject->getPhysicsBodyType()) != otherObject->getPhysicsBodyType())
-				return;
-
 			auto position = _target->getPosition();
 			auto side = this->getSide(otherObject);
+
+			if (otherObject->getPhysicsBodySide() == ePhysicsBody::NOTHING || (side & otherObject->getPhysicsBodySide()) != side)
+				return;
 
 			//OutputDebugString(L"X:");
 			//__debugoutput(this->_dxEntry);
 			//OutputDebugString(L"Y:");
 			//__debugoutput(this->_dyEntry);
 
-			if (side == eDirection::TOP)
+			if (side == eDirection::TOP && (side & otherObject->getPhysicsBodySide()) == side)
 			{
 				auto h = _target->getSprite()->getFrameHeight();
 				_target->setPositionY(otherObject->getBounding().top + _target->getOrigin().y * h);
 			}
-			else if (side == eDirection::LEFT)
+			else if (side == eDirection::LEFT && (side & otherObject->getPhysicsBodySide()) == side)
 			{
 				auto w = _target->getSprite()->getFrameWidth();
 				_target->setPositionX(otherObject->getBounding().left - _target->getOrigin().x * w);
 			}
-			else if (side == eDirection::BOTTOM)
+			else if (side == eDirection::BOTTOM && (side & otherObject->getPhysicsBodySide()) == side)
 			{
 				auto h = _target->getSprite()->getFrameHeight();
 				_target->setPositionY(otherObject->getBounding().bottom - (1 - _target->getOrigin().y) * h);
 
 			}
-			else if (side == eDirection::RIGHT)
+			else if (side == eDirection::RIGHT && (side & otherObject->getPhysicsBodySide()) == side)
 			{
 				auto w = _target->getSprite()->getFrameWidth();
 				_target->setPositionX(otherObject->getBounding().right + _target->getOrigin().x * w);
@@ -368,4 +368,15 @@ void CollisionBody::update(float dt)
 	//		it++;
 	//	}
 	//}
+}
+
+bool CollisionBody::hasPhysicsSide(eDirection direction)
+{
+	return (_physicsCollisionSide & direction) == direction;
+}
+
+void CollisionBody::setPhysicsSide(eDirection sides)
+{
+	if(sides != _physicsCollisionSide)
+		_physicsCollisionSide = sides;
 }

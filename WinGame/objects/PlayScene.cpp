@@ -59,14 +59,13 @@ bool PlayScene::init()
 
 	auto bridge = new Bridge(GVector2(150, 220));
 	bridge->init();
-	bridge->setPhysicsBodyType(ePhysicsBody::LAND);
 	//bridge->setPositionY(100);
 	_listobject.push_back(bridge);
 
-	//auto box2 = new MyBox(1);
-	//box2->init();
-	//box2->setPosition(500, 180);
-	//_listobject.push_back(box2);
+	auto box2 = new MyBox(1);
+	box2->init();
+	box2->setPosition(500, 180);
+	_listobject.push_back(box2);
 
 	_text = new Text(L"Arial", "", 10, 25);
 

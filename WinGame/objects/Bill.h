@@ -85,7 +85,7 @@ public:
 		_sprite = SpriteManager::getInstance()->getSprite(eID::BOX);
 		_sprite->setIndex(_index);
 
-		this->setPhysicsBodyType(ePhysicsBody::LAND);
+		this->setPhysicsBodySide(eDirection::TOP);
 
 		//_componentList["CollisionBody"] = new CollisionBody(this);
 

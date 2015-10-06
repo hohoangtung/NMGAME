@@ -62,9 +62,13 @@ enum eStatus
 enum ePhysicsBody
 {
 	NOTHING			= 0,
-	LAND			= (1 << 0),
-	MAN				= (1 << 1)
+	TOP_EDGE		= (1 << 0),
+	LEFT_EDGE		= (1 << 1),
+	RIGHT_EDGE		= (1 << 2),
+	BOTTOM_EDGE		= (1 << 3)
 };
+
+#define ALL_EDGES (TOP_EDGE | LEFT_EDGE | RIGHT_EDGE | BOTTOM_EDGE)
 
 enum eDirection
 {
@@ -74,6 +78,7 @@ enum eDirection
 	LEFT			= 4,
 	RIGHT			= 8
 };
+
 
 enum eBulletType
 {

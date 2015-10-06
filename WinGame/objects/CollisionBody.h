@@ -72,9 +72,13 @@ public:
 	__event void onCollisionBegin(CollisionEventArg* e);
 	__event void onCollisionEnd(CollisionEventArg* e);
 
+	bool hasPhysicsSide(eDirection direction);
+	void setPhysicsSide(eDirection sides);
+
 private:
 	BaseObject* _target;
 	ePhysicsBody _physicsObjects;
+	eDirection _physicsCollisionSide;
 
 	float _dxEntry, _dyEntry, _dxExit, _dyExit;
 	float _txEntry, _tyEntry, _txExit, _tyExit;
