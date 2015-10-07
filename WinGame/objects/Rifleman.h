@@ -11,7 +11,8 @@ using namespace std;
 
 #define RIFLEMAN_HITPOINT 1
 #define RIFLEMAN_SCORE 500
-#define RIFLEMAN_SHOOTING_DELAY 1.0f
+#define RIFLEMAN_SHOOTING_DELAY 1050.0f
+#define RIFLEMAN_ANIMATION_SPEED 0.4755f
 
 class Rifleman : public BaseEnemy
 {

@@ -1,7 +1,7 @@
 #include "Rifleman.h"
 
 int shooting;
-
+StopWatch *loopWatch;
 Rifleman::Rifleman() : BaseEnemy(eID::RIFLEMAN) {}
 Rifleman::~Rifleman() {}
 
@@ -19,34 +19,35 @@ void Rifleman::init()
 	__hook(&CollisionBody::onCollisionBegin, collisionBody, &Rifleman::onCollisionBegin);
 	__hook(&CollisionBody::onCollisionEnd, collisionBody, &Rifleman::onCollisionEnd);
 
-	_animations[NORMAL] = new Animation(_sprite, 0.15f);
+	_animations[NORMAL] = new Animation(_sprite, RIFLEMAN_ANIMATION_SPEED);
 	_animations[NORMAL]->addFrameRect(eID::RIFLEMAN, "normal_01", NULL);
 
-	_animations[NORMAL | SHOOTING] = new Animation(_sprite, 0.15f);
-	_animations[NORMAL | SHOOTING]->addFrameRect(eID::RIFLEMAN, "normal_01", "shoot_01", NULL);
+	_animations[NORMAL | SHOOTING] = new Animation(_sprite, RIFLEMAN_ANIMATION_SPEED);
+	_animations[NORMAL | SHOOTING]->addFrameRect(eID::RIFLEMAN, "shoot_01", "normal_01", NULL);
 
-	_animations[AIMING_UP] = new Animation(_sprite, 0.15f);
+	_animations[AIMING_UP] = new Animation(_sprite, RIFLEMAN_ANIMATION_SPEED);
 	_animations[AIMING_UP]->addFrameRect(eID::RIFLEMAN, "aim_up_01", NULL);
 
-	_animations[AIMING_DOWN] = new Animation(_sprite, 0.15f);
+	_animations[AIMING_DOWN] = new Animation(_sprite, RIFLEMAN_ANIMATION_SPEED);
 	_animations[AIMING_DOWN]->addFrameRect(eID::RIFLEMAN, "aim_down_01", NULL);
 
-	_animations[AIMING_UP | SHOOTING] = new Animation(_sprite, 0.15f);
+	_animations[AIMING_UP | SHOOTING] = new Animation(_sprite, RIFLEMAN_ANIMATION_SPEED);
 	_animations[AIMING_UP | SHOOTING]->addFrameRect(eID::RIFLEMAN, "aim_up_01", "shoot_up_01", NULL);
 
-	_animations[AIMING_DOWN | SHOOTING] = new Animation(_sprite, 0.15f);
+	_animations[AIMING_DOWN | SHOOTING] = new Animation(_sprite, RIFLEMAN_ANIMATION_SPEED);
 	_animations[AIMING_DOWN | SHOOTING]->addFrameRect(eID::RIFLEMAN, "aim_down_01", NULL);
 
-	_animations[HIDING] = new Animation(_sprite, 0.15f);
+	_animations[HIDING] = new Animation(_sprite, RIFLEMAN_ANIMATION_SPEED);
 	_animations[HIDING]->addFrameRect(eID::RIFLEMAN, "hide_01", NULL);
 
-	_animations[EXPOSING] = new Animation(_sprite, 0.15f);
+	_animations[EXPOSING] = new Animation(_sprite, RIFLEMAN_ANIMATION_SPEED);
 	_animations[EXPOSING]->addFrameRect(eID::RIFLEMAN, "hide_01", "expose_01", "expose_02", NULL);
 
-	_animations[EXPOSING | SHOOTING] = new Animation(_sprite, 0.15f);
+	_animations[EXPOSING | SHOOTING] = new Animation(_sprite, RIFLEMAN_ANIMATION_SPEED);
 	_animations[EXPOSING | SHOOTING]->addFrameRect(eID::RIFLEMAN, "expose_02", NULL);
 
 	_stopwatch = new StopWatch();
+	loopWatch = new StopWatch();
 	// this->addStatus(SHOOTING);
 	this->setHitpoint(RIFLEMAN_HITPOINT);
 	this->setScore(RIFLEMAN_SCORE);
@@ -139,7 +140,7 @@ void Rifleman::update(float deltatime)
 		it.second->update(deltatime);
 	}
 
-	if (_stopwatch->isTimeLoop(2000.0f))
+	if (loopWatch->isTimeLoop(2000.0f))
 	{
 		this->setShootingAngle(rand() % 360 - 180);
 		shooting = rand() % 2;
@@ -179,22 +180,22 @@ void Rifleman::onCollisionEnd(CollisionEventArg* collision_event)
 void Rifleman::shoot() 
 {
 	float angle = getShootingAngle();
-	auto pos = this->getPosition() + GVector2(0, this->getSprite()->getFrameHeight() / 2);
+	auto pos = this->getPosition();// +GVector2(0, this->getSprite()->getFrameHeight() / 2);
 
 	if (this->isInStatus(AIMING_UP)) 
 	{
-		pos.x += this->getScale().x < 0 ? 6 : -6;
-		pos.y -= 4;
+		pos.x += this->getScale().x < 0 ? this->getSprite()->getFrameWidth() / 2 : -this->getSprite()->getFrameWidth() / 2;
+		pos.y += this->getSprite()->getFrameHeight() / 2;
 	}
 	else if (this->isInStatus(AIMING_DOWN))
 	{
-		pos.x -= this->getScale().x < 0 ? -6 : 6;
-		pos.y -= 23;
+		pos.x += this->getScale().x < 0 ? this->getSprite()->getFrameWidth() / 2 : -this->getSprite()->getFrameWidth() / 2;
+		pos.y -= this->getSprite()->getFrameHeight() / 4;
 	}
 	else if (this->isInStatus(NORMAL))
 	{
-		pos.x += this->getScale().x < 0 ? this->getSprite()->getFrameWidth() / 2 : -6;
-		pos.y -= 12;
+		pos.x += this->getScale().x < 0 ? this->getSprite()->getFrameWidth() / 2 : -this->getSprite()->getFrameWidth() / 2;
+		pos.y += this->getSprite()->getFrameHeight() / 4.5;
 	}
 
 	_listBullets.push_back(new Bullet(pos, angle));

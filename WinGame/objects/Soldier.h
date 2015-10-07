@@ -13,6 +13,7 @@ using namespace std;
 #define SOLDIER_SPEED 60
 #define SOLDIER_HITPOINT 1
 #define SOLDIER_SCORE 100
+#define SOLDIER_JUMP_VELOCITY 200
 
 class Soldier : public BaseEnemy
 {
@@ -26,7 +27,9 @@ public:
 	void release();
 	void onCollisionBegin(CollisionEventArg*);
 	void onCollisionEnd(CollisionEventArg*);
-
+	float checkCollision(BaseObject*, float);
+	void jump();
+	GVector2 getVelocity();
 	IComponent* getComponent(string);
 
 private:

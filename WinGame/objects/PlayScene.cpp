@@ -69,16 +69,16 @@ bool PlayScene::init()
 	box2->setPosition(500, 180);
 	_listobject.push_back(box2);
 
+	auto soldier = new Soldier();
+	soldier->init();
+	_listobject.push_back(soldier);
+
 	_text = new Text(L"Arial", "", 10, 25);
 
 	auto aircraft = new AirCraft(START_POSITION, HORIZONTAL_VELOC, AIRCRAFT_AMPLITUDE, AIRCRAFT_FREQUENCY, eAirCraftType::I);
 	aircraft->init();
 	_listobject.push_back(aircraft);
 	_listControlObject.push_back(aircraft);
-
-	auto soldier = new Soldier();
-	soldier->init();
-	_listobject.push_back(soldier);
 
 	auto rifleman = new Rifleman();
 	rifleman->init();
@@ -123,6 +123,9 @@ void PlayScene::update(float dt)
 	_listobject[0]->checkCollision(_listobject[1], dt);
 	_listobject[0]->checkCollision(_listobject[2], dt);
 	_listobject[0]->checkCollision(_listobject[3], dt);
+	_listobject[4]->checkCollision(_listobject[1], dt);
+	_listobject[4]->checkCollision(_listobject[2], dt);
+	_listobject[4]->checkCollision(_listobject[3], dt);
 }
 void PlayScene::draw(LPD3DXSPRITE spriteHandle)
 {
