@@ -4,21 +4,20 @@
 #include "BaseObject.h"
 #include "CollisionBody.h"
 
+#define GRAVITY 500
 class BaseEnemy : public BaseObject 
 {
 public:
-	BaseEnemy(eID id) : BaseObject(id) {}
+	BaseEnemy(eID);
 	
 	int getHitpoint();
 	void setHitpoint(int);
     int getScore();
 	void setScore(int);
-	void onCollisionBegin(CollisionEventArg*);
-	void onCollisionEnd(CollisionEventArg*);
 
-	virtual ~BaseEnemy() {}
+	virtual ~BaseEnemy();
 
-private:
+protected:
 	int _hitpoint;
 	int _score;
 };

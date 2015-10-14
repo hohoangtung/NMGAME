@@ -1,4 +1,4 @@
-﻿#ifndef _RUNNINGSOLDIER_H
+#ifndef _RUNNINGSOLDIER_H
 #define _RUNNINGSOLDIER_H
 
 #include "BaseEnemy.h"
@@ -13,13 +13,11 @@ using namespace std;
 #define SOLDIER_SPEED 60
 #define SOLDIER_HITPOINT 1
 #define SOLDIER_SCORE 100
+#define SOLDIER_JUMP_VELOCITY 200
 
 class Soldier : public BaseEnemy
 {
 public:
-
-	// ver 05.10.2015 - 7ung: đưa thân hàm constructor qua file.cpp
-	// viết thân hàm ở file .h dễ bị lỗi biên dịch
 	Soldier();
 	~Soldier();
 
@@ -27,7 +25,11 @@ public:
 	void update(float);
 	void draw(LPD3DXSPRITE, Viewport*);
 	void release();
-
+	void onCollisionBegin(CollisionEventArg*);
+	void onCollisionEnd(CollisionEventArg*);
+	float checkCollision(BaseObject*, float);
+	void jump();
+	GVector2 getVelocity();
 	IComponent* getComponent(string);
 
 private:
