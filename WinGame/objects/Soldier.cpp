@@ -1,6 +1,14 @@
 #include "Soldier.h"
 
 bool jumped = false;
+Soldier::Soldier() : BaseEnemy(eID::SOLDIER)
+{
+	this->setStatus(eStatus::RUNNING);
+}
+Soldier::~Soldier()
+{
+
+}
 void Soldier::init()
 {
 	_sprite = SpriteManager::getInstance()->getSprite(eID::SOLDIER);
@@ -18,8 +26,8 @@ void Soldier::init()
 	auto collisionBody = new CollisionBody(this);
 	_listComponent["CollisionBody"] = collisionBody;
 
-	__hook(&CollisionBody::onCollisionBegin, collisionBody, &Rifleman::onCollisionBegin);
-	__hook(&CollisionBody::onCollisionEnd, collisionBody, &Rifleman::onCollisionEnd);
+	//__hook(&CollisionBody::onCollisionBegin, collisionBody, &Rifleman::onCollisionBegin);
+	//__hook(&CollisionBody::onCollisionEnd, collisionBody, &Rifleman::onCollisionEnd);
 
 	_animations[RUNNING] = new Animation(_sprite, 0.15f);
 	_animations[RUNNING]->addFrameRect(eID::SOLDIER, "run_01", "run_02", "run_03", "run_04", "run_05", "run_06", NULL);

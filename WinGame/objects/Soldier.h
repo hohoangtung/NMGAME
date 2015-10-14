@@ -1,4 +1,4 @@
-#ifndef _RUNNINGSOLDIER_H
+﻿#ifndef _RUNNINGSOLDIER_H
 #define _RUNNINGSOLDIER_H
 
 #include "BaseEnemy.h"
@@ -17,8 +17,11 @@ using namespace std;
 class Soldier : public BaseEnemy
 {
 public:
-	Soldier() : BaseEnemy(eID::SOLDIER) { this->setStatus(RUNNING); }
-	~Soldier() {};
+
+	// ver 05.10.2015 - 7ung: đưa thân hàm constructor qua file.cpp
+	// viết thân hàm ở file .h dễ bị lỗi biên dịch
+	Soldier();
+	~Soldier();
 
 	void init();
 	void update(float);
