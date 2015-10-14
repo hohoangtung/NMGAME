@@ -1,4 +1,4 @@
-#include "GameTime.h"
+﻿#include "GameTime.h"
 US_FRAMEWORK
 
 GameTime* GameTime::_instance = nullptr;

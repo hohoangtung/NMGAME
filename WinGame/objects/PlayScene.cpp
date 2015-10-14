@@ -110,9 +110,6 @@ void PlayScene::update(float dt)
 	//sprite->nextFrame();
 	//sprite->setRotate(sprite->getRotate() + 10);
 
-	char str[100];
-	sprintf(str, "delta time: %f", dt);
-	_text->setText(str);
 
 	for each (auto object in _listobject)
 	{
@@ -123,6 +120,10 @@ void PlayScene::update(float dt)
 	_listobject[0]->checkCollision(_listobject[1], dt);
 	_listobject[0]->checkCollision(_listobject[2], dt);
 	_listobject[0]->checkCollision(_listobject[3], dt);
+
+	char str[100];
+	sprintf(str, "delta time: %f", dt);
+	_text->setText(str);
 }
 void PlayScene::draw(LPD3DXSPRITE spriteHandle)
 {
