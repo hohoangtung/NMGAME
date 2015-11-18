@@ -1,5 +1,11 @@
 
 #include "BaseObject.h"
+
+IControlable::IControlable()
+{
+	_input = InputController::getInstance();
+}
+
 BaseObject::BaseObject(eID id)
 {
 	this->_id = id;

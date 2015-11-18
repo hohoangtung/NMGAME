@@ -84,8 +84,6 @@ void SpriteManager::loadResource(LPD3DXSPRITE spriteHandle)
 	this->_listSprite[eID::EXPLOSION] = sp;
 	this->loadSpriteInfo(eID::EXPLOSION, "Resources\\explosion_animation.txt");
 
-	sp = new Sprite(spriteHandle, L"Resources\\Map\\stage1.png", 120, 10);
-	this->_listSprite[eID::MAPSTAGE1] = sp;
 
 	Sprite* bill = new Sprite(spriteHandle, L"Resources\\bill_animation.png");
 	this->_listSprite[eID::BILL] = bill;
@@ -106,6 +104,37 @@ void SpriteManager::loadResource(LPD3DXSPRITE spriteHandle)
 	this->_listSprite[eID::BULLET] = bl;
 	this->loadSpriteInfo(eID::BULLET, "Resources\\bullets_type.txt");
 
+	// Đọc file xml để tạo đối tượng sprite
+	sp = loadXMLDoc(spriteHandle, L"Resources//Map//stage1.xml");
+	sp->setOrigin(VECTOR2ZERO);
+	this->_listSprite[eID::MAPSTAGE1] = sp;
+}
+
+Sprite* SpriteManager::loadXMLDoc(LPD3DXSPRITE spritehandle, LPWSTR path)
+{
+	pugi::xml_document doc;
+	pugi::xml_parse_result result = doc.load_file(path, pugi::parse_default  | pugi::parse_pi);
+	if (result == false)
+	{
+		OutputDebugString(L"Khong tim thay file xml");
+		return nullptr;
+	}
+	pugi::xml_node root = doc.first_child();
+	pugi::xml_node tileset_node = root.child("TileSet");
+	// Tìm tên file.
+	// Cắt từ chuỗi path ra để tìm thư mục.
+	// Sau đó ghép với tên file ảnh được lấy từ file xml để load ảnh.
+	string filename = tileset_node.attribute("FileName").as_string();   // get filename from xml node
+	wstring L_filename = wstring(filename.begin(), filename.end());		// convert to wstring.
+
+	wstring strpath = wstring(path);									// convert to wstring.
+	int index = strpath.find_last_of(L'//');							// cut to find path
+	strpath = strpath.substr(0, index);
+	strpath +=  L"/" + L_filename;										// concat string.  Final string is strpath.
+	// Tìm số dòng
+	int rows = tileset_node.attribute("Rows").as_int();
+	int columns = tileset_node.attribute("Columns").as_int();
+	return new Sprite(spritehandle,(LPWSTR) strpath.c_str(), rows * columns, columns);
 }
 Sprite* SpriteManager::getSprite(eID id)
 {
@@ -115,7 +144,8 @@ Sprite* SpriteManager::getSprite(eID id)
 
 RECT SpriteManager::getSourceRect(eID id, string name)
 {
-	return _sourceRectList[id][name];
+	//return _sourceRectList[id].at(name);
+	return _sourceRectList[id][name]; 
 }
 
 void SpriteManager::loadSpriteInfo(eID id, const char* fileInfoPath)
@@ -133,7 +163,7 @@ void SpriteManager::loadSpriteInfo(eID id, const char* fileInfoPath)
 
 			fscanf(file, "%s %d %d %d %d", &name, &rect.left, &rect.top, &rect.right, &rect.bottom);
 
-			_sourceRectList[id][name] = rect;
+			_sourceRectList[id][string(name)] = rect;
 		}
 	}
 

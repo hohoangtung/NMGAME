@@ -67,7 +67,6 @@ public:
 	// @gravity: vector trọng lực của đối tượng. sẽ không đổi theo thời gian
 	// @movement: tham chiếu đến movement của đối tượng
 	Gravity(GVector2 gravity, Movement *movement);
-	Gravity(GVector2 gravuty, Sprite *refSprite);
 	// khi muốn nhảy. set lại status cho gravity là FALLING_DOWN
 	// khi va chạm với đất set lại status cho gravity là  SHALLOWED
 	void setStatus(eGravityStatus status);

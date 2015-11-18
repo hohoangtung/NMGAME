@@ -6,9 +6,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace MapEditor
+namespace MapEditor.Tiles
 {
-    class TileItem : ListViewItem
+    public class TileItem : ListViewItem
     {
         private Tile _tile;
         public Tile Tile
@@ -18,10 +18,11 @@ namespace MapEditor
                 return _tile;
             }
         }
-        public TileItem(Tile tile, string tilename , int imageIndex)
-            :base (tilename, imageIndex)
+        public TileItem(Tile tile)
+            :base (tile.Name, tile.Id - 1)
         {
             _tile = tile;
+            
         }
 
     }

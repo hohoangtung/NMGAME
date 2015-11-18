@@ -10,7 +10,8 @@
 #include <windows.h>
 #include <exception>
 #include <math.h>
-
+#include <string>
+#include "..\debug.h"
 using namespace std;
 
 #define WINDOW_WIDTH 560
