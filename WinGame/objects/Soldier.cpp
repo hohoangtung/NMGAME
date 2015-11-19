@@ -50,13 +50,16 @@ void Soldier::init()
 
 	_stopwatch = new StopWatch();
 
-	jump();
+	die();
 }
 
 void Soldier::draw(LPD3DXSPRITE spritehandle, Viewport* viewport)
 {
 	this->_sprite->render(spritehandle, viewport);
-	_animations[this->getStatus()]->draw(spritehandle, viewport);
+	if (this->getStatus() != eStatus::DESTROY) 
+		_animations[this->getStatus()]->draw(spritehandle, viewport);
+	if (_explosion != NULL)
+		_explosion->draw(spritehandle, viewport);
 }
 
 void Soldier::release()
@@ -74,12 +77,29 @@ void Soldier::update(float deltatime)
 	Gravity *gravity = (Gravity*)this->getComponent("Gravity");
 	Movement *movement = (Movement*)this->getComponent("Movement");
 
+	if (this->getStatus() == eStatus::DYING) {
+		this->die();
+		if (_stopwatch->isStopWatch(400))
+		{
+			movement->setVelocity(GVector2(0, 0));
+			auto pos = this->getPosition();
+			_explosion = new Explosion(1);
+			_explosion->init();
+			_explosion->setScale(SCALE_FACTOR);
+			_explosion->setPosition(pos);
+			this->setStatus(eStatus::DESTROY);			
+		}
+	}
+
 	for (auto it : _listComponent)
 	{
 		it.second->update(deltatime);
 	}
 
-	_animations[this->getStatus()]->update(deltatime);
+	if (this->getStatus() != DESTROY)
+		_animations[this->getStatus()]->update(deltatime);
+	if (_explosion != NULL)
+		_explosion->update(deltatime);
 }
 
 void Soldier::changeDirection()
@@ -157,3 +177,9 @@ GVector2 Soldier::getVelocity()
 	return move->getVelocity();
 }
 
+void Soldier::die() {
+	Gravity *gravity = (Gravity*)this->getComponent("Gravity");
+	gravity->setStatus(eGravityStatus::SHALLOWED);
+	Movement *movement = (Movement*)this->getComponent("Movement");
+	movement->setVelocity(GVector2(0, 100));
+}
