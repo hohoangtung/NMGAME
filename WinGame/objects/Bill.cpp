@@ -6,21 +6,7 @@ Bill::Bill() : BaseObject(eID::BILL)
 
 Bill::~Bill()
 {
-	for (auto it = _animations.begin(); it != _animations.end(); it++)
-	{
-		SAFE_DELETE(it->second);
-	}
-	_animations.clear();
-
-	for (auto it = _componentList.begin(); it != _componentList.end(); it++)
-	{
-		SAFE_DELETE(it->second);
-	}
-	_componentList.clear();
-
-	SAFE_DELETE(_sprite);
-
-	SAFE_DELETE(_stopWatch);
+	
 }
 
 void Bill::init()
@@ -154,10 +140,21 @@ void Bill::draw(LPD3DXSPRITE spriteHandle, Viewport* viewport)
 
 void Bill::release()
 {
-	//_sprite->release();
+	for (auto it = _animations.begin(); it != _animations.end(); it++)
+	{
+		SAFE_DELETE(it->second);
+	}
 	_animations.clear();
 
-	_listBullets.clear();
+	for (auto it = _componentList.begin(); it != _componentList.end(); it++)
+	{
+		SAFE_DELETE(it->second);
+	}
+	_componentList.clear();
+
+	SAFE_DELETE(_sprite);
+
+	SAFE_DELETE(_stopWatch);
 }
 
 void Bill::onKeyPressed(KeyEventArg* key_event)
