@@ -1,6 +1,6 @@
 ﻿namespace MapEditor
 {
-    partial class Form1
+    partial class CreateTilesForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,40 +28,43 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.button_browse = new System.Windows.Forms.Button();
-            this.textBox_width = new System.Windows.Forms.TextBox();
-            this.textBox_height = new System.Windows.Forms.TextBox();
+            this.buttonBrowse = new System.Windows.Forms.Button();
+            this.textBoxWidth = new System.Windows.Forms.TextBox();
+            this.textBoxHeight = new System.Windows.Forms.TextBox();
             this.lable_width = new System.Windows.Forms.Label();
             this.label_height = new System.Windows.Forms.Label();
-            this.button_OK = new System.Windows.Forms.Button();
+            this.buttonOK = new System.Windows.Forms.Button();
             this.panel_tile = new System.Windows.Forms.Panel();
+            this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.SuspendLayout();
             // 
-            // button_browse
+            // buttonBrowse
             // 
-            this.button_browse.Location = new System.Drawing.Point(639, 27);
-            this.button_browse.Name = "button_browse";
-            this.button_browse.Size = new System.Drawing.Size(75, 23);
-            this.button_browse.TabIndex = 0;
-            this.button_browse.Text = "Browse";
-            this.button_browse.UseVisualStyleBackColor = true;
-            this.button_browse.Click += new System.EventHandler(this.button_browse_Click);
+            this.buttonBrowse.Location = new System.Drawing.Point(642, 32);
+            this.buttonBrowse.Name = "buttonBrowse";
+            this.buttonBrowse.Size = new System.Drawing.Size(75, 23);
+            this.buttonBrowse.TabIndex = 0;
+            this.buttonBrowse.Text = "Browse";
+            this.buttonBrowse.UseVisualStyleBackColor = true;
+            this.buttonBrowse.Click += new System.EventHandler(this.buttonBrowse_Click);
             // 
-            // textBox_width
+            // textBoxWidth
             // 
-            this.textBox_width.Location = new System.Drawing.Point(633, 95);
-            this.textBox_width.Name = "textBox_width";
-            this.textBox_width.Size = new System.Drawing.Size(100, 20);
-            this.textBox_width.TabIndex = 1;
-            this.textBox_width.TextChanged += new System.EventHandler(this.textBox_width_TextChanged);
+            this.textBoxWidth.Enabled = false;
+            this.textBoxWidth.Location = new System.Drawing.Point(633, 95);
+            this.textBoxWidth.Name = "textBoxWidth";
+            this.textBoxWidth.Size = new System.Drawing.Size(100, 20);
+            this.textBoxWidth.TabIndex = 1;
+            this.textBoxWidth.TextChanged += new System.EventHandler(this.textBoxWidth_TextChanged);
             // 
-            // textBox_height
+            // textBoxHeight
             // 
-            this.textBox_height.Location = new System.Drawing.Point(633, 134);
-            this.textBox_height.Name = "textBox_height";
-            this.textBox_height.Size = new System.Drawing.Size(100, 20);
-            this.textBox_height.TabIndex = 2;
-            this.textBox_height.TextChanged += new System.EventHandler(this.textBox_height_TextChanged);
+            this.textBoxHeight.Enabled = false;
+            this.textBoxHeight.Location = new System.Drawing.Point(633, 134);
+            this.textBoxHeight.Name = "textBoxHeight";
+            this.textBoxHeight.Size = new System.Drawing.Size(100, 20);
+            this.textBoxHeight.TabIndex = 2;
+            this.textBoxHeight.TextChanged += new System.EventHandler(this.textBoxHeight_TextChanged);
             // 
             // lable_width
             // 
@@ -81,15 +84,15 @@
             this.label_height.TabIndex = 4;
             this.label_height.Text = "height(pixel)";
             // 
-            // button_OK
+            // buttonOK
             // 
-            this.button_OK.Location = new System.Drawing.Point(639, 180);
-            this.button_OK.Name = "button_OK";
-            this.button_OK.Size = new System.Drawing.Size(75, 23);
-            this.button_OK.TabIndex = 5;
-            this.button_OK.Text = "OK";
-            this.button_OK.UseVisualStyleBackColor = true;
-            this.button_OK.Click += new System.EventHandler(this.button_OK_Click);
+            this.buttonOK.Location = new System.Drawing.Point(639, 180);
+            this.buttonOK.Name = "buttonOK";
+            this.buttonOK.Size = new System.Drawing.Size(75, 23);
+            this.buttonOK.TabIndex = 5;
+            this.buttonOK.Text = "OK";
+            this.buttonOK.UseVisualStyleBackColor = true;
+            this.buttonOK.Click += new System.EventHandler(this.buttonOK_Click);
             // 
             // panel_tile
             // 
@@ -102,21 +105,26 @@
             this.panel_tile.TabIndex = 6;
             this.panel_tile.Paint += new System.Windows.Forms.PaintEventHandler(this.panel_tile_Paint);
             // 
-            // Form1
+            // openFileDialog
             // 
-            this.AcceptButton = this.button_OK;
+            this.openFileDialog.FileName = "openFileDialog";
+            this.openFileDialog.Title = "Chose Image TIles";
+            // 
+            // CreateTiles
+            // 
+            this.AcceptButton = this.buttonOK;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(775, 514);
             this.Controls.Add(this.panel_tile);
-            this.Controls.Add(this.button_OK);
+            this.Controls.Add(this.buttonOK);
             this.Controls.Add(this.label_height);
             this.Controls.Add(this.lable_width);
-            this.Controls.Add(this.textBox_height);
-            this.Controls.Add(this.textBox_width);
-            this.Controls.Add(this.button_browse);
-            this.Name = "Form1";
-            this.Text = "Form1";
+            this.Controls.Add(this.textBoxHeight);
+            this.Controls.Add(this.textBoxWidth);
+            this.Controls.Add(this.buttonBrowse);
+            this.Name = "CreateTiles";
+            this.Text = "Create Tiles";
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -124,13 +132,14 @@
 
         #endregion
 
-        private System.Windows.Forms.Button button_browse;
-        private System.Windows.Forms.TextBox textBox_width;
-        private System.Windows.Forms.TextBox textBox_height;
+        private System.Windows.Forms.Button buttonBrowse;
+        private System.Windows.Forms.TextBox textBoxWidth;
+        private System.Windows.Forms.TextBox textBoxHeight;
         private System.Windows.Forms.Label lable_width;
         private System.Windows.Forms.Label label_height;
-        private System.Windows.Forms.Button button_OK;
+        private System.Windows.Forms.Button buttonOK;
         private System.Windows.Forms.Panel panel_tile;
+        private System.Windows.Forms.OpenFileDialog openFileDialog;
 
 
     }

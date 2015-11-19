@@ -1,0 +1,111 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="NameAndType">
+  <Class Name="MapEditor.CreateTilesForm">
+    <Position X="3.75" Y="0.75" Width="2.75" />
+    <Members>
+      <Field Name="_tileset" Hidden="true" />
+      <Field Name="buttonBrowse" Hidden="true" />
+      <Field Name="buttonOK" Hidden="true" />
+      <Field Name="components" Hidden="true" />
+      <Method Name="Dispose" Hidden="true" />
+      <Method Name="InitializeComponent" Hidden="true" />
+      <Field Name="label_height" Hidden="true" />
+      <Field Name="lable_width" Hidden="true" />
+      <Field Name="openFileDialog" Hidden="true" />
+      <Field Name="panel_tile" Hidden="true" />
+      <Field Name="textBoxHeight" Hidden="true" />
+      <Field Name="textBoxWidth" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>AAAAEEAAACCABAAkAAiAQAAGAAAiIAIKBAAABAEAABA=</HashCode>
+      <FileName>CreateTilesForm.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Tileset" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="MapEditor.MainForm">
+    <Position X="8.25" Y="7" Width="3" />
+    <Members>
+      <Field Name="bindingSource1" Hidden="true" />
+      <Field Name="cloneToolStripMenuItem" Hidden="true" />
+      <Field Name="components" Hidden="true" />
+      <Field Name="contextMenuStrip1" Hidden="true" />
+      <Field Name="creatTilesToolStripMenuItem" Hidden="true" />
+      <Field Name="defaultImage" Hidden="true" />
+      <Method Name="Dispose" Hidden="true" />
+      <Field Name="editToolStripMenuItem" Hidden="true" />
+      <Method Name="InitializeComponent" Hidden="true" />
+      <Field Name="listView1" Hidden="true" />
+      <Field Name="loadMapToolStripMenuItem" Hidden="true" />
+      <Field Name="menuStrip1" Hidden="true" />
+      <Field Name="newMapToolStripMenuItem" Hidden="true" />
+      <Field Name="saveMapToolStripMenuItem" Hidden="true" />
+      <Field Name="splitContainer1" Hidden="true" />
+      <Field Name="toolStripMenuItem1" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>AcAAAAAhACAQAAACAQSpAQhGBAFCKQAAAAAAFLAAABA=</HashCode>
+      <FileName>MainForm.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_selectedTile" />
+      <Field Name="_mapController" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="MapEditor.Tiles.TileSet" BaseTypeListCollapsed="true">
+    <Position X="7.75" Y="1" Width="4" />
+    <Members>
+      <Field Name="_columns" Hidden="true" />
+      <Field Name="_filename" Hidden="true" />
+      <Field Name="_hieghttile" Hidden="true" />
+      <Field Name="_listTiles" Hidden="true" />
+      <Field Name="_rows" Hidden="true" />
+      <Field Name="_widthtile" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>AAAEgYAAAEAAAESAAEAAgAAAgAEQEhABAAAAAAhAAAQ=</HashCode>
+      <FileName>Tiles\TileSet.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="MapEditor.Tiles.MapController">
+    <Position X="12.25" Y="7.25" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgACAQAAAAAEGAAAAQAAAAAAAAAAEAA=</HashCode>
+      <FileName>Tiles\MapController.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="TilesMap" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="MapEditor.Tiles.TilesMap">
+    <Position X="12.75" Y="2.25" Width="1.75" />
+    <Members>
+      <Field Name="_mapSize" Hidden="true" />
+      <Field Name="_tileset" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>AAAAgIAAAAAAAEAACAAAAAAAAAAAIAAMAAAAAAkAAAA=</HashCode>
+      <FileName>Tiles\TilesMap.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="TileSet" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="MapEditor.Tiles.Tile">
+    <Position X="2.25" Y="6.75" Width="3.5" />
+    <Members>
+      <Field Name="_id" Hidden="true" />
+      <Field Name="_image" Hidden="true" />
+      <Field Name="_name" Hidden="true" />
+      <Field Name="_srcRect" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>AABCIAAAAAAAAAAAAAJAAAQAgAAASBABAAAAAAAAQAA=</HashCode>
+      <FileName>Tiles\Tile.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

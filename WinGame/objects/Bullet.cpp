@@ -65,10 +65,13 @@ void Bullet::init()
 	}
 
 	auto movement = new Movement(GVector2(0, 0), veloc, _sprite);
-	_componentList["Movement"] = movement;
+	_componentList.insert(pair<string, IComponent*>("Movement",movement));
+	//_componentList["Movement"] = movement;
 
 	auto collisionBody = new CollisionBody(this);
-	_componentList["CollisionBody"] = collisionBody;
+	_componentList.insert(pair<string, IComponent*>("CollisionBody",collisionBody));
+	//_componentList.find("CollisionBody")->second = collisionBody;
+	//_componentList["CollisionBody"] = collisionBody;
 
 	__hook(&CollisionBody::onCollisionBegin, collisionBody, &Bullet::onCollisionBegin);
 }
@@ -97,7 +100,8 @@ int Bullet::getDamage()
 
 GVector2 Bullet::getVelocity()
 {
-	auto move = (Movement*)this->_componentList["Movement"];
+	auto move = (Movement*)this->_componentList.find("Movement")->second;
+	//auto move = (Movement*)this->_componentList["Movement"];
 	return move->getVelocity();
 }
 
@@ -109,7 +113,8 @@ void Bullet::onCollisionBegin(CollisionEventArg* collision_arg)
 
 float Bullet::checkCollision(BaseObject * object, float dt)
 {
-	auto body = (CollisionBody*)_componentList["CollisionBody"];
+	auto body = (CollisionBody*)_componentList.find("CollisionBody")->second;
+	//auto body = (CollisionBody*)_componentList["CollisionBody"];
 	body->checkCollision(object, dt);
 
 	return 0.0f;

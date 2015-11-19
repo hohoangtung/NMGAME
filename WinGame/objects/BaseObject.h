@@ -11,10 +11,7 @@ US_FRAMEWORK
 class IControlable
 {
 public:
-	IControlable()
-	{
-		_input = InputController::getInstance();
-	}
+	IControlable();
 	virtual void updateInput(float deltatime) = 0;
 protected:
 	InputController* _input;
