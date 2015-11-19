@@ -111,6 +111,11 @@ GVector2 Bridge::getPosition()
 }
 RECT Bridge::getBounding()
 {
+	if (this->getStatus() == eStatus::DESTROY)
+	{
+		RECT rect = {0,0,0,0};
+		return rect;
+	}
 	RECT rect;
 	int framewidth = this->_sprite->getFrameWidth();
 	int frameheight = this->_sprite->getFrameHeight();

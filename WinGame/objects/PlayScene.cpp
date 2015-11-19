@@ -1,4 +1,4 @@
-#include "PlayScene.h"
+﻿#include "PlayScene.h"
 
 
 //Viewport* PlayScene::_viewport = new Viewport(0, WINDOW_HEIGHT);
@@ -6,6 +6,7 @@
 PlayScene::PlayScene()
 {
 	_viewport = new Viewport(0, WINDOW_HEIGHT, WINDOW_WIDTH, WINDOW_HEIGHT);
+
 }
 
 PlayScene::~PlayScene()
@@ -85,10 +86,7 @@ bool PlayScene::init()
 	rifleman->init();
 	_listobject.push_back(rifleman);
 
-
-
-	background = new Map();
-	background->init("Resources//Map//map_index.txt");
+	background = Map::LoadFromFile("Resources//Map//stage1.xml",eID::MAPSTAGE1);
 	return true;
 }
 
@@ -121,12 +119,39 @@ void PlayScene::update(float dt)
 	}
 	_viewport->setPositionWorld(
 		GVector2(max(_listobject[0]->getPositionX() - 200, 0), WINDOW_HEIGHT));
+	
 	_listobject[0]->checkCollision(_listobject[1], dt);
 	_listobject[0]->checkCollision(_listobject[2], dt);
 	_listobject[0]->checkCollision(_listobject[3], dt);
 	_listobject[4]->checkCollision(_listobject[1], dt);
 	_listobject[4]->checkCollision(_listobject[2], dt);
 	_listobject[4]->checkCollision(_listobject[3], dt);
+
+}
+
+void PlayScene::destroyobject()
+{
+	for each (auto object in _listobject)
+	{
+		if (object->getStatus() == eStatus::DESTROY)	// kiểm tra nếu là destroy thì loại khỏi list
+		{
+			object->release();
+			// http://www.cplusplus.com/reference/algorithm/remove/
+			auto rs1 = std::remove(_listobject.begin(), _listobject.end(), object);
+			_listobject.pop_back();			// sau khi remove thì còn một phần tử cuối cùng vôi ra. giống như dịch mảng. nên cần bỏ nó đi
+
+			//https://msdn.microsoft.com/en-us/library/cby9kycs.aspx (dynamic_cast) 
+			// loại khỏi list control
+			vector<IControlable*>::iterator icontrol = find(_listControlObject.begin(), _listControlObject.end(), dynamic_cast<IControlable*>(object));
+			if (icontrol != _listControlObject.end())
+			{
+				auto rs2 = std::remove(_listControlObject.begin(), _listControlObject.end(), (*icontrol));
+				_listControlObject.pop_back();
+			}
+			delete object;
+			break;		// sau pop_back phần tử đi thì list bị thay đồi, nên vòng for-each không còn nguyên trạng nữa. -> break (mỗi frame chỉ remove được 1 đối tượng)
+		}
+	}
 }
 void PlayScene::draw(LPD3DXSPRITE spriteHandle)
 {

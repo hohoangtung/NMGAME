@@ -36,7 +36,7 @@ namespace MapEditor
         {
             if (Int32.TryParse(this.textBox1.Text, out _columns) == false)
                 return;
-            if (Int32.TryParse(this.textBox1.Text, out _rows) == false)
+            if (Int32.TryParse(this.textBox2.Text, out _rows) == false)
                 return;
             this.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.Close();

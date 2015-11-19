@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MapEditor.Tiles;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,109 +13,66 @@ namespace MapEditor
 {
     public partial class MainForm : Form
     {
-        private Point _matrixSize;          // kích thước ma trận index
+        // PRIVATE ATTRIBUTE
+        // -------------------------------------------------------------
 
-        private int[,] _matrixIndex;        // ma trận index lưu index của tile
-        private List<Tile> _listTile;       // danh sách các tile
-        private Tile _selectedTile;         // current tile
-        private TableLayoutPanel _tablelayout;  // lưới kẻ ô ở background
-        private Bitmap _bitmap;
+        // Tile đang được chọn trong list view.
+        private Tile _selectedTile;  
 
-        // kích thước ma trận index
-        public Point MatrixSize
-        {
-            get { return _matrixSize; }
-            set 
-            {
-                _matrixSize = value;
-                _matrixIndex = new int[value.X, value.Y];
-            }
-        }
+        // Lưới kẻ ô.
+        private TableLayoutPanel _tablelayout;
+
+        // Class chính dùng để điều khiển hành vi và chứa đối tượng TileMap.
+        private MapController _mapController;
+
+        // Để lưu đường dẫn tạm cho file xml.
+        // khi save nếu path này rỗng thì mở dialog yêu cầu đừng dẫn, ngược lại ta dùng path này để lưu
+        // khi load nếu path này rỗng thì load bình thường, ngược lại, ta lưu lại trước rồi mới load.
+        private string _tilesetPath;
+
+        // CONTRUCTOR
+        // -------------------------------------------------------------
+
         public MainForm()
         {
             InitializeComponent();
-            _listTile = new List<Tile>();
-            _matrixSize = Point.Empty;
-            _matrixIndex = null;
-            _selectedTile = null;
-            _bitmap = null;
+            _mapController = new MapController();
         }
 
-        private void creatTilesToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Form1 form = new Form1();
-            var rs = form.ShowDialog();
-            if (rs == System.Windows.Forms.DialogResult.OK)
-            {
-                // ảnh được load từ file
-                _bitmap = (Bitmap)form.Image;
-                // số tile theo chiều width (số cột)
-                int widthcount = form.WidthCount;
 
-                // số tile theo chiều height (số dòng)
-                int heightcount = form.HeightCount;
+        // PRIVATE METHOD
+        // -------------------------------------------------------------
 
-                //hcn xác định ô tile
-                Rectangle rct = new Rectangle(0, 0, _bitmap.Width / widthcount, _bitmap.Height / heightcount);
-                
-                // image list để gán vào listItem
-                var imglist = new ImageList();
-
-                int temp = heightcount * widthcount;
-                // cắt từ hình được load. tạo imagelist --> listitem
-                for (int i = 0; i < temp; i++)
-                {
-                    rct.Location = new Point(
-                        (i % widthcount) * rct.Width,
-                        (i / widthcount) * rct.Height
-                        );
-                    var bm = _bitmap.Clone(rct, _bitmap.PixelFormat);
-                    var bm2 = _bitmap.Clone(rct, _bitmap.PixelFormat);
-                    imglist.Images.Add(bm);
-                    imglist.ImageSize = new Size(40, 40);
-                    _listTile.Add(new Tile(_bitmap, new Rectangle(rct.Location, new Size(rct.Size.Width - 1, rct.Size.Height - 1)), i + 1));
-                    listView1.Items.Add(new TileItem(_listTile[i], "tile_" + i.ToString(), i));
-                    
-                }
-
-                listView1.LargeImageList = imglist;
-
-
-            }
-
-        }
-
-        /// <summary>
-        /// dùng để tạo ma trận index tự động (clone map)
-        /// </summary>
-        /// <param name="img"> ảnh gốc từ file</param>
-        /// <param name="widthpixel"> chiều rộng tile</param>
-        /// <param name="heightpixel">chiểu cao tile</param>
+        // Clone map từ file có sẵn
         private void cloneMap(Image img, int widthpixel, int heightpixel)
         {
-            Point postion = Point.Empty;            
-            MatrixSize = new Point( img.Width / widthpixel, img.Height / heightpixel);
-            initTableLayout(MatrixSize.X, MatrixSize.Y);
+            Point postion = Point.Empty;
+            //MatrixSize = new Point(img.Width / widthpixel, img.Height / heightpixel);
+
+            _mapController.TilesMap.Resize(img.Width / widthpixel, img.Height / heightpixel);
+
+            initTableLayout(_mapController.TilesMap.Columns, _mapController.TilesMap.Rows);
             Bitmap bm = new Bitmap(widthpixel, heightpixel, img.PixelFormat);           //
-            Rectangle srcRect = new Rectangle(0,0,widthpixel - 1, heightpixel - 1);
+            Rectangle srcRect = new Rectangle(0, 0, widthpixel - 1, heightpixel - 1);
             var imglist = this.listView1.LargeImageList.Images;
-            for (int i = 0; i < MatrixSize.X; i++)
+            for (int i = 0; i < _mapController.TilesMap.Columns; i++)
             {
-                for (int j = 0; j < MatrixSize.Y; j++)
+                for (int j = 0; j < _mapController.TilesMap.Rows; j++)
                 {
                     srcRect.Location = new Point(i * widthpixel, j * heightpixel);
                     bm = (img as Bitmap).Clone(srcRect, img.PixelFormat);
-                    foreach (var tile in this._listTile)
+                    foreach (var tile in _mapController.TilesMap.TileSet.ListTiles)
                     {
                         if (this.compareBitmap(tile.getbitmap(), bm as Bitmap) == true)
                         {
-                            this._matrixIndex[i, j] = tile.Id;
+                            _mapController.TilesMap[i, j] = tile.Id;
                         }
                     }
                 }
             }
         }
-        // so sánh 2 ảnh
+
+        // So sánh 2 ảnh (Helper cho hàm clonemap).
         private bool compareBitmap(Bitmap bm1, Bitmap bm2, float accuracy = 1.0f)
         {
             if (accuracy > 1 || accuracy < 0)   // độ chính xác từ 0 đến 1
@@ -123,8 +81,8 @@ namespace MapEditor
             byte[] bytearray1 = new byte[bytes];
             byte[] bytearray2 = new byte[bytes];
             System.Drawing.Imaging.BitmapData bitmapdata1 = bm1.LockBits(
-                new Rectangle(0,0, bm1.Width - 1, bm1.Height - 1),
-                System.Drawing.Imaging.ImageLockMode.ReadOnly ,
+                new Rectangle(0, 0, bm1.Width - 1, bm1.Height - 1),
+                System.Drawing.Imaging.ImageLockMode.ReadOnly,
                 bm1.PixelFormat);
             System.Drawing.Imaging.BitmapData bitmapdata2 = bm2.LockBits(
                 new Rectangle(0, 0, bm2.Width - 1, bm2.Height - 1),
@@ -146,27 +104,7 @@ namespace MapEditor
                 return true;
             return false;
         }
-        private void splitContainer1_Panel1_Paint(object sender, PaintEventArgs e)
-        {
 
-        }
-
-        private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
-        {
-             
-        }
-
-        private void menuStrip1_ItemClicked(object sender, EventArgs e)
-        {
-            var newmap = new NewMaps();
-            var rs = newmap.ShowDialog();
-            if (rs == System.Windows.Forms.DialogResult.OK)
-            {
-                MatrixSize = new Point(newmap.Columns, newmap.Rows);
-                this.initTableLayout(newmap.Columns, newmap.Rows);
-
-            }
-        }
         // khởi tạo lưới khung
         private void initTableLayout(int columns, int rows)
         {
@@ -194,46 +132,29 @@ namespace MapEditor
             _tablelayout.CellBorderStyle = TableLayoutPanelCellBorderStyle.Single;
             _tablelayout.Margin = new System.Windows.Forms.Padding(0, 0, 0, 0);
             _tablelayout.Name = "map";
-            var s = 50 * columns* rows;
+
             _tablelayout.AutoSize = true;
-            //_tablelayout.Size = new Size(50 * newmap.Columns, 50 * newmap.Rows);
             _tablelayout.Paint += _tablelayout_Paint;
             _tablelayout.MouseClick += tablelayout_MouseClick;
             this.splitContainer1.Panel2.Controls.Add(_tablelayout);
-        }
-        private void _tablelayout_Paint(object sender, PaintEventArgs e)
-        {
-            //var graphics = (sender as TableLayoutPanel).CreateGraphics();
-            //if (graphics.IsClipEmpty == false)
-            //    return;
-            drawmapfromMatrixIndex();
+
+            this._mapController.Graphics = _tablelayout.CreateGraphics();
         }
 
-        private void drawmapfromMatrixIndex()
-        {
-            for (int i = 0; i < _matrixSize.X; i++)
-            {
-                for (int j = 0; j < _matrixSize.Y; j++)
-                {
-                    Tile tile = _listTile.Find(t => t.Id == _matrixIndex[i,j]);
-                    if (tile == null)
-                        continue;
-                    Graphics graphics = this._tablelayout.CreateGraphics();
-                    tile.draw(graphics, new Point(50 * i, 50 * j), new Size(50, 50));
-                }
-            }
-        }
-
+        // event
         private void tablelayout_MouseClick(object sender, MouseEventArgs e)
         {
-            var grp = _tablelayout.CreateGraphics();
-            Point selectedPoint = new Point(e.X / 50, e.Y / 50);
-            _matrixIndex[selectedPoint.X, selectedPoint.Y] = _selectedTile.Id;
-            Point location = new Point(50 * selectedPoint.X, 50 * selectedPoint.Y);
-            
-            _selectedTile.draw(grp, location, new Size(50, 50));
-        }
+            if (_selectedTile == null)
+                return;
 
+            // selected point là chỉ số của matrix 
+            Point selectedPoint = new Point(e.X / 50, e.Y / 50);
+            _mapController.TilesMap[selectedPoint.X, selectedPoint.Y] = _selectedTile.Id;
+
+            // location là vị trí vẽ trên tablelayout
+            Point location = new Point(50 * selectedPoint.X, 50 * selectedPoint.Y);
+            _mapController.DrawTile(location, _selectedTile);
+        }
 
         private void listView1_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -245,58 +166,102 @@ namespace MapEditor
             _selectedTile = ((sender as ListView).SelectedItems[0] as TileItem).Tile;
         }
 
-        private void editToolStripMenuItem_Click(object sender, EventArgs e)
+        private void _tablelayout_Paint(object sender, PaintEventArgs e)
         {
-
+            _mapController.Draw();
         }
 
-        private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
+        // menu toolstrip event
+        private void creatTilesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (_matrixIndex == null)
+            this._mapController.CreateTilesSet();
+            if (this._mapController.TilesMap == null)
+                return;   
+            if (this._mapController.TilesMap.TileSet == null)
                 return;
-            var filedialog = new SaveFileDialog();
-            filedialog.Filter = "Text Files (*.txt)|*.txt";
-            DialogResult rs = filedialog.ShowDialog();
-            if(rs == System.Windows.Forms.DialogResult.OK)
+            this.listView1.LargeImageList = this._mapController.getImageList();
+            
+            if (listView1.Items.Count > 0)
+                listView1.Items.Clear();
+            this.listView1.Items.AddRange(_mapController.getListViewItems().ToArray());
+        }
+
+        private void menuStrip1_ItemClicked(object sender, EventArgs e)
+        {
+            var newmapform = new NewMaps();
+            var rs = newmapform.ShowDialog();
+            if (rs == System.Windows.Forms.DialogResult.OK)
             {
-                try
-                {
-                    System.IO.Stream fstream = filedialog.OpenFile();
-                    System.IO.StreamWriter file = new System.IO.StreamWriter(fstream);
-                    file.Write(this._matrixSize.X + "\t");
-                    file.Write(this._matrixSize.Y);
-                    file.WriteLine();
-                    for (int i = 0; i < _matrixSize.Y; i++)
-                    {
-                        for (int j = 0; j < _matrixSize.X; j++)
-                        {
-                            file.Write(_matrixIndex[j, i] + "\t");
-                        }
-                        file.WriteLine();
-                    }
-                    file.Flush();
-                    file.Close();
-                }
-                catch(Exception exception)
-                {
-#if DEBUG
-                    System.Diagnostics.Debug.WriteLine(exception.Message);
-#endif
-                }
+                //MatrixSize = new Point(newmap.Columns, newmap.Rows);
+                _mapController.TilesMap = new TilesMap(newmapform.Columns, newmapform.Rows);
+                this.initTableLayout(newmapform.Columns, newmapform.Rows);
             }
         }
 
         private void cloneToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var filedialog = new OpenFileDialog();
-            //filedialog.Filter = "Image Files (*.png)|*.png";
+            filedialog.Filter = "Image Files (*.png)|*.png";
             DialogResult rs = filedialog.ShowDialog();
-            if(rs == System.Windows.Forms.DialogResult.OK)
+            if (rs == System.Windows.Forms.DialogResult.OK)
             {
                 System.IO.Stream fstream = filedialog.OpenFile();
                 Bitmap sourcebitmap = Bitmap.FromStream(fstream) as Bitmap;
                 cloneMap(sourcebitmap, 16, 16);
             }
         }
-    }
-}
+
+        private void listView1_AfterLabelEdit(object sender, LabelEditEventArgs e)
+        {
+            ((sender as ListView).Items[e.Item] as TileItem).Tile.Name = e.Label;
+        }
+
+        private void saveMapToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (String.IsNullOrEmpty(this._tilesetPath) == true)
+            {
+                var filedialog = new SaveFileDialog();
+                filedialog.Filter = "XML Files (*.xml)|*.xml";
+                var result = filedialog.ShowDialog();
+                if (result != System.Windows.Forms.DialogResult.OK)
+                    return;
+                this._tilesetPath = filedialog.FileName;
+            }
+            TilesMap.Save(_mapController.TilesMap, this._tilesetPath);
+        }
+
+        private void loadMapToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (String.IsNullOrEmpty(this._tilesetPath) == false)
+            {
+                string name = _tilesetPath.Substring(_tilesetPath.LastIndexOf('\\'));
+                var result = MessageBox.Show(
+                    "Do you want save " + name + "?",
+                    "Save TileSet", MessageBoxButtons.OKCancel,
+                    MessageBoxIcon.Question,
+                    MessageBoxDefaultButton.Button2,
+                    MessageBoxOptions.ServiceNotification);
+                if (result == System.Windows.Forms.DialogResult.OK)
+                {
+                    TilesMap.Save(_mapController.TilesMap, _tilesetPath);
+                }
+                _tilesetPath = String.Empty;
+            }
+            var openfiledialog = new OpenFileDialog();
+            openfiledialog.Filter = "XML Files (*.xml)|*.xml";
+            var rs = openfiledialog.ShowDialog();
+            if (rs != System.Windows.Forms.DialogResult.OK)
+                return;
+            _mapController.TilesMap = TilesMap.Load(openfiledialog.FileName);
+
+            listView1.LargeImageList = _mapController.getImageList();
+            listView1.Items.AddRange(_mapController.getListViewItems().ToArray());
+
+            initTableLayout(_mapController.TilesMap.Columns, _mapController.TilesMap.Rows);
+            _mapController.Draw();
+            
+        }
+
+
+    } // END CLASS mainform
+} // END NAMESPACE mapeditor

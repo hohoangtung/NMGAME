@@ -1,4 +1,4 @@
-#ifndef __PLAY_SCENE_H__
+﻿#ifndef __PLAY_SCENE_H__
 #define __PLAY_SCENE_H__
 
 #include <vector>
@@ -9,7 +9,7 @@
 #include "../FrameWork/Text.h"
 #include "../FrameWork/Animation.h"
 #include "../debug.h"
-#include "../Map/Map.h"
+#include "../Tiles/Map.h"
 
 #include "BaseObject.h"
 #include "Bill.h"
@@ -40,6 +40,7 @@ public:
 
 private:
 	//static Viewport* _viewport;
+	void destroyobject();				// kiển tra nếu object hết hạn sử dụng thì phá huỷ đối tượng
 	Sprite* sprite;
 	Text* _text;
 	vector<BaseObject*> _listobject;

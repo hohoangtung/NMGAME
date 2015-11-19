@@ -117,7 +117,7 @@ void AirCraft::update(float deltatime)
 		gravity->setGravity(AIRCRAFT_GRAVITY);
 		this->setStatus(eStatus::NORMAL);
 	}
-
+	
 }
 
 int AirCraft::getType()
@@ -138,6 +138,10 @@ void AirCraft::draw(LPD3DXSPRITE spriteHandle, Viewport* viewport)
 	{
 		if (_explosion != NULL)
 			_explosion->draw(spriteHandle, viewport);
+	}
+	if (viewport->isContains(this->getBounding()) == false)
+	{
+		this->setStatus(eStatus::DESTROY);
 	}
 }
 void AirCraft::release()

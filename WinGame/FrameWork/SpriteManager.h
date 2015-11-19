@@ -7,6 +7,7 @@
 
 #include "define.h"
 #include "Sprite.h"
+#include "..\pugixml-1.7\src\pugixml.hpp"
 
 NS_FRAMEWORK
 NS_FRAMEWORK_BEGIN
@@ -37,6 +38,8 @@ private:
 	static SpriteManager* _instance;
 	map<eID, Sprite*> _listSprite;
 	map<eID, map<string, RECT> > _sourceRectList;
+
+	Sprite* loadXMLDoc(LPD3DXSPRITE spritehandle, LPWSTR path);
 };
 NS_FRAMEWORK_END
 #endif // !__SPRITEMANAGER_H__
