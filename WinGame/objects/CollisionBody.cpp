@@ -186,7 +186,7 @@ float CollisionBody::isCollide(BaseObject * otherSprite, eDirection & direction,
 	// object không va chạm khi:
 	// nếu thời gian bắt đầu va chạm hơn thời gian kết thúc va chạm
 	// thời gian va chạm x, y nhỏ hơn 0 (chạy qua luôn, 2 thằng đang đi xa ra nhau)
-	// thời gian va chạm x, y lớn hơn 1 (còn xa quá chưa thể va chạm)x 
+	// thời gian va chạm x, y lớn hơn 1 (còn xa quá chưa thể va chạm)
 	if (entryTime > exitTime || _txEntry < 0.0f && _tyEntry < 0.0f || _txEntry > 1.0f || _tyEntry > 1.0f)
 	{
 		// không va chạm trả về 1 đi tiếp bt
@@ -283,20 +283,20 @@ void CollisionBody::updateTargetPosition(BaseObject* otherObject, eDirection dir
 	}
 	else
 	{
-		if (move.y > 0 && (otherObject->getPhysicsBodySide() & eDirection::TOP) == eDirection::TOP && _target->getVelocity().y < 0)
+		if (move.y > 0 && (otherObject->getPhysicsBodySide() & eDirection::TOP) == eDirection::TOP && _target->getVelocity().y <= 0)
 		{
 			_target->setPositionY(_target->getPositionY() + move.y);
 		}
-		else if (move.y < 0 && (otherObject->getPhysicsBodySide() & eDirection::BOTTOM) == eDirection::BOTTOM && _target->getVelocity().y > 0)
+		else if (move.y < 0 && (otherObject->getPhysicsBodySide() & eDirection::BOTTOM) == eDirection::BOTTOM && _target->getVelocity().y >= 0)
 		{
 			_target->setPositionY(_target->getPositionY() + move.y);
 		}
 
-		if (move.x > 0 && (otherObject->getPhysicsBodySide() & eDirection::RIGHT) == eDirection::RIGHT && _target->getVelocity().x < 0)
+		if (move.x > 0 && (otherObject->getPhysicsBodySide() & eDirection::RIGHT) == eDirection::RIGHT && _target->getVelocity().x <= 0)
 		{
 			_target->setPositionX(_target->getPositionX() + move.x);
 		}
-		else if (move.x < 0 && (otherObject->getPhysicsBodySide() & eDirection::LEFT) == eDirection::LEFT && _target->getVelocity().x > 0)
+		else if (move.x < 0 && (otherObject->getPhysicsBodySide() & eDirection::LEFT) == eDirection::LEFT && _target->getVelocity().x >= 0)
 		{
 			_target->setPositionX(_target->getPositionX() + move.x);
 		}

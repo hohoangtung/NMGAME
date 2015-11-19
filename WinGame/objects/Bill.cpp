@@ -19,6 +19,8 @@ Bill::~Bill()
 	_componentList.clear();
 
 	SAFE_DELETE(_sprite);
+
+	SAFE_DELETE(_stopWatch);
 }
 
 void Bill::init()
@@ -78,6 +80,9 @@ void Bill::init()
 	_movingSpeed = BILL_MOVE_SPEED;
 
 	this->setStatus(eStatus::FALLING);
+
+	// create stopWatch
+	_stopWatch = new StopWatch();
 }
 
 void Bill::update(float deltatime)
@@ -101,8 +106,9 @@ void Bill::update(float deltatime)
 	// bullet
 	for (auto it = _listBullets.begin(); it != _listBullets.end(); it++)
 	{
-		// tạm để cho nó hết màn hình nó xóa
 		(*it)->update(deltatime);
+
+		// tạm để cho nó hết màn hình nó xóa
 		//if ((*it)->getPositionX() < 0 || (*it)->getPositionX() > SceneManager::getInstance()->getCurrentScene()->getViewport()->getWidth() ||
 		//	(*it)->getPositionY() < 0 || (*it)->getPositionY() > SceneManager::getInstance()->getCurrentScene()->getViewport()->getHeight()
 		//	)
@@ -126,6 +132,14 @@ void Bill::update(float deltatime)
 
 void Bill::updateInput(float dt)
 {
+	if (_input->isKeyDown(DIK_X))
+	{
+		if (_stopWatch->isStopWatch(SHOOT_SPEED))
+		{
+			shoot();
+			_stopWatch->restart();
+		}
+	}
 }
 
 void Bill::draw(LPD3DXSPRITE spriteHandle, Viewport* viewport)
@@ -186,7 +200,7 @@ void Bill::onKeyPressed(KeyEventArg* key_event)
 		this->addStatus(eStatus::SHOOTING);
 
 		// shoot
-		this->shoot();
+		//this->shoot();
 
 		break;
 	}
@@ -248,7 +262,8 @@ float Bill::checkCollision(BaseObject * object, float dt)
 	if (object->getId() == eID::BOX || object->getId() == eID::BRIDGE)
 	{
 		eDirection direction;
-		if (collisionBody->checkCollision(object, direction, dt))
+		// nếu ko phải là nhảy xuống, mới dừng gravity
+		if (!this->isInStatus(eStatus(eStatus::JUMPING | eStatus::LAYING_DOWN)) && collisionBody->checkCollision(object, direction, dt))
 		{
 			if (direction == eDirection::TOP && this->getVelocity().y < 0)
 			{
@@ -317,10 +332,13 @@ void Bill::jump()
 	if ((this->getStatus() & eStatus::JUMPING) == eStatus::JUMPING)
 		return;
 
-	this->setStatus(eStatus(this->getStatus() | eStatus::JUMPING));
+	this->addStatus(eStatus::JUMPING);
 
-	auto move = (Movement*)this->_componentList["Movement"];
-	move->setVelocity(GVector2(move->getVelocity().x, BILL_JUMP_VEL));
+	if (!this->isInStatus(eStatus::LAYING_DOWN))
+	{
+		auto move = (Movement*)this->_componentList["Movement"];
+		move->setVelocity(GVector2(move->getVelocity().x, BILL_JUMP_VEL));
+	}
 
 	auto g = (Gravity*)this->_componentList["Gravity"];
 	g->setStatus(eGravityStatus::FALLING__DOWN);
@@ -459,7 +477,14 @@ void Bill::updateCurrentAnimateIndex()
 
 	if ((_currentAnimateIndex & eStatus::JUMPING) == eStatus::JUMPING)
 	{
-		_currentAnimateIndex = eStatus::JUMPING;
+		if ((_currentAnimateIndex & eStatus::LAYING_DOWN) == eStatus::LAYING_DOWN)
+		{
+			_currentAnimateIndex = eStatus::NORMAL;
+		}
+		else
+		{
+			_currentAnimateIndex = eStatus::JUMPING;
+		}
 	}
 }
 
