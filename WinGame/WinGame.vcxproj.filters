@@ -260,21 +260,9 @@
     <ClInclude Include="objects\Bullet.h">
       <Filter>Header Files\Objects\GameObjects</Filter>
     </ClInclude>
-<<<<<<< HEAD
-    <ClInclude Include="objects\Bullet.h">
-=======
     <ClInclude Include="objects\Bridge.h">
->>>>>>> 683668d698cf00644347a1254878d6bcd3f652d6
       <Filter>Header Files\Objects\GameObjects</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="Flower.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="Resources\Map\stage1.png">
-      <Filter>Resource Files</Filter>
-    </Image>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Readme.txt" />
