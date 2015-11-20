@@ -35,11 +35,13 @@ public:
 	void onKeyPressed(KeyEventArg* key_event);
 	void onKeyReleased(KeyEventArg* key_event);
 
-	void onCollisionBegin(CollisionEventArg* collision_event);
-	void onCollisionEnd(CollisionEventArg* collision_event);
+	void onCollisionBegin(CollisionEventArg* collision_arg);
+	void onCollisionEnd(CollisionEventArg* collision_arg);
 
 	float checkCollision(BaseObject* object, float dt);
 
+	// Đổi kiểu đạn. 
+	void changeBulletType(eAirCraftType );
 private:
 	map<int, Animation*> _animations;
 	map<string, IComponent*> _componentList;

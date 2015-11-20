@@ -1,5 +1,4 @@
 #include "Bullet.h"
-
 Bullet::Bullet(GVector2 startPosition, eDirection dir) : BaseObject(eID::BULLET)
 {
 	_startPosition = startPosition;
@@ -107,8 +106,16 @@ GVector2 Bullet::getVelocity()
 
 void Bullet::onCollisionBegin(CollisionEventArg* collision_arg)
 {
-	if(collision_arg->_otherObject->getId() == eID::BOX)
+	eID objectID = collision_arg->_otherObject->getId();
+	switch (objectID)
+	{
+	case AIRCRAFT:
+		collision_arg->_otherObject->setStatus(eStatus::BURST);
+		break;
+	case BOX:	
 		OutputDebugString(L"hit...\n");
+		break;
+	}
 }
 
 float Bullet::checkCollision(BaseObject * object, float dt)

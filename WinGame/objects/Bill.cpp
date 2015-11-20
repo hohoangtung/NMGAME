@@ -1,4 +1,5 @@
 ﻿#include "Bill.h"
+#include "AirCraft.h"
 
 Bill::Bill() : BaseObject(eID::BILL)
 {
@@ -240,9 +241,14 @@ void Bill::onKeyReleased(KeyEventArg * key_event)
 	}
 }
 
-void Bill::onCollisionBegin(CollisionEventArg * collision_event)
+void Bill::onCollisionBegin(CollisionEventArg * collision_arg)
 {
-
+	eID objectID = collision_arg->_otherObject->getId();
+	switch (objectID)
+	{
+	case AIRCRAFT:
+		break;
+	}
 }
 
 void Bill::onCollisionEnd(CollisionEventArg * collision_event)
@@ -255,10 +261,11 @@ BaseObject* preObject;
 float Bill::checkCollision(BaseObject * object, float dt)
 {
 	auto collisionBody = (CollisionBody*)_componentList["CollisionBody"];
+	eID objectId = object->getId();
+	eDirection direction;
 
-	if (object->getId() == eID::BOX || object->getId() == eID::BRIDGE || object->getId() == eID::GRASS)
+	if (objectId == eID::BOX || objectId == eID::BRIDGE || objectId == eID::GRASS)
 	{
-		eDirection direction;
 		// nếu ko phải là nhảy xuống, mới dừng gravity
 		if (!this->isInStatus(eStatus(eStatus::JUMPING | eStatus::LAYING_DOWN)) && collisionBody->checkCollision(object, direction, dt))
 		{
@@ -281,6 +288,30 @@ float Bill::checkCollision(BaseObject * object, float dt)
 
 			if (!this->isInStatus(eStatus::JUMPING))
 				this->addStatus(eStatus::FALLING);
+		}
+	}
+	else if (objectId == eID::AIRCRAFT)
+	{
+		if (collisionBody->checkCollision(object, direction, dt))
+		{
+			auto aircraft = ((AirCraft*) object);
+			auto billstatus = this->getStatus();
+			if (((billstatus | eStatus::SHOOTING) == billstatus) && aircraft->getStatus() == eStatus::NORMAL)
+			{
+				// Trường hợp máy bay còn nguyên, vừa bắn vừa đứng đó ăn luôn.
+				aircraft->setStatus(eStatus::BURST);
+				aircraft->setExplored();
+				this->changeBulletType(aircraft->getType());
+			}
+			else
+			{
+				// Trường hợp bắn máy bay xong chạy lại ăn.
+				if (aircraft->getStatus() == eStatus::EXPLORED)
+				{
+					aircraft->setStatus(eStatus::DESTROY);
+					this->changeBulletType(aircraft->getType());
+				}
+			}
 		}
 	}
 	else
@@ -508,4 +539,12 @@ eDirection Bill::getAimingDirection()
 	}
 
 	return direction;
+}
+
+void Bill::changeBulletType(eAirCraftType type)
+{
+	// do somehthing.
+	// Khi va chạm với cái máy bay lúc bị bắn xong thì bên aircraft gọi hàm này.
+	// Khi nào có nhiều kiểu đạn thì ông Vinh thêm vào hàm này nhé.
+	OutputDebugString(L"Ăn đạn, thay đạn");
 }

@@ -131,12 +131,14 @@ void PlayScene::update(float dt)
 	_listobject[0]->checkCollision(_listobject[1], dt);
 	_listobject[0]->checkCollision(_listobject[2], dt);
 	_listobject[0]->checkCollision(_listobject[3], dt);
+	_listobject[0]->checkCollision(_listobject[5], dt);
 	_listobject[0]->checkCollision(_listobject[7], dt);
 
 	_listobject[4]->checkCollision(_listobject[1], dt);
 	_listobject[4]->checkCollision(_listobject[2], dt);
 	_listobject[4]->checkCollision(_listobject[3], dt);
 
+	//_listobject[5]->checkCollision(_listobject[0], dt);
 	_listobject[5]->checkCollision(_listobject[1], dt);
 
 }

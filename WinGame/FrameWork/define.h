@@ -93,6 +93,16 @@ enum eDirection
 	RIGHT			= 8
 };
 
+enum eAirCraftType
+{
+	B,
+	F,
+	L,
+	M,
+	R,
+	S,
+	I,
+};
 
 enum eBulletType
 {
