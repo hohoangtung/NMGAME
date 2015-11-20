@@ -130,21 +130,6 @@ Map* Map::LoadFromFile(const string path, eID spriteId)
 	return map;
 }
 
-std::vector<string> splitString(const string & input, char seperate)
-{
-	vector<string> output;
-	std::stringstream ss(input);
-
-	string item;
-
-	while (std::getline(ss, item, seperate))
-	{
-		output.push_back(item);
-	}
-
-	return output;
-}
-
 void Map::getElementMatrixIndex(xml_node& node, int** matrix)
 {
 	/*

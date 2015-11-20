@@ -15,3 +15,22 @@ bool isRectangleIntersected(RECT rect1, RECT rect2)
 	if (left > 0 || right < 0 || top < 0 || bottom > 0)
 		return false;
 }
+
+// Cắt chuỗi.
+// inout: chuỗi cần cắt.
+// seperate: kí tự dùng để cắt chuỗi
+// return: mãng các chuỗi đã được cắt.
+std::vector<string> splitString(const string & input, char seperate)
+{
+	vector<string> output;
+	std::stringstream ss(input);
+
+	string item;
+
+	while (std::getline(ss, item, seperate))
+	{
+		output.push_back(item);
+	}
+
+	return output;
+}
