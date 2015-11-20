@@ -12,6 +12,7 @@
 #include <math.h>
 #include <string>
 #include "..\debug.h"
+#include "utils.h"
 using namespace std;
 
 #define WINDOW_WIDTH 560
