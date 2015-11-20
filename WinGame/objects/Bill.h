@@ -4,16 +4,18 @@
 #include "..\FrameWork\define.h"
 #include "..\FrameWork\Animation.h"
 #include "..\FrameWork\InputController.h"
+#include "..\FrameWork\Managers\SceneManager.h"
+#include "..\FrameWork\StopWatch.h"
 #include "BaseObject.h"
 #include "IComponent.h"
 #include "CollisionBody.h"
 #include "Bullet.h"
-#include "../FrameWork/Managers/SceneManager.h"
 
 #define BILL_MOVE_SPEED 120
 #define BILL_JUMP_VEL 450
 #define TEST_LAND 200
 #define GRAVITY 800
+#define SHOOT_SPEED 200.0f
 
 [event_receiver(native)]
 class Bill : public BaseObject, public IControlable
@@ -43,6 +45,7 @@ private:
 	map<string, IComponent*> _componentList;
 	
 	float _movingSpeed;
+	StopWatch* _stopWatch;
 
 	void standing();
 	void moveLeft();

@@ -1,5 +1,7 @@
 ﻿
 #include "Map.h"
+#include <string>
+#include <sstream>
 
 Map::Map()
 {
@@ -128,6 +130,21 @@ Map* Map::LoadFromFile(const string path, eID spriteId)
 	return map;
 }
 
+std::vector<string> splitString(const string & input, char seperate)
+{
+	vector<string> output;
+	std::stringstream ss(input);
+
+	string item;
+
+	while (std::getline(ss, item, seperate))
+	{
+		output.push_back(item);
+	}
+
+	return output;
+}
+
 void Map::getElementMatrixIndex(xml_node& node, int** matrix)
 {
 	/*
@@ -147,39 +164,59 @@ void Map::getElementMatrixIndex(xml_node& node, int** matrix)
 
 	// Cặp giá trị [i][j] của mảng.
 	int i = 0, j = 0;		
-	char *temp = NULL;
-	char* pch = NULL;
+
+	//char *temp = NULL;
+	//char *pch = NULL;
+	
 	while (child != nullptr)
 	{
+		char *temp = NULL;
+		char *pch = NULL;
+
 		// Lấy chuỗi giá trị của một element <Row>.
-		indexStr = child.first_child().text().as_string();
+		//indexStr = child.first_child().text().as_string();
+		indexStr = child.text().as_string();
+
 
 		// Lấy attribute Id của node Row, nó cũng là giá trị lớp thứ nhất trong mảng hai chiều.
 		i = child.attribute("id").as_int();
-		
-		// Copy indexStr vào temp.
-		pch = new char[indexStr.length() + 1];		
-		strcpy(pch,indexStr.data());
 
-		// Giữ lại pch làm gốc để huỷ vùng nhớ.
-		temp = pch;
+		auto str = splitString(indexStr, '\t');
+		int j = 0;
 
-		// Slice chuỗi để lấy các gái trị int trong chuỗi.
-		strtok(temp,"\t\0");
-		while (temp != NULL)
+		for (string tmp : str)
 		{
-			matrix[i][j] = atoi(temp);
+			matrix[i][j] = atoi(tmp.c_str());
 			j++;
-			temp += strlen(temp) + 1;
-			temp = strtok(temp,"\t\0");
 		}
 
-		// Node kế tiếp. Nếu node kế tiếp là null thì dừng vòng while.
 		child = child.next_sibling();
-		j = 0;
-		delete[] pch;
-		pch = NULL;
+		str.clear();   
+
+		// Copy indexStr vào temp.
+		//auto l = indexStr.length();
+		//pch = new char[l + 1];
+		//strcpy(pch, indexStr.c_str());
+		//temp = pch;
+
+		//// Slice chuỗi để lấy các gái trị int trong chuỗi.
+		//strtok(temp,"\t\0");
+
+		//while (temp != NULL)
+		//{
+		//	matrix[i][j] = atoi(temp);
+		//	j++;
+		//	temp += strlen(temp) + 1;
+		//	temp = strtok(temp,"\t\0");
+		//}
+
+		//// Node kế tiếp. Nếu node kế tiếp là null thì dừng vòng while.
+		//child = child.next_sibling();
+		//j = 0;
+
+		//SAFE_DELETE(pch);
 	}
+
 }
 xml_attribute Map::getAttributeValue(const xml_node& node, string attributename)
 {
@@ -188,5 +225,6 @@ xml_attribute Map::getAttributeValue(const xml_node& node, string attributename)
 				{
 					if (string(att.name()).compare(attributename) == 0)
 						return true;
+					return false;
 				});
 }
