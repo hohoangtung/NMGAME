@@ -20,6 +20,7 @@
 #include "AirCraft.h"
 #include "Rifleman.h"
 #include "Bridge.h"
+#include "Grass.h"
 using namespace std;
 US_FRAMEWORK
 
@@ -38,6 +39,13 @@ public:
 	void setViewport(Viewport* viewport);
 	//static Viewport* getViewport();
 
+	// Trả về một đối tượng theo id.
+	// id: kiểu enum eID, định danh một đối tượng.
+	// return: đối tượng cần tìm.
+	BaseObject* getObject(eID id);
+
+	// Lấy đối tượng bill.
+	Bill* getBill();
 private:
 	//static Viewport* _viewport;
 	void destroyobject();				// kiển tra nếu object hết hạn sử dụng thì phá huỷ đối tượng
@@ -47,6 +55,10 @@ private:
 	vector<IControlable*> _listControlObject;
 	Animation* _animation;
 	Map* background;
+
+	// Trỏ đến bill, một số đối tượng cần truyền bill vào để xử lý, lấy ở đây.
+	BaseObject* _bill; 
+
 };
 
 #endif // !__PLAY_SCENE_H__

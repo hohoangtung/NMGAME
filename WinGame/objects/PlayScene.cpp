@@ -51,16 +51,18 @@ bool PlayScene::init()
 	auto bill = new Bill();
 	bill->init();
 	bill->setPosition(400, 500);
-
+	
+	this->_bill = bill;
 	_listControlObject.push_back(bill);
 	_listobject.push_back(bill);
+
 
 	auto box1 = new MyBox(0);
 	box1->init();
 	box1->setPosition(400, 180);
 	_listobject.push_back(box1);
 
-	auto bridge = new Bridge(GVector2(150, 280));
+	auto bridge = new Bridge(GVector2(1552, 240));
 	bridge->init();
 	bridge->setPhysicsBodySide(eDirection::TOP);
 	_listobject.push_back(bridge);
@@ -85,13 +87,17 @@ bool PlayScene::init()
 	rifleman->init();
 	_listobject.push_back(rifleman);
 
+	auto grass = new Grass(GVector2(96.0f, 238.0f));
+	grass->init();
+	_listobject.push_back(grass);
+
 	background = Map::LoadFromFile("Resources//Map//stage1.xml",eID::MAPSTAGE1);
 	return true;
 }
 
 void PlayScene::updateInput(float dt)
 {
-	for each (IControlable* obj in _listControlObject)
+	for (IControlable* obj : _listControlObject)
 	{
 		obj->updateInput(dt);
 	}
@@ -112,7 +118,10 @@ void PlayScene::update(float dt)
 	sprintf(str, "delta time: %f", dt);
 	_text->setText(str);
 
-	for each (auto object in _listobject)
+	// id của đối tượng, được get trong vòng lặp duyệt đối tượng.
+	eID objectID;
+
+	for (auto object : _listobject)
 	{
 		object->update(dt);
 	}
@@ -122,15 +131,19 @@ void PlayScene::update(float dt)
 	_listobject[0]->checkCollision(_listobject[1], dt);
 	_listobject[0]->checkCollision(_listobject[2], dt);
 	_listobject[0]->checkCollision(_listobject[3], dt);
+	_listobject[0]->checkCollision(_listobject[7], dt);
+
 	_listobject[4]->checkCollision(_listobject[1], dt);
 	_listobject[4]->checkCollision(_listobject[2], dt);
 	_listobject[4]->checkCollision(_listobject[3], dt);
+
+	_listobject[5]->checkCollision(_listobject[1], dt);
 
 }
 
 void PlayScene::destroyobject()
 {
-	for each (auto object in _listobject)
+	for (auto object : _listobject)
 	{
 		if (object->getStatus() == eStatus::DESTROY)	// kiểm tra nếu là destroy thì loại khỏi list
 		{
@@ -156,7 +169,7 @@ void PlayScene::draw(LPD3DXSPRITE spriteHandle)
 {
 	//sprite->render(spriteHandle, _viewport);
 	background->draw(spriteHandle, _viewport);
-	for each (auto object in _listobject)
+	for (auto object : _listobject)
 	{
 		object->draw(spriteHandle, _viewport);
 	}
@@ -167,8 +180,27 @@ void PlayScene::draw(LPD3DXSPRITE spriteHandle)
 
 void PlayScene::release()
 {
-	for each (auto object in _listobject)
+	for (auto object : _listobject)
 	{
 		object->release();
 	}
+}
+
+BaseObject* PlayScene::getObject(eID id)
+{
+	if (id == eID::BILL)
+		return getBill();
+	eID objectID;
+	for (BaseObject* object : _listobject)
+	{
+		objectID = object->getId();
+		if (objectID == id)
+			return object;
+	}
+	return nullptr;
+}
+
+Bill* PlayScene::getBill()
+{
+	return (Bill*)this->_bill;
 }

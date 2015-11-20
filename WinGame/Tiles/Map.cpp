@@ -155,25 +155,30 @@ void Map::getElementMatrixIndex(xml_node& node, int** matrix)
 		indexStr = child.first_child().text().as_string();
 
 		// Lấy attribute Id của node Row, nó cũng là giá trị lớp thứ nhất trong mảng hai chiều.
-		i = atoi (child.first_attribute().value());
-
+		i = child.attribute("id").as_int();
+		
 		// Copy indexStr vào temp.
-		temp = new char[indexStr.length() + 1];
-		strcpy(temp,indexStr.data());
+		pch = new char[indexStr.length() + 1];		
+		strcpy(pch,indexStr.data());
+
+		// Giữ lại pch làm gốc để huỷ vùng nhớ.
+		temp = pch;
 
 		// Slice chuỗi để lấy các gái trị int trong chuỗi.
-		pch = strtok(temp,"\t\0");
-		while (pch != NULL)
+		strtok(temp,"\t\0");
+		while (temp != NULL)
 		{
-			matrix[i][j] = atoi(pch);
+			matrix[i][j] = atoi(temp);
 			j++;
-			temp += strlen(pch) + 1;
-			pch = strtok(temp,"\t\0");
+			temp += strlen(temp) + 1;
+			temp = strtok(temp,"\t\0");
 		}
 
 		// Node kế tiếp. Nếu node kế tiếp là null thì dừng vòng while.
 		child = child.next_sibling();
 		j = 0;
+		delete[] pch;
+		pch = NULL;
 	}
 }
 xml_attribute Map::getAttributeValue(const xml_node& node, string attributename)

@@ -245,7 +245,7 @@ float Bill::checkCollision(BaseObject * object, float dt)
 {
 	auto collisionBody = (CollisionBody*)_componentList["CollisionBody"];
 
-	if (object->getId() == eID::BOX || object->getId() == eID::BRIDGE)
+	if (object->getId() == eID::BOX || object->getId() == eID::BRIDGE || object->getId() == eID::GRASS)
 	{
 		eDirection direction;
 		if (collisionBody->checkCollision(object, direction, dt))

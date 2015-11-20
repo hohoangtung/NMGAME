@@ -1,5 +1,5 @@
 ﻿#include "CollisionBody.h"
-#include"..\debug.h"
+
 CollisionBody::CollisionBody(BaseObject * target)
 {
 	_target = target;
