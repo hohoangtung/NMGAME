@@ -3,6 +3,7 @@
 
 Bill::Bill() : BaseObject(eID::BILL)
 {
+	_canJumpDown = true;
 }
 
 Bill::~Bill()
@@ -40,6 +41,9 @@ void Bill::init()
 
 	_animations[eStatus::JUMPING] = new Animation(_sprite, 0.1f);
 	_animations[eStatus::JUMPING]->addFrameRect(eID::BILL, "jump_01", "jump_02", "jump_03", NULL);
+
+	_animations[eStatus::FALLING] = new Animation(_sprite, 0.1f);
+	_animations[eStatus::FALLING]->addFrameRect(eID::BILL, "run_03", NULL);
 
 	_animations[eStatus::LAYING_DOWN] = new Animation(_sprite, 0.1f);
 	_animations[eStatus::LAYING_DOWN]->addFrameRect(eID::BILL, "lay_down_01", NULL);
@@ -90,23 +94,30 @@ void Bill::update(float deltatime)
 
 	_animations[_currentAnimateIndex]->update(deltatime);
 
+	// viewport
+	auto viewport = SceneManager::getInstance()->getCurrentScene()->getViewport();
+
 	// bullet
-	for (auto it = _listBullets.begin(); it != _listBullets.end(); it++)
+	for (auto it = _listBullets.begin(); it != _listBullets.end();)
 	{
 		(*it)->update(deltatime);
 
 		// tạm để cho nó hết màn hình nó xóa
-		//if ((*it)->getPositionX() < 0 || (*it)->getPositionX() > SceneManager::getInstance()->getCurrentScene()->getViewport()->getWidth() ||
-		//	(*it)->getPositionY() < 0 || (*it)->getPositionY() > SceneManager::getInstance()->getCurrentScene()->getViewport()->getHeight()
-		//	)
-		//{
-		//	auto temp = it;
-		//	it++;
-		//	_listBullets.erase(temp);
-		//}
+		if ((*it)->getPositionX() < 0 || (*it)->getPositionX() > viewport->getPositionWorld().x + viewport->getWidth() ||
+			(*it)->getPositionY() < 0 || (*it)->getPositionY() > viewport->getPositionWorld().y + viewport->getHeight()
+			)
+		{
+			auto temp = it;
+			it++;
+			_listBullets.erase(temp);
+		}
+		else
+		{
+			it++;
+		}
 
-		//if (_listBullets.size() <= 0)
-		//	break;
+		if (_listBullets.size() <= 0)
+			break;
 	}
 
 	// update component để sau cùng để sửa bên trên sau đó nó cập nhật đúng
@@ -164,7 +175,20 @@ void Bill::onKeyPressed(KeyEventArg* key_event)
 	{
 	case DIK_Z:
 	{
-		this->jump();
+		if (!this->isInStatus(eStatus::LAYING_DOWN) || this->isInStatus(eStatus::MOVING_LEFT) || this->isInStatus(eStatus::MOVING_RIGHT))
+		{
+			this->jump();
+		}
+		else
+		{
+			if (_canJumpDown)
+			{
+				this->addStatus(eStatus::JUMPING);
+				this->addStatus(eStatus::FALLING);
+			}
+				
+		}
+
 		break;
 	}
 	case DIK_LEFT:
@@ -185,20 +209,21 @@ void Bill::onKeyPressed(KeyEventArg* key_event)
 	}
 	case DIK_DOWN:
 	{
+		this->removeStatus(eStatus::LOOKING_UP);
 		this->addStatus(eStatus::LAYING_DOWN);
 		break;
 	}
 	case DIK_UP:
 	{
-		this->addStatus(eStatus::LOOKING_UP);
+		// không có TH nằm mà bắn lên
+		if(!this->isInStatus(eStatus::LAYING_DOWN))
+			this->addStatus(eStatus::LOOKING_UP);
+
 		break;
 	}
 	case DIK_X:
 	{
 		this->addStatus(eStatus::SHOOTING);
-
-		// shoot
-		//this->shoot();
 
 		break;
 	}
@@ -267,8 +292,14 @@ float Bill::checkCollision(BaseObject * object, float dt)
 	if (objectId == eID::BOX || objectId == eID::BRIDGE || objectId == eID::GRASS)
 	{
 		// nếu ko phải là nhảy xuống, mới dừng gravity
-		if (!this->isInStatus(eStatus(eStatus::JUMPING | eStatus::LAYING_DOWN)) && collisionBody->checkCollision(object, direction, dt))
+		if (!this->isInStatus(eStatus(eStatus::JUMPING | eStatus::LAYING_DOWN | eStatus::FALLING)) && collisionBody->checkCollision(object, direction, dt))
 		{
+			// kt coi chổ đứng có cho nhảy xuống ko
+			if (objectId == eID::BOX)
+				_canJumpDown = false;
+			else
+				_canJumpDown = true;
+
 			if (direction == eDirection::TOP && this->getVelocity().y < 0)
 			{
 				auto gravity = (Gravity*)this->_componentList["Gravity"];
@@ -286,8 +317,17 @@ float Bill::checkCollision(BaseObject * object, float dt)
 			auto gravity = (Gravity*)this->_componentList["Gravity"];
 			gravity->setStatus(eGravityStatus::FALLING__DOWN);
 
-			if (!this->isInStatus(eStatus::JUMPING))
+			if(!this->isInStatus(eStatus::JUMPING) && !this->isInStatus(eStatus::FALLING))
+			{
 				this->addStatus(eStatus::FALLING);
+
+				// 2 frame size khác nhau, đổi nó check va chạm dễ lộn, thêm offset để tránh TH đó
+				if (this->getScale().x > 0)
+					this->setPositionX(this->getPositionX() + 2);
+				else
+					this->setPositionX(this->getPositionX() - 2);
+			}
+				
 		}
 	}
 	else if (objectId == eID::AIRCRAFT)
@@ -362,7 +402,7 @@ void Bill::jump()
 
 	this->addStatus(eStatus::JUMPING);
 
-	if (!this->isInStatus(eStatus::LAYING_DOWN))
+	//if (!this->isInStatus(eStatus::LAYING_DOWN))
 	{
 		auto move = (Movement*)this->_componentList["Movement"];
 		move->setVelocity(GVector2(move->getVelocity().x, BILL_JUMP_VEL));
@@ -381,7 +421,6 @@ void Bill::layDown()
 
 void Bill::falling()
 {
-
 }
 
 void Bill::shoot()
@@ -464,7 +503,7 @@ void Bill::updateStatus(float dt)
 	}
 	else if ((this->getStatus() & eStatus::FALLING) == eStatus::FALLING)
 	{
-		this->falling();
+		// falling
 	}
 	else if ((this->getStatus() & eStatus::JUMPING) != eStatus::JUMPING)
 	{
@@ -474,45 +513,53 @@ void Bill::updateStatus(float dt)
 
 void Bill::updateCurrentAnimateIndex()
 {
+	// _currentAnimateIndex là key của animate thôi nên có một số bị dư, nếu dùng chung status
+	// vậy cần convert lại tương ứng với key trong animate
+
 	if (this->isInStatus(eStatus::SHOOTING) && (this->isInStatus(eStatus::LOOKING_UP) || this->isInStatus(eStatus::LAYING_DOWN)) && (this->isInStatus(eStatus::MOVING_LEFT) || this->isInStatus(eStatus::MOVING_RIGHT)))
 	{
+		// đang di chuyển mà shoot
+		// animate ko có shooting nên bỏ nó ra
 		_currentAnimateIndex = (eStatus)(this->getStatus() & ~(eStatus::SHOOTING));
 	}
 	else if (this->isInStatus(eStatus::LAYING_DOWN) && this->isInStatus(eStatus::SHOOTING))
 	{
-		_currentAnimateIndex = eStatus::LAYING_DOWN;
+		// đang nằm và bắn
+		// và ko có đang nhảy, thì animate NẰM thôi
+		if (!this->isInStatus(eStatus::JUMPING))
+			_currentAnimateIndex = eStatus::LAYING_DOWN;
+		else
+			_currentAnimateIndex = eStatus::JUMPING;
 	}
 	else
 	{
+		// trường hợp còn lại gán luôn
 		_currentAnimateIndex = this->getStatus();
 	}
 
 	if ((_currentAnimateIndex & eStatus::FALLING) == eStatus::FALLING)
 	{
-		_currentAnimateIndex = (eStatus)(_currentAnimateIndex & ~(eStatus::FALLING));
+		_currentAnimateIndex = eStatus::FALLING;
+
 	}
 
 	if ((_currentAnimateIndex & eStatus::HOLDING) == eStatus::HOLDING)
 	{
+		// không có animate HOLDING nên bỏ nó ra
 		_currentAnimateIndex = (eStatus)(_currentAnimateIndex & ~(eStatus::HOLDING));
 	}
 
 	if ((_currentAnimateIndex & eStatus::MOVING_LEFT) == eStatus::MOVING_LEFT || ((_currentAnimateIndex & eStatus::MOVING_RIGHT) == eStatus::MOVING_RIGHT))
 	{
+		// animate move left/right xài cung 1 animate là running nên cũng bỏ nó ra
 		_currentAnimateIndex = (eStatus)(_currentAnimateIndex & ~(eStatus::MOVING_LEFT | MOVING_RIGHT));
 		_currentAnimateIndex = (eStatus)(_currentAnimateIndex | eStatus::RUNNING);
 	}
 
 	if ((_currentAnimateIndex & eStatus::JUMPING) == eStatus::JUMPING)
 	{
-		if ((_currentAnimateIndex & eStatus::LAYING_DOWN) == eStatus::LAYING_DOWN)
-		{
-			_currentAnimateIndex = eStatus::NORMAL;
-		}
-		else
-		{
-			_currentAnimateIndex = eStatus::JUMPING;
-		}
+		// nếu jump thì chỉ vẽ jump thôi
+		_currentAnimateIndex = eStatus::JUMPING;
 	}
 }
 
@@ -524,6 +571,9 @@ eDirection Bill::getAimingDirection()
 		direction = eDirection::LEFT;
 	else
 		direction = eDirection::RIGHT;
+
+	if (this->isInStatus(eStatus::JUMPING))
+		return direction;
 
 	if (this->isInStatus(eStatus::LOOKING_UP))
 	{

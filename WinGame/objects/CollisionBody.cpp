@@ -3,6 +3,17 @@
 CollisionBody::CollisionBody(BaseObject * target)
 {
 	_target = target;
+
+	_collisionBodyRect.top = 0;
+	_collisionBodyRect.left = 0;
+	_collisionBodyRect.right = abs(_target->getBounding().left - _target->getBounding().right);
+	_collisionBodyRect.left = abs(_target->getBounding().top - _target->getBounding().bottom);
+}
+
+CollisionBody::CollisionBody(BaseObject * target, RECT bodyRect)
+{
+	_target = target;
+	_collisionBodyRect = bodyRect;
 }
 
 CollisionBody::~CollisionBody()
@@ -379,6 +390,19 @@ eDirection CollisionBody::getSide(BaseObject* otherObject)
 	{
 		return sideY;
 	}
+}
+
+RECT CollisionBody::getCollisionRect()
+{
+	RECT rect;
+
+	rect.top = _target->getBounding().top - _collisionBodyRect.top;
+	rect.left = _target->getBounding().left + _collisionBodyRect.left;
+
+	rect.bottom = rect.top - abs(_collisionBodyRect.top - _collisionBodyRect.bottom);
+	rect.right = rect.left + abs(_collisionBodyRect.right - _collisionBodyRect.left);
+
+	return rect;
 }
 
 bool CollisionBody::isColliding(BaseObject* otherObject)

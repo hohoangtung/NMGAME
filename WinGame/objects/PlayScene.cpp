@@ -87,9 +87,22 @@ bool PlayScene::init()
 	rifleman->init();
 	_listobject.push_back(rifleman);
 
-	auto grass = new Grass(GVector2(96.0f, 238.0f));
-	grass->init();
-	_listobject.push_back(grass);
+	{
+		auto grass = new Grass(GVector2(96.0f, 238.0f));
+		grass->init();
+		_listobject.push_back(grass);
+	}
+
+	{
+		auto grass = new Grass(GVector2(96.0f + 64, 238.0f));
+		grass->init();
+		_listobject.push_back(grass);
+	}
+	{
+		auto grass = new Grass(GVector2(96.0f + 128, 238.0f));
+		grass->init();
+		_listobject.push_back(grass);
+	}
 
 	background = Map::LoadFromFile("Resources//Map//stage1.xml",eID::MAPSTAGE1);
 	return true;
@@ -121,10 +134,6 @@ void PlayScene::update(float dt)
 	// id của đối tượng, được get trong vòng lặp duyệt đối tượng.
 	eID objectID;
 
-	for (auto object : _listobject)
-	{
-		object->update(dt);
-	}
 	_viewport->setPositionWorld(
 		GVector2(max(_listobject[0]->getPositionX() - 200, 0), WINDOW_HEIGHT));
 	
@@ -133,6 +142,8 @@ void PlayScene::update(float dt)
 	_listobject[0]->checkCollision(_listobject[3], dt);
 	_listobject[0]->checkCollision(_listobject[5], dt);
 	_listobject[0]->checkCollision(_listobject[7], dt);
+	_listobject[0]->checkCollision(_listobject[8], dt);
+	_listobject[0]->checkCollision(_listobject[9], dt);
 
 	_listobject[4]->checkCollision(_listobject[1], dt);
 	_listobject[4]->checkCollision(_listobject[2], dt);
@@ -141,6 +152,10 @@ void PlayScene::update(float dt)
 	//_listobject[5]->checkCollision(_listobject[0], dt);
 	_listobject[5]->checkCollision(_listobject[1], dt);
 
+	for (auto object : _listobject)
+	{
+		object->update(dt);
+	}
 }
 
 void PlayScene::destroyobject()
