@@ -72,7 +72,7 @@ bool PlayScene::init()
 
 	auto soldier = new Soldier();
 	soldier->init();
-	soldier->setStatus(eStatus::DYING);
+	soldier->setStatus(eStatus::JUMPING);
 	_listobject.push_back(soldier);
 
 	_text = new Text(L"Arial", "", 10, 25);
