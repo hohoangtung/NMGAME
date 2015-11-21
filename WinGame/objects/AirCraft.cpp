@@ -16,8 +16,8 @@ AirCraft::~AirCraft()
 void AirCraft::init()
 {
 	this->_sprite = SpriteManager::getInstance()->getSprite(eID::AIRCRAFT);
+	this->_sprite->setScale(SCALE_FACTOR);
 	this->_sprite->setPosition(this->_beginPosition);
-	//this->_sprite->setIndex(0);
 	this->_sprite->setFrameRect(SpriteManager::getInstance()->getSourceRect(this->_id, "normal"));
 	_animation = new Animation(_sprite, 0.07f);
 	_animation->addFrameRect(SpriteManager::getInstance()->getSourceRect(this->_id, "invul_1"));
@@ -28,12 +28,14 @@ void AirCraft::init()
 	Movement* movement = new Movement(VECTOR2ZERO, _horizontalVeloc, _sprite);
 	SinMovement* sinmovement = new SinMovement(_amplitude, _frequence, _sprite);
 	Gravity* gravity = new Gravity(VECTOR2ZERO, movement);
-	
+	CollisionBody* collisionBody = new CollisionBody(this);
 	this->_listComponent["Movement"] = movement;
 	this->_listComponent["Gravity"] = gravity;
 	this->_listComponent["Sinmovement"] = sinmovement;
+	this->_listComponent["CollisionBody"] = collisionBody;
+	this->setPhysicsBodySide(eDirection::NONE);
 	_explosion = NULL;
-
+	_explored = false;
 	__hook(&InputController::__eventkeyPressed, _input, &AirCraft::keypressed);
 }
 
@@ -66,11 +68,16 @@ void AirCraft::updateExplosion(float deltatime)
 	_explosion->update(deltatime);
 	if (this->_explosion->getStatus() == eStatus::DESTROY)
 	{
-		this->setStatus(eStatus::EXPLORE);
+		if (this->_explored == true)
+			this->setStatus(eStatus::DESTROY);
+		else
+			this->setStatus(eStatus::EXPLORING);
 	}
 }
 void AirCraft::update(float deltatime)
 {
+	if (this->getStatus() == eStatus::DESTROY)
+		return;
 	for (auto component : _listComponent)
 	{
 		component.second->update(deltatime);
@@ -84,8 +91,15 @@ void AirCraft::update(float deltatime)
 			updateExplosion(deltatime);
 	}
 	_animation->update(deltatime);
-	if (this->_status == eStatus::EXPLORE)
+	if (this->_status == eStatus::EXPLORING)
 	{
+		auto bill = ((PlayScene*) SceneManager::getInstance()->getCurrentScene())->getBill();
+		if (isRectangleIntersected(bill->getBounding(), this->getBounding()))
+		{
+			this->setStatus(eStatus::DESTROY);
+			bill->changeBulletType(this->_type);
+			return;
+		}
 		switch (_type)
 		{
 		case B:
@@ -115,19 +129,24 @@ void AirCraft::update(float deltatime)
 
 		Gravity* gravity = (Gravity*)getComponent("Gravity");
 		gravity->setGravity(AIRCRAFT_GRAVITY);
-		this->setStatus(eStatus::NORMAL);
+
+		//this->setPhysicsBodySide((eDirection)ALL_EDGES);
+		
+		this->setStatus(eStatus::EXPLORED);
 	}
-	
+
 }
 
-int AirCraft::getType()
+eAirCraftType AirCraft::getType()
 {
 	return _type;
 }
 
 void AirCraft::draw(LPD3DXSPRITE spriteHandle, Viewport* viewport)
 {
-	if ((_status & (NORMAL | EXPLORE))==_status)
+	if (this->getStatus() == eStatus::DESTROY)
+		return;
+	if ((_status & (NORMAL | EXPLORING | EXPLORED)) ==_status)
 	{
 		if (_animation->isAnimate())
 			_animation->draw(spriteHandle, viewport);
@@ -163,4 +182,51 @@ IComponent* AirCraft::getComponent(string componentName)
 	if (it == _listComponent.end())
 		throw new exception("key not match");
 	return it->second;
+}
+
+
+float AirCraft::checkCollision(BaseObject * object, float dt)
+{
+	if (this->_status == eStatus::NORMAL)
+		return 0.0f;
+	auto collisionBody = (CollisionBody*)_listComponent["CollisionBody"];
+	auto objeciId = object->getId();
+	eDirection direction;
+
+	if (collisionBody->checkCollision(object, direction, dt))
+	{
+		if (objeciId == eID::BOX || objeciId == eID::BRIDGE)		// => ??
+		{
+			if (direction == eDirection::TOP)
+			{
+				auto gravity = (Gravity*)this->_listComponent["Gravity"];
+				gravity->setStatus(eGravityStatus::SHALLOWED);
+				gravity->setGravity(VECTOR2ZERO);
+
+				auto move = (Movement*) this->_listComponent["Movement"];
+				move->setVelocity(VECTOR2ZERO);
+			}
+			else if (direction & (LEFT | RIGHT) == direction)
+			{
+				auto move = (Movement*) this->_listComponent["Movement"];
+				GVector2 veloc = move->getVelocity();
+				veloc.x *= -1;
+				move->setVelocity(veloc);
+			}
+		}
+	}
+
+
+	return 0.0f;
+}
+
+GVector2 AirCraft::getVelocity()
+{
+	auto move = (Movement*)this->_listComponent["Movement"];
+	return move->getVelocity();
+}
+
+void AirCraft::setExplored()
+{
+	this->_explored = true;
 }

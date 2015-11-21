@@ -79,7 +79,7 @@ namespace MapEditor.Tiles
                             var row = indexs.Split('\t');
                             for (int i = 0; i < columns; i++)
                             {
-                                tilesmap[i, rownumber] = Int32.Parse(row[i]);//
+                                tilesmap[i, rownumber] = Int32.Parse(row[i]);
                             }
                         }
                         if (reader.Name == "TileSet")

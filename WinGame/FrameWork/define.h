@@ -12,6 +12,7 @@
 #include <math.h>
 #include <string>
 #include "..\debug.h"
+#include "utils.h"
 using namespace std;
 
 #define WINDOW_WIDTH 560
@@ -22,8 +23,8 @@ using namespace std;
 #define COLOR_KEY D3DXCOLOR(1.0f, 0.0f, 1.0f, 1.0f)				// màu khi mà load hình nó bỏ qua > trong suốt
 enum eID
 {
-	FLOWER,
-	BILL,
+	FLOWER,			// Mario flower. Just for test.
+	BILL,			// Main character.
 	MARIO,
 	REDCANNON,
 	SOLDIER,
@@ -35,7 +36,8 @@ enum eID
 	BRIDGE,
 	QUADEXPLODE,
 	MAPSTAGE1,
-	BULLET
+	BULLET,
+	GRASS,				// Cỏ đi được ở stage1.
 };
 
 enum eStatus
@@ -49,16 +51,26 @@ enum eStatus
 	RUNNING			= (1 << 4),				// 10000 = 2^4
 	LOOKING_UP		= (1 << 5),				// 2^5
 	SHOOTING		= (1 << 6),
+
+	// Trạng thái huỷ, lúc này, đối tượng không update, không draw, ở scene kiểm tra nếu phát hiện trạng thái này thì huỷ đối tượng.
 	DESTROY			= (1 << 7),
+
+	// Trạng thái nổ, lúc này có thể vẽ các đám cháy, vụ nổ.
 	BURST			= (1 << 8),
-	EXPLORE			= (1 << 9),
-	DYING			= (1 << 10),
-	AIMING_UP		= (1 << 11),
-	AIMING_DOWN		= (1 << 12),
-	HIDING			= (1 << 13),
-	EXPOSING		= (1 << 14),
-	FALLING			= (1 << 15),
-	HOLDING			= (1 << 16)
+
+	// Dùng cho aircraft, trạng thái thể hiện đang nổ để chuyển từ cái máy bay thành đồ tiếp đạn.
+	EXPLORING		= (1 << 9),
+
+	// Dùng cho aircraft, trạng thái đồ tiếp đạn.
+	EXPLORED		= (1 << 10),
+
+	DYING			= (1 << 11),
+	AIMING_UP		= (1 << 12),
+	AIMING_DOWN		= (1 << 13),
+	HIDING			= (1 << 14),
+	EXPOSING		= (1 << 15),
+	FALLING			= (1 << 16),
+	HOLDING			= (1 << 17)
 };
 
 enum ePhysicsBody
@@ -81,6 +93,16 @@ enum eDirection
 	RIGHT			= 8
 };
 
+enum eAirCraftType
+{
+	B,
+	F,
+	L,
+	M,
+	R,
+	S,
+	I,
+};
 
 enum eBulletType
 {

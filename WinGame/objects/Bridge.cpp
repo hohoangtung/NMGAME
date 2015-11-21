@@ -1,4 +1,4 @@
-
+﻿
 #include "Bridge.h"
 
 int Bridge::_matrixIndex[2][MAX_WAVE * 2] =
@@ -10,12 +10,12 @@ int Bridge::_matrixIndex[2][MAX_WAVE * 2] =
 Bridge::Bridge(GVector2 postion) : BaseObject(eID::BRIDGE)
 {
 	_sprite = SpriteManager::getInstance()->getSprite(eID::BRIDGE);
+	_sprite->setScale(SCALE_FACTOR);
 	_transform = new Transformable();
 	_transform->setPosition(postion);
 }
 void Bridge::init()
 {
-	__hook(&InputController::__eventkeyReleased, _input, &Bridge::testExplose);
 	_stopwatch = new StopWatch();
 
 	_explode = new QuadExplose(_transform->getPosition());
@@ -26,17 +26,21 @@ void Bridge::init()
 }
 void Bridge::update(float deltatime)
 {
+	if (this->getStatus() == eStatus::DESTROY)
+		return;
 	if (this->getStatus() == eStatus::BURST)
 		this->burst(deltatime);
+	else
+	{
+		auto playscene = (PlayScene*) SceneManager::getInstance()->getCurrentScene();
+		this->trackBill(playscene->getBill());
+	}
 	for (auto component : _listComponent)
 	{
 		component.second->update(deltatime);
 	}
 }
-void Bridge::updateInput(float deltatime)
-{
 
-}
 void Bridge::burst(float deltatime)
 {
 	if (this->getStatus() == eStatus::DESTROY)
@@ -54,7 +58,7 @@ void Bridge::burst(float deltatime)
 		{
 			_wave++;
 			GVector2 pos = this->getPosition();
-			pos.x += this->_sprite->getFrameWidth() * 2 * this->_sprite->getScale().x * _wave;			// HARD CODE
+			pos.x += this->_sprite->getFrameWidth() * this->_sprite->getScale().x * _wave;
 			_explode = new QuadExplose(pos);
 			_explode->init();
 			_stopwatch->restart();
@@ -66,27 +70,23 @@ void Bridge::burst(float deltatime)
 		}
 	}
 }
-void Bridge::testExplose(KeyEventArg* key)
-{
-	if (key == NULL)
-		return;
-	if (key->_key == DIK_E)
-		this->setStatus(eStatus::BURST);
-}
+
 void Bridge::draw(LPD3DXSPRITE spritehandle, Viewport* viewport)
 {
 	if (this->getStatus() == eStatus::DESTROY)
 		return;
+	GVector2 posrender;
+	// Thuật toán vẽ giống cách vẽ từng pixel trên console.
 	for (int i = 0; i < 2; i++)
 	{
 		for (int j = 0; j < MAX_WAVE * 2; j++)
 		{
 			if (_matrixIndex[i][j] == -1)
 				continue;
-			auto pos = this->_transform->getPosition();
-			pos.x += j * 16;							// HARD CODE
-			pos.y -= i * 16;
-			_sprite->setPosition(pos);
+			posrender = this->_transform->getPosition();
+			posrender.x += j * this->getSprite()->getFrameWidth();
+			posrender.y -= i * this->getSprite()->getFrameHeight();
+			_sprite->setPosition(posrender);
 			_sprite->setIndex(_matrixIndex[i][j]);
 			_sprite->render(spritehandle, viewport);
 		}
@@ -111,20 +111,33 @@ GVector2 Bridge::getPosition()
 }
 RECT Bridge::getBounding()
 {
-	if (this->getStatus() == eStatus::DESTROY)
+	RECT rect = {0,0,0,0};
+	if (this->getStatus() == eStatus::DESTROY || _wave == MAX_WAVE - 1)
 	{
-		RECT rect = {0,0,0,0};
 		return rect;
 	}
-	RECT rect;
+
 	int framewidth = this->_sprite->getFrameWidth();
 	int frameheight = this->_sprite->getFrameHeight();
-	rect.left = this->getPosition().x - framewidth / 2;
+	rect.left = this->getPosition().x - framewidth / 2;					// framewidth /2 là origin(Anchor).
 	rect.bottom = this->getPosition().y - frameheight - frameheight / 2;
-	rect.right = rect.left + framewidth * 2 * MAX_WAVE;
+	rect.right = rect.left + framewidth * 2 * MAX_WAVE;					// Nhân 2 vì cách 2 hình có 1 vụ nổ.
 	rect.top = rect.bottom + frameheight * 2;
-	rect.left += _wave * framewidth * 2;
+
+	if (this->getStatus() == eStatus::BURST)
+	{
+		rect.left += (_wave + 1) * framewidth * 2;
+	}
 	return rect;
+}
+
+void Bridge::trackBill(Bill* bill)
+{
+	RECT billBound = bill->getBounding();
+	RECT bridgeBound = this->getBounding();
+
+	if(billBound.right >= bridgeBound.left)
+		this->setStatus(eStatus::BURST);
 }
 Bridge::~Bridge()
 {
@@ -136,22 +149,28 @@ Bridge::QuadExplose::QuadExplose(GVector2 position) : BaseObject(eID::QUADEXPLOD
 }
 void Bridge::QuadExplose::init()
 {	
+	// Những số cứng 16 bên dưới là khoảng cách các vụ nổ nhỏ trong vụ nổ gồm 4 phát nổ.
+	// Chỉ có mục đích thẩm mĩ, không có mục đích nào khác.
 	_timer = 0.0f;
 	auto pos = _transform->getPosition();
 	_explosion1 = new Explosion(2);
 	_explosion1->init();
+	_explosion1->setScale(SCALE_FACTOR);
 	_explosion1->setPosition(pos);
 
 	_explosion2 = new Explosion(2);
 	_explosion2->init();
+	_explosion2->setScale(SCALE_FACTOR);
 	_explosion2->setPosition(GVector2(pos.x + 16, pos.y - 16));
 
 	_explosion3 = new Explosion(2);
 	_explosion3->init();
+	_explosion3->setScale(SCALE_FACTOR);
 	_explosion3->setPosition(GVector2(pos.x, pos.y - 16));
 
 	_explosion4 = new Explosion(2);
 	_explosion4->init();
+	_explosion4->setScale(SCALE_FACTOR);
 	_explosion4->setPosition(GVector2(pos.x - 16, pos.y - 16));
 }
 
@@ -160,11 +179,11 @@ void Bridge::QuadExplose::update(float deltatime)
 	_timer += deltatime;
 	if (_timer >= 0)
 		_explosion1->update(deltatime);
-	if (_timer >= 50)
+	if (_timer >= 30)
 		_explosion2->update(deltatime);
-	if (_timer >= 100)
+	if (_timer >= 60)
 		_explosion3->update(deltatime);
-	if (_timer >= 150)
+	if (_timer >= 90)
 	{
 		_explosion4->update(deltatime);
 		if (_explosion4->getStatus() == eStatus::DESTROY)
@@ -177,11 +196,11 @@ void Bridge::QuadExplose::draw(LPD3DXSPRITE spritehandle, Viewport* viewport)
 		return;
 	if (_timer >= 0)
 		_explosion1->draw(spritehandle, viewport);
-	if (_timer >= 50)
+	if (_timer >= 30)
 		_explosion2->draw(spritehandle, viewport);
-	if (_timer >= 100)
+	if (_timer >= 60)
 		_explosion3->draw(spritehandle, viewport);
-	if (_timer >= 150)
+	if (_timer >= 90)
 		_explosion4->draw(spritehandle, viewport);
 }
 void Bridge::QuadExplose::setPosition(GVector2 position)
