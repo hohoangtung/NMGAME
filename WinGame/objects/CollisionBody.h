@@ -4,7 +4,6 @@
 #include "BaseObject.h"
 #include "IComponent.h"
 #include <queue>
-
 /*
 by Luu The Vinh
 updated: 2/10/2015

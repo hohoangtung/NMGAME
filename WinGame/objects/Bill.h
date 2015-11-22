@@ -80,6 +80,7 @@ public:
 	{
 		_index = index;
 	}
+
 	~MyBox()
 	{
 

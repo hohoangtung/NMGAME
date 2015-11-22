@@ -7,6 +7,7 @@ CollisionBody::CollisionBody(BaseObject * target)
 
 CollisionBody::~CollisionBody()
 {
+
 }
 
 void CollisionBody::checkCollision(BaseObject * otherObject, float dt)

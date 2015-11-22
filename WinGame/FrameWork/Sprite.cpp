@@ -7,6 +7,7 @@ Sprite::~Sprite()
 //	this->_surface->Release();
 }
 
+
 Sprite::Sprite(LPD3DXSPRITE spriteHandle, LPWSTR filePath, int totalFrames, int cols)
 {
 	_origin = GVector2(0.5f, 0.5f);
