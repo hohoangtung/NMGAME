@@ -37,7 +37,7 @@ enum eID
 	QUADEXPLODE,
 	MAPSTAGE1,
 	BULLET,
-	GRASS,				// Cỏ đi được ở stage1.	=> test fail
+	//GRASS,				// Cỏ đi được ở stage1.	=> test fail
 	LAND,				// Đất đi được.
 };
 
@@ -71,7 +71,10 @@ enum eStatus
 	HIDING			= (1 << 14),
 	EXPOSING		= (1 << 15),
 	FALLING			= (1 << 16),
-	HOLDING			= (1 << 17)
+	HOLDING			= (1 << 17),
+
+	SWIMING			= (1 << 18),
+	DIVING			= (1 << 19)
 };
 
 enum ePhysicsBody
@@ -87,7 +90,7 @@ enum eLandType
 {
 	GRASS,
 	WATER
-}
+};
 
 #define ALL_EDGES (TOP_EDGE | LEFT_EDGE | RIGHT_EDGE | BOTTOM_EDGE)
 

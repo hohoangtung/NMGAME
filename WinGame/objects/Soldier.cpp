@@ -102,7 +102,7 @@ float Soldier::checkCollision(BaseObject * object, float dt)
 {
 	auto collisionBody = (CollisionBody*)_listComponent["CollisionBody"];
 
-	if (object->getId() == eID::BOX || object->getId() == eID::BRIDGE)
+	if (object->getId() == eID::LAND || object->getId() == eID::BOX || object->getId() == eID::BRIDGE)
 	{
 		eDirection direction;
 

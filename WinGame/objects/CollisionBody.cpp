@@ -21,7 +21,7 @@ CollisionBody::~CollisionBody()
 
 }
 
-void CollisionBody::checkCollision(BaseObject * otherObject, float dt)
+void CollisionBody::checkCollision(BaseObject * otherObject, float dt, bool updatePosition)
 {
 	eDirection direction;
 	float time = isCollide(otherObject, direction, dt);
@@ -64,7 +64,8 @@ void CollisionBody::checkCollision(BaseObject * otherObject, float dt)
 				return;
 
 			// cập nhật tọa độ
-			updateTargetPosition(otherObject, side, false, GVector2(moveX, moveY));
+			if (updatePosition)
+				updateTargetPosition(otherObject, side, false, GVector2(moveX, moveY));
 		}
 		else // nếu ko va chạm nữa là kết thúc va chạm
 		{
@@ -78,7 +79,7 @@ void CollisionBody::checkCollision(BaseObject * otherObject, float dt)
 	
 }
 
-bool CollisionBody::checkCollision(BaseObject * otherObject, eDirection & direction, float dt)
+bool CollisionBody::checkCollision(BaseObject * otherObject, eDirection & direction, float dt, bool updatePosition)
 {
 	float time = isCollide(otherObject, direction, dt);
 
@@ -104,7 +105,8 @@ bool CollisionBody::checkCollision(BaseObject * otherObject, eDirection & direct
 				return true;
 
 			// cập nhật tọa độ
-			updateTargetPosition(otherObject, direction, false, GVector2(moveX, moveY));
+			if (updatePosition)
+				updateTargetPosition(otherObject, direction, false, GVector2(moveX, moveY));
 
 			return true;
 		}

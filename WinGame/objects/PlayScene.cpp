@@ -55,21 +55,10 @@ bool PlayScene::init()
 	_listControlObject.push_back(bill);
 	_listobject.push_back(bill);
 
-
-	auto box1 = new MyBox(0);
-	box1->init();
-	box1->setPosition(400, 180);
-	_listobject.push_back(box1);
-
 	auto bridge = new Bridge(GVector2(1552, 240));
 	bridge->init();
 	bridge->setPhysicsBodySide(eDirection::TOP);
 	_listobject.push_back(bridge);
-
-	auto box2 = new MyBox(1);
-	box2->init();
-	box2->setPosition(500, 180);
-	_listobject.push_back(box2);
 
 	auto soldier = new Soldier();
 	soldier->init();
@@ -85,24 +74,30 @@ bool PlayScene::init()
 	rifleman->init();
 	_listobject.push_back(rifleman);
 
-	//auto grass = new Grass(GVector2(96.0f, 238.0f));
-	//grass->init();
-	//_listobject.push_back(grass);
-
-	auto land  = new Land(64, 238, 1472, 16, eDirection::TOP, 0);
+	auto land  = new Land(64, 245, 1472, 1, eDirection::TOP, eLandType::GRASS);
 	land->init();
 	_listobject.push_back(land);
 
-	{
-		auto grass = new Grass(GVector2(96.0f + 64, 238.0f));
-		grass->init();
-		_listobject.push_back(grass);
-	}
-	{
-		auto grass = new Grass(GVector2(96.0f + 128, 238.0f));
-		grass->init();
-		_listobject.push_back(grass);
-	}
+	auto land2 = new Land(288 * 2, 48, 64 * 2, 5, eDirection::TOP, eLandType::GRASS);
+	land2->init();
+	land2->enableJump(false);
+	_listobject.push_back(land2);
+
+	auto land3 = new Land(64 * 5, 64 * 2 + 48, 64 * 3, 5, eDirection::TOP, eLandType::GRASS);
+	land3->init();
+	_listobject.push_back(land3);
+
+	auto land4 = new Land(64 * 8, 64 + 48, 64, 5, eDirection::TOP, eLandType::GRASS);
+	land4->init();
+	_listobject.push_back(land4);
+
+	auto water = new Land(0, 32, 288 * 2, 5, eDirection::TOP, eLandType::WATER);
+	water->init();
+	_listobject.push_back(water);
+
+	auto water2 = new Land(32 * 2 * 11, 32, 32 * 8 * 2, 5, eDirection::TOP, eLandType::WATER);
+	water2->init();
+	_listobject.push_back(water2);
 
 	background = Map::LoadFromFile("Resources//Map//stage1.xml",eID::MAPSTAGE1);
 	return true;
@@ -134,23 +129,25 @@ void PlayScene::update(float dt)
 	// id của đối tượng, được get trong vòng lặp duyệt đối tượng.
 	eID objectID;
 
-	_viewport->setPositionWorld(
-		GVector2(max(_listobject[0]->getPositionX() - 200, 0), WINDOW_HEIGHT));
+	_viewport->setPositionWorld(GVector2(max(_listobject[0]->getPositionX() - 200, 0), WINDOW_HEIGHT));
 	
-	_listobject[0]->checkCollision(_listobject[1], dt);
-	_listobject[0]->checkCollision(_listobject[2], dt);
-	_listobject[0]->checkCollision(_listobject[3], dt);
-	_listobject[0]->checkCollision(_listobject[5], dt);
-	_listobject[0]->checkCollision(_listobject[7], dt);
-	_listobject[0]->checkCollision(_listobject[8], dt);
-	_listobject[0]->checkCollision(_listobject[9], dt);
+	//_listobject[0]->checkCollision(_listobject[1], dt);
+	//_listobject[0]->checkCollision(_listobject[2], dt);
+	//_listobject[0]->checkCollision(_listobject[3], dt);
+	//_listobject[0]->checkCollision(_listobject[5], dt);
+	//_listobject[0]->checkCollision(_listobject[7], dt);
 
-	_listobject[4]->checkCollision(_listobject[1], dt);
-	_listobject[4]->checkCollision(_listobject[2], dt);
-	_listobject[4]->checkCollision(_listobject[3], dt);
+	for (int i = 1; i < _listobject.size(); i++)
+	{
+		// bill check
+		_listobject[0]->checkCollision(_listobject[i], dt);
+	}
 
-	//_listobject[5]->checkCollision(_listobject[0], dt);
-	_listobject[5]->checkCollision(_listobject[1], dt);
+	// sodier
+	_listobject[2]->checkCollision(_listobject[5], dt);
+
+	
+	_listobject[3]->checkCollision(_listobject[5], dt);
 
 	for (auto object : _listobject)
 	{

@@ -27,7 +27,10 @@ public:
 
 	RECT getBounding() override;
 
-	int getType();
+	eLandType getType();
+
+	void enableJump(bool enable);
+	bool canJump();
 
 private:
 
@@ -36,6 +39,7 @@ private:
 	// Hình chữ nhật bao lấy land.
 	RECT _bound;
 	eLandType _type;
+	bool _canJump;
 
 #pragma region Hide all
 	// Đặt những hàm này ở private để giấu chúng đi. Vì lớp này có sprite bằng NULL nên hạn chế những tác động đến sprite.
