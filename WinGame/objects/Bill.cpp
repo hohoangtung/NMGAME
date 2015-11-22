@@ -264,7 +264,7 @@ float Bill::checkCollision(BaseObject * object, float dt)
 	eID objectId = object->getId();
 	eDirection direction;
 
-	if (objectId == eID::BOX || objectId == eID::BRIDGE || objectId == eID::GRASS)
+	if (objectId == eID::BOX || objectId == eID::BRIDGE || objectId == eID::LAND)
 	{
 		// nếu ko phải là nhảy xuống, mới dừng gravity
 		if (!this->isInStatus(eStatus(eStatus::JUMPING | eStatus::LAYING_DOWN)) && collisionBody->checkCollision(object, direction, dt))

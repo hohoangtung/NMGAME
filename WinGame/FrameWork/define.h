@@ -37,7 +37,8 @@ enum eID
 	QUADEXPLODE,
 	MAPSTAGE1,
 	BULLET,
-	GRASS,				// Cỏ đi được ở stage1.
+	GRASS,				// Cỏ đi được ở stage1.	=> test fail
+	LAND,				// Đất đi được.
 };
 
 enum eStatus
@@ -82,6 +83,12 @@ enum ePhysicsBody
 	BOTTOM_EDGE		= (1 << 3)
 };
 
+enum eLandType
+{
+	GRASS,
+	WATER
+}
+
 #define ALL_EDGES (TOP_EDGE | LEFT_EDGE | RIGHT_EDGE | BOTTOM_EDGE)
 
 enum eDirection
@@ -114,6 +121,7 @@ enum eBulletType
 typedef D3DXVECTOR3 GVector3;
 typedef D3DXVECTOR2 GVector2;
 #define VECTOR2ZERO GVector2(0.0f, 0.0f)
+#define VECTOR2ONE  GVector2(1.0f, 1.0f)
 #define NS_FRAMEWORK		namespace FrameWork
 
 #define NS_FRAMEWORK_BEGIN	{

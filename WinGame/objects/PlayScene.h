@@ -21,6 +21,7 @@
 #include "Rifleman.h"
 #include "Bridge.h"
 #include "Grass.h"
+#include "Land.h"
 using namespace std;
 US_FRAMEWORK
 

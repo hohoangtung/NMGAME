@@ -34,19 +34,9 @@ void AirCraft::init()
 	this->_listComponent["Sinmovement"] = sinmovement;
 	this->_listComponent["CollisionBody"] = collisionBody;
 	this->setPhysicsBodySide(eDirection::NONE);
+
 	_explosion = NULL;
 	_explored = false;
-	__hook(&InputController::__eventkeyPressed, _input, &AirCraft::keypressed);
-}
-
-void AirCraft::updateInput(float deltatime)
-{
-
-}
-void AirCraft::keypressed(KeyEventArg* keycode) // test
-{
-	if (keycode->_key == DIK_M)
-		this->_status = eStatus::BURST;
 }
 
 void AirCraft::initExplosion()
@@ -205,13 +195,6 @@ float AirCraft::checkCollision(BaseObject * object, float dt)
 
 				auto move = (Movement*) this->_listComponent["Movement"];
 				move->setVelocity(VECTOR2ZERO);
-			}
-			else if (direction & (LEFT | RIGHT) == direction)
-			{
-				auto move = (Movement*) this->_listComponent["Movement"];
-				GVector2 veloc = move->getVelocity();
-				veloc.x *= -1;
-				move->setVelocity(veloc);
 			}
 		}
 	}

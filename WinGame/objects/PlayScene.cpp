@@ -81,15 +81,18 @@ bool PlayScene::init()
 	auto aircraft = new AirCraft(START_POSITION, HORIZONTAL_VELOC, AIRCRAFT_AMPLITUDE, AIRCRAFT_FREQUENCY, eAirCraftType::I);
 	aircraft->init();
 	_listobject.push_back(aircraft);
-	_listControlObject.push_back(aircraft);
 
 	auto rifleman = new Rifleman();
 	rifleman->init();
 	_listobject.push_back(rifleman);
 
-	auto grass = new Grass(GVector2(96.0f, 238.0f));
-	grass->init();
-	_listobject.push_back(grass);
+	//auto grass = new Grass(GVector2(96.0f, 238.0f));
+	//grass->init();
+	//_listobject.push_back(grass);
+
+	auto land  = new Land(64, 238, 1472, 16, eDirection::TOP, 0);
+	land->init();
+	_listobject.push_back(land);
 
 	background = Map::LoadFromFile("Resources//Map//stage1.xml",eID::MAPSTAGE1);
 	return true;

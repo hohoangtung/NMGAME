@@ -44,7 +44,7 @@ void BaseObject::removeStatus(eStatus status)
 
 bool BaseObject::isInStatus(eStatus status)
 {
-	return (this->getStatus() & status) == status;;
+	return (this->getStatus() & status) == status;
 }
 
 GVector2 BaseObject::getPosition()
