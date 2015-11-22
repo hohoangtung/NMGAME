@@ -48,6 +48,7 @@ private:
 	
 	float _movingSpeed;
 	StopWatch* _stopWatch;
+	bool _canJumpDown;
 
 	void standing();
 	void moveLeft();

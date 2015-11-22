@@ -4,7 +4,6 @@
 #include "BaseObject.h"
 #include "CollisionBody.h"
 
-#define GRAVITY 500
 class BaseEnemy : public BaseObject 
 {
 public:

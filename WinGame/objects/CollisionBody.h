@@ -4,6 +4,7 @@
 #include "BaseObject.h"
 #include "IComponent.h"
 #include <queue>
+
 /*
 by Luu The Vinh
 updated: 2/10/2015
@@ -26,7 +27,7 @@ Sử dụng cho đối tượng muốn kt va chạm
 		+ _sideCollision: phía va chạm của đối tượng kia.
 
 Tham khảo class Bill để xem chi tiết.
-Còn một số lỗi đang làm tiếp. :D
+
 */
 
 class CollisionEventArg : public EventArg
@@ -49,6 +50,19 @@ class CollisionBody : public IComponent
 {
 public:
 	CollisionBody(BaseObject* target);
+
+	/*
+	khởi tạo body với collision RECT (chưa xài được :v)
+		@target: đối tượng sử dụng
+		@bodyRect: hcn của đối tượng dùng để xét va chạm, tính theo gốc top-left của đối tượng đó.
+		@ví dụ: width, height là size của object
+			bodyRect.top = 0;
+			bodyRect.left = 0;
+			bodyRect.right = width;
+			bodyRect.bottom = height;
+	*/
+	CollisionBody(BaseObject* target, RECT bodyRect);
+
 	~CollisionBody();
 
 	/*
@@ -73,8 +87,14 @@ public:
 	__event void onCollisionBegin(CollisionEventArg* e);
 	__event void onCollisionEnd(CollisionEventArg* e);
 
+	/*
+	lấy collision rect trong world, tính theo gốc tọa độ bottom-left
+	*/
+	RECT getCollisionRect();
+
 private:
 	BaseObject* _target;
+	RECT _collisionBodyRect;
 
 	float _dxEntry, _dyEntry, _dxExit, _dyExit;
 	float _txEntry, _tyEntry, _txExit, _tyExit;
@@ -96,6 +116,7 @@ private:
 
 	RECT getSweptBroadphaseRect(BaseObject* object, float dt);
 	eDirection getSide(BaseObject* otherObject);
+
 };
 
 #endif // !__COLLISION_BODY__

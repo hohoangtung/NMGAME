@@ -27,11 +27,11 @@ class AirCraft : public BaseObject
 {
 public:
 	/* Contructor:
-	*		pos: vị trí bắt đầu.
-	*		hVeloc: gia tốc tuyến tính, tạo một phần chuyển động thăng.
-	*		ampl: biên độ của chuyển động tuần hoàn.
-	*		freq: tần số góc của chuyển động tuần hoàn.
-	*		type: loại máy bay, là loại đạn mà nhân vật có thể lấy được.
+	*		@pos: vị trí bắt đầu.
+	*		@hVeloc: gia tốc tuyến tính, tạo một phần chuyển động thăng.
+	*		@ampl: biên độ của chuyển động tuần hoàn.
+	*		@freq: tần số góc của chuyển động tuần hoàn.
+	*		@type: loại máy bay, là loại đạn mà nhân vật có thể lấy được.
 	*/
 	AirCraft(GVector2 pos, GVector2 hVeloc, GVector2 ampl, float freq, eAirCraftType type);
 	~AirCraft();
