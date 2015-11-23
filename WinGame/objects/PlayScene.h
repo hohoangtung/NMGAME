@@ -1,4 +1,5 @@
-﻿#ifndef __PLAY_SCENE_H__
+
+#ifndef __PLAY_SCENE_H__
 #define __PLAY_SCENE_H__
 
 #include <vector>

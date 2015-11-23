@@ -1,4 +1,3 @@
-﻿
 /*
 author: Ho Hoang Tung
 updated: 19/11/2015
@@ -96,3 +95,4 @@ private:
 	QuadExplose* _explode;
 };
 #endif // !__BRIDGE_H__
+

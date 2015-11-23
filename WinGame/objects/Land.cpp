@@ -11,6 +11,11 @@ Land::Land(int x, int y, int width, int height, eDirection physicBodyDirection, 
 	this->_bound.right = x + width;
 	this->_type = type;
 	BaseObject::setPhysicsBodySide(physicBodyDirection);
+
+	if (type == eLandType::GRASS)
+		_canJump = true;
+	else if (type == eLandType::WATER)
+		_canJump = false;
 }
 
 void Land::init()
@@ -18,6 +23,8 @@ void Land::init()
 	this->_sprite = nullptr;
 	auto collisionBody = new CollisionBody(this);
 	_listComponent["CollisionBody"] = collisionBody;
+
+	this->setPhysicsBodySide(eDirection::TOP);
 }
 
 void Land::update(float deltatime)
@@ -157,9 +164,20 @@ RECT Land::getBounding()
 	return _bound;
 }
 
-int Land::getType()
+eLandType Land::getType()
 {
 	return _type;
+}
+
+void Land::enableJump(bool enable)
+{
+	if (enable != _canJump)
+		_canJump = enable;
+}
+
+bool Land::canJump()
+{
+	return _canJump;
 }
 
 Land::~Land()

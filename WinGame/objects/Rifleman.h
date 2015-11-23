@@ -6,6 +6,7 @@
 #include "Bullet.h"
 #include "../FrameWork/Animation.h"
 #include "../Framework/StopWatch.h"
+#include "PlayScene.h"
 
 using namespace std;
 
@@ -43,11 +44,12 @@ private:
 	map<int, Animation*> _animations;
 	float _shootingAngle;
 	StopWatch *_stopwatch;
-
+	BaseObject *_explosion;
 	list<Bullet*> _listBullets;
 
 	void addStatus(eStatus status);
 	void removeStatus(eStatus status);
 	bool isInStatus(eStatus status);
+	void calculateShootingAngle();
 };
 #endif

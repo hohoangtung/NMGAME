@@ -185,7 +185,7 @@ float AirCraft::checkCollision(BaseObject * object, float dt)
 
 	if (collisionBody->checkCollision(object, direction, dt))
 	{
-		if (objeciId == eID::BOX || objeciId == eID::BRIDGE)		// => ??
+		if (objeciId == eID::LAND || objeciId == eID::BRIDGE)		// => ??
 		{
 			if (direction == eDirection::TOP)
 			{

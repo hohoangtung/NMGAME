@@ -70,7 +70,10 @@ enum eStatus
 	HIDING			= (1 << 14),
 	EXPOSING		= (1 << 15),
 	FALLING			= (1 << 16),
-	HOLDING			= (1 << 17)
+	HOLDING			= (1 << 17),
+
+	SWIMING			= (1 << 18),
+	DIVING			= (1 << 19)
 };
 
 enum ePhysicsBody
@@ -121,6 +124,7 @@ typedef D3DXVECTOR3 GVector3;
 typedef D3DXVECTOR2 GVector2;
 #define VECTOR2ZERO GVector2(0.0f, 0.0f)
 #define VECTOR2ONE  GVector2(1.0f, 1.0f)
+
 #define NS_FRAMEWORK		namespace FrameWork
 
 #define NS_FRAMEWORK_BEGIN	{

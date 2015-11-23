@@ -63,6 +63,34 @@ void Bill::init()
 	_animations[eStatus::SHOOTING | eStatus::RUNNING] = new Animation(_sprite, 0.1f);
 	_animations[eStatus::SHOOTING | eStatus::RUNNING]->addFrameRect(eID::BILL, "run_shot_01", "run_shot_02", "run_shot_03", "run_shot_01", "run_shot_02", "run_shot_03", NULL);
 
+	_animations[eStatus::SWIMING] = new Animation(_sprite, 0.1f);
+	_animations[eStatus::SWIMING]->addFrameRect(eID::BILL, "swimming", NULL);
+
+	_animations[eStatus::SWIMING | RUNNING] = new Animation(_sprite, 0.1f);
+	_animations[eStatus::SWIMING | RUNNING]->addFrameRect(eID::BILL, "swimming", NULL);
+
+	_animations[eStatus::DIVING] = new Animation(_sprite, 0.1f);
+	_animations[eStatus::DIVING]->addFrameRect(eID::BILL, "diving", NULL);
+
+	_animations[eStatus::JUMPING | eStatus::SWIMING] = new Animation(_sprite, 0.1f);
+	_animations[eStatus::JUMPING | eStatus::SWIMING]->addFrameRect(eID::BILL, "swim_begin", "diving", "swimming", NULL);
+
+	_animations[eStatus::SWIMING | RUNNING | SHOOTING] = new Animation(_sprite, 0.1f);
+	_animations[eStatus::SWIMING | RUNNING | SHOOTING]->addFrameRect(eID::BILL, "swimming_shot", NULL);
+
+	_animations[eStatus::SWIMING | SHOOTING] = new Animation(_sprite, 0.1f);
+	_animations[eStatus::SWIMING | SHOOTING]->addFrameRect(eID::BILL, "swimming_shot", NULL);
+
+	_animations[eStatus::SWIMING | RUNNING | LOOKING_UP | SHOOTING] = new Animation(_sprite, 0.1f);
+	_animations[eStatus::SWIMING | RUNNING | LOOKING_UP | SHOOTING]->addFrameRect(eID::BILL, "swimming_shotup", NULL);
+
+	_animations[eStatus::SWIMING | LOOKING_UP | SHOOTING] = new Animation(_sprite, 0.1f);
+	_animations[eStatus::SWIMING | LOOKING_UP | SHOOTING]->addFrameRect(eID::BILL, "swimming_shotup_stand", NULL);
+
+	_animations[eStatus::DYING] = new Animation(_sprite, 0.1f);
+	_animations[eStatus::DYING]->addFrameRect(eID::BILL, "dead_01", "dead_02", "dead_03", "dead_04", NULL);
+
+
 	_sprite->drawBounding(false);
 	this->setOrigin(GVector2(0.5f, 0.0f));
 	this->setScale(SCALE_FACTOR);
@@ -78,16 +106,6 @@ void Bill::init()
 
 void Bill::update(float deltatime)
 {
-	if (this->getPositionY() < TEST_LAND)
-	{
-		this->setPositionY(TEST_LAND);
-
-		auto gravity = (Gravity*)this->_componentList["Gravity"];
-		gravity->setStatus(eGravityStatus::SHALLOWED);
-
-		this->standing();
-	}
-
 	this->updateStatus(deltatime);
 
 	this->updateCurrentAnimateIndex();
@@ -177,7 +195,8 @@ void Bill::onKeyPressed(KeyEventArg* key_event)
 	{
 		if (!this->isInStatus(eStatus::LAYING_DOWN) || this->isInStatus(eStatus::MOVING_LEFT) || this->isInStatus(eStatus::MOVING_RIGHT))
 		{
-		this->jump();
+			if(!this->isInStatus(eStatus::SWIMING))
+				this->jump();
 		}
 		else
 		{
@@ -209,8 +228,16 @@ void Bill::onKeyPressed(KeyEventArg* key_event)
 	}
 	case DIK_DOWN:
 	{
-		this->removeStatus(eStatus::LOOKING_UP);
-		this->addStatus(eStatus::LAYING_DOWN);
+		if (!this->isInStatus(eStatus::SWIMING))
+		{
+			this->removeStatus(eStatus::LOOKING_UP);
+			this->addStatus(eStatus::LAYING_DOWN);
+		}
+		else
+		{
+			this->addStatus(eStatus::DIVING);
+		}
+
 		break;
 	}
 	case DIK_UP:
@@ -249,6 +276,7 @@ void Bill::onKeyReleased(KeyEventArg * key_event)
 	case DIK_DOWN:
 	{
 		this->removeStatus(eStatus::LAYING_DOWN);
+		this->removeStatus(eStatus::DIVING);
 		break;
 	}
 	case DIK_UP:
@@ -266,6 +294,8 @@ void Bill::onKeyReleased(KeyEventArg * key_event)
 	}
 }
 
+BaseObject* preObject;
+
 void Bill::onCollisionBegin(CollisionEventArg * collision_arg)
 {
 	eID objectID = collision_arg->_otherObject->getId();
@@ -273,15 +303,43 @@ void Bill::onCollisionBegin(CollisionEventArg * collision_arg)
 	{
 	case AIRCRAFT:
 		break;
+	case eID::LAND:
+	case eID::BRIDGE:
+	{
+		//if (preObject != collision_arg->_otherObject)
+		//{
+
+		//}
+	}
+		break;
+	default:
+		break;
 	}
 }
 
 void Bill::onCollisionEnd(CollisionEventArg * collision_event)
 {
+	eID objectID = collision_event->_otherObject->getId();
 
+	switch (objectID)
+	{
+	case AIRCRAFT:
+		break;
+	case eID::LAND:
+	case eID::BRIDGE:
+	{
+		if (preObject == collision_event->_otherObject)
+		{
+			// hết chạm với land là fall chứ ko có jump
+			this->removeStatus(eStatus::JUMPING);
+			preObject = nullptr;
+		}
+	}
+	break;
+	default:
+		break;
+	}
 }
-
-BaseObject* preObject;
 
 float Bill::checkCollision(BaseObject * object, float dt)
 {
@@ -289,16 +347,26 @@ float Bill::checkCollision(BaseObject * object, float dt)
 	eID objectId = object->getId();
 	eDirection direction;
 
-	if (objectId == eID::BOX || objectId == eID::BRIDGE || objectId == eID::LAND)
+	if (objectId == eID::BRIDGE || objectId == eID::LAND)
 	{
 		// nếu ko phải là nhảy xuống, mới dừng gravity
 		if (!this->isInStatus(eStatus(eStatus::JUMPING | eStatus::LAYING_DOWN | eStatus::FALLING)) && collisionBody->checkCollision(object, direction, dt))
 		{
 			// kt coi chổ đứng có cho nhảy xuống ko
-			if (objectId == eID::BOX)
-				_canJumpDown = false;
-			else
-				_canJumpDown = true;
+			if (objectId == eID::LAND)
+			{
+				auto land = (Land*)object;
+				_canJumpDown = land->canJump();
+
+				if (land->getType() == eLandType::WATER)
+				{
+					this->addStatus(eStatus::SWIMING);
+				}
+				else
+				{
+					this->removeStatus(eStatus::SWIMING);
+				}
+			}
 
 			if (direction == eDirection::TOP && this->getVelocity().y < 0)
 			{
@@ -312,7 +380,9 @@ float Bill::checkCollision(BaseObject * object, float dt)
 		}
 		else if(preObject == object)
 		{
-			preObject = nullptr;
+			// kiểm tra coi nhảy hết qua cái land cũ chưa
+			// để gọi event end.
+			collisionBody->checkCollision(object, dt, false);
 
 			auto gravity = (Gravity*)this->_componentList["Gravity"];
 			gravity->setStatus(eGravityStatus::FALLING__DOWN);
@@ -326,9 +396,8 @@ float Bill::checkCollision(BaseObject * object, float dt)
 					this->setPositionX(this->getPositionX() + 2);
 				else
 					this->setPositionX(this->getPositionX() - 2);
+			}
 		}
-				
-	}
 	}
 	else if (objectId == eID::AIRCRAFT)
 	{
@@ -362,7 +431,8 @@ float Bill::checkCollision(BaseObject * object, float dt)
 
 	for (auto it = _listBullets.begin(); it != _listBullets.end(); it++)
 	{
-		(*it)->checkCollision(object, dt);
+		if(object->getId() != eID::LAND)
+			(*it)->checkCollision(object, dt);
 	}
 
 	return 0.0f;
@@ -421,10 +491,15 @@ void Bill::layDown()
 
 void Bill::falling()
 {
+	auto gravity = (Gravity*)this->_componentList["Gravity"];
+	gravity->setStatus(eGravityStatus::FALLING__DOWN);
 }
 
 void Bill::shoot()
 {
+	if (this->isInStatus(eStatus::DIVING))
+		return;
+
 	float angle = 0.0f;
 	auto direction = getAimingDirection();
 	auto pos = this->getPosition() + GVector2(0, this->getSprite()->getFrameHeight() / 2);
@@ -476,7 +551,10 @@ void Bill::shoot()
 		pos.x -= this->getSprite()->getFrameWidth() / 3;
 		pos.y += 5 * this->getScale().y;
 	}
-		
+
+	if (this->isInStatus(eStatus::SWIMING))
+		pos.y -= 8 * this->getScale().y;
+
 	_listBullets.push_back(new Bullet(pos, angle));
 	_listBullets.back()->init();
 }
@@ -503,7 +581,7 @@ void Bill::updateStatus(float dt)
 	}
 	else if ((this->getStatus() & eStatus::FALLING) == eStatus::FALLING)
 	{
-		// falling
+		this->falling();
 	}
 	else if ((this->getStatus() & eStatus::JUMPING) != eStatus::JUMPING)
 	{
@@ -516,7 +594,7 @@ void Bill::updateCurrentAnimateIndex()
 	// _currentAnimateIndex là key của animate thôi nên có một số bị dư, nếu dùng chung status
 	// vậy cần convert lại tương ứng với key trong animate
 
-	if (this->isInStatus(eStatus::SHOOTING) && (this->isInStatus(eStatus::LOOKING_UP) || this->isInStatus(eStatus::LAYING_DOWN)) && (this->isInStatus(eStatus::MOVING_LEFT) || this->isInStatus(eStatus::MOVING_RIGHT)))
+	if (this->isInStatus(eStatus::SHOOTING) && !this->isInStatus(eStatus::SWIMING) && (this->isInStatus(eStatus::LOOKING_UP) || this->isInStatus(eStatus::LAYING_DOWN)) && (this->isInStatus(eStatus::MOVING_LEFT) || this->isInStatus(eStatus::MOVING_RIGHT)))
 	{
 		// đang di chuyển mà shoot
 		// animate ko có shooting nên bỏ nó ra
@@ -527,7 +605,7 @@ void Bill::updateCurrentAnimateIndex()
 		// đang nằm và bắn
 		// và ko có đang nhảy, thì animate NẰM thôi
 		if (!this->isInStatus(eStatus::JUMPING))
-		_currentAnimateIndex = eStatus::LAYING_DOWN;
+			_currentAnimateIndex = eStatus::LAYING_DOWN;
 		else
 			_currentAnimateIndex = eStatus::JUMPING;
 	}
@@ -560,8 +638,22 @@ void Bill::updateCurrentAnimateIndex()
 	{
 		// nếu jump thì chỉ vẽ jump thôi
 			_currentAnimateIndex = eStatus::JUMPING;
+	}
+
+	// đang bơi
+	if ((_currentAnimateIndex & eStatus::SWIMING) == eStatus::SWIMING)
+	{
+		if ((_currentAnimateIndex & eStatus::SHOOTING) != eStatus::SHOOTING)
+		{
+			_currentAnimateIndex = eStatus::SWIMING;
+		}
+
+		if (this->isInStatus(eStatus::DIVING))
+		{
+			_currentAnimateIndex = eStatus::DIVING;
 		}
 	}
+}
 
 eDirection Bill::getAimingDirection()
 {

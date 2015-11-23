@@ -28,6 +28,8 @@ Sử dụng cho đối tượng muốn kt va chạm
 
 Tham khảo class Bill để xem chi tiết.
 
+update 2:
+- Thêm tùy chỉnh update position trong hàm check collision
 */
 
 class CollisionEventArg : public EventArg
@@ -69,16 +71,18 @@ public:
 	kiểm tra va chạm với object khác, gọi event Begin, End.
 		@otherObject: object cần kt va chạm
 		@dt: delta time của mỗi frame
+		@updatePosition: collision body sẽ cập nhật vị trí object lại nếu object chồng lấp lên object khác khi set = true
 	*/
-	void checkCollision(BaseObject* otherObject, float dt);
+	void checkCollision(BaseObject* otherObject, float dt, bool updatePosition = true);
 
 	/*
 	kiểm tra va chạm với object khác lấy được hướng va chạm, KO  gọi event Begin, End.
 		@otherObject: object cần kt va chạm
 		@direction: lấy hướng va chạm của otherObject
 		@dt: delta time của mỗi frame
+		@updatePosition: collision body sẽ cập nhật vị trí object lại nếu object chồng lấp lên object khác khi set = true
 	*/
-	bool checkCollision(BaseObject* otherObject, eDirection& direction, float dt);
+	bool checkCollision(BaseObject* otherObject, eDirection& direction, float dt, bool updatePosition = true);
 
 	bool isColliding(BaseObject* otherObject);
 	

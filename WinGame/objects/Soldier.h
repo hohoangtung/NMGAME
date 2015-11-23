@@ -2,6 +2,7 @@
 #define _RUNNINGSOLDIER_H
 
 #include "BaseEnemy.h"
+#include "Explosion.h"
 #include "IComponent.h"
 #include "PlayScene.h"
 #include "../FrameWork/Animation.h"
@@ -29,6 +30,7 @@ public:
 	void onCollisionEnd(CollisionEventArg*);
 	float checkCollision(BaseObject*, float);
 	void jump();
+	void die();
 	GVector2 getVelocity();
 	IComponent* getComponent(string);
 
@@ -37,5 +39,7 @@ private:
 	map<int, Animation*> _animations;
 	StopWatch *_stopwatch;
 	void changeDirection();
+	BaseObject *_explosion;
+	void dropHitpoint();
 };
 #endif

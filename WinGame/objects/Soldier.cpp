@@ -1,4 +1,4 @@
-#include "Soldier.h"
+﻿#include "Soldier.h"
 
 bool jumped = false;
 
@@ -12,12 +12,12 @@ void Soldier::init()
 {
 	_sprite = SpriteManager::getInstance()->getSprite(eID::SOLDIER);
 	_sprite->setFrameRect(0, 0, 32.0f, 16.0f);
-	this->setPosition(600, 300);
-	GVector2 v(-SOLDIER_SPEED, 0);
+	this->setPosition(500, 400);
+	GVector2 v(SOLDIER_SPEED, 0);
 	GVector2 a(0, 0);
 
 	this->setScale(SCALE_FACTOR);
-
+	this->setScaleX(-SCALE_FACTOR);
 	this->setHitpoint(SOLDIER_HITPOINT);
 	this->setScore(SOLDIER_SCORE);
 
@@ -49,19 +49,29 @@ void Soldier::init()
 	_animations[DYING]->addFrameRect(eID::SOLDIER, "die_01", NULL);
 
 	_stopwatch = new StopWatch();
-
-	jump();
 }
 
 void Soldier::draw(LPD3DXSPRITE spritehandle, Viewport* viewport)
 {
+	if (_explosion != NULL)
+		_explosion->draw(spritehandle, viewport);
+	if (this->getStatus() == eStatus::DESTROY)
+		return;
 	this->_sprite->render(spritehandle, viewport);
 	_animations[this->getStatus()]->draw(spritehandle, viewport);
 }
 
 void Soldier::release()
 {
-
+	for (auto component : _listComponent)
+	{
+		delete component.second;
+	}
+	_listComponent.clear();
+	if (this->_explosion != NULL)
+		this->_explosion->release();
+	SAFE_DELETE(this->_explosion);
+	SAFE_DELETE(this->_sprite);
 }
 
 IComponent* Soldier::getComponent(string componentName)
@@ -71,15 +81,34 @@ IComponent* Soldier::getComponent(string componentName)
 
 void Soldier::update(float deltatime)
 {
+	if (_explosion != NULL)
+		_explosion->update(deltatime);
+	if (this->getStatus() == DESTROY)
+		return;
 	Gravity *gravity = (Gravity*)this->getComponent("Gravity");
 	Movement *movement = (Movement*)this->getComponent("Movement");
+
+	if (this->getStatus() == eStatus::DYING) {
+		this->die();
+		if (_stopwatch->isStopWatch(200))
+		{
+			movement->setVelocity(GVector2(0, 0));
+			auto pos = this->getPosition();
+			_explosion = new Explosion(1);
+			_explosion->init();
+			_explosion->setScale(SCALE_FACTOR);
+			_explosion->setPosition(pos);
+			this->setStatus(eStatus::DESTROY);			
+		}
+	}
 
 	for (auto it : _listComponent)
 	{
 		it.second->update(deltatime);
 	}
 
-	_animations[this->getStatus()]->update(deltatime);
+	if (this->getStatus() != DESTROY)
+		_animations[this->getStatus()]->update(deltatime);
 }
 
 void Soldier::changeDirection()
@@ -101,11 +130,11 @@ BaseObject* prevObject;
 float Soldier::checkCollision(BaseObject * object, float dt)
 {
 	auto collisionBody = (CollisionBody*)_listComponent["CollisionBody"];
+	eID objectId = object->getId();
+	eDirection direction;
 
-	if (object->getId() == eID::BOX || object->getId() == eID::BRIDGE)
+	if (objectId == eID::BRIDGE || objectId == eID::LAND)
 	{
-		eDirection direction;
-
 		if (collisionBody->checkCollision(object, direction, dt))
 		{
 			if (direction == eDirection::TOP && this->getVelocity().y < 0)
@@ -113,10 +142,11 @@ float Soldier::checkCollision(BaseObject * object, float dt)
 				auto gravity = (Gravity*)this->_listComponent["Gravity"];
 				gravity->setStatus(eGravityStatus::SHALLOWED);
 
-				this->setStatus(RUNNING);
-
+				// dừng veloc của y cho nó đừng rớt xuống nữa
 				auto move = (Movement*)this->_listComponent["Movement"];
 				move->setVelocity(GVector2(move->getVelocity().x, 0));
+
+				this->setStatus(eStatus::RUNNING);
 				prevObject = object;
 			}
 		}
@@ -124,26 +154,27 @@ float Soldier::checkCollision(BaseObject * object, float dt)
 		{
 			prevObject = nullptr;
 
+			// khỏi cần cái này, thằng bill xài nó để xét cho nó nhảy xuống thôi
+			// collisionBody->checkCollision(object, dt, false);
+
 			auto gravity = (Gravity*)this->_listComponent["Gravity"];
-			gravity->setStatus(eGravityStatus::FALLING__DOWN);
-			int randNum = rand() % 2;
-			if (randNum == 1)
-			{
-				if (!this->isInStatus(eStatus::JUMPING))
-					jump();
-			}
-			else
-				changeDirection();
+			gravity->setStatus(eGravityStatus::FALLING__DOWN);			
+			this->jump();
 		}
 	}
 	else
 	{
 		collisionBody->checkCollision(object, dt);
 	}
-
 	return 0.0f;
-}
 
+}
+void Soldier::dropHitpoint() 
+{
+	this->setHitpoint(this->getHitpoint() - 1);
+	if (this->getHitpoint() <= 0)
+		this->setStatus(eStatus::DYING);
+}
 void Soldier::jump() 
 {
 	this->setStatus(FALLING);
@@ -157,3 +188,9 @@ GVector2 Soldier::getVelocity()
 	return move->getVelocity();
 }
 
+void Soldier::die() {
+	Gravity *gravity = (Gravity*)this->getComponent("Gravity");
+	gravity->setStatus(eGravityStatus::SHALLOWED);
+	Movement *movement = (Movement*)this->getComponent("Movement");
+	movement->setVelocity(GVector2(0, 200));
+}

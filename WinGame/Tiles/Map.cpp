@@ -1,4 +1,4 @@
-﻿
+
 #include "Map.h"
 #include <string>
 #include <sstream>
