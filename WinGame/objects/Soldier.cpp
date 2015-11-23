@@ -1,4 +1,4 @@
-#include "Soldier.h"
+﻿#include "Soldier.h"
 
 bool jumped = false;
 
@@ -12,12 +12,12 @@ void Soldier::init()
 {
 	_sprite = SpriteManager::getInstance()->getSprite(eID::SOLDIER);
 	_sprite->setFrameRect(0, 0, 32.0f, 16.0f);
-	this->setPosition(500, 200);
-	GVector2 v(-SOLDIER_SPEED, 0);
+	this->setPosition(500, 400);
+	GVector2 v(SOLDIER_SPEED, 0);
 	GVector2 a(0, 0);
 
 	this->setScale(SCALE_FACTOR);
-
+	this->setScaleX(-SCALE_FACTOR);
 	this->setHitpoint(SOLDIER_HITPOINT);
 	this->setScore(SOLDIER_SCORE);
 
@@ -63,7 +63,15 @@ void Soldier::draw(LPD3DXSPRITE spritehandle, Viewport* viewport)
 
 void Soldier::release()
 {
-
+	for (auto component : _listComponent)
+	{
+		delete component.second;
+	}
+	_listComponent.clear();
+	if (this->_explosion != NULL)
+		this->_explosion->release();
+	SAFE_DELETE(this->_explosion);
+	SAFE_DELETE(this->_sprite);
 }
 
 IComponent* Soldier::getComponent(string componentName)
@@ -122,48 +130,35 @@ BaseObject* prevObject;
 float Soldier::checkCollision(BaseObject * object, float dt)
 {
 	auto collisionBody = (CollisionBody*)_listComponent["CollisionBody"];
+	eID objectId = object->getId();
+	eDirection direction;
 
-	if (object->getId() == eID::LAND || object->getId() == eID::BOX || object->getId() == eID::BRIDGE)
+	if (objectId == eID::BRIDGE || objectId == eID::LAND)
 	{
-		eDirection direction;
-
 		if (collisionBody->checkCollision(object, direction, dt))
 		{
 			if (direction == eDirection::TOP && this->getVelocity().y < 0)
 			{
 				auto gravity = (Gravity*)this->_listComponent["Gravity"];
 				gravity->setStatus(eGravityStatus::SHALLOWED);
-
-				this->setStatus(RUNNING);
-
-				auto move = (Movement*)this->_listComponent["Movement"];
-				move->setVelocity(GVector2(move->getVelocity().x, 0));
+				this->setStatus(eStatus::RUNNING);
 				prevObject = object;
 			}
 		}
 		else if (prevObject == object)
 		{
-			prevObject = nullptr;
-
+			collisionBody->checkCollision(object, dt, false);
 			auto gravity = (Gravity*)this->_listComponent["Gravity"];
-			gravity->setStatus(eGravityStatus::FALLING__DOWN);
-			int randNum = rand() % 2;
-			if (randNum == 1)
-			{
-				if (!this->isInStatus(eStatus::JUMPING))
-					jump();
-			}
-			else
-				changeDirection();
+			gravity->setStatus(eGravityStatus::FALLING__DOWN);			
+			this->jump();
 		}
 	}
 	else
 	{
 		collisionBody->checkCollision(object, dt);
 	}
-	if (object->getId() == eID::BULLET)
-		dropHitpoint();
 	return 0.0f;
+
 }
 void Soldier::dropHitpoint() 
 {

@@ -62,7 +62,7 @@ bool PlayScene::init()
 
 	auto soldier = new Soldier();
 	soldier->init();
-	soldier->setStatus(eStatus::DYING);
+	soldier->setStatus(eStatus::JUMPING);
 	_listobject.push_back(soldier);
 
 	_text = new Text(L"Arial", "", 10, 25);
@@ -145,7 +145,10 @@ void PlayScene::update(float dt)
 	}
 
 	// sodier
-	_listobject[2]->checkCollision(_listobject[5], dt);
+	for (int i = 1; i < _listobject.size(); i++)
+	{
+		_listobject[2]->checkCollision(_listobject[i], dt);
+	}
 
 	
 	_listobject[3]->checkCollision(_listobject[5], dt);

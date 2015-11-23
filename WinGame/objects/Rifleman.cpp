@@ -54,7 +54,7 @@ void Rifleman::init()
 	_stopwatch = new StopWatch();
 	loopWatch = new StopWatch();
 	this->addStatus(SHOOTING);
-	this->setHitpoint(0);
+	this->setHitpoint(RIFLEMAN_HITPOINT);
 	this->setScore(RIFLEMAN_SCORE);
 }
 
@@ -75,7 +75,15 @@ void Rifleman::draw(LPD3DXSPRITE spritehandle, Viewport* viewport)
 
 void Rifleman::release()
 {
-
+	for (auto component : _listComponent)
+	{
+		delete component.second;
+	}
+	_listComponent.clear();
+	if (this->_explosion != NULL)
+		this->_explosion->release();
+	SAFE_DELETE(this->_explosion);
+	SAFE_DELETE(this->_sprite);
 }
 
 IComponent* Rifleman::getComponent(string componentName)
