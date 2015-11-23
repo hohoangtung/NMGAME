@@ -121,12 +121,28 @@ void Soldier::changeDirection()
 void Soldier::onCollisionBegin(CollisionEventArg* collision_eventt) {
 
 }
-
+BaseObject* prevObject;
 void Soldier::onCollisionEnd(CollisionEventArg* collision_event) {
+	eID objectID = collision_event->_otherObject->getId();
 
+	switch (objectID)
+	{
+	case eID::LAND:
+	case eID::BRIDGE:
+	{
+		if (prevObject == collision_event->_otherObject)
+		{
+			this->setStatus(FALLING);
+			prevObject = nullptr;
+		}
+	}
+	break;
+	default:
+		break;
+	}
 }
 
-BaseObject* prevObject;
+
 float Soldier::checkCollision(BaseObject * object, float dt)
 {
 	auto collisionBody = (CollisionBody*)_listComponent["CollisionBody"];
@@ -150,7 +166,6 @@ float Soldier::checkCollision(BaseObject * object, float dt)
 			collisionBody->checkCollision(object, dt, false);
 			auto gravity = (Gravity*)this->_listComponent["Gravity"];
 			gravity->setStatus(eGravityStatus::FALLING__DOWN);			
-			this->jump();
 		}
 	}
 	else
