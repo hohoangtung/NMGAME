@@ -12,7 +12,7 @@ void Soldier::init()
 {
 	_sprite = SpriteManager::getInstance()->getSprite(eID::SOLDIER);
 	_sprite->setFrameRect(0, 0, 32.0f, 16.0f);
-	this->setPosition(600, 300);
+	this->setPosition(500, 200);
 	GVector2 v(-SOLDIER_SPEED, 0);
 	GVector2 a(0, 0);
 
@@ -49,17 +49,16 @@ void Soldier::init()
 	_animations[DYING]->addFrameRect(eID::SOLDIER, "die_01", NULL);
 
 	_stopwatch = new StopWatch();
-
-	die();
 }
 
 void Soldier::draw(LPD3DXSPRITE spritehandle, Viewport* viewport)
 {
-	this->_sprite->render(spritehandle, viewport);
-	if (this->getStatus() != eStatus::DESTROY) 
-		_animations[this->getStatus()]->draw(spritehandle, viewport);
 	if (_explosion != NULL)
 		_explosion->draw(spritehandle, viewport);
+	if (this->getStatus() == eStatus::DESTROY)
+		return;
+	this->_sprite->render(spritehandle, viewport);
+	_animations[this->getStatus()]->draw(spritehandle, viewport);
 }
 
 void Soldier::release()
@@ -74,12 +73,16 @@ IComponent* Soldier::getComponent(string componentName)
 
 void Soldier::update(float deltatime)
 {
+	if (_explosion != NULL)
+		_explosion->update(deltatime);
+	if (this->getStatus() == DESTROY)
+		return;
 	Gravity *gravity = (Gravity*)this->getComponent("Gravity");
 	Movement *movement = (Movement*)this->getComponent("Movement");
 
 	if (this->getStatus() == eStatus::DYING) {
 		this->die();
-		if (_stopwatch->isStopWatch(400))
+		if (_stopwatch->isStopWatch(200))
 		{
 			movement->setVelocity(GVector2(0, 0));
 			auto pos = this->getPosition();
@@ -98,8 +101,6 @@ void Soldier::update(float deltatime)
 
 	if (this->getStatus() != DESTROY)
 		_animations[this->getStatus()]->update(deltatime);
-	if (_explosion != NULL)
-		_explosion->update(deltatime);
 }
 
 void Soldier::changeDirection()
@@ -160,10 +161,16 @@ float Soldier::checkCollision(BaseObject * object, float dt)
 	{
 		collisionBody->checkCollision(object, dt);
 	}
-
+	if (object->getId() == eID::BULLET)
+		dropHitpoint();
 	return 0.0f;
 }
-
+void Soldier::dropHitpoint() 
+{
+	this->setHitpoint(this->getHitpoint() - 1);
+	if (this->getHitpoint() <= 0)
+		this->setStatus(eStatus::DYING);
+}
 void Soldier::jump() 
 {
 	this->setStatus(FALLING);
@@ -181,5 +188,5 @@ void Soldier::die() {
 	Gravity *gravity = (Gravity*)this->getComponent("Gravity");
 	gravity->setStatus(eGravityStatus::SHALLOWED);
 	Movement *movement = (Movement*)this->getComponent("Movement");
-	movement->setVelocity(GVector2(0, 100));
+	movement->setVelocity(GVector2(0, 200));
 }
