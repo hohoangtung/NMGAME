@@ -3,13 +3,25 @@
 CollisionBody::CollisionBody(BaseObject * target)
 {
 	_target = target;
+
+	_collisionBodyRect.top = 0;
+	_collisionBodyRect.left = 0;
+	_collisionBodyRect.right = abs(_target->getBounding().left - _target->getBounding().right);
+	_collisionBodyRect.left = abs(_target->getBounding().top - _target->getBounding().bottom);
+}
+
+CollisionBody::CollisionBody(BaseObject * target, RECT bodyRect)
+{
+	_target = target;
+	_collisionBodyRect = bodyRect;
 }
 
 CollisionBody::~CollisionBody()
 {
+
 }
 
-void CollisionBody::checkCollision(BaseObject * otherObject, float dt)
+void CollisionBody::checkCollision(BaseObject * otherObject, float dt, bool updatePosition)
 {
 	eDirection direction;
 	float time = isCollide(otherObject, direction, dt);
@@ -52,7 +64,8 @@ void CollisionBody::checkCollision(BaseObject * otherObject, float dt)
 				return;
 
 			// cập nhật tọa độ
-			updateTargetPosition(otherObject, side, false, GVector2(moveX, moveY));
+			if (updatePosition)
+				updateTargetPosition(otherObject, side, false, GVector2(moveX, moveY));
 		}
 		else // nếu ko va chạm nữa là kết thúc va chạm
 		{
@@ -66,7 +79,7 @@ void CollisionBody::checkCollision(BaseObject * otherObject, float dt)
 	
 }
 
-bool CollisionBody::checkCollision(BaseObject * otherObject, eDirection & direction, float dt)
+bool CollisionBody::checkCollision(BaseObject * otherObject, eDirection & direction, float dt, bool updatePosition)
 {
 	float time = isCollide(otherObject, direction, dt);
 
@@ -92,7 +105,8 @@ bool CollisionBody::checkCollision(BaseObject * otherObject, eDirection & direct
 				return true;
 
 			// cập nhật tọa độ
-			updateTargetPosition(otherObject, direction, false, GVector2(moveX, moveY));
+			if (updatePosition)
+				updateTargetPosition(otherObject, direction, false, GVector2(moveX, moveY));
 
 			return true;
 		}
@@ -379,6 +393,19 @@ eDirection CollisionBody::getSide(BaseObject* otherObject)
 	{
 		return sideY;
 	}
+}
+
+RECT CollisionBody::getCollisionRect()
+{
+	RECT rect;
+
+	rect.top = _target->getBounding().top - _collisionBodyRect.top;
+	rect.left = _target->getBounding().left + _collisionBodyRect.left;
+
+	rect.bottom = rect.top - abs(_collisionBodyRect.top - _collisionBodyRect.bottom);
+	rect.right = rect.left + abs(_collisionBodyRect.right - _collisionBodyRect.left);
+
+	return rect;
 }
 
 bool CollisionBody::isColliding(BaseObject* otherObject)

@@ -1,13 +1,17 @@
-﻿
+﻿/*
+*	author: Ho Hoang Tung
+*	
+*	AirCraft: lớp dùng để tạo một đối tượng máy bay có thể thay đổi kiểu đạn của nhân vật.
+*/
 
 #ifndef __AIRCRAFT_H__
 #define __AIRCRAFT_H__
 
+#include "..\FrameWork\Animation.h"
 #include "BaseObject.h"
 #include "IComponent.h"
-#include "..\FrameWork\Animation.h"
 #include "Explosion.h"
-
+#include "PlayScene.h"
 
 // use value
 #define AIRCRAFT_FORCE			GVector2(25.0f, 150.0f)		// góc ném viên đạn
@@ -19,22 +23,33 @@
 #define AIRCRAFT_AMPLITUDE		GVector2(0, 100.0f)			// biên độ
 
 [event_receiver(native)]
-class AirCraft : public BaseObject, public IControlable
+class AirCraft : public BaseObject
 {
 public:
+	/* Contructor:
+	*		@pos: vị trí bắt đầu.
+	*		@hVeloc: gia tốc tuyến tính, tạo một phần chuyển động thăng.
+	*		@ampl: biên độ của chuyển động tuần hoàn.
+	*		@freq: tần số góc của chuyển động tuần hoàn.
+	*		@type: loại máy bay, là loại đạn mà nhân vật có thể lấy được.
+	*/
 	AirCraft(GVector2 pos, GVector2 hVeloc, GVector2 ampl, float freq, eAirCraftType type);
 	~AirCraft();
 
+	// Các phương thức kế thừa từ BaseObject.
 	void init() override;
 	void update(float deltatime) override;
 	void draw(LPD3DXSPRITE, Viewport*) override;
 	void release() override;
-	void updateInput(float deltatime) override;
+	GVector2 getVelocity() override;
 
 	IComponent* getComponent(string componentName);
-	void keypressed	(KeyEventArg*);
 	eAirCraftType getType();
+
+	// Set Explored sẽ gán biến _explored thành true, sử dụng khi nhân vật đã chạm vào máy bay lúc nổ.
 	void setExplored();
+
+	// Kiểm tra va chạm.
 	float checkCollision(BaseObject* object, float dt);
 private:
 	map<string, IComponent*> _listComponent;
@@ -44,7 +59,6 @@ private:
 	void initExplosion();
 	void updateExplosion(float deltatime);
 
-	GVector2 getVelocity();
 
 	// some init value
 	GVector2	_beginPosition;

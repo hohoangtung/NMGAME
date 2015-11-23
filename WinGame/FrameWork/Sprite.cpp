@@ -7,6 +7,7 @@ Sprite::~Sprite()
 //	this->_surface->Release();
 }
 
+
 Sprite::Sprite(LPD3DXSPRITE spriteHandle, LPWSTR filePath, int totalFrames, int cols)
 {
 	_origin = GVector2(0.5f, 0.5f);
@@ -188,7 +189,7 @@ void Sprite::setOrigin(GVector2 origin)
 		return;
 	
 	_origin = origin;
-	_anchorPoint = GVector2(_bound.left + _frameWidth * _scale.x * _origin.x, _bound.bottom + _frameHeight * _scale.x * _origin.y);
+	_anchorPoint = GVector2(_bound.left + _frameWidth * _scale.x * _origin.x, _bound.bottom + _frameHeight * _scale.y * _origin.y);
 
 	this->updateBounding();
 }

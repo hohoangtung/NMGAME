@@ -1,4 +1,17 @@
-﻿#ifndef __BILL_H__
+﻿/*
+update 22/11/2015
+by Luu The Vinh
+
+- Cập nhật xét ca chạm với Land, Water
+- Chuyển động nhân vật
+
+Chưa xong:
+- Chuyển độn chết
+- Hiệu ứng nhảy xuông nước
+
+*/
+
+#ifndef __BILL_H__
 #define __BILL_H__
 
 #include "..\FrameWork\define.h"
@@ -12,7 +25,7 @@
 #include "Bullet.h"
 
 #define BILL_MOVE_SPEED 120
-#define BILL_JUMP_VEL 450
+#define BILL_JUMP_VEL 420
 #define TEST_LAND 200
 #define GRAVITY 800
 #define SHOOT_SPEED 200.0f
@@ -42,12 +55,14 @@ public:
 
 	// Đổi kiểu đạn. 
 	void changeBulletType(eAirCraftType );
+
 private:
 	map<int, Animation*> _animations;
 	map<string, IComponent*> _componentList;
 	
 	float _movingSpeed;
 	StopWatch* _stopWatch;
+	bool _canJumpDown;
 
 	void standing();
 	void moveLeft();
@@ -80,6 +95,7 @@ public:
 	{
 		_index = index;
 	}
+
 	~MyBox()
 	{
 

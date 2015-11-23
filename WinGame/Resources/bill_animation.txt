@@ -1,6 +1,6 @@
 frame_name	left	top	right	bottom
-normal_01	2	32	24	64
-normal_02	27	32	49	64
+normal_01	2	31	24	64
+normal_02	27	31	49	64
 run_01		3	67	22	101
 run_02		25	67	40	101
 run_03		43	67	60	101
@@ -23,3 +23,13 @@ shot_up_02	68	20	81	64
 run_shot_01	156	190	180	223
 run_shot_02	185	190	207	223
 run_shot_03	211	190	235	223
+swim_begin	95	116	110	130
+swimming	131	116	146	130
+diving		113	124	128	130
+swimming_shot	192	114	216	130
+swimming_shotup	149	114	167	130
+swimming_shotup_stand	170	104	186	130
+dead_01		3	108	17	130
+dead_02		20	113	41	130
+dead_03		44	108	58	130
+dead_04		61	121	92	130

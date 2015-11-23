@@ -27,7 +27,9 @@ Sử dụng cho đối tượng muốn kt va chạm
 		+ _sideCollision: phía va chạm của đối tượng kia.
 
 Tham khảo class Bill để xem chi tiết.
-Còn một số lỗi đang làm tiếp. :D
+
+update 2:
+- Thêm tùy chỉnh update position trong hàm check collision
 */
 
 class CollisionEventArg : public EventArg
@@ -50,22 +52,37 @@ class CollisionBody : public IComponent
 {
 public:
 	CollisionBody(BaseObject* target);
+
+	/*
+	khởi tạo body với collision RECT (chưa xài được :v)
+		@target: đối tượng sử dụng
+		@bodyRect: hcn của đối tượng dùng để xét va chạm, tính theo gốc top-left của đối tượng đó.
+		@ví dụ: width, height là size của object
+			bodyRect.top = 0;
+			bodyRect.left = 0;
+			bodyRect.right = width;
+			bodyRect.bottom = height;
+	*/
+	CollisionBody(BaseObject* target, RECT bodyRect);
+
 	~CollisionBody();
 
 	/*
 	kiểm tra va chạm với object khác, gọi event Begin, End.
 		@otherObject: object cần kt va chạm
 		@dt: delta time của mỗi frame
+		@updatePosition: collision body sẽ cập nhật vị trí object lại nếu object chồng lấp lên object khác khi set = true
 	*/
-	void checkCollision(BaseObject* otherObject, float dt);
+	void checkCollision(BaseObject* otherObject, float dt, bool updatePosition = true);
 
 	/*
 	kiểm tra va chạm với object khác lấy được hướng va chạm, KO  gọi event Begin, End.
 		@otherObject: object cần kt va chạm
 		@direction: lấy hướng va chạm của otherObject
 		@dt: delta time của mỗi frame
+		@updatePosition: collision body sẽ cập nhật vị trí object lại nếu object chồng lấp lên object khác khi set = true
 	*/
-	bool checkCollision(BaseObject* otherObject, eDirection& direction, float dt);
+	bool checkCollision(BaseObject* otherObject, eDirection& direction, float dt, bool updatePosition = true);
 
 	bool isColliding(BaseObject* otherObject);
 	
@@ -74,8 +91,14 @@ public:
 	__event void onCollisionBegin(CollisionEventArg* e);
 	__event void onCollisionEnd(CollisionEventArg* e);
 
+	/*
+	lấy collision rect trong world, tính theo gốc tọa độ bottom-left
+	*/
+	RECT getCollisionRect();
+
 private:
 	BaseObject* _target;
+	RECT _collisionBodyRect;
 
 	float _dxEntry, _dyEntry, _dxExit, _dyExit;
 	float _txEntry, _tyEntry, _txExit, _tyExit;
@@ -97,6 +120,7 @@ private:
 
 	RECT getSweptBroadphaseRect(BaseObject* object, float dt);
 	eDirection getSide(BaseObject* otherObject);
+
 };
 
 #endif // !__COLLISION_BODY__

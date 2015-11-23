@@ -1,4 +1,3 @@
-﻿
 /*
 author: Ho Hoang Tung
 updated: 19/11/2015
@@ -32,6 +31,8 @@ Trong lớp này có:
 #ifndef __BRIDGE_H__
 #define __BRIDGE_H__
 
+#include "..\FrameWork\StopWatch.h"
+#include "PlayScene.h"
 #include "BaseObject.h"
 #include "Explosion.h"
 
@@ -94,3 +95,4 @@ private:
 	QuadExplose* _explode;
 };
 #endif // !__BRIDGE_H__
+

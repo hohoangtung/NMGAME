@@ -1,4 +1,5 @@
-﻿#ifndef __PLAY_SCENE_H__
+
+#ifndef __PLAY_SCENE_H__
 #define __PLAY_SCENE_H__
 
 #include <vector>
@@ -21,6 +22,7 @@
 #include "Rifleman.h"
 #include "Bridge.h"
 #include "Grass.h"
+#include "Land.h"
 using namespace std;
 US_FRAMEWORK
 
