@@ -13,11 +13,13 @@ namespace MapEditor
 {
     public partial class MainForm : Form
     {
+        public static ApplicationSettings Settings =  new ApplicationSettings();
+
         // PRIVATE ATTRIBUTE
         // -------------------------------------------------------------
 
         // Tile đang được chọn trong list view.
-        private Tile _selectedTile;  
+        private Tile _selectedTile;
 
         // Lưới kẻ ô.
         private TableLayoutPanel _tablelayout;
@@ -30,6 +32,11 @@ namespace MapEditor
         // khi load nếu path này rỗng thì load bình thường, ngược lại, ta lưu lại trước rồi mới load.
         private string _tilesetPath;
 
+        private BufferedGraphics _buffergraphics;
+        private Graphics _graphics;
+        private int _scrollIndex;
+        private METoolbar toolbar;
+
         // CONTRUCTOR
         // -------------------------------------------------------------
 
@@ -37,11 +44,25 @@ namespace MapEditor
         {
             InitializeComponent();
             _mapController = new MapController();
-        }
+            _mapController.Drawn += (object sender, EventArgs e) =>
+                {
+                    this._buffergraphics.Render(this._graphics);
+                };
 
+            InitToolBar();
+        }
 
         // PRIVATE METHOD
         // -------------------------------------------------------------
+
+        // Khởi tạo toolbar của form
+        private void InitToolBar()
+        {
+            this.toolbar = new METoolbar();
+            this.toolbar.Init();
+
+            this.Controls.Add(toolbar);
+        }
 
         // Clone map từ file có sẵn
         private void cloneMap(Image img, int widthpixel, int heightpixel)
@@ -51,7 +72,12 @@ namespace MapEditor
 
             _mapController.TilesMap.Resize(img.Width / widthpixel, img.Height / heightpixel);
 
-            initTableLayout(_mapController.TilesMap.Columns, _mapController.TilesMap.Rows);
+            this.InitTableLayout();
+
+            // Khởi tạo ObjectEditor
+            this._mapController.InitObjectEditor();
+            this._mapController.ObjectEditor.Bind(this.listBoxObject);
+
             Bitmap bm = new Bitmap(widthpixel, heightpixel, img.PixelFormat);           //
             Rectangle srcRect = new Rectangle(0, 0, widthpixel - 1, heightpixel - 1);
             var imglist = this.listView1.LargeImageList.Images;
@@ -106,17 +132,24 @@ namespace MapEditor
         }
 
         // khởi tạo lưới khung
-        private void initTableLayout(int columns, int rows)
+        public void InitTableLayout()
         {
-            _tablelayout = new TableLayoutPanel();
+            if (_tablelayout != null)
+            {
+                this.splitContainer2.Panel1.Controls.Remove(_tablelayout);
+            }
+            int columns = this._mapController.TilesMap.Columns;
+            int rows = this._mapController.TilesMap.Rows;
+                _tablelayout = new TableLayoutPanel();
 
             _tablelayout.ColumnCount = columns;
             // khởi tạo ma trận index
             // khởi tạo cột
+            Size tilesize = MainForm.Settings.TileSize;
             float columnsize = 100.0f / columns;
             for (int i = 0; i < columns; i++)
             {
-                var columnstyle = new ColumnStyle(SizeType.Absolute, 49);
+                var columnstyle = new ColumnStyle(SizeType.Absolute, tilesize.Width - 1);
                 _tablelayout.ColumnStyles.Add(columnstyle);
             }
             // khởi tạo dòng
@@ -124,36 +157,64 @@ namespace MapEditor
             float rowsize = 100.0f / rows;
             for (int i = 0; i < rows; i++)
             {
-                var rowstyle = new RowStyle(SizeType.Absolute, 49);
+                var rowstyle = new RowStyle(SizeType.Absolute, tilesize.Height - 1);
                 _tablelayout.RowStyles.Add(rowstyle);
             }
 
             _tablelayout.BackColor = Color.FromArgb(205, 205, 205);
             _tablelayout.CellBorderStyle = TableLayoutPanelCellBorderStyle.Single;
-            _tablelayout.Margin = new System.Windows.Forms.Padding(0, 0, 0, 0);
+            _tablelayout.Margin = new System.Windows.Forms.Padding(5);
             _tablelayout.Name = "map";
 
             _tablelayout.AutoSize = true;
             _tablelayout.Paint += _tablelayout_Paint;
-            _tablelayout.MouseClick += tablelayout_MouseClick;
-            this.splitContainer1.Panel2.Controls.Add(_tablelayout);
+            _tablelayout.MouseClick += TablelayoutMouseClick;
+            this.splitContainer2.Panel1.Controls.Add(_tablelayout);
+            this.splitContainer2.SplitterDistance = (int)(this.splitContainer2.Size.Height * 0.75);
 
-            this._mapController.Graphics = _tablelayout.CreateGraphics();
+            _tablelayout.MouseDown += TablelayoutMouseDown;
+            _tablelayout.MouseUp += TablelayoutMouseUp;
+
+            // Khởi tạo graphics.
+            _graphics = _tablelayout.CreateGraphics();
+            var context = BufferedGraphicsManager.Current;
+            context.MaximumBuffer = _tablelayout.Size + new Size(1, 1);
+            _buffergraphics = context.Allocate(_tablelayout.CreateGraphics(), new Rectangle(Point.Empty, _tablelayout.Size));
+
+            this._mapController.Graphics = _buffergraphics.Graphics;
+
+        }
+
+        private Rectangle getVisibleMap()
+        {
+            var size = this.splitContainer2.Panel1.ClientSize;
+            Point location = new Point(
+                this.splitContainer2.Panel1.HorizontalScroll.Value,
+                this.splitContainer2.Panel1.VerticalScroll.Value);
+            return new Rectangle(location, size);
         }
 
         // event
-        private void tablelayout_MouseClick(object sender, MouseEventArgs e)
+
+        private void TablelayoutMouseClick(object sender, MouseEventArgs e)
         {
+            if (this.toolbar.Buttons["editstate"].Pushed == true)
+                return;
             if (_selectedTile == null)
                 return;
-
+            Size tilesize = MainForm.Settings.TileSize;
             // selected point là chỉ số của matrix 
-            Point selectedPoint = new Point(e.X / 50, e.Y / 50);
+            Point selectedPoint = new Point(e.X / tilesize.Width, e.Y / tilesize.Height);
+            if (selectedPoint.X >= _mapController.TilesMap.Columns)
+                return;
+            if (selectedPoint.Y >= _mapController.TilesMap.Rows)
+                return;
             _mapController.TilesMap[selectedPoint.X, selectedPoint.Y] = _selectedTile.Id;
 
             // location là vị trí vẽ trên tablelayout
-            Point location = new Point(50 * selectedPoint.X, 50 * selectedPoint.Y);
+            Point location = new Point(tilesize.Width * selectedPoint.X, tilesize.Height * selectedPoint.Y);
             _mapController.DrawTile(location, _selectedTile);
+
         }
 
         private void listView1_SelectedIndexChanged(object sender, EventArgs e)
@@ -168,7 +229,7 @@ namespace MapEditor
 
         private void _tablelayout_Paint(object sender, PaintEventArgs e)
         {
-            _mapController.Draw();
+            _mapController.Draw(getVisibleMap());
         }
 
         // menu toolstrip event
@@ -194,7 +255,11 @@ namespace MapEditor
             {
                 //MatrixSize = new Point(newmap.Columns, newmap.Rows);
                 _mapController.TilesMap = new TilesMap(newmapform.Columns, newmapform.Rows);
-                this.initTableLayout(newmapform.Columns, newmapform.Rows);
+                this.InitTableLayout();
+                // Khởi tạo ObjectEditor
+                this._mapController.InitObjectEditor();
+                this._mapController.ObjectEditor.Bind(this.listBoxObject);
+
             }
         }
 
@@ -253,15 +318,121 @@ namespace MapEditor
             if (rs != System.Windows.Forms.DialogResult.OK)
                 return;
             _mapController.TilesMap = TilesMap.Load(openfiledialog.FileName);
+            this._tilesetPath = openfiledialog.FileName;
 
             listView1.LargeImageList = _mapController.getImageList();
             listView1.Items.AddRange(_mapController.getListViewItems().ToArray());
 
-            initTableLayout(_mapController.TilesMap.Columns, _mapController.TilesMap.Rows);
-            _mapController.Draw();
+            this.InitTableLayout();
+
+            // Khởi tạo ObjectEditor
+            this._mapController.InitObjectEditor();
+            this._mapController.ObjectEditor.Bind(this.listBoxObject);
+
+            _mapController.Draw(getVisibleMap());
             
         }
 
+        private void TablelayoutMouseDown(object sender, MouseEventArgs e)
+        {
+            if (this.toolbar.Buttons["editstate"].Pushed == false)
+                return;
+            System.Diagnostics.Debug.WriteLine("down");
+            if (MainForm.Settings.UseTransform == true)
+            {
+                int height = this._mapController.TilesMap.GetMapHeight();
+                this._mapController.ObjectEditor.MouseDown = new Point(e.Location.X, height - e.Location.Y);
+            }
+            else
+            {
+                this._mapController.ObjectEditor.MouseDown = e.Location;
+            }
+        }
 
+        private void TablelayoutMouseUp(object sender, MouseEventArgs e)
+        {
+            if (this.toolbar.Buttons["editstate"].Pushed == false)
+                return;
+            System.Diagnostics.Debug.WriteLine("Up");
+            if (MainForm.Settings.UseTransform == true)
+            {
+                int height = this._mapController.TilesMap.GetMapHeight();
+                this._mapController.ObjectEditor.MouseUp = new Point(e.Location.X, height - e.Location.Y);
+            }
+            else
+            {
+                this._mapController.ObjectEditor.MouseUp = e.Location;
+            }
+            this._mapController.ObjectEditor.InitGameObject();
+        }
+
+        private void listBoxObject_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            this.gameObjectproperty.SelectedObject = ((sender as ListBox).SelectedItem as GameObject);
+        }
+
+        private void Panel_Scroll(object sender, ScrollEventArgs e)
+        {
+            if (e.Type == ScrollEventType.EndScroll)
+            {
+                this._scrollIndex = e.NewValue;
+            }
+        }
+
+        private void gameObjectproperty_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
+        {
+            (this.listBoxObject.DataSource as BindingSource).ResetBindings(false);
+        }
+
+        private void listBoxObject_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == System.Windows.Forms.MouseButtons.Right)
+            {
+                listBoxObject.SelectedIndex = listBoxObject.IndexFromPoint(e.Location);
+                if (listBoxObject.SelectedIndex != -1)
+                {
+                    ContextMenuListBox.Show(listBoxObject.PointToScreen(e.Location));
+                }
+            }
+        }
+
+        private void ContextMenuListBox_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+            if (e.ClickedItem.Text == "Delete")
+            {
+                (listBoxObject.DataSource as BindingSource).RemoveCurrent();
+            }
+            else if (e.ClickedItem.Text == "Fit Tile")
+            {
+                var current = (listBoxObject.DataSource as BindingSource).Current as GameObject;
+                ObjectEditor.FitTile(current);
+
+                this._mapController.Draw(getVisibleMap());
+            }
+        }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+            MainForm.Settings.PropertyChanged += (object s, PropertyChangedEventArgs property_event) =>
+                {
+                    if (this.Focused == true)
+                        this._mapController.Draw(getVisibleMap());        
+                };
+        }
+
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            MainForm.Settings.Save();
+        }
+
+        private void splitContainer2_Panel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        public void ReDrawMap()
+        {
+            this._mapController.Draw(this.getVisibleMap());
+        }
     } // END CLASS mainform
 } // END NAMESPACE mapeditor

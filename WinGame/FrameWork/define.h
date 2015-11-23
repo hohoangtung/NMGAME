@@ -37,7 +37,6 @@ enum eID
 	QUADEXPLODE,
 	MAPSTAGE1,
 	BULLET,
-	GRASS,				// Cỏ đi được ở stage1.	=> test fail
 	LAND,				// Đất đi được.
 };
 
@@ -87,7 +86,7 @@ enum eLandType
 {
 	GRASS,
 	WATER
-}
+};
 
 #define ALL_EDGES (TOP_EDGE | LEFT_EDGE | RIGHT_EDGE | BOTTOM_EDGE)
 

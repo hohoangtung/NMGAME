@@ -89,20 +89,20 @@ bool PlayScene::init()
 	//grass->init();
 	//_listobject.push_back(grass);
 
-	auto land  = new Land(64, 238, 1472, 16, eDirection::TOP, 0);
+	auto land  = new Land(64, 238, 1472, 16, eDirection::TOP, eLandType::GRASS);
 	land->init();
 	_listobject.push_back(land);
 
-	{
-		auto grass = new Grass(GVector2(96.0f + 64, 238.0f));
-		grass->init();
-		_listobject.push_back(grass);
-	}
-	{
-		auto grass = new Grass(GVector2(96.0f + 128, 238.0f));
-		grass->init();
-		_listobject.push_back(grass);
-	}
+	//{
+	//	auto grass = new Grass(GVector2(96.0f + 64, 238.0f));
+	//	grass->init();
+	//	_listobject.push_back(grass);
+	//}
+	//{
+	//	auto grass = new Grass(GVector2(96.0f + 128, 238.0f));
+	//	grass->init();
+	//	_listobject.push_back(grass);
+	//}
 
 	background = Map::LoadFromFile("Resources//Map//stage1.xml",eID::MAPSTAGE1);
 	return true;
