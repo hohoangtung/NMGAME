@@ -37,12 +37,7 @@ enum eID
 	QUADEXPLODE,
 	MAPSTAGE1,
 	BULLET,
-<<<<<<< HEAD
-	GRASS,				// Cỏ đi được ở stage1.
-=======
-	//GRASS,				// Cỏ đi được ở stage1.	=> test fail
 	LAND,				// Đất đi được.
->>>>>>> ce4e1e13db1a05f5c4d417a4126dca3b7dcfad22
 };
 
 enum eStatus
@@ -75,14 +70,10 @@ enum eStatus
 	HIDING			= (1 << 14),
 	EXPOSING		= (1 << 15),
 	FALLING			= (1 << 16),
-<<<<<<< HEAD
-	HOLDING			= (1 << 17)
-=======
 	HOLDING			= (1 << 17),
 
 	SWIMING			= (1 << 18),
 	DIVING			= (1 << 19)
->>>>>>> ce4e1e13db1a05f5c4d417a4126dca3b7dcfad22
 };
 
 enum ePhysicsBody
@@ -94,15 +85,12 @@ enum ePhysicsBody
 	BOTTOM_EDGE		= (1 << 3)
 };
 
-<<<<<<< HEAD
-=======
 enum eLandType
 {
 	GRASS,
 	WATER
 };
 
->>>>>>> ce4e1e13db1a05f5c4d417a4126dca3b7dcfad22
 #define ALL_EDGES (TOP_EDGE | LEFT_EDGE | RIGHT_EDGE | BOTTOM_EDGE)
 
 enum eDirection
@@ -135,10 +123,8 @@ enum eBulletType
 typedef D3DXVECTOR3 GVector3;
 typedef D3DXVECTOR2 GVector2;
 #define VECTOR2ZERO GVector2(0.0f, 0.0f)
-<<<<<<< HEAD
-=======
 #define VECTOR2ONE  GVector2(1.0f, 1.0f)
->>>>>>> ce4e1e13db1a05f5c4d417a4126dca3b7dcfad22
+
 #define NS_FRAMEWORK		namespace FrameWork
 
 #define NS_FRAMEWORK_BEGIN	{
