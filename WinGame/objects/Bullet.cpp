@@ -1,15 +1,22 @@
-#include "Bullet.h"
-Bullet::Bullet(GVector2 startPosition, eDirection dir) : BaseObject(eID::BULLET)
+﻿#include "Bullet.h"
+Bullet::Bullet(GVector2 startPosition, eBulletType type,eDirection dir) : BaseObject(eID::BULLET)
 {
 	_startPosition = startPosition;
 	_direction = dir;
+	_type = type;
 }
 
-Bullet::Bullet(GVector2 startPosition, float degree) : BaseObject(eID::BULLET)
+Bullet::Bullet(GVector2 startPosition, eBulletType type,float degree) : BaseObject(eID::BULLET)
 {
 	_startPosition = startPosition;
 	_direction = eDirection::NONE;
 	_degree = degree;
+	_type = type;
+}
+
+eBulletType Bullet::getBulletType()
+{
+	return _type;
 }
 
 Bullet::~Bullet()
@@ -104,20 +111,44 @@ GVector2 Bullet::getVelocity()
 	return move->getVelocity();
 }
 
+bool Bullet::isBillBullet()
+{
+	return (_type & (eBulletType::BILL_BULLET) == _type);
+}
+
+bool Bullet::isEnemyBullet()
+{
+	return (_type & (eBulletType::ENEMY_BULLET) == _type);
+}
+
+bool Bullet::isContainType(eBulletType type)
+{
+	return (_type & (type) == _type);
+}
+
 void Bullet::onCollisionBegin(CollisionEventArg* collision_arg)
 {
 	eID objectID = collision_arg->_otherObject->getId();
-	switch (objectID)
+
+	if (this->isBillBullet())
 	{
-	case AIRCRAFT:
-		collision_arg->_otherObject->setStatus(eStatus::BURST);
-		break;
-	case BOX:	
-		OutputDebugString(L"hit...\n");
-		break;
-	case SOLDIER: case RIFLEMAN:
-		((BaseEnemy*)collision_arg->_otherObject)->dropHitpoint();
-		break;
+		// Nếu đây là đạn của Bill
+		switch (objectID)
+		{
+		case AIRCRAFT:
+			collision_arg->_otherObject->setStatus(eStatus::BURST);
+			break;
+		case BOX:	
+			OutputDebugString(L"hit...\n");
+			break;
+		case SOLDIER: case RIFLEMAN:
+			((BaseEnemy*)collision_arg->_otherObject)->dropHitpoint();
+			break;
+		}
+	}
+	if (this->isEnemyBullet())
+	{
+
 	}
 }
 

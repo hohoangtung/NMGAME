@@ -1,4 +1,4 @@
-﻿#ifndef __NS_FRAMEWORK__
+#ifndef __NS_FRAMEWORK__
 #define __NS_FRAMEWORK__
 
 #define _USE_MATH_DEFINES
@@ -23,9 +23,7 @@ using namespace std;
 #define COLOR_KEY D3DXCOLOR(1.0f, 0.0f, 1.0f, 1.0f)				// màu khi mà load hình nó bỏ qua > trong suốt
 enum eID
 {
-	FLOWER,			// Mario flower. Just for test.
 	BILL,			// Main character.
-	MARIO,
 	REDCANNON,
 	SOLDIER,
 	FALCON,
@@ -36,10 +34,8 @@ enum eID
 	BRIDGE,
 	QUADEXPLODE,
 	MAPSTAGE1,
-	BULLET,	// Cỏ đi được ở stage1.
-	//GRASS,				// Cỏ đi được ở stage1.	=> test fail
+	BULLET,
 	LAND,				// Đất đi được.
-
 };
 
 enum eStatus

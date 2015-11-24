@@ -39,16 +39,28 @@
             this.loadMapToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.listView1 = new System.Windows.Forms.ListView();
+            this.splitContainer2 = new System.Windows.Forms.SplitContainer();
+            this.gameObjectproperty = new System.Windows.Forms.PropertyGrid();
+            this.listBoxObject = new System.Windows.Forms.ListBox();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.defaultImage = new System.Windows.Forms.ImageList(this.components);
             this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
+            this.ContextMenuListBox = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.MenuItemDelete = new System.Windows.Forms.ToolStripMenuItem();
+            this.MenuItemFitTile = new System.Windows.Forms.ToolStripMenuItem();
+            this.MenuItemImport = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
+            this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
+            this.splitContainer2.Panel2.SuspendLayout();
+            this.splitContainer2.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
+            this.ContextMenuListBox.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -60,7 +72,7 @@
             this.loadMapToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(713, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1184, 24);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -80,7 +92,7 @@
             // 
             this.creatTilesToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.creatTilesToolStripMenuItem.Name = "creatTilesToolStripMenuItem";
-            this.creatTilesToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.creatTilesToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
             this.creatTilesToolStripMenuItem.Text = "Create Tiles...";
             this.creatTilesToolStripMenuItem.Click += new System.EventHandler(this.creatTilesToolStripMenuItem_Click);
             // 
@@ -88,7 +100,7 @@
             // 
             this.newMapToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.newMapToolStripMenuItem.Name = "newMapToolStripMenuItem";
-            this.newMapToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.newMapToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
             this.newMapToolStripMenuItem.Text = "New Map";
             this.newMapToolStripMenuItem.Click += new System.EventHandler(this.menuStrip1_ItemClicked);
             // 
@@ -126,8 +138,9 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.AutoScroll = true;
-            this.splitContainer1.Size = new System.Drawing.Size(713, 442);
-            this.splitContainer1.SplitterDistance = 133;
+            this.splitContainer1.Panel2.Controls.Add(this.splitContainer2);
+            this.splitContainer1.Size = new System.Drawing.Size(1184, 718);
+            this.splitContainer1.SplitterDistance = 220;
             this.splitContainer1.TabIndex = 1;
             // 
             // listView1
@@ -138,11 +151,58 @@
             this.listView1.Location = new System.Drawing.Point(0, 0);
             this.listView1.MultiSelect = false;
             this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(133, 442);
+            this.listView1.Size = new System.Drawing.Size(220, 718);
             this.listView1.TabIndex = 0;
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.AfterLabelEdit += new System.Windows.Forms.LabelEditEventHandler(this.listView1_AfterLabelEdit);
             this.listView1.SelectedIndexChanged += new System.EventHandler(this.listView1_SelectedIndexChanged);
+            // 
+            // splitContainer2
+            // 
+            this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer2.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
+            this.splitContainer2.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer2.Name = "splitContainer2";
+            this.splitContainer2.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // splitContainer2.Panel1
+            // 
+            this.splitContainer2.Panel1.AutoScroll = true;
+            this.splitContainer2.Panel1.Scroll += new System.Windows.Forms.ScrollEventHandler(this.Panel_Scroll);
+            this.splitContainer2.Panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.splitContainer2_Panel1_Paint);
+            // 
+            // splitContainer2.Panel2
+            // 
+            this.splitContainer2.Panel2.AutoScroll = true;
+            this.splitContainer2.Panel2.Controls.Add(this.gameObjectproperty);
+            this.splitContainer2.Panel2.Controls.Add(this.listBoxObject);
+            this.splitContainer2.Size = new System.Drawing.Size(960, 718);
+            this.splitContainer2.SplitterDistance = 434;
+            this.splitContainer2.TabIndex = 0;
+            // 
+            // gameObjectproperty
+            // 
+            this.gameObjectproperty.HelpVisible = false;
+            this.gameObjectproperty.Location = new System.Drawing.Point(661, 0);
+            this.gameObjectproperty.Name = "gameObjectproperty";
+            this.gameObjectproperty.PropertySort = System.Windows.Forms.PropertySort.Alphabetical;
+            this.gameObjectproperty.Size = new System.Drawing.Size(299, 280);
+            this.gameObjectproperty.TabIndex = 1;
+            this.gameObjectproperty.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.gameObjectproperty_PropertyValueChanged);
+            // 
+            // listBoxObject
+            // 
+            this.listBoxObject.Dock = System.Windows.Forms.DockStyle.Left;
+            this.listBoxObject.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.25F);
+            this.listBoxObject.FormattingEnabled = true;
+            this.listBoxObject.ItemHeight = 17;
+            this.listBoxObject.Location = new System.Drawing.Point(0, 0);
+            this.listBoxObject.Name = "listBoxObject";
+            this.listBoxObject.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
+            this.listBoxObject.Size = new System.Drawing.Size(426, 280);
+            this.listBoxObject.TabIndex = 0;
+            this.listBoxObject.SelectedIndexChanged += new System.EventHandler(this.listBoxObject_SelectedIndexChanged);
+            this.listBoxObject.MouseDown += new System.Windows.Forms.MouseEventHandler(this.listBoxObject_MouseDown);
             // 
             // contextMenuStrip1
             // 
@@ -162,14 +222,43 @@
             // 
             this.defaultImage.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("defaultImage.ImageStream")));
             this.defaultImage.TransparentColor = System.Drawing.Color.Transparent;
-            this.defaultImage.Images.SetKeyName(0, "default_cyan.bmp");
-            this.defaultImage.Images.SetKeyName(1, "selectedcell.bmp");
+            this.defaultImage.Images.SetKeyName(0, "object.png");
+            this.defaultImage.Images.SetKeyName(1, "tile.png");
+            this.defaultImage.Images.SetKeyName(2, "settings.png");
+            // 
+            // ContextMenuListBox
+            // 
+            this.ContextMenuListBox.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.MenuItemDelete,
+            this.MenuItemFitTile,
+            this.MenuItemImport});
+            this.ContextMenuListBox.Name = "ContextMenuListBox";
+            this.ContextMenuListBox.Size = new System.Drawing.Size(156, 70);
+            this.ContextMenuListBox.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.ContextMenuListBox_ItemClicked);
+            // 
+            // MenuItemDelete
+            // 
+            this.MenuItemDelete.Name = "MenuItemDelete";
+            this.MenuItemDelete.Size = new System.Drawing.Size(155, 22);
+            this.MenuItemDelete.Text = "Delete";
+            // 
+            // MenuItemFitTile
+            // 
+            this.MenuItemFitTile.Name = "MenuItemFitTile";
+            this.MenuItemFitTile.Size = new System.Drawing.Size(155, 22);
+            this.MenuItemFitTile.Text = "Fit Tile";
+            // 
+            // MenuItemImport
+            // 
+            this.MenuItemImport.Name = "MenuItemImport";
+            this.MenuItemImport.Size = new System.Drawing.Size(155, 22);
+            this.MenuItemImport.Text = "Import Image...";
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(713, 466);
+            this.ClientSize = new System.Drawing.Size(1184, 742);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
@@ -177,13 +266,20 @@
             this.RightToLeftLayout = true;
             this.Text = "MainForm";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
+            this.Load += new System.EventHandler(this.MainForm_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.splitContainer1.Panel1.ResumeLayout(false);
+            this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
+            this.splitContainer2.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
+            this.splitContainer2.ResumeLayout(false);
             this.contextMenuStrip1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).EndInit();
+            this.ContextMenuListBox.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -204,5 +300,12 @@
         private System.Windows.Forms.BindingSource bindingSource1;
         private System.Windows.Forms.ToolStripMenuItem saveMapToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem loadMapToolStripMenuItem;
+        private System.Windows.Forms.SplitContainer splitContainer2;
+        private System.Windows.Forms.ListBox listBoxObject;
+        private System.Windows.Forms.PropertyGrid gameObjectproperty;
+        private System.Windows.Forms.ContextMenuStrip ContextMenuListBox;
+        private System.Windows.Forms.ToolStripMenuItem MenuItemDelete;
+        private System.Windows.Forms.ToolStripMenuItem MenuItemFitTile;
+        private System.Windows.Forms.ToolStripMenuItem MenuItemImport;
     }
 }

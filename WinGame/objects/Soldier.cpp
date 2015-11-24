@@ -164,13 +164,22 @@ float Soldier::checkCollision(BaseObject * object, float dt)
 				auto movement = (Movement*)this->_listComponent["Movement"];
 				movement->setVelocity(GVector2(movement->getVelocity().x, 0));
 				gravity->setStatus(eGravityStatus::SHALLOWED);
+
+				// dừng veloc của y cho nó đừng rớt xuống nữa
+				auto move = (Movement*)this->_listComponent["Movement"];
+				move->setVelocity(GVector2(move->getVelocity().x, 0));
+
 				this->setStatus(eStatus::RUNNING);
 				prevObject = object;
 			}
 		}
 		else if (prevObject == object)
 		{
-			collisionBody->checkCollision(object, dt, false);
+			prevObject = nullptr;
+
+			// khỏi cần cái này, thằng bill xài nó để xét cho nó nhảy xuống thôi
+			// collisionBody->checkCollision(object, dt, false);
+
 			auto gravity = (Gravity*)this->_listComponent["Gravity"];
 			gravity->setStatus(eGravityStatus::FALLING__DOWN);	
 			this->setStatus(FALLING);
