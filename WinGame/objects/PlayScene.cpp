@@ -150,7 +150,10 @@ void PlayScene::update(float dt)
 		_listobject[2]->checkCollision(_listobject[i], dt);
 	}
 
-	
+	for (int i = 1; i < _listobject.size(); i++)
+	{
+		_listobject[4]->checkCollision(_listobject[i], dt);
+	}
 	_listobject[3]->checkCollision(_listobject[5], dt);
 
 	for (auto object : _listobject)

@@ -22,7 +22,7 @@ void Soldier::init()
 	this->setScore(SOLDIER_SCORE);
 
 	this->_listComponent.insert(pair<string, IComponent*>("Movement", new Movement(a, v, this->_sprite)));
-	this->_listComponent.insert(pair<string, IComponent*>("Gravity", new Gravity(GVector2(0, -400), (Movement*)(this->getComponent("Movement")))));
+	this->_listComponent.insert(pair<string, IComponent*>("Gravity", new Gravity(GVector2(0, -ENEMY_GRAVITY), (Movement*)(this->getComponent("Movement")))));
 
 	auto collisionBody = new CollisionBody(this);
 	_listComponent["CollisionBody"] = collisionBody;
@@ -87,7 +87,8 @@ void Soldier::update(float deltatime)
 		return;
 	Gravity *gravity = (Gravity*)this->getComponent("Gravity");
 	Movement *movement = (Movement*)this->getComponent("Movement");
-
+	if (this->getHitpoint() <= 0)
+		this->setStatus(eStatus::DYING);
 	if (this->getStatus() == eStatus::DYING) {
 		this->die();
 		if (_stopwatch->isStopWatch(200))
@@ -98,7 +99,8 @@ void Soldier::update(float deltatime)
 			_explosion->init();
 			_explosion->setScale(SCALE_FACTOR);
 			_explosion->setPosition(pos);
-			this->setStatus(eStatus::DESTROY);			
+			this->setStatus(eStatus::DESTROY);		
+			return;
 		}
 	}
 
@@ -121,10 +123,11 @@ void Soldier::changeDirection()
 void Soldier::onCollisionBegin(CollisionEventArg* collision_eventt) {
 
 }
-BaseObject* prevObject;
-void Soldier::onCollisionEnd(CollisionEventArg* collision_event) {
-	eID objectID = collision_event->_otherObject->getId();
 
+void Soldier::onCollisionEnd(CollisionEventArg* collision_event) {
+	if (this->getStatus() == eStatus::DESTROY)
+		return;
+	eID objectID = collision_event->_otherObject->getId();
 	switch (objectID)
 	{
 	case eID::LAND:
@@ -145,6 +148,8 @@ void Soldier::onCollisionEnd(CollisionEventArg* collision_event) {
 
 float Soldier::checkCollision(BaseObject * object, float dt)
 {
+	if (this->getStatus() == eStatus::DESTROY)
+		return 0.0f;
 	auto collisionBody = (CollisionBody*)_listComponent["CollisionBody"];
 	eID objectId = object->getId();
 	eDirection direction;
@@ -156,6 +161,8 @@ float Soldier::checkCollision(BaseObject * object, float dt)
 			if (direction == eDirection::TOP && this->getVelocity().y < 0)
 			{
 				auto gravity = (Gravity*)this->_listComponent["Gravity"];
+				auto movement = (Movement*)this->_listComponent["Movement"];
+				movement->setVelocity(GVector2(movement->getVelocity().x, 0));
 				gravity->setStatus(eGravityStatus::SHALLOWED);
 				this->setStatus(eStatus::RUNNING);
 				prevObject = object;
@@ -165,7 +172,8 @@ float Soldier::checkCollision(BaseObject * object, float dt)
 		{
 			collisionBody->checkCollision(object, dt, false);
 			auto gravity = (Gravity*)this->_listComponent["Gravity"];
-			gravity->setStatus(eGravityStatus::FALLING__DOWN);			
+			gravity->setStatus(eGravityStatus::FALLING__DOWN);	
+			this->setStatus(FALLING);
 		}
 	}
 	else
@@ -174,12 +182,6 @@ float Soldier::checkCollision(BaseObject * object, float dt)
 	}
 	return 0.0f;
 
-}
-void Soldier::dropHitpoint() 
-{
-	this->setHitpoint(this->getHitpoint() - 1);
-	if (this->getHitpoint() <= 0)
-		this->setStatus(eStatus::DYING);
 }
 void Soldier::jump() 
 {

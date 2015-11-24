@@ -4,6 +4,7 @@
 #include "BaseEnemy.h"
 #include "CollisionBody.h"
 #include "Bullet.h"
+#include "IComponent.h"
 #include "../FrameWork/Animation.h"
 #include "../Framework/StopWatch.h"
 #include "PlayScene.h"
@@ -31,10 +32,10 @@ public:
 
 	void onCollisionBegin(CollisionEventArg*);
 	void onCollisionEnd(CollisionEventArg*);
+	float checkCollision(BaseObject*, float);
 
 	void die();
 	void shoot();
-	
 	void setStatus(eStatus);
 	
 	IComponent* getComponent(string);
@@ -44,6 +45,7 @@ private:
 	map<int, Animation*> _animations;
 	float _shootingAngle;
 	StopWatch *_stopwatch;
+	StopWatch *_loopwatch;
 	BaseObject *_explosion;
 	list<Bullet*> _listBullets;
 
@@ -51,5 +53,6 @@ private:
 	void removeStatus(eStatus status);
 	bool isInStatus(eStatus status);
 	void calculateShootingAngle();
+	void calculatingShootingDirection();
 };
 #endif

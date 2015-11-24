@@ -40,6 +40,6 @@ private:
 	StopWatch *_stopwatch;
 	void changeDirection();
 	BaseObject *_explosion;
-	void dropHitpoint();
+	BaseObject* prevObject;
 };
 #endif

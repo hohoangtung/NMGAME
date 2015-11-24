@@ -115,6 +115,9 @@ void Bullet::onCollisionBegin(CollisionEventArg* collision_arg)
 	case BOX:	
 		OutputDebugString(L"hit...\n");
 		break;
+	case SOLDIER: case RIFLEMAN:
+		((BaseEnemy*)collision_arg->_otherObject)->dropHitpoint();
+		break;
 	}
 }
 

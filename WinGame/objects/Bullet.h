@@ -3,6 +3,7 @@
 
 #include "BaseObject.h"
 #include "IComponent.h"
+#include "BaseEnemy.h"
 #include "../FrameWork/define.h"
 #include "CollisionBody.h"
 
