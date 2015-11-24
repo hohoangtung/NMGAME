@@ -5,7 +5,7 @@
 #include "IComponent.h"
 #include "../FrameWork/define.h"
 #include "CollisionBody.h"
-
+ 
 
 #define NORMAL_BULLET_SPEED 400;
 

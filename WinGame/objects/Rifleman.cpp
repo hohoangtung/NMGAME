@@ -4,7 +4,7 @@ int shooting;
 StopWatch *loopWatch;
 Rifleman::Rifleman() : BaseEnemy(eID::RIFLEMAN) {}
 Rifleman::~Rifleman() {}
-
+ 
 void Rifleman::init()
 {
 	_sprite = SpriteManager::getInstance()->getSprite(eID::RIFLEMAN);

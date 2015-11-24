@@ -73,7 +73,7 @@ bool PlayScene::init()
 	rifleman->init();
 	_listobject.push_back(rifleman);
 
-	
+	 
 
 	auto wallturret = new WallTurret();
 	wallturret->init();
