@@ -13,7 +13,7 @@ Map::~Map()
 {
 	
 }
-
+ 
 void Map::release()
 {
 	//if (_mapIndex != NULL)
