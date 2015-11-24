@@ -141,7 +141,7 @@ void PlayScene::update(float dt)
 	for (int i = 1; i < _listobject.size(); i++)
 	{
 		// bill check
-		_listobject[0]->checkCollision(_listobject[i], dt);
+		this->_bill->checkCollision(_listobject[i], dt);
 	}
 	
 	// sodier

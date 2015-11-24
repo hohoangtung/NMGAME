@@ -23,9 +23,7 @@ using namespace std;
 #define COLOR_KEY D3DXCOLOR(1.0f, 0.0f, 1.0f, 1.0f)				// màu khi mà load hình nó bỏ qua > trong suốt
 enum eID
 {
-	FLOWER,			// Mario flower. Just for test.
 	BILL,			// Main character.
-	MARIO,
 	REDCANNON,
 	SOLDIER,
 	FALCON,

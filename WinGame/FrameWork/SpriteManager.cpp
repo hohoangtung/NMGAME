@@ -58,12 +58,14 @@ void SpriteManager::loadResource(LPD3DXSPRITE spriteHandle)
 	// [psedue code]
 	// sp = new SPRITE(...)
 	// this->_listSprite.insert(pair<eID, Sprite*>(eID::ENUMOBJECT, sp));
-	Sprite* sp = new Sprite(spriteHandle, L"Flower.png", 4, 4);
-	this->_listSprite.insert(pair<eID, Sprite*>(eID::FLOWER, sp));
 
-	sp = new Sprite(spriteHandle, L"mario.png", 5, 5);
-	this->_listSprite.insert(pair<eID, Sprite*>(eID::MARIO, sp));
+	//Sprite* sp = new Sprite(spriteHandle, L"Flower.png", 4, 4);
+	//this->_listSprite.insert(pair<eID, Sprite*>(eID::FLOWER, sp));
 
+	//sp = new Sprite(spriteHandle, L"mario.png", 5, 5);
+	//this->_listSprite.insert(pair<eID, Sprite*>(eID::MARIO, sp));
+
+	Sprite* sp = NULL;
 	sp = new Sprite(spriteHandle, L"Resources\\Soldier.png");
 	this->_listSprite.insert(pair<eID, Sprite*>(eID::SOLDIER, sp));
 	this->loadSpriteInfo(eID::SOLDIER, "Resources\\soldier_animation.txt");
