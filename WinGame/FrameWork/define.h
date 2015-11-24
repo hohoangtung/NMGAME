@@ -74,7 +74,8 @@ enum eStatus
 	FALLING			= (1 << 16),
 	HOLDING			= (1 << 17),
 	SWIMING			= (1 << 18),
-	DIVING			= (1 << 19)
+	DIVING			= (1 << 19),
+	HIDDEN			= (1 << 20)
 
 };
 
