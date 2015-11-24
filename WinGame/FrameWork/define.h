@@ -36,9 +36,9 @@ enum eID
 	BRIDGE,
 	QUADEXPLODE,
 	MAPSTAGE1,
-	BULLET,
-	//GRASS,				// Cỏ đi được ở stage1.	=> test fail
+	BULLET,				
 	LAND,				// Đất đi được.
+	WALL_TURRET,
 };
 
 enum eStatus
@@ -74,7 +74,18 @@ enum eStatus
 	HOLDING			= (1 << 17),
 
 	SWIMING			= (1 << 18),
-	DIVING			= (1 << 19)
+	DIVING			= (1 << 19),
+	WT_LEFT_30	= (1 << 20),
+	WT_LEFT_60	= (1 << 21),
+	WT_LEFT_150 = (1 << 22),
+	WT_LEFT_120 = (1 << 23),
+	WT_UP			 = (1 << 24),
+	WT_DOWN			= (1 << 25),
+	WT_RIGHT		 = (1 << 26),
+	WT_RIGHT_30 = (1 << 27),
+	WT_RIGHT_60 = (1 << 28),
+	WT_RIGHT_120 = (1 << 29),
+	WT_RIGHT_150 = (1 << 30)
 };
 
 enum ePhysicsBody

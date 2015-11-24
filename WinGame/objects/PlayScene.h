@@ -15,6 +15,7 @@
 #include "Bill.h"
 #include "Mario.h"
 #include "RedCannon.h"
+#include "WallTurret.h"
 #include "Soldier.h"
 #include "Falcon.h"
 #include "AirCraft.h"

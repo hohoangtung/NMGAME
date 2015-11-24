@@ -1,4 +1,5 @@
 #include "Bullet.h"
+#include "RedCannon.h"
 Bullet::Bullet(GVector2 startPosition, eDirection dir) : BaseObject(eID::BULLET)
 {
 	_startPosition = startPosition;
@@ -114,6 +115,10 @@ void Bullet::onCollisionBegin(CollisionEventArg* collision_arg)
 		break;
 	case BOX:	
 		OutputDebugString(L"hit...\n");
+		break;
+	case REDCANNON:
+		/*collision_arg->_otherObject->setStatus(eStatus::DESTROY);*/
+		((RedCannon*)collision_arg->_otherObject)->drophitpoint();
 		break;
 	}
 }

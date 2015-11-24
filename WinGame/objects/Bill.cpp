@@ -423,7 +423,16 @@ float Bill::checkCollision(BaseObject * object, float dt)
 			}
 		}
 	}
-	else
+	else /*if (objectId==eID::REDCANNON)
+	{
+		if (collisionBody->checkCollision(object, direction, dt))
+		{
+			auto redcannon = ((RedCannon*)object);
+			auto billstatus = this->getStatus();
+			if ((billstatus|eStatus::SHOOTING))
+		}
+	}
+	else*/
 	{
 		collisionBody->checkCollision(object, dt);
 	}

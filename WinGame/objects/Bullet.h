@@ -6,6 +6,7 @@
 #include "../FrameWork/define.h"
 #include "CollisionBody.h"
 
+
 #define NORMAL_BULLET_SPEED 400;
 
 class Bullet : public BaseObject

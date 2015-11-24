@@ -1,61 +1,58 @@
-
-#ifndef __REDCANNON_H__
-#define __REDCANNON_H__
-
+#pragma once
+#ifndef __WALL_TURRET_H__
+#define __WALL_TURRET_H__
 #include "BaseEnemy.h"
 #include "CollisionBody.h"
-#include "Bullet.h"
 #include "IComponent.h"
+#include "Bullet.h"
 #include "Explosion.h"
+#include "PlayScene.h"
 #include "../FrameWork/Animation.h"
 #include "../FrameWork/StopWatch.h"
 #include <map>
 #include <math.h>
-#include "PlayScene.h"
+#define WALL_TURRET_HITPOINT 1
+#define WALL_TURRET_SCORE 1000
+#define WALL_TURRET_SHOOTING_DELAY 1000.0f
+#define WALL_TURRET_ANIMATION_SPEED 0.5f
 using namespace std;
-#define CANNON_HITPOINT 10
-#define CANNON_SCORE 500
-#define CANNON_SHOOTING_DELAY 1000.0f
-#define CANNON_ANIMATION_SPEED 0.5f
-class RedCannon : public BaseEnemy
+class WallTurret :public BaseEnemy
 {
 public:
-	RedCannon() :BaseEnemy(eID::REDCANNON){}
-	~RedCannon();
-	void init();
-	void update(float deltatime);
+	WallTurret() :BaseEnemy(eID::WALL_TURRET){}
 
-	void draw(LPD3DXSPRITE spriteHandle, Viewport*);
+	~WallTurret();
+
+	void init();
+	void update(float);
+	void draw(LPD3DXSPRITE, Viewport*);
 	void release();
+	
 	void onCollisionBegin(CollisionEventArg*);
 	void onCollisionEnd(CollisionEventArg*);
 
-	void destroy();
-	void shoot();
-	void drophitpoint();
-	void setShootingAngle(float);
-	float getShootingAngle();
 	void setBillAngle(float);
 	float getBillAngle();
+	void setShootingAngle(float);
+	float getShootingAngle();
+
 	void setStatus(eStatus);
+	void shoot();
+	void destroy();
 
 	IComponent* getComponent(string);
 private:
-	map<string, IComponent*> _listComponent;
+	map < string, IComponent*> _listComponent;
 	map<int, Animation*> _animation;
-	BaseObject* _explosion;
-
-
 	float _shootingAngle;
 	float _billAngle;
+	BaseObject* _explosion;
+	list<Bullet*> _listBullet;
 	StopWatch* _stopwatch;
-	list<Bullet*> _listBullets;
 
 	void addStatus(eStatus);
 	void removeStatus(eStatus);
 	bool isInStatus(eStatus);
 	void calculateBillangle();
-	
 };
-
-#endif // !__REDCANNON_H__
+#endif

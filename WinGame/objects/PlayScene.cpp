@@ -44,8 +44,7 @@ bool PlayScene::init()
 	//_listobject.push_back(mario);
 	//_listControlObject.push_back(mario);
 
-	//auto redcannon = new RedCannon(GVector2(500, 500));
-	//_listobject.push_back(redcannon);
+	
 
 	auto bill = new Bill();
 	bill->init();
@@ -73,6 +72,16 @@ bool PlayScene::init()
 	auto rifleman = new Rifleman();
 	rifleman->init();
 	_listobject.push_back(rifleman);
+
+	
+
+	auto wallturret = new WallTurret();
+	wallturret->init();
+	_listobject.push_back(wallturret);
+
+	auto redcannon = new RedCannon();
+	redcannon->init();
+	_listobject.push_back(redcannon);
 
 	auto land  = new Land(64, 245, 1472, 1, eDirection::TOP, eLandType::GRASS);
 	land->init();
