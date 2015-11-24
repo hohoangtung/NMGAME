@@ -1,5 +1,5 @@
 #include "Soldier.h"
-
+ 
 bool jumped = false;
 
 Soldier::Soldier() : BaseEnemy(eID::SOLDIER) {

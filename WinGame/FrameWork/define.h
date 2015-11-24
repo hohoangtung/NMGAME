@@ -87,7 +87,7 @@ enum eStatus
 	WT_RIGHT_120 = (1 << 29),
 	WT_RIGHT_150 = (1 << 30)
 };
-
+ 
 enum ePhysicsBody
 {
 	NOTHING			= 0,
