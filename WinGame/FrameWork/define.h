@@ -11,6 +11,8 @@
 #include <exception>
 #include <math.h>
 #include <string>
+#include <map>
+#include <vector>
 #include "..\debug.h"
 #include "utils.h"
 using namespace std;

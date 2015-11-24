@@ -68,12 +68,12 @@ Map* Map::LoadFromFile(const string path, eID spriteId)
 
 	// Mở file và đọc
 	xml_parse_result result = doc.load_file(path.data(), pugi::parse_default  | pugi::parse_pi);
-
-	Map* map = new Map();
 	if (result == false)
 	{
 		return nullptr;
 	}
+	Map* map = new Map();
+
 
 	/*
 		Đọc dữ liệu từ element Tilesmap
