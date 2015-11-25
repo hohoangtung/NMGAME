@@ -1,4 +1,4 @@
-#ifndef _RUNNINGSOLDIER_H
+﻿#ifndef _RUNNINGSOLDIER_H
 #define _RUNNINGSOLDIER_H
 
 #include "BaseEnemy.h"
@@ -19,7 +19,14 @@ using namespace std;
 class Soldier : public BaseEnemy
 {
 public:
-	Soldier();
+	/* 
+		@status: Tạm thời chỉ truyền RUNNING
+		@pos: Vị trí
+		@direction: hướng chạy, -1 là bên trái, 1 là bên phải
+		@x, y: tọa độ của pos
+	*/
+	Soldier(eStatus status, GVector2 pos, int direction);
+	Soldier(eStatus status, float x, float y, int direction);
 	~Soldier();
 
 	void init();

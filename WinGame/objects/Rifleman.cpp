@@ -1,26 +1,30 @@
 ﻿#include "Rifleman.h"
 
-int shooting = 1;
-StopWatch *sw1 = new StopWatch();
-StopWatch *sw2 = new StopWatch();
-StopWatch *sw3 = new StopWatch();
-StopWatch *sw4 = new StopWatch();
-StopWatch *sw5 = new StopWatch();
+float animationTime = 0;
 #define PI 3.14159265
-Rifleman::Rifleman() : BaseEnemy(eID::RIFLEMAN) {}
+Rifleman::Rifleman(eStatus status, GVector2 position) : BaseEnemy(eID::RIFLEMAN) {
+	_sprite = SpriteManager::getInstance()->getSprite(eID::RIFLEMAN);
+	_sprite->setFrameRect(0, 0, 23, 38);
+	this->setStatus(status);
+	this->setPosition(position);
+}
+
+Rifleman::Rifleman(eStatus status, float x, float y) : BaseEnemy(eID::RIFLEMAN) {
+	_sprite = SpriteManager::getInstance()->getSprite(eID::RIFLEMAN);
+	_sprite->setFrameRect(0, 0, 23, 38);
+	GVector2 pos(x, y);
+	this->setStatus(status);
+	this->setPosition(pos);
+}
+
 Rifleman::~Rifleman() {}
 
 void Rifleman::init()
 {
-	_sprite = SpriteManager::getInstance()->getSprite(eID::RIFLEMAN);
-	_sprite->setFrameRect(0, 0, 23, 38);
-	this->setPosition(650, 100);
-	this->setStatus(HIDDEN);
 	this->setScale(SCALE_FACTOR);
 
 	auto collisionBody = new CollisionBody(this);
-	_listComponent["CollisionBody"] = collisionBody;
-	
+	_listComponent["CollisionBody"] = collisionBody;	
 
 	__hook(&CollisionBody::onCollisionBegin, collisionBody, &Rifleman::onCollisionBegin);
 	__hook(&CollisionBody::onCollisionEnd, collisionBody, &Rifleman::onCollisionEnd);
@@ -125,6 +129,8 @@ void Rifleman::update(float deltatime)
 		return;
 	if (this->getHitpoint() <= 0) 
 	{
+		if (this->isInStatus(SHOOTING))
+			this->setStatus(NORMAL);
 		this->die();
 		if (this->_stopwatch->isStopWatch(200)) 
 		{
@@ -174,43 +180,38 @@ void Rifleman::update(float deltatime)
 		this->addStatus(SHOOTING);
 		calculateShootingAngle();
 	}
-	// thuật toán thủ công xài tạm
 	else 
 	{
+		float time = GameTime::getInstance()->getTotalGameTime() - animationTime;
 		calculatingShootingDirection();
-		if (this->isInStatus(HIDDEN))
+		if (this->getStatus() == HIDDEN)
 		{
-			if (sw1->isStopWatch(2000.0f))
+			if (time > 2000.0f)
 			{
 				this->setStatus(EXPOSING);
-				sw2 = new StopWatch();
-				delete sw4;
+				_animations[EXPOSING]->setIndex(0);
 			}
 		}
 		else if (this->getStatus() == EXPOSING)
 		{
-			if (sw2->isStopWatch(600.0f))
+			if (time > 2700.0f)
 			{
 				this->addStatus(SHOOTING);
-				sw3 = new StopWatch();
-				delete sw1;
 			}
 		}
 		else if (this->isInStatus(SHOOTING))
 		{
-			if (sw3->isStopWatch(5000.0f))
+			if (time > 7800.0f)
 			{
-				this->setStatus(HIDING);
-				sw4 = new StopWatch();
-				delete sw2;
+				this->setStatus(HIDING);				
+				_animations[HIDING]->setIndex(0);
 			}
 		}
 		else if (this->getStatus() == HIDING) {
-			if (sw4->isStopWatch(600.0f))
+			if (time > 8200.0f)
 			{
 				this->setStatus(HIDDEN);
-				sw1 = new StopWatch();
-				delete sw3;
+				animationTime = GameTime::getInstance()->getTotalGameTime();
 			}
 		}
 	}

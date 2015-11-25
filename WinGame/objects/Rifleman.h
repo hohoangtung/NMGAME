@@ -1,4 +1,4 @@
-#ifndef _RIFLEMAN_H
+﻿#ifndef _RIFLEMAN_H
 #define _RIFLEMAN_H
 
 #include "BaseEnemy.h"
@@ -19,7 +19,13 @@ using namespace std;
 class Rifleman : public BaseEnemy
 {
 public:
-	Rifleman();
+	/*
+		@status: NORMAL cho lính đứng bắn, HIDDEN cho lính núp
+		@pos: vị trí
+		@x, y: tọa độ của pos
+	*/
+	Rifleman(eStatus status, GVector2 pos);
+	Rifleman(eStatus status, float x, float y);
 	~Rifleman();
 
 	void init();

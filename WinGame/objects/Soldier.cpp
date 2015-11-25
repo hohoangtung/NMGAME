@@ -1,27 +1,36 @@
 ﻿#include "Soldier.h"
 
-bool jumped = false;
+Soldier::Soldier(eStatus status, GVector2 pos, int direction) : BaseEnemy(eID::SOLDIER) {
+	_sprite = SpriteManager::getInstance()->getSprite(eID::SOLDIER);
+	_sprite->setFrameRect(0, 0, 32.0f, 16.0f);
+	GVector2 v(direction * -SOLDIER_SPEED, 0);
+	GVector2 a(0, 0);
+	this->_listComponent.insert(pair<string, IComponent*>("Movement", new Movement(a, v, this->_sprite)));
+	this->setStatus(status);
+	this->setPosition(pos);
+	this->setScale(SCALE_FACTOR);
+	this->setScaleX(direction * SCALE_FACTOR);
+}
 
-Soldier::Soldier() : BaseEnemy(eID::SOLDIER) {
-	this->setStatus(RUNNING);
+Soldier::Soldier(eStatus status, float x, float y, int direction) : BaseEnemy(eID::SOLDIER) {
+	_sprite = SpriteManager::getInstance()->getSprite(eID::SOLDIER);
+	_sprite->setFrameRect(0, 0, 32.0f, 16.0f);
+	GVector2 pos(x, y);
+	GVector2 v(direction * -SOLDIER_SPEED, 0);
+	GVector2 a(0, 0);
+	this->_listComponent.insert(pair<string, IComponent*>("Movement", new Movement(a, v, this->_sprite)));
+	this->setStatus(status);
+	this->setPosition(pos);
+	this->setScale(SCALE_FACTOR);
+	this->setScaleX(direction * SCALE_FACTOR);
 }
 
 Soldier::~Soldier() {}
 
 void Soldier::init()
 {
-	_sprite = SpriteManager::getInstance()->getSprite(eID::SOLDIER);
-	_sprite->setFrameRect(0, 0, 32.0f, 16.0f);
-	this->setPosition(500, 400);
-	GVector2 v(SOLDIER_SPEED, 0);
-	GVector2 a(0, 0);
-
-	this->setScale(SCALE_FACTOR);
-	this->setScaleX(-SCALE_FACTOR);
 	this->setHitpoint(SOLDIER_HITPOINT);
 	this->setScore(SOLDIER_SCORE);
-
-	this->_listComponent.insert(pair<string, IComponent*>("Movement", new Movement(a, v, this->_sprite)));
 	this->_listComponent.insert(pair<string, IComponent*>("Gravity", new Gravity(GVector2(0, -ENEMY_GRAVITY), (Movement*)(this->getComponent("Movement")))));
 
 	auto collisionBody = new CollisionBody(this);
@@ -165,7 +174,6 @@ float Soldier::checkCollision(BaseObject * object, float dt)
 				movement->setVelocity(GVector2(movement->getVelocity().x, 0));
 				gravity->setStatus(eGravityStatus::SHALLOWED);
 
-				// dừng veloc của y cho nó đừng rớt xuống nữa
 				auto move = (Movement*)this->_listComponent["Movement"];
 				move->setVelocity(GVector2(move->getVelocity().x, 0));
 
@@ -176,9 +184,6 @@ float Soldier::checkCollision(BaseObject * object, float dt)
 		else if (prevObject == object)
 		{
 			prevObject = nullptr;
-
-			// khỏi cần cái này, thằng bill xài nó để xét cho nó nhảy xuống thôi
-			// collisionBody->checkCollision(object, dt, false);
 
 			auto gravity = (Gravity*)this->_listComponent["Gravity"];
 			gravity->setStatus(eGravityStatus::FALLING__DOWN);	

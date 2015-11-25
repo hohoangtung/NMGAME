@@ -113,17 +113,17 @@ GVector2 Bullet::getVelocity()
 
 bool Bullet::isBillBullet()
 {
-	return (_type & (eBulletType::BILL_BULLET) == _type);
+	return (_type & (eBulletType::BILL_BULLET) == eBulletType::BILL_BULLET);
 }
 
 bool Bullet::isEnemyBullet()
 {
-	return (_type & (eBulletType::ENEMY_BULLET) == _type);
+	return (_type & (eBulletType::ENEMY_BULLET) == eBulletType::ENEMY_BULLET);
 }
 
 bool Bullet::isContainType(eBulletType type)
 {
-	return (_type & (type) == _type);
+	return (_type & (type) == type);
 }
 
 void Bullet::onCollisionBegin(CollisionEventArg* collision_arg)
@@ -142,7 +142,8 @@ void Bullet::onCollisionBegin(CollisionEventArg* collision_arg)
 			OutputDebugString(L"hit...\n");
 			break;
 		case SOLDIER: case RIFLEMAN:
-			((BaseEnemy*)collision_arg->_otherObject)->dropHitpoint();
+			if (collision_arg->_otherObject->getStatus() != HIDDEN && collision_arg->_otherObject->getStatus() != EXPOSING)
+				((BaseEnemy*)collision_arg->_otherObject)->dropHitpoint();
 			break;
 		}
 	}
