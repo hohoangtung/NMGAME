@@ -8,7 +8,7 @@ Bill::Bill() : BaseObject(eID::BILL)
 
 Bill::~Bill()
 {
-	
+	 
 }
  
 void Bill::init()

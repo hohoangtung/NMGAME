@@ -9,7 +9,7 @@ Grass::Grass(GVector2 pos) : BaseObject(eID::GRASS)
 	this->_sprite->setPosition(pos);
 	this->_sprite->setScale(SCALE_FACTOR);
 }
-
+ 
 Grass::~Grass()
 {
 }

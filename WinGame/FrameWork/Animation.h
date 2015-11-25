@@ -7,7 +7,7 @@
 #include "Sprite.h"
 #include "..\objects\IComponent.h"
 #include "SpriteManager.h"
-
+ 
 US_FRAMEWORK
 
 class Animation : public IComponent

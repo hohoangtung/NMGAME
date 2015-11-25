@@ -10,7 +10,7 @@ Animation::Animation(Sprite * spriteSheet, float timeAnimate)
 	_totalFrames = 0;
 	_index = 0;
 	_timer = 0;
-
+	 
 	this->setIndex(0);
 }
 
