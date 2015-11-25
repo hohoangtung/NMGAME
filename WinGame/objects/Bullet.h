@@ -2,10 +2,10 @@
 #define __BULLET_H__
 
 #include "BaseObject.h"
+#include "BaseEnemy.h"
 #include "IComponent.h"
 #include "../FrameWork/define.h"
 #include "CollisionBody.h"
- 
 
 #define NORMAL_BULLET_SPEED 400;
 
@@ -15,16 +15,20 @@ public:
 	/*
 	Khởi tạo viên đạn
 		@startPosition: vị trí bắt đầu
+		@type: loại đạn, chia ra đạn của bill (= 0) và enemy (= 1).
+		tuy nhiên còn có các loại đạn khác, nên lúc gán thì gán (BILL_BULLET | SOMETYPE) hoặc (ENEMY_BULLET | SOMETYPE)
 		@dir: hướng viên đạn
 	*/
-	Bullet(GVector2 startPosition, eBulletType type, eDirection dir);
+	Bullet(GVector2 startPosition,  eBulletType type, eDirection dir);
 
 	/*
 	Khởi tạo viên đạn
 		@startPosition: vị trí bắt đầu
+		@type: loại đạn, chia ra đạn của bill (= 0) và enemy (= 1).
+		tuy nhiên còn có các loại đạn khác, nên lúc gán thì gán (BILL_BULLET | SOMETYPE) hoặc (ENEMY_BULLET | SOMETYPE)
 		@degree: hướng viên đạn theo độ, gốc là 12h, theo chiều kim đồng hồ
 	*/
-	Bullet(GVector2 startPosition,eBulletType type, float degree);
+	Bullet(GVector2 startPosition, eBulletType type, float degree);
 
 	~Bullet();
 
@@ -36,7 +40,7 @@ public:
 	virtual int getDamage();
 
 	GVector2 getVelocity();
-
+	
 	eBulletType getBulletType();
 	bool isBillBullet();
 	bool isEnemyBullet();
@@ -53,7 +57,6 @@ protected:
 	int _damage;
 	eDirection _direction;
 	eBulletType _type;
-
 private:
 	map<string, IComponent*> _componentList;
 

@@ -45,7 +45,7 @@
       <Field Name="toolStripMenuItem1" Hidden="true" />
     </Members>
     <TypeIdentifier>
-      <HashCode>AcAAAAAhACAQAAACAQSpAQhGBAFCKQAAAAAAFLAAABA=</HashCode>
+      <HashCode>IcQABAChACAQAIkCoYSpERhGBAVCKxICgAAYFtCAABA=</HashCode>
       <FileName>MainForm.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -72,7 +72,7 @@
   <Class Name="MapEditor.Tiles.MapController">
     <Position X="12.25" Y="7.25" Width="3" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAgACAQAAAAAEGAAAAQAAAAAAAAAAEAA=</HashCode>
+      <HashCode>gCIIAAAAEAAAAgACAQBAAAAEGAAAAQACAAAAAAAAEAA=</HashCode>
       <FileName>Tiles\MapController.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -86,7 +86,7 @@
       <Field Name="_tileset" Hidden="true" />
     </Members>
     <TypeIdentifier>
-      <HashCode>AAAAgIAAAAAAAEAACAAAAAAAAAAAIAAMAAAAAAkAAAA=</HashCode>
+      <HashCode>AAAAgIAAAAAAAEAACAAAgAAAAAAAIAAMAAAAAAkAAAA=</HashCode>
       <FileName>Tiles\TilesMap.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>

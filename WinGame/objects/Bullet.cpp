@@ -1,20 +1,19 @@
-#include "Bullet.h"
-#include "RedCannon.h"
-#include "WallTurret.h"
-Bullet::Bullet(GVector2 startPosition,eBulletType type, eDirection dir) : BaseObject(eID::BULLET)
+﻿#include "Bullet.h"
+Bullet::Bullet(GVector2 startPosition, eBulletType type,eDirection dir) : BaseObject(eID::BULLET)
 {
 	_startPosition = startPosition;
 	_direction = dir;
 	_type = type;
 }
 
-Bullet::Bullet(GVector2 startPosition,eBulletType type, float degree) : BaseObject(eID::BULLET)
+Bullet::Bullet(GVector2 startPosition, eBulletType type,float degree) : BaseObject(eID::BULLET)
 {
 	_startPosition = startPosition;
 	_direction = eDirection::NONE;
 	_degree = degree;
 	_type = type;
 }
+
 eBulletType Bullet::getBulletType()
 {
 	return _type;
@@ -111,47 +110,46 @@ GVector2 Bullet::getVelocity()
 	//auto move = (Movement*)this->_componentList["Movement"];
 	return move->getVelocity();
 }
+
 bool Bullet::isBillBullet()
 {
-	return (_type & (eBulletType::BILL_BULLET) == _type);
+	return (_type & (eBulletType::BILL_BULLET) == (eBulletType::BILL_BULLET));
 }
 
 bool Bullet::isEnemyBullet()
 {
-	return (_type & (eBulletType::ENEMY_BULLET) == _type);
+	return (_type & (eBulletType::ENEMY_BULLET) == (eBulletType::ENEMY_BULLET));
 }
 
 bool Bullet::isContainType(eBulletType type)
 {
-	return (_type & (type) == _type);
+	return (_type & (type) == type);
 }
 
 void Bullet::onCollisionBegin(CollisionEventArg* collision_arg)
 {
 	eID objectID = collision_arg->_otherObject->getId();
+
 	if (this->isBillBullet())
 	{
-
+		// Nếu đây là đạn của Bill
 		switch (objectID)
 		{
 		case AIRCRAFT:
 			collision_arg->_otherObject->setStatus(eStatus::BURST);
 			break;
-		case BOX:
+		case BOX:	
 			OutputDebugString(L"hit...\n");
 			break;
-		case REDCANNON:
-			/*collision_arg->_otherObject->setStatus(eStatus::DESTROY);*/
-			((RedCannon*)collision_arg->_otherObject)->drophitpoint();
-			break;
-		case WALL_TURRET:
-			((WallTurret*)collision_arg->_otherObject)->drophitpoint();
+		case SOLDIER: case RIFLEMAN:
+			if (collision_arg->_otherObject->getStatus() != HIDDEN && collision_arg->_otherObject->getStatus() != EXPOSING)
+				((BaseEnemy*)collision_arg->_otherObject)->dropHitpoint();
 			break;
 		}
 	}
 	if (this->isEnemyBullet())
 	{
-		
+
 	}
 }
 

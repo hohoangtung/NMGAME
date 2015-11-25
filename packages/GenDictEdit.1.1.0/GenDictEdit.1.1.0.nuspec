@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>GenDictEdit</id>
+    <version>1.1.0</version>
+    <title>GenericDictionaryEditor</title>
+    <authors>wexman</authors>
+    <owners>wexman</owners>
+    <projectUrl>http://gendictedit.codeplex.com/</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>A UITypeEditor for editing generic dictionaries (Dictionary&lt;TKey, TValue&gt;) in the PropertyGrid.</description>
+    <tags>Dictionary UITypeEditor</tags>
+  </metadata>
+</package>

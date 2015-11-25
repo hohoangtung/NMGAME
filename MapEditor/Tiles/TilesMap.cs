@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -20,6 +21,7 @@ namespace MapEditor.Tiles
         {
             _mapSize = new Point(columns, rows);
             _matrixIndex = new int[columns, rows];
+            ListObject = new BindingList<GameObject>();
             TileSet = null;
         }
 
@@ -38,6 +40,7 @@ namespace MapEditor.Tiles
             get { return _mapSize.Y; }
             private set { _mapSize.Y = value; }
         }
+        public BindingList<GameObject> ListObject { get; set; }
         public int this[int i, int j]
         {
             get
@@ -86,6 +89,11 @@ namespace MapEditor.Tiles
                         {
                             tilesmap.TileSet = TileSet.Load(reader, path);
                         }
+                        if (reader.Name == "Objects")
+                        {
+                            var listobject = ObjectEditor.Load(reader, path);
+                            tilesmap.ListObject = new BindingList<GameObject>(listobject);
+                        }
                     }
                     if (reader.NodeType == XmlNodeType.EndElement && reader.Name == "Tilesmap")
                         break;
@@ -118,7 +126,7 @@ namespace MapEditor.Tiles
                                 wr.WriteAttributeString("id", i.ToString());
                                 for (int j = 0; j < tilesmap.Columns; j++)
                                 {
-                                    wr.WriteString(tilesmap[j,i].ToString());
+                                    wr.WriteString(tilesmap[j, i].ToString());
                                     if (j != tilesmap.Columns - 1)
                                         wr.WriteString("\t");
                                 }
@@ -131,6 +139,10 @@ namespace MapEditor.Tiles
                     if (tilesmap.TileSet != null)
                     {
                         TileSet.Save(wr, tilesmap.TileSet, path);
+                    }
+                    if (tilesmap.ListObject.Any())
+                    {
+                        ObjectEditor.Save(wr, tilesmap.ListObject, path);
                     }
                 }
 
@@ -151,5 +163,9 @@ namespace MapEditor.Tiles
             _matrixIndex = new int[columns, rows];
         }
 
+        public int GetMapHeight()
+        {
+            return this.Rows * MainForm.Settings.TileSize.Height;
+        }
     }
 }

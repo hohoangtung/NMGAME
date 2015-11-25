@@ -21,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -32,10 +33,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="GenericDictionaryEditor">
+      <HintPath>..\packages\GenDictEdit.1.1.0\lib\net20\GenericDictionaryEditor.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Design" />
     <Reference Include="System.DirectoryServices" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
@@ -51,8 +56,18 @@
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApplicationSetting.cs" />
+    <Compile Include="AppSettingsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AppSettingsForm.Designer.cs">
+      <DependentUpon>AppSettingsForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="CreateTilesForm.cs">
       <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CreateTilesForm.Designer.cs">
+      <DependentUpon>CreateTilesForm.cs</DependentUpon>
     </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
@@ -60,7 +75,6 @@
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="MapController.cs" />
     <Compile Include="NewMaps.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -69,18 +83,26 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TestForm.cs">
-      <SubType>Form</SubType>
+    <Compile Include="Tiles\GameObject.cs" />
+    <Compile Include="Tiles\ObjectEditor.cs" />
+    <Compile Include="Tiles\Tile.cs" />
+    <Compile Include="Tiles\TileItem.cs" />
+    <Compile Include="Tiles\MapController.cs" />
+    <Compile Include="Tiles\TilesMap.cs" />
+    <Compile Include="Tiles\TileSet.cs" />
+    <Compile Include="METoolbar.cs">
+      <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Tile.cs" />
-    <Compile Include="TileItem.cs" />
-    <Compile Include="TileSet.cs" />
-    <Compile Include="TilesMap.cs" />
+    <EmbeddedResource Include="AppSettingsForm.resx">
+      <DependentUpon>AppSettingsForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="CreateTilesForm.resx">
       <DependentUpon>CreateTilesForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="NewMaps.resx">
       <DependentUpon>NewMaps.cs</DependentUpon>
@@ -94,9 +116,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="TestForm.resx">
-      <DependentUpon>TestForm.cs</DependentUpon>
-    </EmbeddedResource>
+    <None Include="Overview.cd" />
+    <None Include="packages.config" />
+    <None Include="Properties\DataSources\Tile.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -117,7 +139,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -1,4 +1,5 @@
-﻿#ifndef __PLAY_SCENE_H__
+
+#ifndef __PLAY_SCENE_H__
 #define __PLAY_SCENE_H__
 
 #include <vector>
@@ -15,13 +16,11 @@
 #include "Bill.h"
 #include "Mario.h"
 #include "RedCannon.h"
-#include "WallTurret.h"
 #include "Soldier.h"
 #include "Falcon.h"
 #include "AirCraft.h"
 #include "Rifleman.h"
 #include "Bridge.h"
-#include "Grass.h"
 #include "Land.h"
 using namespace std;
 US_FRAMEWORK

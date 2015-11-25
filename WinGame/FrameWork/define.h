@@ -11,6 +11,8 @@
 #include <exception>
 #include <math.h>
 #include <string>
+#include <map>
+#include <vector>
 #include "..\debug.h"
 #include "utils.h"
 using namespace std;
@@ -23,8 +25,7 @@ using namespace std;
 #define COLOR_KEY D3DXCOLOR(1.0f, 0.0f, 1.0f, 1.0f)				// màu khi mà load hình nó bỏ qua > trong suốt
 enum eID
 {
-	
-	BILL,			// Main
+	BILL,			// Main character.
 	REDCANNON,
 	SOLDIER,
 	FALCON,
@@ -35,9 +36,8 @@ enum eID
 	BRIDGE,
 	QUADEXPLODE,
 	MAPSTAGE1,
-	BULLET,				
+	BULLET,
 	LAND,				// Đất đi được.
-	WALL_TURRET,
 };
 
 enum eStatus
@@ -71,22 +71,12 @@ enum eStatus
 	EXPOSING		= (1 << 15),
 	FALLING			= (1 << 16),
 	HOLDING			= (1 << 17),
-
 	SWIMING			= (1 << 18),
 	DIVING			= (1 << 19),
-	WT_LEFT_30	= (1 << 20),
-	WT_LEFT_60	= (1 << 21),
-	WT_LEFT_150 = (1 << 22),
-	WT_LEFT_120 = (1 << 23),
-	WT_UP			 = (1 << 24),
-	WT_DOWN			= (1 << 25),
-	WT_RIGHT		 = (1 << 26),
-	WT_RIGHT_30 = (1 << 27),
-	WT_RIGHT_60 = (1 << 28),
-	WT_RIGHT_120 = (1 << 29),
-	WT_RIGHT_150 = (1 << 30)
+	HIDDEN			= (1 << 20)
+
 };
- 
+
 enum ePhysicsBody
 {
 	NOTHING			= 0,
@@ -95,6 +85,7 @@ enum ePhysicsBody
 	RIGHT_EDGE		= (1 << 2),
 	BOTTOM_EDGE		= (1 << 3)
 };
+
 
 enum eLandType
 {
@@ -126,15 +117,16 @@ enum eAirCraftType
 
 enum eBulletType
 {
-	BILL_BULLET		= 0,
-	ENEMY_BULLET	= (1 << 0),
-	NORMAL_BULLET   = (1 << 1),
+	BILL_BULLET		= (1 << 0),
+	ENEMY_BULLET	= (1 << 1),
+	NORMAL_BULLET   = (1 << 2),
 };
 
 typedef D3DXVECTOR3 GVector3;
 typedef D3DXVECTOR2 GVector2;
 #define VECTOR2ZERO GVector2(0.0f, 0.0f)
 #define VECTOR2ONE  GVector2(1.0f, 1.0f)
+
 #define NS_FRAMEWORK		namespace FrameWork
 
 #define NS_FRAMEWORK_BEGIN	{
@@ -152,3 +144,4 @@ if(p) \
 
 
 #endif // !__NS_FRAMEWORK__
+

@@ -1,7 +1,8 @@
-#ifndef _RUNNINGSOLDIER_H
+﻿#ifndef _RUNNINGSOLDIER_H
 #define _RUNNINGSOLDIER_H
 
 #include "BaseEnemy.h"
+#include "Explosion.h"
 #include "IComponent.h"
 #include "PlayScene.h"
 #include "../FrameWork/Animation.h"
@@ -18,7 +19,14 @@ using namespace std;
 class Soldier : public BaseEnemy
 {
 public:
-	Soldier();
+	/* 
+		@status: Tạm thời chỉ truyền RUNNING
+		@pos: Vị trí
+		@direction: hướng chạy, -1 là bên trái, 1 là bên phải
+		@x, y: tọa độ của pos
+	*/
+	Soldier(eStatus status, GVector2 pos, int direction);
+	Soldier(eStatus status, float x, float y, int direction);
 	~Soldier();
 
 	void init();
@@ -29,6 +37,7 @@ public:
 	void onCollisionEnd(CollisionEventArg*);
 	float checkCollision(BaseObject*, float);
 	void jump();
+	void die();
 	GVector2 getVelocity();
 	IComponent* getComponent(string);
 
@@ -37,5 +46,7 @@ private:
 	map<int, Animation*> _animations;
 	StopWatch *_stopwatch;
 	void changeDirection();
+	BaseObject *_explosion;
+	BaseObject* prevObject;
 };
 #endif
