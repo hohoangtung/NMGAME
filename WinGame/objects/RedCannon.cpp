@@ -12,7 +12,7 @@ RedCannon::~RedCannon()
 }
 void RedCannon::init()
 {
-
+	 
 }
 void RedCannon::draw(LPD3DXSPRITE spriteHandle, Viewport* viewport)
 {

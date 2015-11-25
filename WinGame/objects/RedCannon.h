@@ -15,7 +15,7 @@ public:
 	void draw(LPD3DXSPRITE spriteHandle, Viewport*);
 	void release() {}
 private:
-
+	 
 };
 
 #endif // !__REDCANNON_H__

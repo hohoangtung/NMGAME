@@ -10,7 +10,7 @@
 
 	you can call directly: SpriteManager::getInstance()->DOSOMETHING()
 	or reference it:
-			SpriteManager* _spritemanager;
+		 	SpriteManager* _spritemanager;
 			...
 			_spritemanager = SpriteManager::getInstance();
 			...
