@@ -18,7 +18,6 @@ namespace MapEditor.Tiles
 {
     public class GameObject : INotifyPropertyChanged
     {
-
         private Rectangle _activebound;
         private Rectangle _initBound;
 

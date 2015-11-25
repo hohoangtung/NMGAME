@@ -198,7 +198,6 @@
             this.listBoxObject.ItemHeight = 17;
             this.listBoxObject.Location = new System.Drawing.Point(0, 0);
             this.listBoxObject.Name = "listBoxObject";
-            this.listBoxObject.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
             this.listBoxObject.Size = new System.Drawing.Size(426, 280);
             this.listBoxObject.TabIndex = 0;
             this.listBoxObject.SelectedIndexChanged += new System.EventHandler(this.listBoxObject_SelectedIndexChanged);
