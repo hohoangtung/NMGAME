@@ -8,7 +8,7 @@ const int Mario::_runanimation[3] = { 0, 1, 2 };
 	}
 	Mario::~Mario(){  }
 
-
+ 
 	void Mario::init()
 	{
 		_sprite = SpriteManager::getInstance()->getSprite(eID::MARIO);
