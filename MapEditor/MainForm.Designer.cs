@@ -113,6 +113,7 @@
             // 
             // saveMapToolStripMenuItem
             // 
+            this.saveMapToolStripMenuItem.Enabled = false;
             this.saveMapToolStripMenuItem.Name = "saveMapToolStripMenuItem";
             this.saveMapToolStripMenuItem.Size = new System.Drawing.Size(67, 20);
             this.saveMapToolStripMenuItem.Text = "SaveMap";
@@ -200,7 +201,6 @@
             this.listBoxObject.Name = "listBoxObject";
             this.listBoxObject.Size = new System.Drawing.Size(426, 280);
             this.listBoxObject.TabIndex = 0;
-            this.listBoxObject.SelectedIndexChanged += new System.EventHandler(this.listBoxObject_SelectedIndexChanged);
             this.listBoxObject.MouseDown += new System.Windows.Forms.MouseEventHandler(this.listBoxObject_MouseDown);
             // 
             // contextMenuStrip1
@@ -224,6 +224,9 @@
             this.defaultImage.Images.SetKeyName(0, "object.png");
             this.defaultImage.Images.SetKeyName(1, "tile.png");
             this.defaultImage.Images.SetKeyName(2, "settings.png");
+            this.defaultImage.Images.SetKeyName(3, "save.png");
+            this.defaultImage.Images.SetKeyName(4, "save_as.png");
+            this.defaultImage.Images.SetKeyName(5, "open.png");
             // 
             // ContextMenuListBox
             // 
