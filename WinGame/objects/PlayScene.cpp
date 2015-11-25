@@ -1,5 +1,5 @@
 ﻿#include "PlayScene.h"
-
+#include "..\Tiles\ObjectFactory.h"
 
 //Viewport* PlayScene::_viewport = new Viewport(0, WINDOW_HEIGHT);
 
@@ -75,30 +75,33 @@ bool PlayScene::init()
 	rifleman->init();
 	_listobject.push_back(rifleman);
 
-	auto land  = new Land(64, 245, 1472, 1, eDirection::TOP, eLandType::GRASS);
-	land->init();
-	_listobject.push_back(land);
+	//auto land  = new Land(64, 245, 1472, 1, eDirection::TOP, eLandType::GRASS);
+	//land->init();
+	//_listobject.push_back(land);
 
-	auto land2 = new Land(288 * 2, 48, 64 * 2, 5, eDirection::TOP, eLandType::GRASS);
-	land2->init();
-	land2->enableJump(false);
-	_listobject.push_back(land2);
+	//auto land2 = new Land(288 * 2, 48, 64 * 2, 5, eDirection::TOP, eLandType::GRASS);
+	//land2->init();
+	//land2->enableJump(false);
+	//_listobject.push_back(land2);
 
-	auto land3 = new Land(64 * 5, 64 * 2 + 48, 64 * 3, 5, eDirection::TOP, eLandType::GRASS);
-	land3->init();
-	_listobject.push_back(land3);
+	//auto land3 = new Land(64 * 5, 64 * 2 + 48, 64 * 3, 5, eDirection::TOP, eLandType::GRASS);
+	//land3->init();
+	//_listobject.push_back(land3);
 
-	auto land4 = new Land(64 * 8, 64 + 48, 64, 5, eDirection::TOP, eLandType::GRASS);
-	land4->init();
-	_listobject.push_back(land4);
+	//auto land4 = new Land(64 * 8, 64 + 48, 64, 5, eDirection::TOP, eLandType::GRASS);
+	//land4->init();
+	//_listobject.push_back(land4);
 
-	auto water = new Land(0, 32, 288 * 2, 5, eDirection::TOP, eLandType::WATER);
-	water->init();
-	_listobject.push_back(water);
+	//auto water = new Land(0, 32, 288 * 2, 5, eDirection::TOP, eLandType::WATER);
+	//water->init();
+	//_listobject.push_back(water);
 
-	auto water2 = new Land(32 * 2 * 11, 32, 32 * 8 * 2, 5, eDirection::TOP, eLandType::WATER);
-	water2->init();
-	_listobject.push_back(water2);
+	//auto water2 = new Land(32 * 2 * 11, 32, 32 * 8 * 2, 5, eDirection::TOP, eLandType::WATER);
+	//water2->init();
+	//_listobject.push_back(water2);
+
+	vector<BaseObject*>* temp = ObjectFactory::getListObjectFromFile("Resources//Map//stage1.xml");
+	this->_listobject.insert(_listobject.end(), temp->begin(), temp->end());
 
 	background = Map::LoadFromFile("Resources//Map//stage1.xml",eID::MAPSTAGE1);
 	return true;

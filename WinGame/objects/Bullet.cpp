@@ -113,12 +113,12 @@ GVector2 Bullet::getVelocity()
 
 bool Bullet::isBillBullet()
 {
-	return (_type & (eBulletType::BILL_BULLET) == eBulletType::BILL_BULLET);
+	return (_type & (eBulletType::BILL_BULLET) == (eBulletType::BILL_BULLET));
 }
 
 bool Bullet::isEnemyBullet()
 {
-	return (_type & (eBulletType::ENEMY_BULLET) == eBulletType::ENEMY_BULLET);
+	return (_type & (eBulletType::ENEMY_BULLET) == (eBulletType::ENEMY_BULLET));
 }
 
 bool Bullet::isContainType(eBulletType type)

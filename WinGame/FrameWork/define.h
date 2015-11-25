@@ -1,4 +1,4 @@
-#ifndef __NS_FRAMEWORK__
+﻿#ifndef __NS_FRAMEWORK__
 #define __NS_FRAMEWORK__
 
 #define _USE_MATH_DEFINES
@@ -11,6 +11,8 @@
 #include <exception>
 #include <math.h>
 #include <string>
+#include <map>
+#include <vector>
 #include "..\debug.h"
 #include "utils.h"
 using namespace std;
@@ -84,6 +86,7 @@ enum ePhysicsBody
 	BOTTOM_EDGE		= (1 << 3)
 };
 
+
 enum eLandType
 {
 	GRASS,
@@ -114,7 +117,7 @@ enum eAirCraftType
 
 enum eBulletType
 {
-	BILL_BULLET		= 1,
+	BILL_BULLET		= (1 << 0),
 	ENEMY_BULLET	= (1 << 1),
 	NORMAL_BULLET   = (1 << 2),
 };
@@ -123,6 +126,7 @@ typedef D3DXVECTOR3 GVector3;
 typedef D3DXVECTOR2 GVector2;
 #define VECTOR2ZERO GVector2(0.0f, 0.0f)
 #define VECTOR2ONE  GVector2(1.0f, 1.0f)
+
 #define NS_FRAMEWORK		namespace FrameWork
 
 #define NS_FRAMEWORK_BEGIN	{
@@ -140,3 +144,4 @@ if(p) \
 
 
 #endif // !__NS_FRAMEWORK__
+
