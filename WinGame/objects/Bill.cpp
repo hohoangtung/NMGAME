@@ -370,7 +370,7 @@ float Bill::checkCollision(BaseObject * object, float dt)
 				if (land->getType() == eLandType::WATER)
 				{
 					// nếu trước đó không phải là nước thì mới cho bơi
-					if(preType == eLandType::GRASS || preObject == nullptr)
+					if(preType == eLandType::GRASS || preObject == nullptr || preObject->getId() == eID::BRIDGE)
 						this->addStatus(eStatus::SWIMING);
 				}
 				else if (this->isInStatus(eStatus::SWIMING))
@@ -379,6 +379,10 @@ float Bill::checkCollision(BaseObject * object, float dt)
 					this->removeStatus(eStatus::SWIMING);
 					this->setPositionY(object->getPositionY());
 				}
+			}
+			else if (objectId == eID::BRIDGE)
+			{
+
 			}
 
 			if (direction == eDirection::TOP && this->getVelocity().y < 0)
@@ -444,7 +448,7 @@ float Bill::checkCollision(BaseObject * object, float dt)
 
 	for (auto it = _listBullets.begin(); it != _listBullets.end(); it++)
 	{
-		if(object->getId() != eID::LAND)
+		if(object->getId() != eID::LAND | object->getId() != eID::BRIDGE)
 			(*it)->checkCollision(object, dt);
 	}
 
