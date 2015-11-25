@@ -18,7 +18,6 @@ namespace MapEditor.Tiles
 {
     public class GameObject : INotifyPropertyChanged
     {
-
         private Rectangle _activebound;
         private Rectangle _initBound;
 
@@ -63,7 +62,7 @@ namespace MapEditor.Tiles
                 //if (value.Contains(InitBound) == false && value != Rectangle.Empty)
                 //    return;
                 _activebound = value;
-                _initBound = value;
+                
                 OnPropertyChanged(new PropertyChangedEventArgs("ActiveBound"));
             }
         }
@@ -76,7 +75,6 @@ namespace MapEditor.Tiles
                 if (_initBound == value)
                     return;
                 _initBound = value;
-                _activebound = value;
                 //if (ActiveBound != Rectangle.Empty)
                 //{
                 //    if (ActiveBound.Contains(_initBound) == false)

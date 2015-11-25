@@ -126,7 +126,7 @@ namespace MapEditor.Tiles
                                 wr.WriteAttributeString("id", i.ToString());
                                 for (int j = 0; j < tilesmap.Columns; j++)
                                 {
-                                    wr.WriteString(tilesmap[j,i].ToString());
+                                    wr.WriteString(tilesmap[j, i].ToString());
                                     if (j != tilesmap.Columns - 1)
                                         wr.WriteString("\t");
                                 }
