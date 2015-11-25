@@ -90,23 +90,11 @@ enum eStatus
 
 };
 
-enum ePhysicsBody
-{
-	NOTHING			= 0,
-	TOP_EDGE		= (1 << 0),
-	LEFT_EDGE		= (1 << 1),
-	RIGHT_EDGE		= (1 << 2),
-	BOTTOM_EDGE		= (1 << 3)
-};
-
-
 enum eLandType
 {
 	GRASS,
 	WATER
 };
-
-#define ALL_EDGES (TOP_EDGE | LEFT_EDGE | RIGHT_EDGE | BOTTOM_EDGE)
 
 enum eDirection
 {

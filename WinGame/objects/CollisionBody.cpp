@@ -60,7 +60,7 @@ void CollisionBody::checkCollision(BaseObject * otherObject, float dt, bool upda
 		{
 			auto side = this->getSide(otherObject);
 
-			if (otherObject->getPhysicsBodySide() == ePhysicsBody::NOTHING || (side & otherObject->getPhysicsBodySide()) != side)
+			if (otherObject->getPhysicsBodySide() == eDirection::NONE || (side & otherObject->getPhysicsBodySide()) != side)
 				return;
 
 			// cập nhật tọa độ
@@ -101,7 +101,7 @@ bool CollisionBody::checkCollision(BaseObject * otherObject, eDirection & direct
 			auto side = this->getSide(otherObject);
 			direction = side;
 
-			if (otherObject->getPhysicsBodySide() == ePhysicsBody::NOTHING || (side & otherObject->getPhysicsBodySide()) != side)
+			if (otherObject->getPhysicsBodySide() == eDirection::NONE || (side & otherObject->getPhysicsBodySide()) != side)
 				return true;
 
 			// cập nhật tọa độ
