@@ -1,6 +1,13 @@
 ﻿#ifndef __ANIMATION_H__
 #define __ANIMATION_H__
 
+/*
+update 23/11/2015
+Luu The Vinh
+
+- Thêm tùy chỉnh lặp cho Animation
+*/
+
 #include <vector>
 #include <stdarg.h>
 #include "define.h"
@@ -98,6 +105,9 @@ public:
 		// để tạm ở đây cho hết lỗi, nếu setPosition thì set ở sprite reference tới
 	}
 
+	void setLoop(bool isLoop);
+	bool isLoop();
+
 private:
 	int						_index;									// số thứ tự frame
 	int						_totalFrames;
@@ -106,6 +116,7 @@ private:
 	float					_timer;
 
 	bool					_canAnimate;
+	bool					_isLoop;
 
 	Sprite*					_spriteSheet;							// ref to object's sprite
 	vector<RECT>			_frameRectList;

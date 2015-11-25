@@ -72,8 +72,9 @@ void Bill::init()
 	_animations[eStatus::DIVING] = new Animation(_sprite, 0.1f);
 	_animations[eStatus::DIVING]->addFrameRect(eID::BILL, "diving", NULL);
 
-	_animations[eStatus::JUMPING | eStatus::SWIMING] = new Animation(_sprite, 0.1f);
-	_animations[eStatus::JUMPING | eStatus::SWIMING]->addFrameRect(eID::BILL, "swim_begin", "diving", "swimming", NULL);
+	_animations[eStatus::FALLING | eStatus::SWIMING] = new Animation(_sprite, 0.1f);
+	_animations[eStatus::FALLING | eStatus::SWIMING]->addFrameRect(eID::BILL, "swim_begin", "diving", "swimming", NULL);
+	_animations[eStatus::FALLING | eStatus::SWIMING]->setLoop(false);
 
 	_animations[eStatus::SWIMING | RUNNING | SHOOTING] = new Animation(_sprite, 0.1f);
 	_animations[eStatus::SWIMING | RUNNING | SHOOTING]->addFrameRect(eID::BILL, "swimming_shot", NULL);
@@ -281,7 +282,7 @@ void Bill::onKeyReleased(KeyEventArg * key_event)
 	}
 	case DIK_UP:
 	{
-		this->removeStatus(eStatus::LOOKING_UP);
+			this->removeStatus(eStatus::LOOKING_UP);
 		break;
 	}
 	case DIK_X:
@@ -350,7 +351,7 @@ float Bill::checkCollision(BaseObject * object, float dt)
 	if (objectId == eID::BRIDGE || objectId == eID::LAND)
 	{
 		// nếu ko phải là nhảy xuống, mới dừng gravity
-		if (!this->isInStatus(eStatus(eStatus::JUMPING | eStatus::LAYING_DOWN | eStatus::FALLING)) && collisionBody->checkCollision(object, direction, dt))
+		if (!this->isInStatus(eStatus(eStatus::JUMPING | eStatus::FALLING)) && collisionBody->checkCollision(object, direction, dt))
 		{
 			// kt coi chổ đứng có cho nhảy xuống ko
 			if (objectId == eID::LAND)
@@ -611,8 +612,17 @@ void Bill::updateCurrentAnimateIndex()
 	}
 	else
 	{
-		// trường hợp còn lại gán luôn
-		_currentAnimateIndex = this->getStatus();
+		
+		//if (this->isInStatus(eStatus::SWIMING) && (_currentAnimateIndex & eStatus::SWIMING) == eStatus::SWIMING)
+		//{
+		//	_currentAnimateIndex = eStatus(eStatus::SWIMING | eStatus::FALLING);
+		//	return;
+		//}
+		//else
+		{
+			// trường hợp còn lại gán luôn
+			_currentAnimateIndex = this->getStatus();
+		}
 	}
 
 	if ((_currentAnimateIndex & eStatus::FALLING) == eStatus::FALLING)
@@ -637,7 +647,7 @@ void Bill::updateCurrentAnimateIndex()
 	if ((_currentAnimateIndex & eStatus::JUMPING) == eStatus::JUMPING)
 	{
 		// nếu jump thì chỉ vẽ jump thôi
-			_currentAnimateIndex = eStatus::JUMPING;
+		_currentAnimateIndex = eStatus::JUMPING;
 	}
 
 	// đang bơi
