@@ -114,9 +114,9 @@ enum eAirCraftType
 
 enum eBulletType
 {
-	BILL_BULLET		= 0,
-	ENEMY_BULLET	= (1 << 0),
-	NORMAL_BULLET   = (1 << 1),
+	BILL_BULLET		= 1,
+	ENEMY_BULLET	= (1 << 1),
+	NORMAL_BULLET   = (1 << 2),
 };
 
 typedef D3DXVECTOR3 GVector3;
