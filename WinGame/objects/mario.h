@@ -11,7 +11,7 @@
 #include <map>
 
 using namespace std;
-
+ 
 /*
 	class Mario để ví dụ cách xây dựng một object
 */	
