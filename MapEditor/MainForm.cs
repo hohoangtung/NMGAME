@@ -48,8 +48,8 @@ namespace MapEditor
                 {
                     this._buffergraphics.Render(this._graphics);
                 };
-
             InitToolBar();
+            this.disableSaveButton();
         }
 
         // PRIVATE METHOD
@@ -214,8 +214,9 @@ namespace MapEditor
             // location là vị trí vẽ trên tablelayout
             Point location = new Point(tilesize.Width * selectedPoint.X, tilesize.Height * selectedPoint.Y);
             _mapController.DrawTile(location, _selectedTile);
-
+            this.enableSaveButton();            
         }
+
 
         private void listView1_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -283,18 +284,62 @@ namespace MapEditor
 
         private void saveMapToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            this.Save();
+        }
+        private string saveasDialog()
+        {
+            var filedialog = new SaveFileDialog();
+            filedialog.Filter = "XML Files (*.xml)|*.xml";
+            var result = filedialog.ShowDialog();
+            if (result != System.Windows.Forms.DialogResult.OK)
+                return String.Empty;
+            return filedialog.FileName;
+        }
+        public void SaveAs()
+        {
+            string newpath = saveasDialog();
+            if (String.IsNullOrEmpty(newpath) == false)
+            {
+                this._tilesetPath = newpath;
+            }
+            else
+                return;
+            Cursor.Current = Cursors.WaitCursor;
+            TilesMap.Save(_mapController.TilesMap, this._tilesetPath);
+            Cursor.Current = Cursors.Default;
+            this.disableSaveButton();
+        }
+        public void Save()
+        {
             if (String.IsNullOrEmpty(this._tilesetPath) == true)
             {
-                var filedialog = new SaveFileDialog();
-                filedialog.Filter = "XML Files (*.xml)|*.xml";
-                var result = filedialog.ShowDialog();
-                if (result != System.Windows.Forms.DialogResult.OK)
+                string newpath = saveasDialog();
+                if (String.IsNullOrEmpty(newpath))
                     return;
-                this._tilesetPath = filedialog.FileName;
+                else
+                    this._tilesetPath = newpath;
             }
+            Cursor.Current = Cursors.WaitCursor;
             TilesMap.Save(_mapController.TilesMap, this._tilesetPath);
+            Cursor.Current = Cursors.Default;
+            this.disableSaveButton();
         }
-
+        private void disableSaveButton()
+        {
+            this.saveMapToolStripMenuItem.Enabled = false;
+            if (this.toolbar.Save != null)
+            {
+                toolbar.Save.Enabled = false;
+            }
+        }
+        private void enableSaveButton()
+        {
+            this.saveMapToolStripMenuItem.Enabled = true;
+            if (this.toolbar.Save != null)
+            {
+                toolbar.Save.Enabled = true;
+            }
+        }
         private void loadMapToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (String.IsNullOrEmpty(this._tilesetPath) == false)
@@ -317,6 +362,7 @@ namespace MapEditor
             var rs = openfiledialog.ShowDialog();
             if (rs != System.Windows.Forms.DialogResult.OK)
                 return;
+            Cursor.Current = Cursors.WaitCursor;
             _mapController.TilesMap = TilesMap.Load(openfiledialog.FileName);
             this._tilesetPath = openfiledialog.FileName;
 
@@ -328,9 +374,13 @@ namespace MapEditor
             // Khởi tạo ObjectEditor
             this._mapController.InitObjectEditor();
             this._mapController.ObjectEditor.Bind(this.listBoxObject);
-
+            this._mapController.ObjectEditor.ListItem.ListChanged += (object s, ListChangedEventArgs arg) =>
+                {
+                    this.enableSaveButton();
+                };
             _mapController.Draw(getVisibleMap());
-            
+            Cursor.Current = Cursors.Default;
+            this.disableSaveButton();
         }
 
         private void TablelayoutMouseDown(object sender, MouseEventArgs e)
@@ -364,6 +414,7 @@ namespace MapEditor
                 this._mapController.ObjectEditor.MouseUp = e.Location;
             }
             this._mapController.ObjectEditor.InitGameObject();
+            this.enableSaveButton();
         }
 
         private void listBoxObject_SelectedIndexChanged(object sender, EventArgs e)
@@ -382,6 +433,7 @@ namespace MapEditor
         private void gameObjectproperty_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
         {
             (this.listBoxObject.DataSource as BindingSource).ResetBindings(false);
+            this.enableSaveButton();
         }
 
         private void listBoxObject_MouseDown(object sender, MouseEventArgs e)

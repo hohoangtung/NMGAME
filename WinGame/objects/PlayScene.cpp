@@ -2,11 +2,11 @@
 #include "..\Tiles\ObjectFactory.h"
 
 //Viewport* PlayScene::_viewport = new Viewport(0, WINDOW_HEIGHT);
-
+ 
 PlayScene::PlayScene()
 {
 	_viewport = new Viewport(0, WINDOW_HEIGHT, WINDOW_WIDTH, WINDOW_HEIGHT);
-}
+} 
 
 PlayScene::~PlayScene()
 {
@@ -74,6 +74,14 @@ bool PlayScene::init()
 	auto rifleman = new Rifleman(NORMAL, 500, 200);
 	rifleman->init();
 	_listobject.push_back(rifleman);
+
+	auto redcannon = new RedCannon(NORMAL, 900, 200);
+	redcannon->init();
+	_listobject.push_back(redcannon);
+
+	auto wall_turret = new WallTurret(NORMAL, 730, 150);
+	wall_turret->init();
+	_listobject.push_back(wall_turret);
 
 	//auto land  = new Land(64, 245, 1472, 1, eDirection::TOP, eLandType::GRASS);
 	//land->init();

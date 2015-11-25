@@ -145,6 +145,8 @@ void Bullet::onCollisionBegin(CollisionEventArg* collision_arg)
 			if (collision_arg->_otherObject->getStatus() != HIDDEN && collision_arg->_otherObject->getStatus() != EXPOSING)
 				((BaseEnemy*)collision_arg->_otherObject)->dropHitpoint();
 			break;
+		case REDCANNON: case WALL_TURRET:
+			((BaseEnemy*)collision_arg->_otherObject)->dropHitpoint();
 		}
 	}
 	if (this->isEnemyBullet())

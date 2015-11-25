@@ -7,7 +7,7 @@
 
 	file text được load bằng phương thức init, truyền vào đường dẫn tương đối của file
 	hình ảnh được load như sprite thông qua sprte manager.
-
+ 
 	MOST BASIC:
 	khi vẽ map. ta duyệt từ đầu đến cuối _mapIndex, kiểm tra index hiện tại là gì, sau đó set index cho sprite
 		_sprite->setIndex(_mapIndex[i] - 1)

@@ -8,9 +8,9 @@ Bill::Bill() : BaseObject(eID::BILL)
 
 Bill::~Bill()
 {
-	
+	 
 }
-
+ 
 void Bill::init()
 {
 	__hook(&InputController::__eventkeyPressed, _input, &Bill::onKeyPressed);

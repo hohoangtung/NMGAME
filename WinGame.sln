@@ -1,16 +1,12 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.40629.0
-MinimumVisualStudioVersion = 10.0.40219.1
+# Visual Studio 2012
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WinGame", "WinGame\WinGame.vcxproj", "{9B105AC7-30BC-4976-B319-1807AF1BC26B}"
 	ProjectSection(ProjectDependencies) = postProject
 		{89A1E353-E2DC-495C-B403-742BE206ACED} = {89A1E353-E2DC-495C-B403-742BE206ACED}
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MapEditor", "MapEditor\MapEditor.csproj", "{4ED640C5-E37D-46C7-A64F-D3CB280E6D4F}"
-EndProject
-Project("{F088123C-0E9E-452A-89E6-6BA2F21D5CAC}") = "ModelingProject", "ModelingProject\ModelingProject.modelproj", "{FD18A6B9-4D58-4301-919C-8007D041EA5D}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "pugixml_vs2010", "WinGame\pugixml-1.7\scripts\pugixml_vs2010.vcxproj", "{89A1E353-E2DC-495C-B403-742BE206ACED}"
 EndProject
@@ -50,18 +46,6 @@ Global
 		{4ED640C5-E37D-46C7-A64F-D3CB280E6D4F}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{4ED640C5-E37D-46C7-A64F-D3CB280E6D4F}.Release|Win32.ActiveCfg = Release|Any CPU
 		{4ED640C5-E37D-46C7-A64F-D3CB280E6D4F}.Release|x64.ActiveCfg = Release|Any CPU
-		{FD18A6B9-4D58-4301-919C-8007D041EA5D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FD18A6B9-4D58-4301-919C-8007D041EA5D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FD18A6B9-4D58-4301-919C-8007D041EA5D}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{FD18A6B9-4D58-4301-919C-8007D041EA5D}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{FD18A6B9-4D58-4301-919C-8007D041EA5D}.Debug|Win32.ActiveCfg = Debug|Any CPU
-		{FD18A6B9-4D58-4301-919C-8007D041EA5D}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{FD18A6B9-4D58-4301-919C-8007D041EA5D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FD18A6B9-4D58-4301-919C-8007D041EA5D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FD18A6B9-4D58-4301-919C-8007D041EA5D}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{FD18A6B9-4D58-4301-919C-8007D041EA5D}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{FD18A6B9-4D58-4301-919C-8007D041EA5D}.Release|Win32.ActiveCfg = Release|Any CPU
-		{FD18A6B9-4D58-4301-919C-8007D041EA5D}.Release|x64.ActiveCfg = Release|Any CPU
 		{89A1E353-E2DC-495C-B403-742BE206ACED}.Debug|Any CPU.ActiveCfg = Debug|Win32
 		{89A1E353-E2DC-495C-B403-742BE206ACED}.Debug|Mixed Platforms.ActiveCfg = Debug|Win32
 		{89A1E353-E2DC-495C-B403-742BE206ACED}.Debug|Mixed Platforms.Build.0 = Debug|Win32

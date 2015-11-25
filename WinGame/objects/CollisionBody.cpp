@@ -153,7 +153,7 @@ float CollisionBody::isCollide(BaseObject * otherSprite, eDirection & direction,
 		_dxEntry = otherRect.right - myRect.left;
 		_dxExit = otherRect.left - myRect.right;
 	}
-
+ 
 	// dy
 	if (velocity.y > 0)
 	{

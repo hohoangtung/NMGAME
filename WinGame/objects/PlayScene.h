@@ -14,7 +14,6 @@
 
 #include "BaseObject.h"
 #include "Bill.h"
-#include "Mario.h"
 #include "RedCannon.h"
 #include "Soldier.h"
 #include "Falcon.h"
@@ -22,6 +21,7 @@
 #include "Rifleman.h"
 #include "Bridge.h"
 #include "Land.h"
+#include "WallTurret.h"
 using namespace std;
 US_FRAMEWORK
 

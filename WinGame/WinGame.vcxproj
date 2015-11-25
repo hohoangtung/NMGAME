@@ -160,7 +160,6 @@
     <ClInclude Include="objects\Explosion.h" />
     <ClInclude Include="objects\Falcon.h" />
     <ClInclude Include="objects\IComponent.h" />
-    <ClInclude Include="objects\mario.h" />
     <ClInclude Include="objects\PlayScene.h" />
     <ClInclude Include="objects\RedCannon.h" />
     <ClInclude Include="objects\Rifleman.h" />
