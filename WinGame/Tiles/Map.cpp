@@ -7,7 +7,7 @@ Map::Map()
 {
 	_mapIndex = NULL;
 	
-}
+} 
 
 Map::~Map()
 {
