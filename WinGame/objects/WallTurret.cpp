@@ -3,6 +3,23 @@ int _shooting1 = 1;
 StopWatch* _loopwatch1;
 #define PI 3.14159265
 
+WallTurret::WallTurret(eStatus status, GVector2 position) :BaseEnemy(eID::WALL_TURRET)
+{
+	_sprite = SpriteManager::getInstance()->getSprite(eID::WALL_TURRET);
+	_sprite->setFrameRect(0, 0, 32, 32);
+	this->setPosition(position);
+	this->setStatus(status);
+}
+
+WallTurret::WallTurret(eStatus status, float x, float y) :BaseEnemy(eID::WALL_TURRET)
+{
+	_sprite = SpriteManager::getInstance()->getSprite(eID::WALL_TURRET);
+	_sprite->setFrameRect(0, 0, 32, 32);
+	GVector2 pos(x, y);
+	this->setPosition(pos);
+	this->setStatus(status);
+
+}
 WallTurret::~WallTurret()
 {
 	for (auto it = _animation.begin(); it != _animation.end(); it++)
@@ -19,10 +36,7 @@ WallTurret::~WallTurret()
 }
 void WallTurret::init()
 {
-	_sprite = SpriteManager::getInstance()->getSprite(eID::WALL_TURRET);
-	this->_sprite->setPosition(600, 200);
-	this->_sprite->setFrameRect(0, 0, 32.0f, 32.0f);
-	this->setStatus(NORMAL);
+	
 	this->setScale(SCALE_FACTOR);
 
 	auto collisionBody = new CollisionBody(this);
@@ -105,7 +119,7 @@ void WallTurret::update(float deltatime)
 		return;
 	if (this->getHitpoint() <= 0)
 	{
-		this->destroy();
+	
 		if (this->_stopwatch->isStopWatch(200))
 		{
 			auto pos = this->getPosition();
@@ -181,6 +195,7 @@ void WallTurret::update(float deltatime)
 		this->setStatus(WT_RIGHT_150);
 		_shootingAngle = 150;
 	}
+
 	else if (_billAngle >= 165 || _billAngle<-165)
 	{
 		this->setScale(SCALE_FACTOR);
@@ -193,6 +208,7 @@ void WallTurret::update(float deltatime)
 		this->setStatus(WT_LEFT_150);
 		_shootingAngle = -150;
 	}
+
 	else if (_billAngle >= -135 && _billAngle<-105)
 	{
 		this->setScale(SCALE_FACTOR);
@@ -306,10 +322,7 @@ float WallTurret::getShootingAngle()
 
 void WallTurret::onCollisionBegin(CollisionEventArg* collision_event)
 {
-	if (collision_event->_otherObject->getId() == eID::BULLET)
-	{
-		_hitpoint--;
-	}
+	
 }
 void WallTurret::onCollisionEnd(CollisionEventArg* collision_event)
 {
@@ -402,11 +415,9 @@ void WallTurret::calculateBillangle()
 	else if (dx<0 && dy>0)
 		_billAngle = -atan(abs(dx) / dy) * 180 / PI + 180;
 }
-void WallTurret::destroy()
-{}
+
 void WallTurret::drophitpoint()
 {
 	this->setHitpoint(this->getHitpoint() - 1);
-	/*if (this->getHitpoint() <= 0)
-		this->setStatus(eStatus::DYING);*/
+	
 }

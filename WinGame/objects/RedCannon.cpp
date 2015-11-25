@@ -5,6 +5,22 @@ int _shooting = 1;
 #define PI 3.14159265
 StopWatch *_loopwatch;
 
+RedCannon::RedCannon(eStatus status, GVector2 position) :BaseEnemy(eID::REDCANNON)
+{
+	_sprite = SpriteManager::getInstance()->getSprite(eID::REDCANNON);
+	
+	_sprite->setFrameRect(0, 0, 32, 32);
+	this->setPosition(position);
+	this->setStatus(status);
+}
+RedCannon::RedCannon(eStatus status, float x, float y) :BaseEnemy(eID::REDCANNON)
+{
+	_sprite = SpriteManager::getInstance()->getSprite(eID::REDCANNON);
+	_sprite->setFrameRect(0, 0, 32, 32);
+	GVector2 pos(x, y);
+	this->setPosition(pos);
+	this->setStatus(status);
+}
 RedCannon::~RedCannon()
 {
 	for (auto it = _animation.begin(); it != _animation.end(); it++)
@@ -21,15 +37,11 @@ RedCannon::~RedCannon()
 }
 void RedCannon::init()
 {
-	_sprite = SpriteManager::getInstance()->getSprite(eID::REDCANNON);
-	this->_sprite->setPosition(500, 200);
-	this->_sprite->setFrameRect(0, 0, 32.0f, 32.0f);
-	/*this->setStatus(NORMAL);*/
+	
+	
 	this->setScale(SCALE_FACTOR);
 
-	/*GVector2 v(0, 0);
-	GVector2 a(0, 0);
-	this->_listComponent.insert(pair<string, IComponent*>("Movement", new Movement(a, v, this->_sprite)));*/
+	
 
 	auto collisionBody = new CollisionBody(this);
 	_listComponent["CollisionBody"] = collisionBody;
@@ -57,7 +69,7 @@ void RedCannon::init()
 
 	_stopwatch = new StopWatch();
 	_loopwatch = new StopWatch();
-	_explosion = NULL;
+	/*_explosion = NULL;*/
 	this->addStatus(SHOOTING);
 	this->setHitpoint(CANNON_HITPOINT);
 	this->setScore(CANNON_SCORE);
@@ -92,7 +104,7 @@ void RedCannon::update(float deltatime)
 	this->getHitpoint();
 	if (this->getHitpoint() <= 0)
 	{
-		this->destroy();
+		
 		if (this->_stopwatch->isStopWatch(200))
 		{
 			auto pos = this->getPosition();
@@ -205,10 +217,7 @@ void RedCannon::release()
 
 void RedCannon::onCollisionBegin(CollisionEventArg* collision_event)
 {
-	if (collision_event->_otherObject->getId() == eID::BULLET)
-	{
-		_hitpoint--;
-	}
+	
 }
 void RedCannon::onCollisionEnd(CollisionEventArg* collision_event)
 {}
@@ -275,10 +284,7 @@ void RedCannon::calculateBillangle()
 		_billAngle = -30;
 	else _billAngle = -90;
 }
-void RedCannon::destroy()
-{
 
-}
 void RedCannon::drophitpoint()
 {
 	this->setHitpoint(this->getHitpoint() - 1);

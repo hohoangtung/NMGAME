@@ -20,7 +20,9 @@ using namespace std;
 class RedCannon : public BaseEnemy
 {
 public:
-	RedCannon() :BaseEnemy(eID::REDCANNON){}
+	
+	RedCannon(eStatus status, GVector2 pos);
+	RedCannon(eStatus status, float x, float y);
 	~RedCannon();
 	void init();
 	void update(float deltatime);
@@ -30,7 +32,7 @@ public:
 	void onCollisionBegin(CollisionEventArg*);
 	void onCollisionEnd(CollisionEventArg*);
 
-	void destroy();
+	
 	void shoot();
 	void drophitpoint();
 	void setShootingAngle(float);

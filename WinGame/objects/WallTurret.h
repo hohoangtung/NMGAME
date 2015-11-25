@@ -11,7 +11,7 @@
 #include "../FrameWork/StopWatch.h"
 #include <map>
 #include <math.h>
-#define WALL_TURRET_HITPOINT 5
+#define WALL_TURRET_HITPOINT 3
 #define WALL_TURRET_SCORE 1000
 #define WALL_TURRET_SHOOTING_DELAY 1000.0f
 #define WALL_TURRET_ANIMATION_SPEED 0.5f
@@ -19,7 +19,8 @@ using namespace std;
 class WallTurret :public BaseEnemy
 {
 public:
-	WallTurret() :BaseEnemy(eID::WALL_TURRET){}
+	WallTurret(eStatus status, GVector2 pos);
+	WallTurret(eStatus status, float x, float y);
 
 	~WallTurret();
 
@@ -40,7 +41,7 @@ public:
 
 	void setStatus(eStatus);
 	void shoot();
-	void destroy();
+	
 
 	IComponent* getComponent(string);
 private:
