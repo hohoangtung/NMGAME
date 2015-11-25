@@ -218,9 +218,6 @@
     <ClInclude Include="FrameWork\Transformable.h">
       <Filter>Header Files\FrameWork</Filter>
     </ClInclude>
-    <ClInclude Include="objects\mario.h">
-      <Filter>Header Files\Objects</Filter>
-    </ClInclude>
     <ClInclude Include="objects\IComponent.h">
       <Filter>Header Files\Objects</Filter>
     </ClInclude>
