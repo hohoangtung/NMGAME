@@ -103,7 +103,7 @@ void WallTurret::update(float deltatime)
 		_explosion->update(deltatime);
 	if (this->getStatus() == eStatus::DESTROY)
 		return;
-	if (this->getHitpoint() == 0)
+	if (this->getHitpoint() <= 0)
 	{
 		this->destroy();
 		if (this->_stopwatch->isStopWatch(200))
@@ -384,7 +384,7 @@ void WallTurret::shoot()
 		pos.x += this->getScale().x < 0 == this->getSprite()->getFrameWidth() / 2;
 		pos.y += 0;
 	}
-	_listBullet.push_back(new Bullet( pos, angle));
+	_listBullet.push_back(new Bullet( pos, (eBulletType)(ENEMY_BULLET|NORMAL_BULLET), angle));
 	_listBullet.back()->init();
 }
 void WallTurret::calculateBillangle()
@@ -404,3 +404,9 @@ void WallTurret::calculateBillangle()
 }
 void WallTurret::destroy()
 {}
+void WallTurret::drophitpoint()
+{
+	this->setHitpoint(this->getHitpoint() - 1);
+	/*if (this->getHitpoint() <= 0)
+		this->setStatus(eStatus::DYING);*/
+}

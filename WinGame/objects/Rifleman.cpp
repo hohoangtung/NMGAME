@@ -198,7 +198,7 @@ void Rifleman::shoot()
 		pos.y += this->getSprite()->getFrameHeight() / 4.5;
 	}
 
-	_listBullets.push_back(new Bullet(pos, angle));
+	_listBullets.push_back(new Bullet(pos,(eBulletType)(ENEMY_BULLET|NORMAL_BULLET), angle));
 	_listBullets.back()->init();
 }
 

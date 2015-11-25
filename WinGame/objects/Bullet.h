@@ -17,14 +17,14 @@ public:
 		@startPosition: vị trí bắt đầu
 		@dir: hướng viên đạn
 	*/
-	Bullet(GVector2 startPosition, eDirection dir);
+	Bullet(GVector2 startPosition, eBulletType type, eDirection dir);
 
 	/*
 	Khởi tạo viên đạn
 		@startPosition: vị trí bắt đầu
 		@degree: hướng viên đạn theo độ, gốc là 12h, theo chiều kim đồng hồ
 	*/
-	Bullet(GVector2 startPosition, float degree);
+	Bullet(GVector2 startPosition,eBulletType type, float degree);
 
 	~Bullet();
 
@@ -37,6 +37,11 @@ public:
 
 	GVector2 getVelocity();
 
+	eBulletType getBulletType();
+	bool isBillBullet();
+	bool isEnemyBullet();
+	bool isContainType(eBulletType type);
+
 	void onCollisionBegin(CollisionEventArg* collision_arg);
 
 	float checkCollision(BaseObject* object, float dt);
@@ -47,6 +52,7 @@ protected:
 
 	int _damage;
 	eDirection _direction;
+	eBulletType _type;
 
 private:
 	map<string, IComponent*> _componentList;

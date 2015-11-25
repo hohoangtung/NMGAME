@@ -11,7 +11,7 @@
 #include "../FrameWork/StopWatch.h"
 #include <map>
 #include <math.h>
-#define WALL_TURRET_HITPOINT 1
+#define WALL_TURRET_HITPOINT 5
 #define WALL_TURRET_SCORE 1000
 #define WALL_TURRET_SHOOTING_DELAY 1000.0f
 #define WALL_TURRET_ANIMATION_SPEED 0.5f
@@ -35,6 +35,8 @@ public:
 	float getBillAngle();
 	void setShootingAngle(float);
 	float getShootingAngle();
+	void drophitpoint();
+
 
 	void setStatus(eStatus);
 	void shoot();

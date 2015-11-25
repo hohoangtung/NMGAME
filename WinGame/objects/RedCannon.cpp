@@ -90,7 +90,7 @@ void RedCannon::update(float deltatime)
 	if (this->getStatus() == eStatus::DESTROY)
 		return;
 	this->getHitpoint();
-	if (this->getHitpoint() == 0)
+	if (this->getHitpoint() <= 0)
 	{
 		this->destroy();
 		if (this->_stopwatch->isStopWatch(200))
@@ -260,7 +260,7 @@ void RedCannon::shoot()
 		pos.y += 0;
 	}
 
-	_listBullets.push_back(new Bullet(pos, angle));
+	_listBullets.push_back(new Bullet(pos, (eBulletType)(ENEMY_BULLET|NORMAL_BULLET), angle));
 	_listBullets.back()->init();
 }
 void RedCannon::calculateBillangle()

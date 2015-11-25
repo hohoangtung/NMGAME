@@ -37,6 +37,18 @@
     <Filter Include="Source Files\Objects\GameObjects">
       <UniqueIdentifier>{577704fe-4bbd-4b33-8fa0-9820c80b92a2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Tiles">
+      <UniqueIdentifier>{0c0757a4-e3b9-40c0-8d92-91f33e4b08ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Tiles">
+      <UniqueIdentifier>{823a8e55-8b78-487b-b2f1-6c843965dda9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Resources">
+      <UniqueIdentifier>{84b522cc-7b37-445d-9594-c544dcb8e870}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Resources\Map">
+      <UniqueIdentifier>{eb483771-2819-4a2e-9a98-d2bc2704ad7b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -138,9 +150,6 @@
     <ClCompile Include="objects\Rifleman.cpp">
       <Filter>Source Files\Objects\GameObjects</Filter>
     </ClCompile>
-    <ClCompile Include="Map\Map.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="objects\Bullet.cpp">
       <Filter>Source Files\Objects\GameObjects</Filter>
     </ClCompile>
@@ -149,6 +158,30 @@
     </ClCompile>
     <ClCompile Include="objects\Bridge.cpp">
       <Filter>Source Files\Objects\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="objects\WallTurret.cpp">
+      <Filter>Source Files\Objects\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="objects\Grass.cpp">
+      <Filter>Source Files\Objects\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="objects\Land.cpp">
+      <Filter>Source Files\Objects\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Tiles\Map.cpp">
+      <Filter>Source Files\Tiles</Filter>
+    </ClCompile>
+    <ClCompile Include="Tiles\Tile.cpp">
+      <Filter>Source Files\Tiles</Filter>
+    </ClCompile>
+    <ClCompile Include="Tiles\TileSet.cpp">
+      <Filter>Source Files\Tiles</Filter>
+    </ClCompile>
+    <ClCompile Include="FrameWork\Surface.cpp">
+      <Filter>Source Files\FrameWork</Filter>
+    </ClCompile>
+    <ClCompile Include="FrameWork\utils.cpp">
+      <Filter>Source Files\FrameWork</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -251,9 +284,6 @@
     <ClInclude Include="objects\AirCraft.h">
       <Filter>Header Files\Objects\GameObjects</Filter>
     </ClInclude>
-    <ClInclude Include="Map\Map.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="objects\Bullet.h">
       <Filter>Header Files\Objects\GameObjects</Filter>
     </ClInclude>
@@ -263,6 +293,33 @@
     <ClInclude Include="objects\Bridge.h">
       <Filter>Header Files\Objects\GameObjects</Filter>
     </ClInclude>
+    <ClInclude Include="objects\WallTurret.h">
+      <Filter>Header Files\Objects\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="objects\Grass.h">
+      <Filter>Header Files\Objects\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="objects\Land.h">
+      <Filter>Header Files\Objects\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Tiles\config.h">
+      <Filter>Header Files\Tiles</Filter>
+    </ClInclude>
+    <ClInclude Include="Tiles\Map.h">
+      <Filter>Header Files\Tiles</Filter>
+    </ClInclude>
+    <ClInclude Include="Tiles\Tile.h">
+      <Filter>Header Files\Tiles</Filter>
+    </ClInclude>
+    <ClInclude Include="Tiles\TileSet.h">
+      <Filter>Header Files\Tiles</Filter>
+    </ClInclude>
+    <ClInclude Include="FrameWork\Surface.h">
+      <Filter>Header Files\FrameWork</Filter>
+    </ClInclude>
+    <ClInclude Include="FrameWork\utils.h">
+      <Filter>Header Files\FrameWork</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Flower.png">
@@ -271,8 +328,76 @@
     <Image Include="Resources\Map\stage1.png">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="Resources\aircraft.png">
+      <Filter>Resource Files\Resources</Filter>
+    </Image>
+    <Image Include="Resources\bill_animation.png">
+      <Filter>Resource Files\Resources</Filter>
+    </Image>
+    <Image Include="Resources\box.png">
+      <Filter>Resource Files\Resources</Filter>
+    </Image>
+    <Image Include="Resources\bridge.png">
+      <Filter>Resource Files\Resources</Filter>
+    </Image>
+    <Image Include="Resources\Bullets.png">
+      <Filter>Resource Files\Resources</Filter>
+    </Image>
+    <Image Include="Resources\Cannon.png">
+      <Filter>Resource Files\Resources</Filter>
+    </Image>
+    <Image Include="Resources\Explosion.png">
+      <Filter>Resource Files\Resources</Filter>
+    </Image>
+    <Image Include="Resources\Falcon.png">
+      <Filter>Resource Files\Resources</Filter>
+    </Image>
+    <Image Include="Resources\grass.png">
+      <Filter>Resource Files\Resources</Filter>
+    </Image>
+    <Image Include="Resources\rifleman.png">
+      <Filter>Resource Files\Resources</Filter>
+    </Image>
+    <Image Include="Resources\Soldier.png">
+      <Filter>Resource Files\Resources</Filter>
+    </Image>
+    <Image Include="Resources\Wall_turret.png">
+      <Filter>Resource Files\Resources</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Readme.txt" />
+    <Text Include="Resources\aircraft_animation.txt">
+      <Filter>Resource Files\Resources</Filter>
+    </Text>
+    <Text Include="Resources\bill_animation.txt">
+      <Filter>Resource Files\Resources</Filter>
+    </Text>
+    <Text Include="Resources\bullets_type.txt">
+      <Filter>Resource Files\Resources</Filter>
+    </Text>
+    <Text Include="Resources\cannon_animation.txt">
+      <Filter>Resource Files\Resources</Filter>
+    </Text>
+    <Text Include="Resources\explosion_animation.txt">
+      <Filter>Resource Files\Resources</Filter>
+    </Text>
+    <Text Include="Resources\falcon_animation.txt">
+      <Filter>Resource Files\Resources</Filter>
+    </Text>
+    <Text Include="Resources\rifleman_animation.txt">
+      <Filter>Resource Files\Resources</Filter>
+    </Text>
+    <Text Include="Resources\soldier_animation.txt">
+      <Filter>Resource Files\Resources</Filter>
+    </Text>
+    <Text Include="Resources\Wall_turret_animation.txt">
+      <Filter>Resource Files\Resources</Filter>
+    </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="Resources\Map\stage1.xml">
+      <Filter>Resource Files\Resources\Map</Filter>
+    </Xml>
   </ItemGroup>
 </Project>

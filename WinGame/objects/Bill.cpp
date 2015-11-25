@@ -508,7 +508,7 @@ void Bill::shoot()
 	{
 		pos.y -= 5 * this->getScale().y;
 	}
-	
+
 	if (direction == eDirection::TOP)
 	{
 		angle = 0.0f;
@@ -555,7 +555,7 @@ void Bill::shoot()
 	if (this->isInStatus(eStatus::SWIMING))
 		pos.y -= 8 * this->getScale().y;
 
-	_listBullets.push_back(new Bullet(pos, angle));
+	_listBullets.push_back(new Bullet(pos, (eBulletType)(BILL_BULLET|NORMAL_BULLET), angle));
 	_listBullets.back()->init();
 }
 
