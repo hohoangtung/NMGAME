@@ -1,9 +1,10 @@
-#ifndef _RIFLEMAN_H
+﻿#ifndef _RIFLEMAN_H
 #define _RIFLEMAN_H
 
 #include "BaseEnemy.h"
 #include "CollisionBody.h"
 #include "Bullet.h"
+#include "IComponent.h"
 #include "../FrameWork/Animation.h"
 #include "../Framework/StopWatch.h"
 #include "PlayScene.h"
@@ -18,7 +19,13 @@ using namespace std;
 class Rifleman : public BaseEnemy
 {
 public:
-	Rifleman();
+	/*
+		@status: NORMAL cho lính đứng bắn, HIDDEN cho lính núp
+		@pos: vị trí
+		@x, y: tọa độ của pos
+	*/
+	Rifleman(eStatus status, GVector2 pos);
+	Rifleman(eStatus status, float x, float y);
 	~Rifleman();
 
 	void init();
@@ -31,10 +38,10 @@ public:
 
 	void onCollisionBegin(CollisionEventArg*);
 	void onCollisionEnd(CollisionEventArg*);
+	float checkCollision(BaseObject*, float);
 
 	void die();
 	void shoot();
-	
 	void setStatus(eStatus);
 	
 	IComponent* getComponent(string);
@@ -44,6 +51,7 @@ private:
 	map<int, Animation*> _animations;
 	float _shootingAngle;
 	StopWatch *_stopwatch;
+	StopWatch *_loopwatch;
 	BaseObject *_explosion;
 	list<Bullet*> _listBullets;
 
@@ -51,5 +59,6 @@ private:
 	void removeStatus(eStatus status);
 	bool isInStatus(eStatus status);
 	void calculateShootingAngle();
+	void calculatingShootingDirection();
 };
 #endif

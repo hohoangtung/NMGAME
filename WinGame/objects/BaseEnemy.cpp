@@ -22,3 +22,8 @@ int BaseEnemy::getScore()
 {
 	return _score;
 }
+
+void BaseEnemy::dropHitpoint()
+{
+	_hitpoint--;
+}

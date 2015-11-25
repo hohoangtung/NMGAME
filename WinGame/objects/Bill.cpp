@@ -556,7 +556,7 @@ void Bill::shoot()
 	if (this->isInStatus(eStatus::SWIMING))
 		pos.y -= 8 * this->getScale().y;
 
-	_listBullets.push_back(new Bullet(pos, angle));
+	_listBullets.push_back(new Bullet(pos,(eBulletType)(BILL_BULLET | NORMAL_BULLET),angle));		// normalbullet -> hardcode
 	_listBullets.back()->init();
 }
 

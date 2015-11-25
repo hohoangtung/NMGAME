@@ -195,23 +195,6 @@ namespace MapEditor.Tiles
                 reader.Read();
                 if (reader.IsStartElement())
                 {
-                    if (reader.IsStartElement("FileName"))
-                    {
-                        //reader.Read();
-
-                        //// Xử lý để từ tên file ảnh trong giá trị element của node FileName
-                        //// ta lấy thư mục bằng cách tách chuỗi trong path của file xml
-                        //// ghép với tên file ảnh.
-                        //string imagefilename = reader.Value.Trim();
-                        //string relativepath = filename.Substring(0, filename.LastIndexOf('\\') + 1);  // +1 là dấu \ trong path
-                        //tileset.FileName = relativepath + imagefilename;
-
-                        //if (System.IO.File.Exists(tileset.FileName))
-                        //    tileset.Image = Image.FromFile(tileset.FileName);
-                        //else
-                        //    throw new Exception("");
-                        continue;
-                    }
                     if (reader.IsStartElement("Tiles"))
                     {
                         reader.ReadStartElement("Tiles");

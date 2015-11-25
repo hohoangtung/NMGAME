@@ -11,6 +11,8 @@
 #include <exception>
 #include <math.h>
 #include <string>
+#include <map>
+#include <vector>
 #include "..\debug.h"
 #include "utils.h"
 using namespace std;
@@ -23,9 +25,7 @@ using namespace std;
 #define COLOR_KEY D3DXCOLOR(1.0f, 0.0f, 1.0f, 1.0f)				// màu khi mà load hình nó bỏ qua > trong suốt
 enum eID
 {
-	FLOWER,			// Mario flower. Just for test.
 	BILL,			// Main character.
-	MARIO,
 	REDCANNON,
 	SOLDIER,
 	FALCON,
@@ -71,9 +71,10 @@ enum eStatus
 	EXPOSING		= (1 << 15),
 	FALLING			= (1 << 16),
 	HOLDING			= (1 << 17),
-
 	SWIMING			= (1 << 18),
-	DIVING			= (1 << 19)
+	DIVING			= (1 << 19),
+	HIDDEN			= (1 << 20)
+
 };
 
 enum ePhysicsBody
@@ -84,6 +85,7 @@ enum ePhysicsBody
 	RIGHT_EDGE		= (1 << 2),
 	BOTTOM_EDGE		= (1 << 3)
 };
+
 
 enum eLandType
 {
@@ -115,9 +117,9 @@ enum eAirCraftType
 
 enum eBulletType
 {
-	BILL_BULLET		= 0,
-	ENEMY_BULLET	= (1 << 0),
-	NORMAL_BULLET   = (1 << 1),
+	BILL_BULLET		= (1 << 0),
+	ENEMY_BULLET	= (1 << 1),
+	NORMAL_BULLET   = (1 << 2),
 };
 
 typedef D3DXVECTOR3 GVector3;
@@ -142,3 +144,4 @@ if(p) \
 
 
 #endif // !__NS_FRAMEWORK__
+

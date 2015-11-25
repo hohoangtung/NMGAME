@@ -8,7 +8,8 @@ by Luu The Vinh
 Chưa xong:
 - Chuyển độn chết
 - Hiệu ứng nhảy xuông nước
-
+- Vừa chạy vừa bắn.
+- nằm -> nhảy -> rớt -> vừa rớt nhảy -> bay trong trạng thái rớt.
 */
 
 #ifndef __BILL_H__
