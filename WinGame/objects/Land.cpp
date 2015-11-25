@@ -24,7 +24,7 @@ void Land::init()
 	auto collisionBody = new CollisionBody(this);
 	_listComponent["CollisionBody"] = collisionBody;
 
-	this->setPhysicsBodySide(eDirection::TOP);
+	//this->setPhysicsBodySide(eDirection::TOP);
 }
 
 void Land::update(float deltatime)

@@ -12,6 +12,7 @@ Animation::Animation(Sprite * spriteSheet, float timeAnimate)
 	_timer = 0;
 	 
 	this->setIndex(0);
+	this->setLoop(true);
 }
 
 Animation::Animation(Sprite * spriteSheet, int totalFrames, int cols, float timeAnimate)
@@ -60,8 +61,13 @@ void Animation::setIndex(int index)
 
 	if (_index >= _totalFrames)
 		_index = _index % _totalFrames;
-
+	
 	_currentRect = _frameRectList[_index];
+
+	if (!_isLoop && _index == _totalFrames - 1)
+	{
+		this->stop();
+	}
 }
 
 void Animation::update(float dt)
@@ -157,6 +163,17 @@ void Animation::addFrameRect(eID id, char* firstRectName, ...)
 	}
 
 	va_end(vl);
+}
+
+void Animation::setLoop(bool isLoop)
+{
+	if (isLoop != _isLoop)
+		_isLoop = isLoop;
+}
+
+bool Animation::isLoop()
+{
+	return _isLoop;
 }
 
 void Animation::draw(LPD3DXSPRITE spriteHandle, Viewport * viewport)

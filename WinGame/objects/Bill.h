@@ -26,7 +26,7 @@ Chưa xong:
 #include "Bullet.h"
 
 #define BILL_MOVE_SPEED 120
-#define BILL_JUMP_VEL 420
+#define BILL_JUMP_VEL 400
 #define TEST_LAND 200
 #define GRAVITY 800
 #define SHOOT_SPEED 200.0f

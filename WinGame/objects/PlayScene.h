@@ -22,6 +22,7 @@
 #include "Rifleman.h"
 #include "Bridge.h"
 #include "Land.h"
+#include "WallTurret.h"
 using namespace std;
 US_FRAMEWORK
 

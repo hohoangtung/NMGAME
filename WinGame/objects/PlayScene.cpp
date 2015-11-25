@@ -75,6 +75,14 @@ bool PlayScene::init()
 	rifleman->init();
 	_listobject.push_back(rifleman);
 
+	auto redcannon = new RedCannon(NORMAL, 900, 200);
+	redcannon->init();
+	_listobject.push_back(redcannon);
+
+	auto wall_turret = new WallTurret(NORMAL, 730, 150);
+	wall_turret->init();
+	_listobject.push_back(wall_turret);
+
 	//auto land  = new Land(64, 245, 1472, 1, eDirection::TOP, eLandType::GRASS);
 	//land->init();
 	//_listobject.push_back(land);
