@@ -307,12 +307,9 @@ void Bill::onCollisionBegin(CollisionEventArg * collision_arg)
 	case eID::LAND:
 	case eID::BRIDGE:
 	{
-		//if (preObject != collision_arg->_otherObject)
-		//{
 
-		//}
-	}
 		break;
+	}
 	default:
 		break;
 	}
@@ -359,13 +356,28 @@ float Bill::checkCollision(BaseObject * object, float dt)
 				auto land = (Land*)object;
 				_canJumpDown = land->canJump();
 
+				eLandType preType = land->getType();
+
+				// lấy type của preObject
+				if (preObject != nullptr && preObject->getId() == eID::LAND)
+				{
+					preType = ((Land*)preObject)->getType();
+				}
+				
+				// để trường hợp đang bơi mà lên bờ
+				// bill cùng chạm water và grass
+				// nó ưu tiên grass hơn không gán lại đang bơi
 				if (land->getType() == eLandType::WATER)
 				{
-					this->addStatus(eStatus::SWIMING);
+					// nếu trước đó không phải là nước thì mới cho bơi
+					if(preType == eLandType::GRASS || preObject == nullptr)
+						this->addStatus(eStatus::SWIMING);
 				}
-				else
+				else if (this->isInStatus(eStatus::SWIMING))
 				{
+					// lên bờ thì remove swim / nhảy lên
 					this->removeStatus(eStatus::SWIMING);
+					this->setPositionY(object->getPositionY());
 				}
 			}
 
