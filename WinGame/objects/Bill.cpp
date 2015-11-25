@@ -324,7 +324,6 @@ void Bill::onCollisionEnd(CollisionEventArg * collision_event)
 	case AIRCRAFT:
 		break;
 	case eID::LAND:
-	case eID::BRIDGE:
 	{
 		if (preObject == collision_event->_otherObject)
 		{
@@ -332,7 +331,9 @@ void Bill::onCollisionEnd(CollisionEventArg * collision_event)
 			this->removeStatus(eStatus::JUMPING);
 			preObject = nullptr;
 		}
+		break;
 	}
+	case eID::BRIDGE:
 	break;
 	default:
 		break;
@@ -379,10 +380,6 @@ float Bill::checkCollision(BaseObject * object, float dt)
 					this->removeStatus(eStatus::SWIMING);
 					this->setPositionY(object->getPositionY());
 				}
-			}
-			else if (objectId == eID::BRIDGE)
-			{
-
 			}
 
 			if (direction == eDirection::TOP && this->getVelocity().y < 0)
@@ -484,7 +481,7 @@ void Bill::moveRight()
 
 void Bill::jump()
 {
-	if ((this->getStatus() & eStatus::JUMPING) == eStatus::JUMPING)
+	if (this->isInStatus(eStatus::JUMPING) || this->isInStatus(eStatus::FALLING))
 		return;
 
 	this->addStatus(eStatus::JUMPING);
