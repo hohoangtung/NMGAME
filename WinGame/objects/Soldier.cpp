@@ -24,7 +24,7 @@ Soldier::Soldier(eStatus status, float x, float y, int direction) : BaseEnemy(eI
 	this->setScale(SCALE_FACTOR);
 	this->setScaleX(direction * SCALE_FACTOR);
 }
-
+ 
 Soldier::~Soldier() {}
 
 void Soldier::init()
