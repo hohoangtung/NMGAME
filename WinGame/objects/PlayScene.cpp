@@ -60,7 +60,7 @@ bool PlayScene::init()
 	bridge->setPhysicsBodySide(eDirection::TOP);
 	_listobject.push_back(bridge);
 
-	auto soldier = new Soldier();
+	auto soldier = new Soldier(RUNNING, 500, 400, -1);
 	soldier->init();
 	soldier->setStatus(eStatus::JUMPING);
 	_listobject.push_back(soldier);
@@ -71,7 +71,7 @@ bool PlayScene::init()
 	aircraft->init();
 	_listobject.push_back(aircraft);
 
-	auto rifleman = new Rifleman();
+	auto rifleman = new Rifleman(NORMAL, 500, 200);
 	rifleman->init();
 	_listobject.push_back(rifleman);
 
@@ -153,7 +153,10 @@ void PlayScene::update(float dt)
 		_listobject[2]->checkCollision(_listobject[i], dt);
 	}
 
-
+	for (int i = 1; i < _listobject.size(); i++)
+	{
+		_listobject[4]->checkCollision(_listobject[i], dt);
+	}
 	_listobject[3]->checkCollision(_listobject[5], dt);
 
 	for (auto object : _listobject)

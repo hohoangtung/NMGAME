@@ -71,9 +71,10 @@ enum eStatus
 	EXPOSING		= (1 << 15),
 	FALLING			= (1 << 16),
 	HOLDING			= (1 << 17),
-
 	SWIMING			= (1 << 18),
-	DIVING			= (1 << 19)
+	DIVING			= (1 << 19),
+	HIDDEN			= (1 << 20)
+
 };
 
 enum ePhysicsBody
@@ -84,6 +85,7 @@ enum ePhysicsBody
 	RIGHT_EDGE		= (1 << 2),
 	BOTTOM_EDGE		= (1 << 3)
 };
+
 
 enum eLandType
 {
@@ -142,3 +144,4 @@ if(p) \
 
 
 #endif // !__NS_FRAMEWORK__
+

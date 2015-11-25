@@ -15,7 +15,7 @@ public:
 	void setHitpoint(int);
     int getScore();
 	void setScore(int);
-
+	void dropHitpoint();
 	virtual ~BaseEnemy();
 
 protected:

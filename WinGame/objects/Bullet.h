@@ -2,6 +2,7 @@
 #define __BULLET_H__
 
 #include "BaseObject.h"
+#include "BaseEnemy.h"
 #include "IComponent.h"
 #include "../FrameWork/define.h"
 #include "CollisionBody.h"

@@ -141,13 +141,16 @@ void Bullet::onCollisionBegin(CollisionEventArg* collision_arg)
 		case BOX:	
 			OutputDebugString(L"hit...\n");
 			break;
+		case SOLDIER: case RIFLEMAN:
+			if (collision_arg->_otherObject->getStatus() != HIDDEN && collision_arg->_otherObject->getStatus() != EXPOSING)
+				((BaseEnemy*)collision_arg->_otherObject)->dropHitpoint();
+			break;
 		}
 	}
 	if (this->isEnemyBullet())
 	{
-		// Nếu đây là đạn của Enemy
-	}
 
+	}
 }
 
 float Bullet::checkCollision(BaseObject * object, float dt)
