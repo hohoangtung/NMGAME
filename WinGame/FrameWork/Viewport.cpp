@@ -71,3 +71,14 @@ bool Viewport::isContains(const RECT &rect)
 	return true;
 }
 
+RECT Viewport::getBounding()
+{
+	RECT rect;
+	rect.left = _positionWorld.x;
+	rect.bottom = _positionWorld.y;
+	rect.top = rect.bottom + _height;
+	rect.right = rect.left + _width;
+
+	return rect;
+}
+

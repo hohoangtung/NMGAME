@@ -65,6 +65,7 @@ BaseObject* ObjectFactory::getObjectById(xml_node node, eID id)
 		case EXPLOSION:
 			break;
 		case RIFLEMAN:
+			return getRifleMan(node);
 			break;
 		case BOX:
 			break;
@@ -127,5 +128,53 @@ BaseObject* ObjectFactory::getLand(xml_node node)
 	land = new Land(x, y, width, height, dir, type);
 	land->init();
 	return land;
+}
+
+BaseObject * ObjectFactory::getRifleMan(xml_node node)
+{
+	auto properties = getObjectProperties(node);
+	int x, y;
+	eStatus status;
+
+	if (properties.size() == 0)
+		return nullptr;
+
+	try
+	{
+		status = (eStatus)properties["status"];
+		x = properties["X"];
+		y = properties["Y"];
+	}
+	catch (exception ex)
+	{
+		status = eStatus::NORMAL;
+	}
+
+	auto rifleMan = new Rifleman(status, GVector2(x, y));
+	rifleMan->init();
+
+	return rifleMan;
+}
+
+map<string, int> ObjectFactory::getObjectProperties(xml_node node)
+{
+	map<string, int> properties;
+
+	// general
+	properties["X"] = node.attribute("X").as_int();
+	properties["Y"] = node.attribute("Y").as_int();
+	properties["Width"] = node.attribute("Width").as_int();
+	properties["Height"] = node.attribute("Height").as_int();
+
+	// parameters
+	xml_node params = node.child("Params");
+	for (auto item : params)
+	{
+		auto key = item.attribute("Key").as_string();
+		auto value = item.attribute("Value").as_int();
+		properties[key] = value;
+	}
+
+	return properties;
 }
 

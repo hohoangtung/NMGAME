@@ -26,6 +26,11 @@ public:
 	// kiểm tra hcn có nằm trong màn hình không.
 	bool	isContains(const RECT &rect);
 
+	/*
+		Lấy kích thước của viewport bằng HCN, tinhs trong world lớn
+	*/
+	RECT getBounding();
+
 private:
 	GVector2 _positionWorld;
 	float _width;

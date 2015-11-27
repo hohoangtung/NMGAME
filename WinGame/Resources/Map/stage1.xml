@@ -17,7 +17,7 @@
     <Row id="13">4	4	4	4	4	4	4	4	4	4	4	4	4	4	4	4	4	8	15	22	15	22	48	4	4	4	4	4	4	4	4	4	4	4	4	4	4	8	15	22	15	22	48	4	4	4	4	4	4	4	4	4	4	4	4	4	4	4	4	4	4	4	4	4	4	4	4	4	4	4	4	4	4	4	4	4	4	4	4	4	4	4	4	4	4	4	4	8	15	22	15	22	15	22	48	4	4	4	4	4	4	4	4	4	4	4	4	8	15	22	68	19	12	19	12	19	12	19	12	19	14	21	14	21	14	21	14	21	14	21	14	21	14	21	14	21	14	21	14	21	14	21	14	21	60	64	12	19	14	21	14	21	14	21	14	21	12	19	14	21	60	64	14	21	14	21	14	21	14	21	12	19	12	19	12	19	60	64	14	21	14	21	60	64	14	21	14	21	12	19	12	19	12	19	12	19	12	19	12	19	12	19	12	109	112	112	112	112</Row>
   </MatrixIndex>
   <TileSet Columns="10" Rows="12" Widthtile="32" Heighttile="32" FileName="stage1.png">
-    <Tiles> 
+    <Tiles>
       <Tile Id="1" Name="tile_1">
         <Rect X="0" Y="0" Width="31" Height="31" />
       </Tile>
@@ -619,8 +619,8 @@
         <Elem Key="type" Value="0" />
       </Params>
     </Item>
-    <Item Id="12" Name="object37" X="6336" Y="117" Width="64" Height="5">
-      <ActiveBound X="6336" Y="117" Width="64" Height="5" />
+    <Item Id="12" Name="object36" X="6336" Y="116" Width="64" Height="5">
+      <ActiveBound X="6336" Y="116" Width="64" Height="5" />
       <Params>
         <Elem Key="physicBodyDirection" Value="1" />
         <Elem Key="type" Value="0" />
@@ -680,6 +680,12 @@
       <Params>
         <Elem Key="physicBodyDirection" Value="1" />
         <Elem Key="type" Value="1" />
+      </Params>
+    </Item>
+    <Item Id="6" Name="rifleMan1" X="624" Y="120" Width="32" Height="64">
+      <ActiveBound X="624" Y="120" Width="32" Height="64" />
+      <Params>
+        <Elem Key="status" Value="0" />
       </Params>
     </Item>
   </Objects>

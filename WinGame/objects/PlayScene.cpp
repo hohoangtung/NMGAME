@@ -164,6 +164,7 @@ void PlayScene::update(float dt)
 	for (int i = 1; i < _listobject.size(); i++)
 	{
 		_listobject[4]->checkCollision(_listobject[i], dt);
+		_listobject[50]->checkCollision(_listobject[i], dt);
 	}
 	_listobject[3]->checkCollision(_listobject[5], dt);
 
