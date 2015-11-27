@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MapEditor.QuadTree;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
@@ -21,6 +22,10 @@ namespace MapEditor.Tiles
         private static Pen pen = new Pen(brush);
         private static Brush brush_initBound = new SolidBrush(Color.FromArgb(175, 50, 50, 50));
         private static Brush brush_font = new SolidBrush(Color.FromArgb(220, 35, 35, 35));
+        private static Brush brush_quadnode = new SolidBrush(Color.FromArgb(160, 130, 210, 250));
+        private static Brush brush_quadnode_noobject = new SolidBrush(Color.FromArgb(160, 240, 240, 240));
+        public QNode QuadTree { get; set; }
+
         public ObjectEditor(BindingList<GameObject> sourceList)
         {
             ListItem = sourceList;
@@ -61,13 +66,12 @@ namespace MapEditor.Tiles
             int y = Math.Min(MouseDown.Y, MouseUp.Y);
             int width = Math.Max(MouseDown.X, MouseUp.X) - x;
             int height = Math.Max(MouseDown.Y, MouseUp.Y) - y;
+            if (width == 0 && height == 0)
+                return;
             if (MainForm.Settings.UseTransform == true)
             {
                 y += height;
             }
-
-            if (width == 0 && height == 0)
-                return;
             var obj = new GameObject(x, y, width, height);
             obj.Name = "object" + ListItem.Count.ToString();
             obj.Id = 0;
@@ -76,6 +80,7 @@ namespace MapEditor.Tiles
             this.MouseDown = new Point(-1, -1);
         }
 
+        // Vẽ tất cả object 
         public void draw(Graphics graphics)
         {
             foreach (GameObject GObject in ListItem)
@@ -97,14 +102,19 @@ namespace MapEditor.Tiles
                     GObject.ActiveBound.X + 3,
                     GObject.ActiveBound.Y + 3);
             }
+
+            //// Vẽ tất cả node.
+            this.drawQuadTreeNode(this.QuadTree, graphics);
         }
+
+        // Vẽ tất cả object, sử dụng đổi hệ trục toạ độ
         public void draw(Graphics graphics, int worldheight)
         {
 
             foreach (GameObject GObject in ListItem)
             {
                 var activebound = GObject.GetActiveBoundTransform(worldheight);
-                var initbound =  GObject.GetInitBoundTransform(worldheight);
+                var initbound = GObject.GetInitBoundTransform(worldheight);
                 if (GObject.Image == null)
                 {
                     graphics.FillRectangle(brush_initBound, initbound);
@@ -120,6 +130,84 @@ namespace MapEditor.Tiles
                     brush_font,
                     activebound.X + 3,
                     activebound.Y + 3);
+            }
+        }
+
+        // Vẽ các object trong một khung visibleRect, sử dụng đổi hệ trục toạ độ.
+        public void draw(Graphics Graphics, Rectangle visilbleRect, int worldheight)
+        {
+            var listobject = this.QuadTree.getListObject(visilbleRect);
+            foreach (GameObject GObject in listobject)
+            {
+                var activebound = GObject.GetActiveBoundTransform(worldheight);
+                var initbound = GObject.GetInitBoundTransform(worldheight);
+                if (GObject.Image == null)
+                {
+                    Graphics.FillRectangle(brush_initBound, initbound);
+                }
+                else
+                {
+                    Graphics.DrawImage(GObject.Image, initbound);
+                }
+                Graphics.FillRectangle(brush, activebound);
+                Graphics.DrawString(
+                    GObject.Name,
+                    SystemFonts.IconTitleFont,
+                    brush_font,
+                    activebound.X + 3,
+                    activebound.Y + 3);
+            }
+        }
+
+        // Vẽ các object trong một khung visibleRect, không sử dụng đổi hệ trục toạ độ.
+        public void draw(Graphics Graphics, Rectangle visilbleRect)
+        {
+            var listobject = this.QuadTree.getListObject(visilbleRect);
+            foreach (GameObject GObject in ListItem)
+            {
+                if (GObject.Image == null)
+                {
+                    Graphics.FillRectangle(brush_initBound, GObject.InitBound);
+                }
+                else
+                {
+                    Graphics.DrawImage(GObject.Image, GObject.InitBound);
+                }
+                Graphics.FillRectangle(brush, GObject.ActiveBound);
+
+                Graphics.DrawString(
+                    GObject.Name,
+                    SystemFonts.IconTitleFont,
+                    brush_font,
+                    GObject.ActiveBound.X + 3,
+                    GObject.ActiveBound.Y + 3);
+            }
+
+        }
+
+        public void RenderQuadTree(Graphics graphics)
+        {
+            drawQuadTreeNode(this.QuadTree, graphics);
+        }
+
+        private void drawQuadTreeNode(QNode node, Graphics graphics)
+        {
+            if (node == null)
+                return;
+            if (node.isLeaf() == true)
+            {
+                if (node.ListObject.Any())
+                    graphics.FillRectangle(brush_quadnode, node.Bound);
+                else
+                    graphics.FillRectangle(brush_quadnode_noobject, node.Bound);
+                graphics.DrawRectangle(new Pen(new SolidBrush(Color.FromArgb(255, 45, 45, 45))), node.Bound);
+            }
+            else
+            {
+                for (int i = 0; i < 4; i++)
+                {
+                    drawQuadTreeNode(node.Childs[i], graphics);
+                }
             }
         }
 
@@ -161,7 +249,6 @@ namespace MapEditor.Tiles
 
             return new Rectangle(left, top, right - left, bottom - top);
         }
-
 
         public static void Save(XmlTextWriter writter, BindingList<GameObject> listObject, string path)
         {
@@ -214,6 +301,52 @@ namespace MapEditor.Tiles
                 }
             }
             writter.WriteEndElement();                                      // Objects
+
+        }
+        public static void SaveQuadTree( QNode root, string path)
+        {
+            using (XmlTextWriter writter = new XmlTextWriter(path, Encoding.UTF8))
+            {
+                writter.Formatting = Formatting.Indented;
+                writter.WriteStartDocument();
+                Save(writter, root, path);
+                writter.WriteEndDocument();
+            }
+
+        }
+        private static void Save(XmlTextWriter writter, QNode qnode, string path)
+        {
+            if (qnode == null)
+                return;
+            writter.WriteStartElement("QNode");
+            {
+                writter.WriteAttributeString("Id", qnode.Id.ToString());
+                writter.WriteAttributeString("Level", qnode.Level.ToString());
+                writter.WriteAttributeString("X", qnode.Bound.X.ToString());
+                writter.WriteAttributeString("Y", qnode.Bound.Y.ToString());
+                writter.WriteAttributeString("Width", qnode.Bound.Width.ToString());
+                writter.WriteAttributeString("Height", qnode.Bound.Height.ToString());
+                if (qnode.isLeaf() == true && qnode.ListObject.Any())
+                {
+                    string str = String.Empty;
+                    foreach (var obj in qnode.ListObject)
+                    {
+                        str += obj.Name + " ";
+                    }
+                    writter.WriteStartElement("Objects");
+                    writter.WriteString(str);
+                    writter.WriteEndElement();
+                }
+                else
+                {
+                    for (int i = 0; i < 4; i++)
+                    {
+                        Save(writter, qnode.Childs[i], path);
+                    }
+                }
+            }
+            writter.WriteEndElement();
+
         }
 
         public static IList<GameObject> Load(XmlTextReader reader, string path)
@@ -232,6 +365,8 @@ namespace MapEditor.Tiles
 
             return listGameObject;
         }
+
+
 
         private static GameObject readGameObject(XmlTextReader reader)
         {
@@ -284,5 +419,13 @@ namespace MapEditor.Tiles
             }
             return obj;
         }
+
+        public void InitQuadTree(int level, Rectangle bound)
+        {
+            this.QuadTree = new QuadTree.QNode(0, bound, null);
+            this.QuadTree.ListObject = this.ListItem.ToList();
+            this.QuadTree.initChild();
+        }
+
     }
 }

@@ -60,7 +60,13 @@ void Map::draw(LPD3DXSPRITE spriteHandle, Viewport* viewport)
 	}
 }
 
-
+GVector2 Map::getWorldSize()
+{
+	GVector2 result;
+	result.x = this->_mapSize.x * this->_framewidth;
+	result.y = this->_mapSize.y * this->_frameheight;
+	return result;
+}
 
 Map* Map::LoadFromFile(const string path, eID spriteId)
 {

@@ -231,6 +231,10 @@ namespace MapEditor
         private void _tablelayout_Paint(object sender, PaintEventArgs e)
         {
             _mapController.Draw(getVisibleMap());
+            if (this.toolbar != null && this.toolbar.QuadTree.Pushed)
+            {
+                this.DrawQuadTree();
+            }
         }
 
         // menu toolstrip event
@@ -342,6 +346,18 @@ namespace MapEditor
         }
         private void loadMapToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            this.LoadMap();
+            if (_mapController.TilesMap != null)
+            {
+                 var mapbound = new Rectangle(0,0,
+                    this._mapController.TilesMap.GetMapWidth(),
+                    this._mapController.TilesMap.GetMapHeight());
+                this._mapController.ObjectEditor.InitQuadTree(0, mapbound);           
+            }
+        }
+
+        public void LoadMap()
+        {
             if (String.IsNullOrEmpty(this._tilesetPath) == false)
             {
                 string name = _tilesetPath.Substring(_tilesetPath.LastIndexOf('\\'));
@@ -375,9 +391,9 @@ namespace MapEditor
             this._mapController.InitObjectEditor();
             this._mapController.ObjectEditor.Bind(this.listBoxObject);
             this._mapController.ObjectEditor.ListItem.ListChanged += (object s, ListChangedEventArgs arg) =>
-                {
-                    this.enableSaveButton();
-                };
+            {
+                this.enableSaveButton();
+            };
             _mapController.Draw(getVisibleMap());
             Cursor.Current = Cursors.Default;
             this.disableSaveButton();
@@ -468,7 +484,18 @@ namespace MapEditor
             MainForm.Settings.PropertyChanged += (object s, PropertyChangedEventArgs property_event) =>
                 {
                     if (this.Focused == true)
-                        this._mapController.Draw(getVisibleMap());        
+                        this._mapController.Draw(getVisibleMap());
+                    if (_mapController.TilesMap != null)
+                    {
+                        MapController.MapSize = new Size(
+                            _mapController.TilesMap.Columns * MainForm.Settings.TileSize.Width,
+                            _mapController.TilesMap.Rows * MainForm.Settings.TileSize.Height);
+
+                        var mapbound = new Rectangle(0, 0,
+                                this._mapController.TilesMap.GetMapWidth(),
+                                this._mapController.TilesMap.GetMapHeight());
+                        this._mapController.ObjectEditor.InitQuadTree(0, mapbound);
+                    }
                 };
         }
 
@@ -477,14 +504,31 @@ namespace MapEditor
             MainForm.Settings.Save();
         }
 
-        private void splitContainer2_Panel1_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
         public void ReDrawMap()
         {
             this._mapController.Draw(this.getVisibleMap());
+        }
+        public void DrawQuadTree()
+        {
+            this._mapController.RenderQuadTree();
+        }
+
+        private void exportQTreeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.ExportQuadTree();
+        }
+
+        private void ExportQuadTree()
+        {
+            var filedialog = new SaveFileDialog();
+            filedialog.Filter = "XML Files (*.xml)|*.xml";
+            var result = filedialog.ShowDialog();
+            if (result != System.Windows.Forms.DialogResult.OK)
+                return;
+            string filename = filedialog.FileName;
+            Cursor.Current = Cursors.WaitCursor;
+            ObjectEditor.SaveQuadTree(this._mapController.ObjectEditor.QuadTree, filename);
+            Cursor.Current = Cursors.Default;
         }
     } // END CLASS mainform
 } // END NAMESPACE mapeditor

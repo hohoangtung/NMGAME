@@ -109,7 +109,12 @@ bool PlayScene::init()
 	//_listobject.push_back(water2);
 
 	vector<BaseObject*>* temp = ObjectFactory::getListObjectFromFile("Resources//Map//stage1.xml");
+	map<string, BaseObject*>* maptemp = ObjectFactory::getMapObjectFromFile("Resources//Map//stage1.xml");
+
 	this->_listobject.insert(_listobject.end(), temp->begin(), temp->end());
+	this->_mapobject.insert(maptemp->begin(), maptemp->end());
+
+	_root = QNode::loadQuadTree("Resources//Map//stage1_quadtree.xml", this->_mapobject);
 
 	background = Map::LoadFromFile("Resources//Map//stage1.xml",eID::MAPSTAGE1);
 	return true;
@@ -141,7 +146,7 @@ void PlayScene::update(float dt)
 	// id của đối tượng, được get trong vòng lặp duyệt đối tượng.
 	eID objectID;
 
-	_viewport->setPositionWorld(GVector2(max(_listobject[0]->getPositionX() - 200, 0), WINDOW_HEIGHT));
+	this->updateViewport(_bill);
 	
 	//_listobject[0]->checkCollision(_listobject[1], dt);
 	//_listobject[0]->checkCollision(_listobject[2], dt);
@@ -166,6 +171,7 @@ void PlayScene::update(float dt)
 		_listobject[4]->checkCollision(_listobject[i], dt);
 		_listobject[50]->checkCollision(_listobject[i], dt);
 	}
+
 	_listobject[3]->checkCollision(_listobject[5], dt);
 
 	for (auto object : _listobject)
@@ -198,10 +204,35 @@ void PlayScene::destroyobject()
 		}
 	}
 }
+
+void PlayScene::updateViewport(BaseObject* objTracker)
+{
+	// Vị trí hiện tại của viewport. 
+	GVector2 current_position = _viewport->getPositionWorld();
+	GVector2 worldsize = this->background->getWorldSize();
+	// Bám theo object.
+	GVector2 new_position = GVector2(max(objTracker->getPositionX() - 200, 0), WINDOW_HEIGHT);
+
+	// Không cho đi ngược
+	if (new_position.x < current_position.x)
+	{
+		new_position.x = current_position.x;
+	}
+
+	// Không cho đi quá map.
+	if (new_position.x + WINDOW_WIDTH > worldsize.x)
+	{
+		new_position.x = worldsize.x - WINDOW_WIDTH;
+	}
+
+	_viewport->setPositionWorld(new_position);
+}
+
 void PlayScene::draw(LPD3DXSPRITE spriteHandle)
 {
 	//sprite->render(spriteHandle, _viewport);
 	background->draw(spriteHandle, _viewport);
+
 	for (auto object : _listobject)
 	{
 		object->draw(spriteHandle, _viewport);

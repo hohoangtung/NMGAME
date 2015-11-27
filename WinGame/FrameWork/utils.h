@@ -18,10 +18,11 @@ using namespace std;
 bool isRectangleIntersected(RECT rect1, RECT rect2);
 
 /*
-	Cắt chuỗi thành vector<string> chia bởi ký tự
-	@input: chuỗi được cắt
-	@seperate: ký tự chia
+* Kiểm tra rect1 có chứa rect2 không.
+* @return: true nếu rect1 chứa rect2
 */
+bool isContains(RECT rect1, RECT rect2);
+
 std::vector<std::string> splitString(const std::string & input, char seperate);
 
 /*

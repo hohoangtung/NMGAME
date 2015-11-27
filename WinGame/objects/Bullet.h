@@ -1,10 +1,12 @@
 ﻿#ifndef __BULLET_H__
 #define __BULLET_H__
 
+#include "../FrameWork/define.h"
+#include "../FrameWork/Managers/SceneManager.h"
+
 #include "BaseObject.h"
 #include "BaseEnemy.h"
 #include "IComponent.h"
-#include "../FrameWork/define.h"
 #include "CollisionBody.h"
 
 #define NORMAL_BULLET_SPEED 400;

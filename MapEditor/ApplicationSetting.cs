@@ -38,5 +38,33 @@ namespace MapEditor
                 this["UseTransform"] = (bool)value;
             }
         }
+
+        [UserScopedSetting()]
+        [DefaultSettingValue("3")]
+        public int MaxObjectQuadTree
+        {
+            get
+            {
+                return ((int)this["MaxObjectQuadTree"]);
+            }
+            set
+            {
+                this["MaxObjectQuadTree"] = (int)value;
+            }
+        }
+
+        [UserScopedSetting()]
+        [DefaultSettingValue("32")]
+        public int MaxLevelQuadTree
+        {
+            get
+            {
+                return ((int)this["MaxLevelQuadTree"]);
+            }
+            set
+            {
+                this["MaxLevelQuadTree"] = (int)value;
+            }
+        }
     }
 }

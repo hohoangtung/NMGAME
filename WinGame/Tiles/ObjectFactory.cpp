@@ -48,6 +48,45 @@ vector<BaseObject*>* ObjectFactory::getListObjectFromFile(const string path)
 	return listobject;
 }
 
+map<string, BaseObject*>* ObjectFactory::getMapObjectFromFile(const string path)
+{
+	pugi::xml_document doc;
+	map<string, BaseObject*>* listobject = new map<string, BaseObject*>();
+
+	// Mở file và đọc
+	xml_parse_result result = doc.load_file(path.data(), pugi::parse_default | pugi::parse_pi);
+	if (result == false)
+	{
+		return listobject;
+	}
+
+	xml_node tilemap = doc.child("Tilesmap");
+	if (tilemap == NULL)
+		return listobject;
+
+	xml_node objects = tilemap.child("Objects");
+	auto list = objects.children();
+
+	// Lấy id từ file xml. so sánh với eID, tuỳ theo eID nào mà gọi đến đúng hàm load cho riêng object đó.
+	for (auto item : list)
+	{
+		int id = item.attribute("Id").as_int();
+		string name = item.attribute("Name").as_string();
+		eID enumID;
+		try{
+			enumID = (eID)id;
+		}
+		catch (exception e){
+			continue;
+		}
+		BaseObject* obj = getObjectById(item, enumID);
+		if (obj != NULL)
+			(*listobject)[name] = obj;
+	}
+	return listobject;
+}
+
+
 BaseObject* ObjectFactory::getObjectById(xml_node node, eID id)
 {
 		switch (id)

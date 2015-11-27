@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="NameAndType">
   <Class Name="MapEditor.CreateTilesForm">
-    <Position X="3.75" Y="0.75" Width="2.75" />
+    <Position X="2.75" Y="5" Width="2" />
     <Members>
       <Field Name="_tileset" Hidden="true" />
       <Field Name="buttonBrowse" Hidden="true" />
@@ -25,7 +25,7 @@
     </ShowAsAssociation>
   </Class>
   <Class Name="MapEditor.MainForm">
-    <Position X="8.25" Y="7" Width="3" />
+    <Position X="19.5" Y="0.75" Width="3.5" />
     <Members>
       <Field Name="bindingSource1" Hidden="true" />
       <Field Name="cloneToolStripMenuItem" Hidden="true" />
@@ -45,7 +45,7 @@
       <Field Name="toolStripMenuItem1" Hidden="true" />
     </Members>
     <TypeIdentifier>
-      <HashCode>IcQABAChACAQAIkCoYSpERhGBAVCKxICgAAYFtCAABA=</HashCode>
+      <HashCode>IcQAhIChACAQAIkCgYSpERlmBEVCKwICgBAQF9CACAA=</HashCode>
       <FileName>MainForm.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -54,7 +54,7 @@
     </ShowAsAssociation>
   </Class>
   <Class Name="MapEditor.Tiles.TileSet" BaseTypeListCollapsed="true">
-    <Position X="7.75" Y="1" Width="4" />
+    <Position X="6.25" Y="4.75" Width="2.25" />
     <Members>
       <Field Name="_columns" Hidden="true" />
       <Field Name="_filename" Hidden="true" />
@@ -62,6 +62,10 @@
       <Field Name="_listTiles" Hidden="true" />
       <Field Name="_rows" Hidden="true" />
       <Field Name="_widthtile" Hidden="true" />
+      <Method Name="readtile" Hidden="true" />
+      <Method Name="setProperty" Hidden="true" />
+      <Method Name="TileSet" Hidden="true" />
+      <Method Name="TileSet_PropertyChanged" Hidden="true" />
     </Members>
     <TypeIdentifier>
       <HashCode>AAAEgYAAAEAAAESAAEAAgAAAgAEQEhABAAAAAAhAAAQ=</HashCode>
@@ -70,31 +74,40 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="MapEditor.Tiles.MapController">
-    <Position X="12.25" Y="7.25" Width="3" />
+    <Position X="13.5" Y="4.75" Width="3" />
+    <Members>
+      <Method Name="gameObject_PropertyChanged" Hidden="true" />
+      <Method Name="ListItem_ListChanged" Hidden="true" />
+    </Members>
     <TypeIdentifier>
-      <HashCode>gCIIAAAAEAAAAgACAQBAAAAEGAAAAQACAAAAAAAAEAA=</HashCode>
+      <HashCode>gCIIAAAAEAAAAgACAQBAAAAAGAAAAQACAAAAAAAAEAA=</HashCode>
       <FileName>Tiles\MapController.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
+      <Property Name="ObjectEditor" />
       <Property Name="TilesMap" />
     </ShowAsAssociation>
   </Class>
   <Class Name="MapEditor.Tiles.TilesMap">
-    <Position X="12.75" Y="2.25" Width="1.75" />
+    <Position X="10" Y="4.75" Width="2" />
     <Members>
       <Field Name="_mapSize" Hidden="true" />
       <Field Name="_tileset" Hidden="true" />
     </Members>
     <TypeIdentifier>
-      <HashCode>AAAAgIAAAAAAAEAACAAAgAAAAAAAIAAMAAAAAAkAAAA=</HashCode>
+      <HashCode>AAAAgIAQAAACAEAAKAAAkAAAgAAAIAAMAAAAAAkAAAA=</HashCode>
       <FileName>Tiles\TilesMap.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
       <Property Name="TileSet" />
     </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="ListObject" />
+    </ShowAsCollectionAssociation>
+    <Lollipop Position="0.2" />
   </Class>
   <Class Name="MapEditor.Tiles.Tile">
-    <Position X="2.25" Y="6.75" Width="3.5" />
+    <Position X="24.5" Y="4.25" Width="3.5" />
     <Members>
       <Field Name="_id" Hidden="true" />
       <Field Name="_image" Hidden="true" />
@@ -106,6 +119,48 @@
       <FileName>Tiles\Tile.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="MapEditor.Tiles.ObjectEditor">
+    <Position X="9.75" Y="0.5" Width="1.5" />
+    <Members>
+      <Field Name="_listItem" Hidden="true" />
+      <Field Name="brush" Hidden="true" />
+      <Field Name="brush_font" Hidden="true" />
+      <Field Name="brush_initBound" Hidden="true" />
+      <Method Name="fitTile" Hidden="true" />
+      <Field Name="pen" Hidden="true" />
+      <Method Name="readGameObject" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>AEAAgIAIAgAAAEAAAQ5AAIAAAAAAEAAEAAgAAAAMCAA=</HashCode>
+      <FileName>Tiles\ObjectEditor.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="ListItem" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="MapEditor.Tiles.GameObject">
+    <Position X="4.5" Y="0.5" Width="1.5" />
+    <Members>
+      <Field Name="_activebound" Hidden="true" />
+      <Field Name="_image" Hidden="true" />
+      <Field Name="_initBound" Hidden="true" />
+      <Field Name="_parameters" Hidden="true" />
+      <Field Name="id" Hidden="true" />
+      <Field Name="name" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>ABACAAAAAAAEAAAAIAABAAwAgAIEQBABAIEAAAABAgA=</HashCode>
+      <FileName>Tiles\GameObject.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="QNode">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IIAAAAAAAAAAAACAABCABCAAAAEgAAAAAAACACAAAkA=</HashCode>
+      <FileName>QuadTree\QNode.cs</FileName>
+    </TypeIdentifier>
   </Class>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>

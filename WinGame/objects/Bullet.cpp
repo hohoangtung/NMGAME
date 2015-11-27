@@ -1,4 +1,5 @@
 ﻿#include "Bullet.h"
+
 Bullet::Bullet(GVector2 startPosition, eBulletType type,eDirection dir) : BaseObject(eID::BULLET)
 {
 	_startPosition = startPosition;
@@ -84,6 +85,16 @@ void Bullet::init()
 
 void Bullet::update(float deltatime)
 {
+	if (this->getStatus() == eStatus::DESTROY)
+		return;
+	
+	// viewport
+	auto viewport = SceneManager::getInstance()->getCurrentScene()->getViewport();
+
+	// Nếu ra khỏi màn hình thì có trạng thái là destroy.
+	if (viewport->isContains(this->getBounding()) == false)
+		this->setStatus(eStatus::DESTROY);
+
 	for (auto it = _componentList.begin(); it != _componentList.end(); it++)
 	{
 		it->second->update(deltatime);
@@ -92,6 +103,8 @@ void Bullet::update(float deltatime)
 
 void Bullet::draw(LPD3DXSPRITE spriteHandle, Viewport *viewport)
 {
+	if (this->getStatus() == eStatus::DESTROY)
+		return;
 	_sprite->render(spriteHandle, viewport);
 }
 
@@ -137,6 +150,7 @@ void Bullet::onCollisionBegin(CollisionEventArg* collision_arg)
 		{
 		case AIRCRAFT:
 			collision_arg->_otherObject->setStatus(eStatus::BURST);
+			this->setStatus(eStatus::DESTROY);
 			break;
 		case BOX:	
 			OutputDebugString(L"hit...\n");
@@ -144,9 +158,12 @@ void Bullet::onCollisionBegin(CollisionEventArg* collision_arg)
 		case SOLDIER: case RIFLEMAN:
 			if (collision_arg->_otherObject->getStatus() != HIDDEN && collision_arg->_otherObject->getStatus() != EXPOSING)
 				((BaseEnemy*)collision_arg->_otherObject)->dropHitpoint();
+			this->setStatus(eStatus::DESTROY);
 			break;
 		case REDCANNON: case WALL_TURRET:
 			((BaseEnemy*)collision_arg->_otherObject)->dropHitpoint();
+			this->setStatus(eStatus::DESTROY);
+			break;
 		}
 	}
 	if (this->isEnemyBullet())

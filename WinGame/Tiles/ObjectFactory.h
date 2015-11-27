@@ -15,11 +15,10 @@ class ObjectFactory
 public:
 	ObjectFactory();
 	~ObjectFactory();
-
+	static map<string, BaseObject*>* getMapObjectFromFile(const string path);
 	static vector<BaseObject*>* getListObjectFromFile(const string path);
 private: 
 	static BaseObject* getObjectById(xml_node node, eID id);
-
 	static BaseObject* getLand(xml_node node);
 	static BaseObject* getRifleMan(xml_node node);
 

@@ -113,32 +113,36 @@ void Bill::update(float deltatime)
 
 	_animations[_currentAnimateIndex]->update(deltatime);
 
-	// viewport
-	auto viewport = SceneManager::getInstance()->getCurrentScene()->getViewport();
+	//// viewport
+	//auto viewport = SceneManager::getInstance()->getCurrentScene()->getViewport();
+	
+	// Huỷ các bullet đã hết hiệu lực.
+	this->deleteBullet();
 
 	// bullet
 	for (auto it = _listBullets.begin(); it != _listBullets.end();)
 	{
 		(*it)->update(deltatime);
+		
+		//// Tung Ho. Trong bullet đã có, nếu ra khỏi màn hình thì bullet có trạng thái là destroy. hàm delete bullet xử lý nếu trạng thái là destroy thì huỷ đối tượng.
 
-		// tạm để cho nó hết màn hình nó xóa
-		if ((*it)->getPositionX() < 0 || (*it)->getPositionX() > viewport->getPositionWorld().x + viewport->getWidth() ||
-			(*it)->getPositionY() < 0 || (*it)->getPositionY() > viewport->getPositionWorld().y + viewport->getHeight()
-			)
-		{
-			auto temp = it;
-			it++;
-			_listBullets.erase(temp);
-		}
-		else
-		{
-			it++;
-		}
-
+		//// tạm để cho nó hết màn hình nó xóa
+		//if ((*it)->getPositionX() < 0 || (*it)->getPositionX() > viewport->getPositionWorld().x + viewport->getWidth() ||
+		//	(*it)->getPositionY() < 0 || (*it)->getPositionY() > viewport->getPositionWorld().y + viewport->getHeight()
+		//	)
+		//{
+		//	auto temp = it;
+		//	it++;
+		//	_listBullets.erase(temp);
+		//}
+		//else
+		//{
+		//	it++;
+		//}
+		it++;
 		if (_listBullets.size() <= 0)
 			break;
 	}
-
 	// update component để sau cùng để sửa bên trên sau đó nó cập nhật đúng
 	for (auto it = _componentList.begin(); it != _componentList.end(); it++)
 	{
@@ -147,6 +151,29 @@ void Bill::update(float deltatime)
 
 }
 
+
+/*
+*	author: Tung Ho
+*	datemodified : 27/11/2015
+*	kiểm tra và xoá đạn..
+*	xoá các đạn ra khỏi màn hình và các đạn có status = destroy
+*/
+void Bill::deleteBullet()
+{
+	for (auto bullet : _listBullets)
+	{
+		if (bullet->getStatus() == eStatus::DESTROY)	// kiểm tra nếu là destroy thì loại khỏi list
+		{
+			bullet->release();
+			// http://www.cplusplus.com/reference/algorithm/remove/
+			auto rs1 = std::remove(_listBullets.begin(), _listBullets.end(), bullet);
+			_listBullets.pop_back();			// sau khi remove thì còn một phần tử cuối cùng vôi ra. giống như dịch mảng. nên cần bỏ nó đi
+			
+			delete bullet;
+			break;		// sau pop_back phần tử đi thì list bị thay đổi, nên vòng for-each không còn nguyên trạng nữa. -> break (mỗi frame chỉ remove được 1 đối tượng)
+		}
+	}
+}
 void Bill::updateInput(float dt)
 {
 	if (_input->isKeyDown(DIK_X))
@@ -342,6 +369,8 @@ void Bill::onCollisionEnd(CollisionEventArg * collision_event)
 
 float Bill::checkCollision(BaseObject * object, float dt)
 {
+	if (object->getStatus() == eStatus::DESTROY)
+		return 0.0f;
 	auto collisionBody = (CollisionBody*)_componentList["CollisionBody"];
 	eID objectId = object->getId();
 	eDirection direction;
@@ -463,6 +492,17 @@ void Bill::standing()
 
 void Bill::moveLeft()
 {
+	// viewport
+	auto viewport = SceneManager::getInstance()->getCurrentScene()->getViewport();
+	GVector2 viewportPosition = viewport->getPositionWorld();
+	float billPositionX = this->getPositionX();
+	auto halfwidth = this->getSprite()->getFrameWidth() * this->getSprite()->getOrigin().x;
+	// Không cho đi vượt cạnh trái
+	if (billPositionX +  halfwidth - _movingSpeed * 0.33 <= viewportPosition.x) // hard code
+	{
+		this->setPositionX(viewportPosition.x + halfwidth);
+		return;
+	}
 	if(this->getScale().x > 0)
 		this->setScaleX(this->getScale().x * (-1));
 
