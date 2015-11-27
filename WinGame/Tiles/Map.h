@@ -68,7 +68,11 @@ public:
 		eID: sprite id được đăng kí ở sprite manager.
 	*/
 	static Map* LoadFromFile(const string path, eID spriteId);
-	
+
+	/*
+	Lấy kich thước map.
+	*/
+	GVector2 getWorldSize();
 	Map();
 	~Map();
 

@@ -65,6 +65,7 @@ private:
 	// Trỏ đến bill, một số đối tượng cần truyền bill vào để xử lý, lấy ở đây.
 	BaseObject* _bill; 
 
+	void updateViewport(BaseObject* objTracker);
 };
 
 #endif // !__PLAY_SCENE_H__

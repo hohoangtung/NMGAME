@@ -168,7 +168,7 @@ void Bill::deleteBullet()
 			// http://www.cplusplus.com/reference/algorithm/remove/
 			auto rs1 = std::remove(_listBullets.begin(), _listBullets.end(), bullet);
 			_listBullets.pop_back();			// sau khi remove thì còn một phần tử cuối cùng vôi ra. giống như dịch mảng. nên cần bỏ nó đi
-
+			
 			delete bullet;
 			break;		// sau pop_back phần tử đi thì list bị thay đổi, nên vòng for-each không còn nguyên trạng nữa. -> break (mỗi frame chỉ remove được 1 đối tượng)
 		}
@@ -369,6 +369,8 @@ void Bill::onCollisionEnd(CollisionEventArg * collision_event)
 
 float Bill::checkCollision(BaseObject * object, float dt)
 {
+	if (object->getStatus() == eStatus::DESTROY)
+		return 0.0f;
 	auto collisionBody = (CollisionBody*)_componentList["CollisionBody"];
 	eID objectId = object->getId();
 	eDirection direction;
@@ -490,6 +492,17 @@ void Bill::standing()
 
 void Bill::moveLeft()
 {
+	// viewport
+	auto viewport = SceneManager::getInstance()->getCurrentScene()->getViewport();
+	GVector2 viewportPosition = viewport->getPositionWorld();
+	float billPositionX = this->getPositionX();
+	auto halfwidth = this->getSprite()->getFrameWidth() * this->getSprite()->getOrigin().x;
+	// Không cho đi vượt cạnh trái
+	if (billPositionX +  halfwidth - _movingSpeed * 0.33 <= viewportPosition.x) // hard code
+	{
+		this->setPositionX(viewportPosition.x + halfwidth);
+		return;
+	}
 	if(this->getScale().x > 0)
 		this->setScaleX(this->getScale().x * (-1));
 

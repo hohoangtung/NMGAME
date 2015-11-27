@@ -146,7 +146,7 @@ void PlayScene::update(float dt)
 	// id của đối tượng, được get trong vòng lặp duyệt đối tượng.
 	eID objectID;
 
-	_viewport->setPositionWorld(GVector2(max(_listobject[0]->getPositionX() - 200, 0), WINDOW_HEIGHT));
+	this->updateViewport(_bill);
 	
 	//_listobject[0]->checkCollision(_listobject[1], dt);
 	//_listobject[0]->checkCollision(_listobject[2], dt);
@@ -203,12 +203,34 @@ void PlayScene::destroyobject()
 		}
 	}
 }
+
+void PlayScene::updateViewport(BaseObject* objTracker)
+{
+	// Vị trí hiện tại của viewport. 
+	GVector2 current_position = _viewport->getPositionWorld();
+	GVector2 worldsize = this->background->getWorldSize();
+	// Bám theo object.
+	GVector2 new_position = GVector2(max(objTracker->getPositionX() - 200, 0), WINDOW_HEIGHT);
+
+	// Không cho đi ngược
+	if (new_position.x < current_position.x)
+	{
+		new_position.x = current_position.x;
+	}
+
+	// Không cho đi quá map.
+	if (new_position.x + WINDOW_WIDTH > worldsize.x)
+	{
+		new_position.x = worldsize.x - WINDOW_WIDTH;
+	}
+
+	_viewport->setPositionWorld(new_position);
+}
+
 void PlayScene::draw(LPD3DXSPRITE spriteHandle)
 {
 	//sprite->render(spriteHandle, _viewport);
 	background->draw(spriteHandle, _viewport);
-
-
 
 	for (auto object : _listobject)
 	{
