@@ -109,7 +109,12 @@ bool PlayScene::init()
 	//_listobject.push_back(water2);
 
 	vector<BaseObject*>* temp = ObjectFactory::getListObjectFromFile("Resources//Map//stage1.xml");
+	map<string, BaseObject*>* maptemp = ObjectFactory::getMapObjectFromFile("Resources//Map//stage1.xml");
+
 	this->_listobject.insert(_listobject.end(), temp->begin(), temp->end());
+	this->_mapobject.insert(maptemp->begin(), maptemp->end());
+
+	_root = QNode::loadQuadTree("Resources//Map//stage1_quadtree.xml", this->_mapobject);
 
 	background = Map::LoadFromFile("Resources//Map//stage1.xml",eID::MAPSTAGE1);
 	return true;
@@ -165,6 +170,7 @@ void PlayScene::update(float dt)
 	{
 		_listobject[4]->checkCollision(_listobject[i], dt);
 	}
+
 	_listobject[3]->checkCollision(_listobject[5], dt);
 
 	for (auto object : _listobject)

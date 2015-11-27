@@ -17,5 +17,11 @@ using namespace std;
 	return: true nếu có chồng lên nhau, ngược lại là false
 */
 bool isRectangleIntersected(RECT rect1, RECT rect2);
+
+/*
+* Kiểm tra rect1 có chứa rect2 không.
+* @return: true nếu rect1 chứa rect2
+*/
+bool isContains(RECT rect1, RECT rect2);
 std::vector<std::string> splitString(const std::string & input, char seperate);
 #endif // !__UTILS_H__

@@ -34,11 +34,6 @@ namespace MapEditor
             this.textBoxHeight.DataBindings.Add("Text", _tileset, "Hieghttile");
         }
 
-        private void InitializeComponent()
-        {
-            throw new NotImplementedException();
-        }
-
         // PRIVATE ATTRIBUTE
         // ---------------------------------------------------------
         private Pen _pen;

@@ -9,7 +9,7 @@ using System.Xml;
 
 namespace MapEditor.Tiles
 {
-    public class TilesMap
+    public class TilesMap : INotifyPropertyChanged
     {
         #region Private Attribute
         private Point _mapSize;
@@ -21,24 +21,50 @@ namespace MapEditor.Tiles
         {
             _mapSize = new Point(columns, rows);
             _matrixIndex = new int[columns, rows];
+
             ListObject = new BindingList<GameObject>();
             TileSet = null;
+            MapController.MapSize = new Size(
+                _mapSize.X * MainForm.Settings.TileSize.Width,
+                _mapSize.Y * MainForm.Settings.TileSize.Height);
         }
 
         public int Columns
         {
             get { return _mapSize.X; }
-            private set { _mapSize.X = value; }
+            private set
+            {
+                if (_mapSize.X != value)
+                {
+                    _mapSize.X = value;
+                    OnProPertyChanged(new PropertyChangedEventArgs("Columns"));
+
+                }
+            }
         }
+
         public TileSet TileSet
         {
             get { return _tileset; }
-            set { _tileset = value; }
+            set {
+                if (_tileset != value)
+                {
+                    _tileset = value;
+          
+                }
+            }
         }
         public int Rows
         {
             get { return _mapSize.Y; }
-            private set { _mapSize.Y = value; }
+            private set
+            {
+                if (_mapSize.Y != value)
+                {
+                    _mapSize.Y = value;
+                    OnProPertyChanged(new PropertyChangedEventArgs("Rows"));
+                }
+            }
         }
         public BindingList<GameObject> ListObject { get; set; }
         public int this[int i, int j]
@@ -133,7 +159,6 @@ namespace MapEditor.Tiles
                             }
                             wr.WriteEndElement(); // rows
                         }
-
                     }
                     wr.WriteEndElement();   // Matrixindex
                     if (tilesmap.TileSet != null)
@@ -144,6 +169,7 @@ namespace MapEditor.Tiles
                     {
                         ObjectEditor.Save(wr, tilesmap.ListObject, path);
                     }
+
                 }
 
                 wr.WriteEndElement();       // Tiles map
@@ -166,6 +192,26 @@ namespace MapEditor.Tiles
         public int GetMapHeight()
         {
             return this.Rows * MainForm.Settings.TileSize.Height;
+        }
+        public int GetMapWidth()
+        {
+            return this.Columns * MainForm.Settings.TileSize.Width;
+        }
+        public Size GetMapSize()
+        {
+            return new Size(
+                this.GetMapWidth(),
+                this.GetMapHeight());
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected void OnProPertyChanged(PropertyChangedEventArgs args)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, args);
+            }
         }
     }
 }

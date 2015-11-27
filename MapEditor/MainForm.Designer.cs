@@ -50,6 +50,7 @@
             this.MenuItemDelete = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuItemFitTile = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuItemImport = new System.Windows.Forms.ToolStripMenuItem();
+            this.exportQTreeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -69,7 +70,8 @@
             this.editToolStripMenuItem,
             this.cloneToolStripMenuItem,
             this.saveMapToolStripMenuItem,
-            this.loadMapToolStripMenuItem});
+            this.loadMapToolStripMenuItem,
+            this.exportQTreeToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(1184, 24);
@@ -140,7 +142,7 @@
             // 
             this.splitContainer1.Panel2.AutoScroll = true;
             this.splitContainer1.Panel2.Controls.Add(this.splitContainer2);
-            this.splitContainer1.Size = new System.Drawing.Size(1184, 718);
+            this.splitContainer1.Size = new System.Drawing.Size(1184, 709);
             this.splitContainer1.SplitterDistance = 220;
             this.splitContainer1.TabIndex = 1;
             // 
@@ -152,7 +154,7 @@
             this.listView1.Location = new System.Drawing.Point(0, 0);
             this.listView1.MultiSelect = false;
             this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(220, 718);
+            this.listView1.Size = new System.Drawing.Size(220, 709);
             this.listView1.TabIndex = 0;
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.AfterLabelEdit += new System.Windows.Forms.LabelEditEventHandler(this.listView1_AfterLabelEdit);
@@ -170,14 +172,13 @@
             // 
             this.splitContainer2.Panel1.AutoScroll = true;
             this.splitContainer2.Panel1.Scroll += new System.Windows.Forms.ScrollEventHandler(this.Panel_Scroll);
-            this.splitContainer2.Panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.splitContainer2_Panel1_Paint);
             // 
             // splitContainer2.Panel2
             // 
             this.splitContainer2.Panel2.AutoScroll = true;
             this.splitContainer2.Panel2.Controls.Add(this.gameObjectproperty);
             this.splitContainer2.Panel2.Controls.Add(this.listBoxObject);
-            this.splitContainer2.Size = new System.Drawing.Size(960, 718);
+            this.splitContainer2.Size = new System.Drawing.Size(960, 709);
             this.splitContainer2.SplitterDistance = 434;
             this.splitContainer2.TabIndex = 0;
             // 
@@ -201,6 +202,7 @@
             this.listBoxObject.Name = "listBoxObject";
             this.listBoxObject.Size = new System.Drawing.Size(426, 280);
             this.listBoxObject.TabIndex = 0;
+            this.listBoxObject.SelectedIndexChanged += new System.EventHandler(this.listBoxObject_SelectedIndexChanged);
             this.listBoxObject.MouseDown += new System.Windows.Forms.MouseEventHandler(this.listBoxObject_MouseDown);
             // 
             // contextMenuStrip1
@@ -227,6 +229,7 @@
             this.defaultImage.Images.SetKeyName(3, "save.png");
             this.defaultImage.Images.SetKeyName(4, "save_as.png");
             this.defaultImage.Images.SetKeyName(5, "open.png");
+            this.defaultImage.Images.SetKeyName(6, "quadtree.png");
             // 
             // ContextMenuListBox
             // 
@@ -256,11 +259,18 @@
             this.MenuItemImport.Size = new System.Drawing.Size(155, 22);
             this.MenuItemImport.Text = "Import Image...";
             // 
+            // exportQTreeToolStripMenuItem
+            // 
+            this.exportQTreeToolStripMenuItem.Name = "exportQTreeToolStripMenuItem";
+            this.exportQTreeToolStripMenuItem.Size = new System.Drawing.Size(87, 20);
+            this.exportQTreeToolStripMenuItem.Text = "Export QTree";
+            this.exportQTreeToolStripMenuItem.Click += new System.EventHandler(this.exportQTreeToolStripMenuItem_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1184, 742);
+            this.ClientSize = new System.Drawing.Size(1184, 733);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
@@ -309,5 +319,6 @@
         private System.Windows.Forms.ToolStripMenuItem MenuItemDelete;
         private System.Windows.Forms.ToolStripMenuItem MenuItemFitTile;
         private System.Windows.Forms.ToolStripMenuItem MenuItemImport;
+        private System.Windows.Forms.ToolStripMenuItem exportQTreeToolStripMenuItem;
     }
 }

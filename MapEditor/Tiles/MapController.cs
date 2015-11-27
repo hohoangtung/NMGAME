@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MapEditor.QuadTree;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
@@ -58,7 +59,35 @@ namespace MapEditor.Tiles
 
         public ObjectEditor ObjectEditor { get; set; }
 
-        public TilesMap TilesMap { get; set; }
+        private TilesMap _tilesMap;
+        public TilesMap TilesMap
+        {
+            get
+            {
+                return _tilesMap;
+            }
+            set
+            {
+                if (_tilesMap != value)
+                {
+                    _tilesMap = value;
+                    if (value !=null)
+                    {
+                        value.PropertyChanged += (object sender, PropertyChangedEventArgs e) =>
+                            {
+                                if (e.PropertyName == "Columns" || e.PropertyName == "Rows")
+                                {
+                                    MapController.MapSize = new Size(
+                                        _tilesMap.Columns * MainForm.Settings.TileSize.Width,
+                                        _tilesMap.Rows * MainForm.Settings.TileSize.Height);
+                                }
+                            };
+                    }
+                }
+            }
+        }
+
+        public static Size MapSize { get; set; }
 
         // Sự kiện được kích hoạt mỗi khi vẽ lại map, hoặc vẽ thêm một tile lên map
         public event EventHandler Drawn;
@@ -105,14 +134,20 @@ namespace MapEditor.Tiles
             }
             if (MainForm.Settings.UseTransform == true)
             {
-                int height = this.TilesMap.GetMapHeight();
-                this.ObjectEditor.draw(Graphics, height);
+                int worldheight = this.TilesMap.GetMapHeight();
+                if (this.ObjectEditor.QuadTree == null)
+                    this.ObjectEditor.draw(Graphics, worldheight);
+                else
+                    this.ObjectEditor.draw(Graphics, visilbleRect, worldheight);
             }
             else
             {
-                this.ObjectEditor.draw(Graphics);
+                if (this.ObjectEditor.QuadTree == null)
+                    this.ObjectEditor.draw(Graphics);
+                else
+                    this.ObjectEditor.draw(Graphics, visilbleRect);
             }
-
+            
             _lastVisibleRect = visilbleRect;
             OnDraw(null);
         }
@@ -176,6 +211,15 @@ namespace MapEditor.Tiles
             }
             imagelist.ImageSize = new Size(40, 40);     //hard code
             return imagelist;
+        }
+
+        public void RenderQuadTree()
+        {
+            if (this.ObjectEditor != null && this.Graphics != null)
+            {
+                this.ObjectEditor.RenderQuadTree(this.Graphics);
+                OnDraw(null);       
+            }
         }
     }
 }

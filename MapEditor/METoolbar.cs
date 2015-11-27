@@ -18,7 +18,7 @@ namespace MapEditor
         public ToolBarButton Save { get; set; }
         public ToolBarButton SaveAs { get; set; }
         public ToolBarButton Open { get; set; }
-
+        public ToolBarButton QuadTree { get; set; }
         public void Init()
         {
             var resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
@@ -33,6 +33,7 @@ namespace MapEditor
             this.Save = initSaveButton("save");
             this.SaveAs = initSaveAsButton("saveAs");
             this.Open = initOpenButton("open");
+            this.QuadTree = initQuadTreeButton("quadtree");
 
             this.Buttons.Add(EditState);
             this.Buttons.Add(AppSettings);
@@ -40,6 +41,8 @@ namespace MapEditor
             this.Buttons.Add(Save);
             this.Buttons.Add(SaveAs);
             this.Buttons.Add(Open);
+            this.Buttons.Add(initSeperator("seperator2"));
+            this.Buttons.Add(QuadTree);
 
             this.ButtonClick += (object sender, ToolBarButtonClickEventArgs e) =>
             {
@@ -63,7 +66,22 @@ namespace MapEditor
                 {
                     this.buttonOpenHandleClick(sender, e);   
                 }
+                else if (e.Button.Name == "quadtree")
+                {
+                    this.buttonQuadtreeHandleClick(sender, e);
+                }
             };
+        }
+
+        private ToolBarButton initQuadTreeButton(string name)
+        {
+            ToolBarButton quadtreebtn = new ToolBarButton();
+            quadtreebtn.Name = name;
+            quadtreebtn.Style = ToolBarButtonStyle.ToggleButton;
+            quadtreebtn.Pushed = false;
+            quadtreebtn.ImageIndex = 6;
+
+            return quadtreebtn;
         }
 
         private ToolBarButton initSeperator(string name)
@@ -168,6 +186,7 @@ namespace MapEditor
         private void buttonOpenHandleClick(object sender, ToolBarButtonClickEventArgs e)
         {
             var mainform = (sender as ToolBar).FindForm() as MainForm;
+            mainform.LoadMap();
         }
 
         // Hàm xử lý sự kiện nhấn nút Save As
@@ -183,5 +202,19 @@ namespace MapEditor
             var mainform = (sender as ToolBar).FindForm() as MainForm;
             mainform.Save();
         }
+
+        private void buttonQuadtreeHandleClick(object sender, ToolBarButtonClickEventArgs e)
+        {
+            var mainform = (sender as ToolBar).FindForm() as MainForm;
+            if (e.Button.Pushed)
+            {
+                mainform.DrawQuadTree();
+            }
+            else
+            {
+                mainform.ReDrawMap();
+            }
+        }
+
     }
 }

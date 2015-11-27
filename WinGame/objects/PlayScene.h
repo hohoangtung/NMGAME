@@ -11,6 +11,7 @@
 #include "../FrameWork/Animation.h"
 #include "../debug.h"
 #include "../Tiles/Map.h"
+#include "../QNode.h"
 
 #include "BaseObject.h"
 #include "Bill.h"
@@ -53,10 +54,14 @@ private:
 	Sprite* sprite;
 	Text* _text;
 	vector<BaseObject*> _listobject;
+	map <string, BaseObject*> _mapobject;
+
 	vector<IControlable*> _listControlObject;
 	Animation* _animation;
 	Map* background;
 
+	// quadtree
+	QNode* _root;
 	// Trỏ đến bill, một số đối tượng cần truyền bill vào để xử lý, lấy ở đây.
 	BaseObject* _bill; 
 

@@ -85,6 +85,9 @@ private:
 	list<Bullet* > _listBullets;
 
 	eDirection getAimingDirection();
+
+	// Tung Ho: kiểm tra và xoá đạn hết hiệu lực.
+	void deleteBullet();
 };
 
 #endif // !__BILL_H__
