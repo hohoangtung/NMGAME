@@ -309,9 +309,7 @@ namespace MapEditor.Tiles
             {
                 writter.Formatting = Formatting.Indented;
                 writter.WriteStartDocument();
-                writter.WriteStartElement("QuadTree");
                 Save(writter, root, path);
-                writter.WriteEndElement();
                 writter.WriteEndDocument();
             }
 

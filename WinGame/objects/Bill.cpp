@@ -170,7 +170,7 @@ void Bill::deleteBullet()
 			_listBullets.pop_back();			// sau khi remove thì còn một phần tử cuối cùng vôi ra. giống như dịch mảng. nên cần bỏ nó đi
 
 			delete bullet;
-			break;		// sau pop_back phần tử đi thì list bị thay đồi, nên vòng for-each không còn nguyên trạng nữa. -> break (mỗi frame chỉ remove được 1 đối tượng)
+			break;		// sau pop_back phần tử đi thì list bị thay đổi, nên vòng for-each không còn nguyên trạng nữa. -> break (mỗi frame chỉ remove được 1 đối tượng)
 		}
 	}
 }

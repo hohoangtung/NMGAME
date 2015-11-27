@@ -207,6 +207,9 @@ void PlayScene::draw(LPD3DXSPRITE spriteHandle)
 {
 	//sprite->render(spriteHandle, _viewport);
 	background->draw(spriteHandle, _viewport);
+
+
+
 	for (auto object : _listobject)
 	{
 		object->draw(spriteHandle, _viewport);
