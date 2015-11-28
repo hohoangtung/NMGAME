@@ -185,11 +185,11 @@ BaseObject * ObjectFactory::getRifleMan(xml_node node)
 	x = stoi(properties["X"]);
 	y = stoi(properties["Y"]);
 
-	try
+	if (properties.find("status") != properties.end())
 	{
-		status = (eStatus)stoi(properties["status"]);
+		status = (eStatus)(stoi(properties.find("status")->second));
 	}
-	catch (exception ex)
+	else
 	{
 		status = eStatus::NORMAL;
 	}
@@ -212,20 +212,20 @@ BaseObject * ObjectFactory::getSoldier(xml_node node)
 	x = stoi(properties["X"]);
 	y = stoi(properties["Y"]);
 	
-	try
+	if (properties.find("status") != properties.end())
 	{
-		status = (eStatus)stoi(properties["status"]);
+		status = (eStatus)(stoi(properties.find("status")->second));
 	}
-	catch (exception ex)
+	else
 	{
 		status = eStatus::NORMAL;
 	}
 
-	try
+	if (properties.find("direction") != properties.end())
 	{
-		dir = stoi(properties["direction"]);
+		dir = stoi(properties.find("direction")->second);
 	}
-	catch (exception ex)
+	else
 	{
 		dir = -1;
 	}
@@ -248,11 +248,11 @@ BaseObject * ObjectFactory::getRedCannon(xml_node node)
 	x = stoi(properties["X"]) + 32;
 	y = stoi(properties["Y"]) - 32;
 
-	try
+	if (properties.find("status") != properties.end())
 	{
-		status = (eStatus)stoi(properties["status"]);
+		status = (eStatus)(stoi(properties.find("status")->second));
 	}
-	catch (exception ex)
+	else
 	{
 		status = eStatus::NORMAL;
 	}
@@ -275,11 +275,11 @@ BaseObject * ObjectFactory::getWallTurret(xml_node node)
 	x = stoi(properties["X"]) + 32;
 	y = stoi(properties["Y"]) - 32;
 
-	try
+	if (properties.find("status") != properties.end())
 	{
-		status = (eStatus)(stoi(properties["status"]));
+		status = (eStatus)(stoi(properties.find("status")->second));
 	}
-	catch (exception ex)
+	else
 	{
 		status = eStatus::NORMAL;
 	}
@@ -304,49 +304,50 @@ BaseObject * ObjectFactory::getAirCraft(xml_node node)
 	pos.x = stoi(properties["X"]);
 	pos.y = stoi(properties["Y"]);
 
-	try
+	// type
+	if (properties.find("type") != properties.end())
 	{
-		type = (eAirCraftType)(stoi(properties["type"]));
+		type = (eAirCraftType)(stoi(properties.find("type")->second));
 	}
-	catch (exception ex)
+	else
 	{
 		type = eAirCraftType::S;
 	}
 
 	// ampl
-	try
+	if (properties.find("Amplitude") != properties.end())
 	{
-		auto velocStr = properties["Amplitude"];
+		auto velocStr = properties.find("Amplitude")->second;
 		auto value = splitString(velocStr, ',');
 
 		ampl.x = stoi(value[0]);
 		ampl.y = stoi(value[1]);
 	}
-	catch (exception ex)
+	else
 	{
 		ampl = AIRCRAFT_AMPLITUDE;
 	}
 
 	// hVeloc
-	try
+	if (properties.find("HVelocity") != properties.end())
 	{
-		auto velocStr = properties["HVelocity"];
+		auto velocStr = properties.find("HVelocity")->second;
 		auto value = splitString(velocStr, ',');
 
 		hVeloc.x = stoi(value[0]);
 		hVeloc.y = stoi(value[1]);
 	}
-	catch (exception ex)
+	else
 	{
 		hVeloc = HORIZONTAL_VELOC;
 	}
 
 	// freq
-	try
+	if (properties.find("Frequency") != properties.end())
 	{
-		freq = stof(properties["frequency"]);
+		freq = stof(properties.find("Frequency")->second);
 	}
-	catch (exception ex)
+	else
 	{
 		freq = AIRCRAFT_FREQUENCY;
 	}
