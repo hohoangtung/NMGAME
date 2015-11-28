@@ -688,5 +688,35 @@
         <Elem Key="status" Value="0" />
       </Params>
     </Item>
+    <Item Id="6" Name="rifleMan2" X="1280" Y="120" Width="32" Height="64">
+      <ActiveBound X="1280" Y="120" Width="32" Height="64" />
+    </Item>
+    <Item Id="11" Name="wallTurret1" X="2496" Y="192" Width="64" Height="64">
+      <ActiveBound X="2496" Y="192" Width="64" Height="64" />
+    </Item>
+    <Item Id="11" Name="wallTurret2" X="3264" Y="256" Width="64" Height="64">
+      <ActiveBound X="3264" Y="256" Width="64" Height="64" />
+    </Item>
+    <Item Id="11" Name="wallTurret3" X="3648" Y="256" Width="64" Height="64">
+      <ActiveBound X="3648" Y="256" Width="64" Height="64" />
+    </Item>
+    <Item Id="1" Name="redCannon1" X="4096" Y="192" Width="64" Height="64">
+      <ActiveBound X="4096" Y="192" Width="64" Height="64" />
+    </Item>
+    <Item Id="1" Name="redCannon2" X="4352" Y="384" Width="64" Height="64">
+      <ActiveBound X="4352" Y="384" Width="64" Height="64" />
+    </Item>
+    <Item Id="6" Name="rifleMan3" X="4736" Y="256" Width="32" Height="64">
+      <ActiveBound X="4736" Y="256" Width="32" Height="64" />
+    </Item>
+    <Item Id="1" Name="redCannon4" X="5504" Y="256" Width="64" Height="64">
+      <ActiveBound X="5504" Y="256" Width="64" Height="64" />
+    </Item>
+    <Item Id="11" Name="wallTurret4" X="5952" Y="128" Width="64" Height="64">
+      <ActiveBound X="5952" Y="128" Width="64" Height="64" />
+    </Item>
+    <Item Id="11" Name="wallTurret5" X="6208" Y="128" Width="64" Height="64">
+      <ActiveBound X="6208" Y="128" Width="64" Height="64" />
+    </Item>
   </Objects>
 </Tilesmap>

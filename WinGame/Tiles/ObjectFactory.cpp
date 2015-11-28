@@ -94,19 +94,20 @@ BaseObject* ObjectFactory::getObjectById(xml_node node, eID id)
 		case BILL:
 			break;
 		case REDCANNON:
+			return getRedCannon(node);
 			break;
 		case SOLDIER:
+			return getSoldier(node);
 			break;
 		case FALCON:
 			break;
 		case AIRCRAFT:
+			return getAirCraft(node);
 			break;
 		case EXPLOSION:
 			break;
 		case RIFLEMAN:
 			return getRifleMan(node);
-			break;
-		case BOX:
 			break;
 		case BRIDGE:
 			break;
@@ -118,6 +119,9 @@ BaseObject* ObjectFactory::getObjectById(xml_node node, eID id)
 			break;
 		case LAND:
 			return getLand(node);
+			break;
+		case WALL_TURRET:
+			return getWallTurret(node);
 			break;
 		default:
 			return NULL;
@@ -172,17 +176,18 @@ BaseObject* ObjectFactory::getLand(xml_node node)
 BaseObject * ObjectFactory::getRifleMan(xml_node node)
 {
 	auto properties = getObjectProperties(node);
-	int x, y;
-	eStatus status;
-
 	if (properties.size() == 0)
 		return nullptr;
 
+	int x, y;
+	eStatus status;
+
+	x = stoi(properties["X"]);
+	y = stoi(properties["Y"]);
+
 	try
 	{
-		status = (eStatus)properties["status"];
-		x = properties["X"];
-		y = properties["Y"];
+		status = (eStatus)stoi(properties["status"]);
 	}
 	catch (exception ex)
 	{
@@ -195,22 +200,179 @@ BaseObject * ObjectFactory::getRifleMan(xml_node node)
 	return rifleMan;
 }
 
-map<string, int> ObjectFactory::getObjectProperties(xml_node node)
+BaseObject * ObjectFactory::getSoldier(xml_node node)
 {
-	map<string, int> properties;
+	auto properties = getObjectProperties(node);
+	if (properties.size() == 0)
+		return nullptr;
+
+	int x, y, dir;
+	eStatus status;
+
+	x = stoi(properties["X"]);
+	y = stoi(properties["Y"]);
+	
+	try
+	{
+		status = (eStatus)stoi(properties["status"]);
+	}
+	catch (exception ex)
+	{
+		status = eStatus::NORMAL;
+	}
+
+	try
+	{
+		dir = stoi(properties["direction"]);
+	}
+	catch (exception ex)
+	{
+		dir = -1;
+	}
+
+	auto soldier = new Soldier(status, GVector2(x, y), dir);
+	soldier->init();
+
+	return soldier;
+}
+
+BaseObject * ObjectFactory::getRedCannon(xml_node node)
+{
+	auto properties = getObjectProperties(node);
+	if (properties.size() == 0)
+		return nullptr;
+
+	int x, y;
+	eStatus status;
+
+	x = stoi(properties["X"]) + 32;
+	y = stoi(properties["Y"]) - 32;
+
+	try
+	{
+		status = (eStatus)stoi(properties["status"]);
+	}
+	catch (exception ex)
+	{
+		status = eStatus::NORMAL;
+	}
+
+	auto cannon = new RedCannon(status, GVector2(x, y));
+	cannon->init();
+
+	return cannon;
+}
+
+BaseObject * ObjectFactory::getWallTurret(xml_node node)
+{
+	auto properties = getObjectProperties(node);
+	if (properties.size() == 0)
+		return nullptr;
+
+	int x, y;
+	eStatus status;
+
+	x = stoi(properties["X"]) + 32;
+	y = stoi(properties["Y"]) - 32;
+
+	try
+	{
+		status = (eStatus)(stoi(properties["status"]));
+	}
+	catch (exception ex)
+	{
+		status = eStatus::NORMAL;
+	}
+
+	auto turret = new WallTurret(status, GVector2(x, y));
+	turret->init();
+
+	return turret;
+}
+
+BaseObject * ObjectFactory::getAirCraft(xml_node node)
+{
+	auto properties = getObjectProperties(node);
+	if (properties.size() == 0)
+		return nullptr;
+
+	int x, y;
+	GVector2 pos, hVeloc, ampl;
+	float freq;
+	eAirCraftType type;
+
+	pos.x = stoi(properties["X"]);
+	pos.y = stoi(properties["Y"]);
+
+	try
+	{
+		type = (eAirCraftType)(stoi(properties["type"]));
+	}
+	catch (exception ex)
+	{
+		type = eAirCraftType::S;
+	}
+
+	// ampl
+	try
+	{
+		auto velocStr = properties["Amplitude"];
+		auto value = splitString(velocStr, ',');
+
+		ampl.x = stoi(value[0]);
+		ampl.y = stoi(value[1]);
+	}
+	catch (exception ex)
+	{
+		ampl = AIRCRAFT_AMPLITUDE;
+	}
+
+	// hVeloc
+	try
+	{
+		auto velocStr = properties["HVelocity"];
+		auto value = splitString(velocStr, ',');
+
+		hVeloc.x = stoi(value[0]);
+		hVeloc.y = stoi(value[1]);
+	}
+	catch (exception ex)
+	{
+		hVeloc = HORIZONTAL_VELOC;
+	}
+
+	// freq
+	try
+	{
+		freq = stof(properties["frequency"]);
+	}
+	catch (exception ex)
+	{
+		freq = AIRCRAFT_FREQUENCY;
+	}
+
+	auto airCraft = new AirCraft(pos, hVeloc, ampl, freq, type);
+	airCraft->init();
+
+	return airCraft;
+}
+
+map<string, string> ObjectFactory::getObjectProperties(xml_node node)
+{
+	map<string, string> properties;
 
 	// general
-	properties["X"] = node.attribute("X").as_int();
-	properties["Y"] = node.attribute("Y").as_int();
-	properties["Width"] = node.attribute("Width").as_int();
-	properties["Height"] = node.attribute("Height").as_int();
+	properties["X"] = node.attribute("X").as_string();
+	properties["Y"] = node.attribute("Y").as_string();
+	properties["Width"] = node.attribute("Width").as_string();
+	properties["Height"] = node.attribute("Height").as_string();
 
 	// parameters
 	xml_node params = node.child("Params");
 	for (auto item : params)
 	{
 		auto key = item.attribute("Key").as_string();
-		auto value = item.attribute("Value").as_int();
+		auto value = item.attribute("Value").as_string();
 		properties[key] = value;
 	}
 

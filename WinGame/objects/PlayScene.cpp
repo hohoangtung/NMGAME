@@ -71,17 +71,17 @@ bool PlayScene::init()
 	aircraft->init();
 	_listobject.push_back(aircraft);
 
-	auto rifleman = new Rifleman(NORMAL, 500, 200);
-	rifleman->init();
-	_listobject.push_back(rifleman);
+	//auto rifleman = new Rifleman(NORMAL, 500, 200);
+	//rifleman->init();
+	//_listobject.push_back(rifleman);
 
-	auto redcannon = new RedCannon(NORMAL, 900, 200);
-	redcannon->init();
-	_listobject.push_back(redcannon);
+	//auto redcannon = new RedCannon(NORMAL, 900, 200);
+	//redcannon->init();
+	//_listobject.push_back(redcannon);
 
-	auto wall_turret = new WallTurret(NORMAL, 730, 150);
-	wall_turret->init();
-	_listobject.push_back(wall_turret);
+	//auto wall_turret = new WallTurret(NORMAL, 730, 150);
+	//wall_turret->init();
+	//_listobject.push_back(wall_turret);
 
 	//auto land  = new Land(64, 245, 1472, 1, eDirection::TOP, eLandType::GRASS);
 	//land->init();
@@ -169,7 +169,11 @@ void PlayScene::update(float dt)
 	for (int i = 1; i < _listobject.size(); i++)
 	{
 		_listobject[4]->checkCollision(_listobject[i], dt);
-		_listobject[50]->checkCollision(_listobject[i], dt);
+
+		// rifle man
+		_listobject[47]->checkCollision(_listobject[i], dt);
+		_listobject[48]->checkCollision(_listobject[i], dt);
+		_listobject[54]->checkCollision(_listobject[i], dt);
 	}
 
 	_listobject[3]->checkCollision(_listobject[5], dt);
@@ -213,11 +217,13 @@ void PlayScene::updateViewport(BaseObject* objTracker)
 	// Bám theo object.
 	GVector2 new_position = GVector2(max(objTracker->getPositionX() - 200, 0), WINDOW_HEIGHT);
 
+#if(!_DEBUG)
 	// Không cho đi ngược
 	if (new_position.x < current_position.x)
 	{
 		new_position.x = current_position.x;
 	}
+#endif
 
 	// Không cho đi quá map.
 	if (new_position.x + WINDOW_WIDTH > worldsize.x)

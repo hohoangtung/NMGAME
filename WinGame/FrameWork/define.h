@@ -25,20 +25,19 @@ using namespace std;
 #define COLOR_KEY D3DXCOLOR(1.0f, 0.0f, 1.0f, 1.0f)				// màu khi mà load hình nó bỏ qua > trong suốt
 enum eID
 {
-	BILL,			// Main character.
-	REDCANNON,
-	SOLDIER,
-	FALCON,
-	AIRCRAFT,
-	EXPLOSION,
-	RIFLEMAN,
-	BOX,
-	BRIDGE,
-	QUADEXPLODE,
-	MAPSTAGE1,
-	BULLET,
-	LAND,				// Đất đi được.
-	WALL_TURRET
+	BILL			= 0,			// Main character.
+	REDCANNON		= 1,
+	SOLDIER			= 2,
+	FALCON			= 3,
+	AIRCRAFT		= 4,
+	EXPLOSION		= 5,
+	RIFLEMAN		= 6,
+	BRIDGE			= 7,
+	QUADEXPLODE		= 8,
+	MAPSTAGE1		= 9,
+	BULLET			= 10,
+	WALL_TURRET		= 11,
+	LAND			= 12				// Đất đi được.
 	
 };
 

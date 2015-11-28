@@ -21,8 +21,12 @@ private:
 	static BaseObject* getObjectById(xml_node node, eID id);
 	static BaseObject* getLand(xml_node node);
 	static BaseObject* getRifleMan(xml_node node);
+	static BaseObject* getSoldier(xml_node node);
+	static BaseObject* getRedCannon(xml_node node);
+	static BaseObject* getWallTurret(xml_node node);
+	static BaseObject* getAirCraft(xml_node node);
 
-	static map<string, int> getObjectProperties(xml_node node);
+	static map<string, string> getObjectProperties(xml_node node);
 
 };
 
