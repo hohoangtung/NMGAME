@@ -178,7 +178,7 @@ void PlayScene::update(float dt)
 
 		// aircraft
 		_listobject[59]->checkCollision(_listobject[i], dt);
-
+		_listobject[60]->checkCollision(_listobject[i], dt);
 	}
 
 	//_listobject[3]->checkCollision(_listobject[5], dt);

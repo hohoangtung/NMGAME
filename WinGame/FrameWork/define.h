@@ -37,7 +37,8 @@ enum eID
 	MAPSTAGE1		= 9,
 	BULLET			= 10,
 	WALL_TURRET		= 11,
-	LAND			= 12				// Đất đi được.
+	LAND			= 12,				// Đất đi được.
+	CREATOR			= 13
 	
 };
 

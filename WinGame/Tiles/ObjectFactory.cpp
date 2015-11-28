@@ -123,6 +123,9 @@ BaseObject* ObjectFactory::getObjectById(xml_node node, eID id)
 		case WALL_TURRET:
 			return getWallTurret(node);
 			break;
+		case CREATOR:
+			return getCreator(node);
+			break;
 		default:
 			return NULL;
 			break;
@@ -356,6 +359,68 @@ BaseObject * ObjectFactory::getAirCraft(xml_node node)
 	airCraft->init();
 
 	return airCraft;
+}
+
+BaseObject * ObjectFactory::getCreator(xml_node node)
+{
+	auto properties = getObjectProperties(node);
+	if (properties.size() == 0)
+		return nullptr;
+
+	GVector2 pos;
+	int dir, num, width, height;
+	eID type;
+	float time;
+
+	pos.x = stoi(properties["X"]);
+	pos.y = stoi(properties["Y"]);
+	width = stoi(properties["Width"]);
+	height = stoi(properties["Height"]);
+	
+	// type
+	if (properties.find("type") != properties.end())
+	{
+		type = (eID)(stoi(properties.find("type")->second));
+	}
+	else
+	{
+		type = eID::SOLDIER;
+	}
+
+	// dir
+	if (properties.find("direction") != properties.end())
+	{
+		dir = stoi(properties.find("direction")->second);
+	}
+	else
+	{
+		dir = -1;
+	}
+
+	// time
+	if (properties.find("time") != properties.end())
+	{
+		time = stof(properties.find("time")->second);
+	}
+	else
+	{
+		time = 1000.0f;
+	}
+
+	// num
+	if (properties.find("number") != properties.end())
+	{
+		num = stoi(properties.find("number")->second);
+	}
+	else
+	{
+		num = -1;
+	}
+
+	auto creator = new ObjectCreator(pos, width, height, type, dir, time, num);
+	creator->init();
+
+	return creator;
 }
 
 map<string, string> ObjectFactory::getObjectProperties(xml_node node)

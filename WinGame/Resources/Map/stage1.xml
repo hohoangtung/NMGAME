@@ -733,5 +733,14 @@
         <Elem Key="type" Value="4" />
       </Params>
     </Item>
+    <Item Id="13" Name="sodierCreator1" X="896" Y="320" Width="64" Height="64">
+      <ActiveBound X="896" Y="320" Width="64" Height="64" />
+      <Params>
+        <Elem Key="type" Value="2" />
+        <Elem Key="direction" Value="-1" />
+        <Elem Key="time" Value="3000" />
+        <Elem Key="number" Value="-1" />
+      </Params>
+    </Item>
   </Objects>
 </Tilesmap>
