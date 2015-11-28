@@ -32,6 +32,7 @@ public:
 
 private:
 	BaseObject* getObject(eID id);
+	void deleteObject();
 
 	StopWatch* _stopWatch;
 	vector<BaseObject*> _listObjects;

@@ -113,36 +113,14 @@ void Bill::update(float deltatime)
 
 	_animations[_currentAnimateIndex]->update(deltatime);
 
-	//// viewport
-	//auto viewport = SceneManager::getInstance()->getCurrentScene()->getViewport();
-	
 	// Huỷ các bullet đã hết hiệu lực.
 	this->deleteBullet();
 
-	// bullet
-	for (auto it = _listBullets.begin(); it != _listBullets.end();)
+	for (auto bullet : _listBullets)
 	{
-		(*it)->update(deltatime);
-		
-		//// Tung Ho. Trong bullet đã có, nếu ra khỏi màn hình thì bullet có trạng thái là destroy. hàm delete bullet xử lý nếu trạng thái là destroy thì huỷ đối tượng.
-
-		//// tạm để cho nó hết màn hình nó xóa
-		//if ((*it)->getPositionX() < 0 || (*it)->getPositionX() > viewport->getPositionWorld().x + viewport->getWidth() ||
-		//	(*it)->getPositionY() < 0 || (*it)->getPositionY() > viewport->getPositionWorld().y + viewport->getHeight()
-		//	)
-		//{
-		//	auto temp = it;
-		//	it++;
-		//	_listBullets.erase(temp);
-		//}
-		//else
-		//{
-		//	it++;
-		//}
-		it++;
-		if (_listBullets.size() <= 0)
-			break;
+		bullet->update(deltatime);
 	}
+
 	// update component để sau cùng để sửa bên trên sau đó nó cập nhật đúng
 	for (auto it = _componentList.begin(); it != _componentList.end(); it++)
 	{
@@ -176,7 +154,7 @@ void Bill::deleteBullet()
 }
 void Bill::updateInput(float dt)
 {
-	if (_input->isKeyDown(DIK_X))
+	if (_input->isKeyDown(DIK_Z))
 	{
 		if (_stopWatch->isStopWatch(SHOOT_SPEED))
 		{
@@ -219,7 +197,7 @@ void Bill::onKeyPressed(KeyEventArg* key_event)
 {
 	switch (key_event->_key)
 	{
-	case DIK_Z:
+	case DIK_X:
 	{
 		if (!this->isInStatus(eStatus::LAYING_DOWN) || this->isInStatus(eStatus::MOVING_LEFT) || this->isInStatus(eStatus::MOVING_RIGHT))
 		{
@@ -228,7 +206,7 @@ void Bill::onKeyPressed(KeyEventArg* key_event)
 		}
 		else
 		{
-			if (_canJumpDown)
+			if (_canJumpDown && !this->isInStatus(eStatus::JUMPING))
 			{
 				this->addStatus(eStatus::JUMPING);
 				this->addStatus(eStatus::FALLING);
@@ -276,7 +254,7 @@ void Bill::onKeyPressed(KeyEventArg* key_event)
 
 		break;
 	}
-	case DIK_X:
+	case DIK_Z:
 	{
 		this->addStatus(eStatus::SHOOTING);
 
@@ -312,7 +290,7 @@ void Bill::onKeyReleased(KeyEventArg * key_event)
 			this->removeStatus(eStatus::LOOKING_UP);
 		break;
 	}
-	case DIK_X:
+	case DIK_Z:
 	{
 		this->removeStatus(eStatus::SHOOTING);
 		break;
@@ -605,6 +583,10 @@ void Bill::shoot()
 		pos.x -= this->getSprite()->getFrameWidth() / 3;
 		pos.y += 5 * this->getScale().y;
 	}
+	else if (direction == eDirection::BOTTOM)
+	{
+		angle = 180.0f;
+	}
 
 	if (this->isInStatus(eStatus::SWIMING))
 		pos.y -= 8 * this->getScale().y;
@@ -727,8 +709,8 @@ eDirection Bill::getAimingDirection()
 	else
 		direction = eDirection::RIGHT;
 
-	if (this->isInStatus(eStatus::JUMPING))
-		return direction;
+	//if (this->isInStatus(eStatus::JUMPING))
+	//	return direction;
 
 	if (this->isInStatus(eStatus::LOOKING_UP))
 	{
@@ -741,6 +723,8 @@ eDirection Bill::getAimingDirection()
 	{
 		if (_input->getInstance()->isKeyDown(DIK_LEFT) || _input->getInstance()->isKeyDown(DIK_RIGHT))
 			direction = (eDirection)(direction | eDirection::BOTTOM);
+		else if(this->isInStatus(eStatus::JUMPING))
+			direction = eDirection::BOTTOM;
 	}
 
 	return direction;

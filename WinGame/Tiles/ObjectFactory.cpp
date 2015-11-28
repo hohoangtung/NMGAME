@@ -372,8 +372,8 @@ BaseObject * ObjectFactory::getCreator(xml_node node)
 	eID type;
 	float time;
 
-	pos.x = stoi(properties["X"]);
-	pos.y = stoi(properties["Y"]);
+	pos.x = stoi(properties["X"]) + 32;
+	pos.y = stoi(properties["Y"]) - 32;
 	width = stoi(properties["Width"]);
 	height = stoi(properties["Height"]);
 	

@@ -3,26 +3,26 @@
 Soldier::Soldier(eStatus status, GVector2 pos, int direction) : BaseEnemy(eID::SOLDIER) {
 	_sprite = SpriteManager::getInstance()->getSprite(eID::SOLDIER);
 	_sprite->setFrameRect(0, 0, 32.0f, 16.0f);
-	GVector2 v(direction * -SOLDIER_SPEED, 0);
+	GVector2 v(direction * SOLDIER_SPEED, 0);
 	GVector2 a(0, 0);
 	this->_listComponent.insert(pair<string, IComponent*>("Movement", new Movement(a, v, this->_sprite)));
 	this->setStatus(status);
 	this->setPosition(pos);
 	this->setScale(SCALE_FACTOR);
-	this->setScaleX(direction * SCALE_FACTOR);
+	this->setScaleX(-direction * SCALE_FACTOR);
 }
 
 Soldier::Soldier(eStatus status, float x, float y, int direction) : BaseEnemy(eID::SOLDIER) {
 	_sprite = SpriteManager::getInstance()->getSprite(eID::SOLDIER);
 	_sprite->setFrameRect(0, 0, 32.0f, 16.0f);
 	GVector2 pos(x, y);
-	GVector2 v(direction * -SOLDIER_SPEED, 0);
+	GVector2 v(direction * SOLDIER_SPEED, 0);
 	GVector2 a(0, 0);
 	this->_listComponent.insert(pair<string, IComponent*>("Movement", new Movement(a, v, this->_sprite)));
 	this->setStatus(status);
 	this->setPosition(pos);
 	this->setScale(SCALE_FACTOR);
-	this->setScaleX(direction * SCALE_FACTOR);
+	this->setScaleX(-direction * SCALE_FACTOR);
 }
  
 Soldier::~Soldier() {}
@@ -66,7 +66,10 @@ void Soldier::draw(LPD3DXSPRITE spritehandle, Viewport* viewport)
 		_explosion->draw(spritehandle, viewport);
 	if (this->getStatus() == eStatus::DESTROY)
 		return;
-	this->_sprite->render(spritehandle, viewport);
+
+	// animation draw là nó lấy sprite draw nên ko cần phải render sprite nữa.
+	//this->_sprite->render(spritehandle, viewport);
+
 	_animations[this->getStatus()]->draw(spritehandle, viewport);
 }
 
