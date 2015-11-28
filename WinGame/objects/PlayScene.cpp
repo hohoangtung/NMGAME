@@ -67,9 +67,9 @@ bool PlayScene::init()
 
 	_text = new Text(L"Arial", "", 10, 25);
 
-	auto aircraft = new AirCraft(START_POSITION, HORIZONTAL_VELOC, AIRCRAFT_AMPLITUDE, AIRCRAFT_FREQUENCY, eAirCraftType::I);
-	aircraft->init();
-	_listobject.push_back(aircraft);
+	//auto aircraft = new AirCraft(START_POSITION, HORIZONTAL_VELOC, AIRCRAFT_AMPLITUDE, AIRCRAFT_FREQUENCY, eAirCraftType::I);
+	//aircraft->init();
+	//_listobject.push_back(aircraft);
 
 	//auto rifleman = new Rifleman(NORMAL, 500, 200);
 	//rifleman->init();
@@ -168,16 +168,21 @@ void PlayScene::update(float dt)
 
 	for (int i = 1; i < _listobject.size(); i++)
 	{
-		_listobject[4]->checkCollision(_listobject[i], dt);
+		//_listobject[4]->checkCollision(_listobject[i], dt);
 
 		// rifle man
+		_listobject[46]->checkCollision(_listobject[i], dt);
 		_listobject[47]->checkCollision(_listobject[i], dt);
-		_listobject[48]->checkCollision(_listobject[i], dt);
-		_listobject[54]->checkCollision(_listobject[i], dt);
+		_listobject[53]->checkCollision(_listobject[i], dt);
+		_listobject[58]->checkCollision(_listobject[i], dt);
+
+		// aircraft
 		_listobject[59]->checkCollision(_listobject[i], dt);
+
 	}
 
-	_listobject[3]->checkCollision(_listobject[5], dt);
+	//_listobject[3]->checkCollision(_listobject[5], dt);
+
 
 	for (auto object : _listobject)
 	{

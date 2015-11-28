@@ -727,5 +727,11 @@
     <Item Id="6" Name="rifleMan4" X="2560" Y="320" Width="32" Height="64">
       <ActiveBound X="2560" Y="320" Width="32" Height="64" />
     </Item>
+    <Item Id="4" Name="airCraft1" X="480" Y="384" Width="64" Height="32">
+      <ActiveBound X="480" Y="384" Width="64" Height="32" />
+      <Params>
+        <Elem Key="type" Value="4" />
+      </Params>
+    </Item>
   </Objects>
 </Tilesmap>
