@@ -14,11 +14,11 @@
 #include "PlayScene.h"
 
 // use value
-#define AIRCRAFT_FORCE			GVector2(25.0f, 150.0f)		// góc ném viên đạn
+#define AIRCRAFT_FORCE			GVector2(50.0f, 280.0f)		// góc ném viên đạn
 #define AIRCRAFT_GRAVITY		GVector2(0.0f, -200.0f)
 // demo value 
 #define START_POSITION			GVector2(200.0f, 350.0f)	// vị trí khởi tạo
-#define HORIZONTAL_VELOC		GVector2(90.0f, 0.0f)		// vận tốc ngang
+#define HORIZONTAL_VELOC		GVector2(200.0f, 0.0f)		// vận tốc ngang
 #define AIRCRAFT_FREQUENCY		0.9f						// tần số
 #define AIRCRAFT_AMPLITUDE		GVector2(0, 100.0f)			// biên độ
 
@@ -67,6 +67,10 @@ private:
 	float		_frequence;
 
 	bool _explored;
+	void checkifOutofScreen();
+	void updateHiding();
+	void updateBurst(float deltatime);
+	void updateExploring(float deltatime);
 };
 
 

@@ -15,10 +15,7 @@ void SBullet::init()
 	_childBullet[2] = this->initChildBullet(_startPosition, _degree - FIRST_WAVE_ANGLE);
 	_childBullet[3] = this->initChildBullet(_startPosition, _degree + SECOND_WAVE_ANGLE);
 	_childBullet[4] = this->initChildBullet(_startPosition, _degree - SECOND_WAVE_ANGLE);
-	for (int i = 1; i < 5; i++)
-	{
-		_childBullet[i]->setStatus(eStatus::HIDDEN);
-	}
+
 	_first_wave = new StopWatch();
 	_second_wave = new StopWatch();
 }
@@ -38,7 +35,7 @@ float SBullet::checkCollision(BaseObject* object, float dt)
 	{
 		if (bullet == nullptr)
 			continue;
-		if (bullet->getStatus() != eStatus::NORMAL)
+		if (bullet->getStatus() == eStatus::DESTROY)
 			continue;
 		bullet->checkCollision(object, dt);
 	}
@@ -82,16 +79,16 @@ void SBullet::update(float deltatime)
 void SBullet::initFirstWave()
 {
 
-	this->_childBullet[1]->setStatus(eStatus::NORMAL);
-	this->_childBullet[2]->setStatus(eStatus::NORMAL);
+	//this->_childBullet[1]->setStatus(eStatus::NORMAL);
+	//this->_childBullet[2]->setStatus(eStatus::NORMAL);
 }
 
 // Phân thân lần thứ nhất, tạo ra 2 bullet ở chỉ số 3 và 4
 void SBullet::initSecondWave()
 {
 
-	this->_childBullet[3]->setStatus(eStatus::NORMAL);
-	this->_childBullet[4]->setStatus(eStatus::NORMAL);
+	//this->_childBullet[3]->setStatus(eStatus::NORMAL);
+	//this->_childBullet[4]->setStatus(eStatus::NORMAL);
 
 }
 

@@ -17,7 +17,7 @@
 #include "utils.h"
 using namespace std;
 
-#define WINDOW_WIDTH 560
+#define WINDOW_WIDTH 512
 #define WINDOW_HEIGHT 448
 #define SCALE_FACTOR 2.0f
 

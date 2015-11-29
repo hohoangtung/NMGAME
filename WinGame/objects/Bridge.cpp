@@ -2,17 +2,18 @@
 #include "Bridge.h"
 
 int Bridge::_matrixIndex[2][MAX_WAVE * 2] =
-	{
-		{ 3, 0, 3, 0, 3, 0, 3, 0 },
-		{ 1, 4, 4, 4, 4, 4, 4, 5 },
+{
+	{ 3, 0, 3, 0, 3, 0, 3, 0 },
+	{ 1, 4, 4, 4, 4, 4, 4, 5 },
+};
 
-	};
 Bridge::Bridge(GVector2 postion) : BaseObject(eID::BRIDGE)
 {
 	_sprite = SpriteManager::getInstance()->getSprite(eID::BRIDGE);
 	_sprite->setScale(SCALE_FACTOR);
 	_transform = new Transformable();
 	_transform->setPosition(postion);
+
 }
 void Bridge::init()
 {
@@ -21,8 +22,20 @@ void Bridge::init()
 	_explode = new QuadExplose(_transform->getPosition());
 	_explode->init();
 	_wave = 0;
-
+	_stopwatch->restart();
 	_listComponent["CollisionBody"] = new CollisionBody(this);
+
+	for (int i = 0; i < 2; i++)
+	{
+		this->privateIndex[i] = new int[MAX_WAVE * 2];
+	}
+	for (int i = 0; i < 2; i++)
+	{
+		for (int j = 0; j < MAX_WAVE * 2; j++)
+		{
+			this->privateIndex[i][j] = _matrixIndex[i][j];
+		}
+	}
 }
 void Bridge::update(float deltatime)
 {
@@ -45,10 +58,10 @@ void Bridge::burst(float deltatime)
 {
 	if (this->getStatus() == eStatus::DESTROY)
 		return;
-	_matrixIndex[0][0 + _wave * 2] =
-		_matrixIndex[0][1 + _wave * 2] =
-		_matrixIndex[1][0 + _wave * 2] =
-		_matrixIndex[1][1 + _wave * 2] = -1;
+	privateIndex[0][0 + _wave * 2] =
+		privateIndex[0][1 + _wave * 2] =
+		privateIndex[1][0 + _wave * 2] =
+		privateIndex[1][1 + _wave * 2] = -1;
 	if (_explode->getStatus() == NORMAL)
 		_explode->update(deltatime);
 	if (_explode->getStatus() == DESTROY)
@@ -81,13 +94,13 @@ void Bridge::draw(LPD3DXSPRITE spritehandle, Viewport* viewport)
 	{
 		for (int j = 0; j < MAX_WAVE * 2; j++)
 		{
-			if (_matrixIndex[i][j] == -1)
+			if (privateIndex[i][j] == -1)
 				continue;
 			posrender = this->_transform->getPosition();
 			posrender.x += j * this->getSprite()->getFrameWidth();
 			posrender.y -= i * this->getSprite()->getFrameHeight();
 			_sprite->setPosition(posrender);
-			_sprite->setIndex(_matrixIndex[i][j]);
+			_sprite->setIndex(privateIndex[i][j]);
 			_sprite->render(spritehandle, viewport);
 		}
 	}
@@ -119,6 +132,15 @@ RECT Bridge::getBounding()
 
 	int framewidth = this->_sprite->getFrameWidth();
 	int frameheight = this->_sprite->getFrameHeight();
+	//rect.left = this->getPosition().x - (framewidth > 1);					// framewidth /2 là origin(Anchor).
+	//rect.bottom = this->getPosition().y - frameheight - (frameheight > 1);
+	//rect.right = rect.left + (framewidth * MAX_WAVE) < 1;					// Nhân 2 vì cách 2 hình có 1 vụ nổ.
+	////rect.top = rect.bottom + frameheight < 1 - frameheight > 1;				// < 1 là nhân 2; > 1 là chia 2. Trừ đi frameheight / 2 đẻ bằng với land
+
+	//if (this->getStatus() == eStatus::BURST)
+	//{
+	//	rect.left += (_wave + 1) * (framewidth < 1);
+	//}
 	rect.left = this->getPosition().x - framewidth / 2;					// framewidth /2 là origin(Anchor).
 	rect.bottom = this->getPosition().y - frameheight - frameheight / 2;
 	rect.right = rect.left + framewidth * 2 * MAX_WAVE;					// Nhân 2 vì cách 2 hình có 1 vụ nổ.

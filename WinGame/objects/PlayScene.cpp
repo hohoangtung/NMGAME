@@ -49,16 +49,16 @@ bool PlayScene::init()
 
 	auto bill = new Bill();
 	bill->init();
-	bill->setPosition(400, 500);
+	bill->setPosition(120, 500);
 	
 	this->_bill = bill;
 	_listControlObject.push_back(bill);
 	_listobject.push_back(bill);
 
-	auto bridge = new Bridge(GVector2(1552, 240));
-	bridge->init();
-	bridge->setPhysicsBodySide(eDirection::TOP);
-	_listobject.push_back(bridge);
+	//auto bridge = new Bridge(GVector2(1552, 240));
+	//bridge->init();
+	//bridge->setPhysicsBodySide(eDirection::TOP);
+	//_listobject.push_back(bridge);
 
 	auto soldier = new Soldier(RUNNING, 500, 400, -1);
 	soldier->init();
@@ -171,14 +171,14 @@ void PlayScene::update(float dt)
 		//_listobject[4]->checkCollision(_listobject[i], dt);
 
 		// rifle man
+		_listobject[45]->checkCollision(_listobject[i], dt);
 		_listobject[46]->checkCollision(_listobject[i], dt);
-		_listobject[47]->checkCollision(_listobject[i], dt);
-		_listobject[53]->checkCollision(_listobject[i], dt);
-		_listobject[58]->checkCollision(_listobject[i], dt);
+		_listobject[52]->checkCollision(_listobject[i], dt);
+		_listobject[57]->checkCollision(_listobject[i], dt);
 
 		// aircraft
+		_listobject[58]->checkCollision(_listobject[i], dt);
 		_listobject[59]->checkCollision(_listobject[i], dt);
-		_listobject[60]->checkCollision(_listobject[i], dt);
 	}
 
 	//_listobject[3]->checkCollision(_listobject[5], dt);

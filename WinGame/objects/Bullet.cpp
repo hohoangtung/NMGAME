@@ -207,6 +207,8 @@ void Bullet::onCollisionBegin(CollisionEventArg* collision_arg)
 		switch (objectID)
 		{
 		case AIRCRAFT:
+			if (collision_arg->_otherObject->getStatus() == eStatus::HIDING || collision_arg->_otherObject->getStatus() == eStatus::EXPLORED)
+				return;
 			collision_arg->_otherObject->setStatus(eStatus::BURST);
 			this->setStatus(eStatus::DESTROY);
 			break;
@@ -236,6 +238,8 @@ float Bullet::checkCollision(BaseObject * object, float dt)
 {
 	auto body = (CollisionBody*)_componentList.find("CollisionBody")->second;
 	//auto body = (CollisionBody*)_componentList["CollisionBody"];
+	if (object->getId() == eID::BULLET && object->getStatus() == eStatus::EXPLORED)
+		return 0.0f;
 	body->checkCollision(object, dt);
 
 	return 0.0f;

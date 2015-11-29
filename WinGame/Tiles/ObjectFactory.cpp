@@ -110,6 +110,7 @@ BaseObject* ObjectFactory::getObjectById(xml_node node, eID id)
 			return getRifleMan(node);
 			break;
 		case BRIDGE:
+			return getBridge(node);
 			break;
 		case QUADEXPLODE:
 			break;
@@ -421,6 +422,23 @@ BaseObject * ObjectFactory::getCreator(xml_node node)
 	creator->init();
 
 	return creator;
+}
+
+BaseObject * ObjectFactory::getBridge(xml_node node)
+{
+	auto properties = getObjectProperties(node);
+	if (properties.size() == 0)
+		return nullptr;
+
+	int x, y;
+
+	x = stoi(properties["X"]);
+	y = stoi(properties["Y"]);
+
+	// X Cộng 16 Y Trừ 16 vì gameobject set origin là center
+	auto bridge = new Bridge(GVector2(x + 16, y - 16));
+	bridge->init();
+	return bridge;
 }
 
 map<string, string> ObjectFactory::getObjectProperties(xml_node node)

@@ -34,7 +34,7 @@ void AirCraft::init()
 	this->_listComponent["Sinmovement"] = sinmovement;
 	this->_listComponent["CollisionBody"] = collisionBody;
 	this->setPhysicsBodySide(eDirection::NONE);
-
+	this->setStatus(eStatus::HIDING);
 	_explosion = NULL;
 	_explored = false;
 }
@@ -64,65 +64,105 @@ void AirCraft::updateExplosion(float deltatime)
 			this->setStatus(eStatus::EXPLORING);
 	}
 }
+
+void AirCraft::checkifOutofScreen()
+{
+	auto viewport = ((PlayScene*)SceneManager::getInstance()->getCurrentScene())->getViewport();
+	RECT screenBound = viewport->getBounding();
+	float screenHeight = viewport->getHeight();
+	GVector2 position = this->getPosition();
+	if (position.y < screenBound.bottom - screenHeight)
+	{
+		this->setStatus(eStatus::DESTROY);
+	}
+}
+
+void AirCraft::updateHiding()
+{
+	auto viewport = ((PlayScene*)SceneManager::getInstance()->getCurrentScene())->getViewport();
+	RECT screenBound = viewport->getBounding();
+	if (this->getBounding().right < screenBound.left)
+	{
+		this->setStatus(eStatus::NORMAL);
+	}
+}
+void AirCraft::updateBurst(float deltatime)
+{
+	if (_explosion == NULL)
+		initExplosion();
+	if (_explosion != NULL)
+		updateExplosion(deltatime);
+}
+void AirCraft::updateExploring(float deltatime)
+{
+	auto bill = ((PlayScene*)SceneManager::getInstance()->getCurrentScene())->getBill();
+	if (isRectangleIntersected(bill->getBounding(), this->getBounding()))
+	{
+		this->setStatus(eStatus::DESTROY);
+		bill->changeBulletType(this->_type);
+		return;
+	}
+	switch (_type)
+	{
+	case B:
+		this->_sprite->setFrameRect(SpriteManager::getInstance()->getSourceRect(this->_id, "b_ammo"));
+		break;
+	case F:
+		this->_sprite->setFrameRect(SpriteManager::getInstance()->getSourceRect(this->_id, "f_ammo"));
+		break;
+	case L:
+		this->_sprite->setFrameRect(SpriteManager::getInstance()->getSourceRect(this->_id, "l_ammo"));
+		break;
+	case M:
+		this->_sprite->setFrameRect(SpriteManager::getInstance()->getSourceRect(this->_id, "m_ammo"));
+		break;
+	case R:
+		this->_sprite->setFrameRect(SpriteManager::getInstance()->getSourceRect(this->_id, "r_ammo"));
+		break;
+	case S:
+		this->_sprite->setFrameRect(SpriteManager::getInstance()->getSourceRect(this->_id, "s_ammo"));
+		break;
+	default:
+		_animation->start();
+		break;
+	}
+	Movement* move = (Movement*)getComponent("Movement");
+	move->setVelocity(AIRCRAFT_FORCE);
+
+	Gravity* gravity = (Gravity*)getComponent("Gravity");
+	gravity->setGravity(AIRCRAFT_GRAVITY);
+
+	//this->setPhysicsBodySide((eDirection)ALL_EDGES);
+
+	this->setStatus(eStatus::EXPLORED);
+}
 void AirCraft::update(float deltatime)
 {
 	if (this->getStatus() == eStatus::DESTROY)
 		return;
-	for (auto component : _listComponent)
+	if (this->getStatus() == eStatus::HIDING)
 	{
-		component.second->update(deltatime);
+		this->updateHiding();
+		return;
 	}
-	
+	else
+	{
+		this->checkifOutofScreen();
+
+		for (auto component : _listComponent)
+		{
+			component.second->update(deltatime);
+		}
+	}
+
 	if (this->_status == eStatus::BURST)
 	{
-		if (_explosion == NULL)
-			initExplosion();
-		if (_explosion != NULL)
-			updateExplosion(deltatime);
+		this->updateBurst(deltatime);
 	}
 	_animation->update(deltatime);
 	if (this->_status == eStatus::EXPLORING)
 	{
-		auto bill = ((PlayScene*) SceneManager::getInstance()->getCurrentScene())->getBill();
-		if (isRectangleIntersected(bill->getBounding(), this->getBounding()))
-		{
-			this->setStatus(eStatus::DESTROY);
-			bill->changeBulletType(this->_type);
-			return;
-		}
-		switch (_type)
-		{
-		case B:
-			this->_sprite->setFrameRect(SpriteManager::getInstance()->getSourceRect(this->_id, "b_ammo"));
-			break;
-		case F:
-			this->_sprite->setFrameRect(SpriteManager::getInstance()->getSourceRect(this->_id, "f_ammo"));
-			break;
-		case L:
-			this->_sprite->setFrameRect(SpriteManager::getInstance()->getSourceRect(this->_id, "l_ammo"));
-			break;
-		case M:
-			this->_sprite->setFrameRect(SpriteManager::getInstance()->getSourceRect(this->_id, "m_ammo"));
-			break;
-		case R:
-			this->_sprite->setFrameRect(SpriteManager::getInstance()->getSourceRect(this->_id, "r_ammo"));
-			break;
-		case S:
-			this->_sprite->setFrameRect(SpriteManager::getInstance()->getSourceRect(this->_id, "s_ammo"));
-			break;
-		default:
-			_animation->start();
-			break;
-		}
-		Movement* move = (Movement*)getComponent("Movement");
-		move->setVelocity(AIRCRAFT_FORCE);
-
-		Gravity* gravity = (Gravity*)getComponent("Gravity");
-		gravity->setGravity(AIRCRAFT_GRAVITY);
-
-		//this->setPhysicsBodySide((eDirection)ALL_EDGES);
-		
-		this->setStatus(eStatus::EXPLORED);
+		this->updateExploring(deltatime);
 	}
 
 }
@@ -134,7 +174,7 @@ eAirCraftType AirCraft::getType()
 
 void AirCraft::draw(LPD3DXSPRITE spriteHandle, Viewport* viewport)
 {
-	if (this->getStatus() == eStatus::DESTROY)
+	if (this->getStatus() == eStatus::DESTROY || this->getStatus() == eStatus::HIDING)
 		return;
 	if ((_status & (NORMAL | EXPLORING | EXPLORED)) ==_status)
 	{
@@ -148,10 +188,10 @@ void AirCraft::draw(LPD3DXSPRITE spriteHandle, Viewport* viewport)
 		if (_explosion != NULL)
 			_explosion->draw(spriteHandle, viewport);
 	}
-	if (viewport->isContains(this->getBounding()) == false)
-	{
-		this->setStatus(eStatus::DESTROY);
-	}
+	//if (viewport->isContains(this->getBounding()) == false)
+	//{
+	//	this->setStatus(eStatus::DESTROY);
+	//}
 }
 void AirCraft::release()
 {
@@ -187,7 +227,7 @@ float AirCraft::checkCollision(BaseObject * object, float dt)
 	{
 		if (objeciId == eID::LAND || objeciId == eID::BRIDGE)		// => ??
 		{
-			if (direction == eDirection::TOP)
+			if (direction == eDirection::TOP )
 			{
 				auto gravity = (Gravity*)this->_listComponent["Gravity"];
 				gravity->setStatus(eGravityStatus::SHALLOWED);
