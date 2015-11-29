@@ -8,8 +8,11 @@ by Luu The Vinh
 Chưa xong:
 - Chuyển độn chết
 - Hiệu ứng nhảy xuông nước
-- Vừa chạy vừa bắn.
-- nằm -> nhảy -> rớt -> vừa rớt nhảy -> bay trong trạng thái rớt.
+
+
+Lỗi:
+	Khi bay: bấm bắn nhảy liên tục
+	Khi bay: cần có góc bắn hướng xuống (6 giờ)
 */
 
 #ifndef __BILL_H__
@@ -24,6 +27,10 @@ Chưa xong:
 #include "IComponent.h"
 #include "CollisionBody.h"
 #include "Bullet.h"
+#include "L_Bullet.h"
+#include "F_Bullet.h"
+#include "S_Bullet.h"
+#include "M_Bullet.h"
 
 #define BILL_MOVE_SPEED 120
 #define BILL_JUMP_VEL 400
@@ -86,6 +93,11 @@ private:
 
 	eDirection getAimingDirection();
 
+
+	Bullet* getBulletFromGun(GVector2 position, float angle);
+
+	// Dùng để tạo ra đạn, nếu ăn máy bay tiếp đạn thì thay đổi thông số này, nếu bắn đạn thì dựa trên thuộc tính này để chọn loại đạn khởi tạo
+	eBulletType _currentGun;
 	// Tung Ho: kiểm tra và xoá đạn hết hiệu lực.
 	void deleteBullet();
 };

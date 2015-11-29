@@ -10,6 +10,7 @@
 #include <string>
 #include <vector>
 #include <sstream>
+
 using namespace std;
 /*
 	Kiểm tra hai hình chữ nhật có chồng lên nhau không.
@@ -23,5 +24,8 @@ bool isRectangleIntersected(RECT rect1, RECT rect2);
 * @return: true nếu rect1 chứa rect2
 */
 bool isContains(RECT rect1, RECT rect2);
+
+float getdistance(D3DXVECTOR2 p1, D3DXVECTOR2 p2);
+
 std::vector<std::string> splitString(const std::string & input, char seperate);
 #endif // !__UTILS_H__

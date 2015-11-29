@@ -67,7 +67,7 @@ bool PlayScene::init()
 
 	_text = new Text(L"Arial", "", 10, 25);
 
-	auto aircraft = new AirCraft(START_POSITION, HORIZONTAL_VELOC, AIRCRAFT_AMPLITUDE, AIRCRAFT_FREQUENCY, eAirCraftType::I);
+	auto aircraft = new AirCraft(START_POSITION, HORIZONTAL_VELOC, AIRCRAFT_AMPLITUDE, AIRCRAFT_FREQUENCY, eAirCraftType::M);
 	aircraft->init();
 	_listobject.push_back(aircraft);
 
@@ -210,7 +210,7 @@ void PlayScene::updateViewport(BaseObject* objTracker)
 	GVector2 current_position = _viewport->getPositionWorld();
 	GVector2 worldsize = this->background->getWorldSize();
 	// Bám theo object.
-	GVector2 new_position = GVector2(max(objTracker->getPositionX() - 200, 0), WINDOW_HEIGHT);
+	GVector2 new_position = GVector2(max(objTracker->getPositionX() - 260, 0), WINDOW_HEIGHT);		// 200 khoảng cách tối đa giữa object và map -> hardcode
 
 	// Không cho đi ngược
 	if (new_position.x < current_position.x)

@@ -103,6 +103,8 @@ void Bill::init()
 
 	// create stopWatch
 	_stopWatch = new StopWatch();
+
+	_currentGun = eBulletType::NORMAL_BULLET;
 }
 
 void Bill::update(float deltatime)
@@ -474,7 +476,7 @@ float Bill::checkCollision(BaseObject * object, float dt)
 
 	for (auto it = _listBullets.begin(); it != _listBullets.end(); it++)
 	{
-		if(object->getId() != eID::LAND | object->getId() != eID::BRIDGE)
+		if(object->getId() != eID::LAND && object->getId() != eID::BRIDGE)
 			(*it)->checkCollision(object, dt);
 	}
 
@@ -565,52 +567,128 @@ void Bill::shoot()
 	
 	if (direction == eDirection::TOP)
 	{
-		angle = 0.0f;
+		angle = TOP_SHOOT_ANGLE;
 		pos.x += 5 * this->getScale().x;
 		pos.y += this->getSprite()->getFrameHeight() / 3;
 	}
 	else if (direction == (eDirection::TOP | eDirection::RIGHT))
 	{
-		angle = 60.0f;
+		angle = TOPRIGHT_SHOOT_ANGLE;
 		pos.x += this->getSprite()->getFrameWidth() / 3;
 		pos.y += 14 * this->getScale().y;
 	}
 	else if (direction == (eDirection::TOP | eDirection::LEFT))
 	{
-		angle = -60.0f;
+		angle = TOPLEFT_SHOOT_ANGLE;
 		pos.x -= this->getSprite()->getFrameWidth() / 3;
 		pos.y += 14 * this->getScale().y;
 	}
 	else if (direction == eDirection::LEFT)
 	{
-		angle = -90.0f;
+		angle = LEFT_SHOOT_ANGLE;
 		pos.x -= this->getSprite()->getFrameWidth() / 3;
 		pos.y += 5 * this->getScale().y;
 	}
 	else if (direction == eDirection::RIGHT)
 	{
-		angle = 90.0f;
+		angle = RIGHT_SHOOT_ANGLE;
 		pos.x += this->getSprite()->getFrameWidth() / 3;
 		pos.y += 5 * this->getScale().y;
 	}
 	else if (direction == (eDirection::BOTTOM | eDirection::RIGHT))
 	{
-		angle = 120.0f;
+		angle = BOTRIGHT_SHOOT_ANGLE;
 		pos.x += this->getSprite()->getFrameWidth() / 3;
 		pos.y += 5 * this->getScale().y;
 	}
 	else if (direction == (eDirection::BOTTOM | eDirection::LEFT))
 	{
-		angle = -120.0f;
+		angle = BOTLEFT_SHOOT_ANGLE;
 		pos.x -= this->getSprite()->getFrameWidth() / 3;
 		pos.y += 5 * this->getScale().y;
 	}
 
 	if (this->isInStatus(eStatus::SWIMING))
 		pos.y -= 8 * this->getScale().y;
+	
 
-	_listBullets.push_back(new Bullet(pos,(eBulletType)(BILL_BULLET | NORMAL_BULLET),angle));		// normalbullet -> hardcode
+	Bullet* bullet = this->getBulletFromGun(pos, angle);
+	if (bullet == nullptr)
+		return;
+
+	//_listBullets.push_back(new Bullet(pos,(eBulletType)(BILL_BULLET | NORMAL_BULLET),angle));		// normalbullet -> hardcode
+	_listBullets.push_back(bullet);		// normalbullet -> hardcode
 	_listBullets.back()->init();
+
+
+	
+}
+
+void Bill::changeBulletType(eAirCraftType type)
+{
+	switch (type)
+	{
+	case L:
+		this->_currentGun = eBulletType::L_BULLET;
+		break;
+	case B:
+		this->_currentGun = eBulletType::NORMAL_BULLET;
+		break;
+	case F:
+		this->_currentGun = eBulletType::F_BULLET;
+		break;
+	case S:
+		this->_currentGun = eBulletType::S_BULLET;
+		break;
+	case M:
+		this->_currentGun = eBulletType::M_BULLET;
+		break;
+	case R:
+		if (this->_currentGun != eBulletType::L_BULLET)
+			this->_currentGun = eBulletType(this->_currentGun | eBulletType::R_BULLET);
+		break;
+	default:
+		break;
+	}
+}
+
+// Từ thuộc tính currentGun mà chọn loại đoạn trả về thích hợp
+Bullet* Bill::getBulletFromGun(GVector2 position, float angle)
+{
+	Bullet* bullet = nullptr;
+	if ((_currentGun & NORMAL_BULLET) == NORMAL_BULLET)
+	{
+		if (_listBullets.size() >= 4 && (_currentGun & R_BULLET ) != R_BULLET)
+			return nullptr;
+		bullet = new Bullet(position, (eBulletType)(BILL_BULLET | NORMAL_BULLET), angle);
+	}
+	else if ((_currentGun & L_BULLET) == L_BULLET)
+	{
+		if (this->_listBullets.empty() == false)
+		{
+			_listBullets.clear();
+		}
+		bullet = new LGun(position, angle);
+	}
+	else if ((_currentGun & F_BULLET) == F_BULLET)
+	{
+		if (_listBullets.size() >= 2 && (_currentGun & R_BULLET) != R_BULLET)
+			return nullptr; 
+		bullet = new FBullet(position, angle);
+	}
+	else if ((_currentGun & S_BULLET) == S_BULLET)
+	{
+		if (_listBullets.size() >= 2 && (_currentGun & R_BULLET) != R_BULLET)
+			return nullptr;
+		bullet = new SBullet(position, angle);
+	}
+	else if ((_currentGun & M_BULLET) == M_BULLET)
+	{
+		if (_listBullets.size() >= 6 && (_currentGun & R_BULLET) != R_BULLET)
+			return nullptr;
+		bullet = new MBullet(position, angle);
+	}
+	return bullet;
 }
 
 GVector2 Bill::getVelocity()
@@ -744,12 +822,4 @@ eDirection Bill::getAimingDirection()
 	}
 
 	return direction;
-}
-
-void Bill::changeBulletType(eAirCraftType type)
-{
-	// do somehthing.
-	// Khi va chạm với cái máy bay lúc bị bắn xong thì bên aircraft gọi hàm này.
-	// Khi nào có nhiều kiểu đạn thì ông Vinh thêm vào hàm này nhé.
-	OutputDebugString(L"Ăn đạn, thay đạn");
 }

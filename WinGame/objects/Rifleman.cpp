@@ -1,7 +1,7 @@
 ﻿#include "Rifleman.h" 
 
 float animationTime = 0;
-#define PI 3.14159265
+
 Rifleman::Rifleman(eStatus status, GVector2 position) : BaseEnemy(eID::RIFLEMAN) {
 	_sprite = SpriteManager::getInstance()->getSprite(eID::RIFLEMAN);
 	_sprite->setFrameRect(0, 0, 23, 38);
@@ -243,13 +243,13 @@ void Rifleman::calculateShootingAngle() {
 	float dx = (this->getPosition().x) - (bill->getPosition().x);
 	float dy = (this->getPosition().y) - (bill->getPosition().y + bill->getSprite()->getFrameHeight() / 2);
 	if (dx > 0 && dy < 0)
-		_shootingAngle = atan(dx / dy) * 180 / PI;
+		_shootingAngle = atan(dx / dy) * 180 / M_PI;
 	else if (dx > 0 && dy > 0)
-		_shootingAngle = -atan(dy / dx) * 180 / PI - 90;
+		_shootingAngle = -atan(dy / dx) * 180 / M_PI - 90;
 	else if (dx < 0 && dy < 0)
-		_shootingAngle = atan(dx / dy) * 180 / PI;
+		_shootingAngle = atan(dx / dy) * 180 / M_PI;
 	else if (dx < 0 && dy > 0)
-		_shootingAngle = -atan(dy / dx) * 180 / PI + 90;
+		_shootingAngle = -atan(dy / dx) * 180 / M_PI + 90;
 	else if (dx == 0 && dy > 0)
 		_shootingAngle = 0;
 	else if (dx == 0 && dy < 0)

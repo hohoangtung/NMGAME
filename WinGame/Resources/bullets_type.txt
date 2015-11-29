@@ -1,2 +1,6 @@
 frame_name	left	top	right	bottom
 normal_bullet	58	42	60	44
+l_bullet	23	39	38	44
+f_bullet	41	37	48	44
+s_bullet	61	27	66	32
+m_bullet	69	28	73	32
