@@ -163,7 +163,7 @@ void PlayScene::update(float dt)
 	// sodier
 	for (int i = 1; i < _listobject.size(); i++)
 	{
-		_listobject[2]->checkCollision(_listobject[i], dt);
+		_listobject[1]->checkCollision(_listobject[i], dt);
 	}
 
 	for (int i = 1; i < _listobject.size(); i++)
