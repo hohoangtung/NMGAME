@@ -1,196 +1,374 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-  <QNode Id="0" Level="0" X="0" Y="0" Width="6656" Height="448">
-    <QNode Id="0" Level="1" X="0" Y="0" Width="3328" Height="224">
-      <QNode Id="0" Level="2" X="0" Y="0" Width="1664" Height="112" />
-      <QNode Id="16" Level="2" X="1664" Y="0" Width="1664" Height="112" />
-      <QNode Id="32" Level="2" X="1664" Y="112" Width="1664" Height="112">
-        <QNode Id="32" Level="3" X="1664" Y="112" Width="832" Height="56" />
-        <QNode Id="288" Level="3" X="2496" Y="112" Width="832" Height="56">
-          <Objects>object11 </Objects>
+<QNode Id="0" Level="0" X="0" Y="0" Width="6656" Height="448">
+  <QNode Id="0" Level="1" X="0" Y="0" Width="3328" Height="224">
+    <QNode Id="0" Level="2" X="0" Y="0" Width="1664" Height="112">
+      <Objects>airCraft1 </Objects>
+    </QNode>
+    <QNode Id="16" Level="2" X="1664" Y="0" Width="1664" Height="112" />
+    <QNode Id="32" Level="2" X="1664" Y="112" Width="1664" Height="112">
+      <QNode Id="32" Level="3" X="1664" Y="112" Width="832" Height="56">
+        <Objects>airCraft2 </Objects>
+      </QNode>
+      <QNode Id="288" Level="3" X="2496" Y="112" Width="832" Height="56">
+        <Objects>object11 rifleMan4 </Objects>
+      </QNode>
+      <QNode Id="544" Level="3" X="2496" Y="168" Width="832" Height="56">
+        <QNode Id="544" Level="4" X="2496" Y="168" Width="416" Height="28">
+          <Objects>rifleMan4 </Objects>
         </QNode>
-        <QNode Id="544" Level="3" X="2496" Y="168" Width="832" Height="56">
+        <QNode Id="66080" Level="4" X="2912" Y="168" Width="416" Height="28">
+          <Objects>wallTurret2 </Objects>
+        </QNode>
+        <QNode Id="131616" Level="4" X="2912" Y="196" Width="416" Height="28">
+          <Objects>wallTurret2 </Objects>
+        </QNode>
+        <QNode Id="197152" Level="4" X="2496" Y="196" Width="416" Height="28">
           <Objects>object38 </Objects>
         </QNode>
-        <QNode Id="800" Level="3" X="1664" Y="168" Width="832" Height="56">
-          <Objects>object8 object38 </Objects>
+      </QNode>
+      <QNode Id="800" Level="3" X="1664" Y="168" Width="832" Height="56">
+        <QNode Id="800" Level="4" X="1664" Y="168" Width="416" Height="28">
+          <Objects>bridge1 </Objects>
+        </QNode>
+        <QNode Id="66336" Level="4" X="2080" Y="168" Width="416" Height="28">
+          <Objects>bridge2 </Objects>
+        </QNode>
+        <QNode Id="131872" Level="4" X="2080" Y="196" Width="416" Height="28">
+          <QNode Id="131872" Level="5" X="2080" Y="196" Width="208" Height="14">
+            <Objects>object8 bridge2 </Objects>
+          </QNode>
+          <QNode Id="131873" Level="5" X="2288" Y="196" Width="208" Height="14">
+            <Objects>object38 bridge2 </Objects>
+          </QNode>
+          <QNode Id="131874" Level="5" X="2288" Y="210" Width="208" Height="14">
+            <Objects>bridge2 </Objects>
+          </QNode>
+          <QNode Id="131875" Level="5" X="2080" Y="210" Width="208" Height="14">
+            <Objects>bridge2 </Objects>
+          </QNode>
+        </QNode>
+        <QNode Id="197408" Level="4" X="1664" Y="196" Width="416" Height="28">
+          <Objects>object8 bridge1 </Objects>
         </QNode>
       </QNode>
-      <QNode Id="48" Level="2" X="0" Y="112" Width="1664" Height="112">
+    </QNode>
+    <QNode Id="48" Level="2" X="0" Y="112" Width="1664" Height="112">
+      <QNode Id="48" Level="3" X="0" Y="112" Width="832" Height="56" />
+      <QNode Id="304" Level="3" X="832" Y="112" Width="832" Height="56">
+        <Objects>sodierCreator1 </Objects>
+      </QNode>
+      <QNode Id="560" Level="3" X="832" Y="168" Width="832" Height="56">
+        <QNode Id="560" Level="4" X="832" Y="168" Width="416" Height="28">
+          <Objects>sodierCreator1 </Objects>
+        </QNode>
+        <QNode Id="66096" Level="4" X="1248" Y="168" Width="416" Height="28">
+          <Objects>bridge1 </Objects>
+        </QNode>
+        <QNode Id="131632" Level="4" X="1248" Y="196" Width="416" Height="28">
+          <Objects>land1 bridge1 </Objects>
+        </QNode>
+        <QNode Id="197168" Level="4" X="832" Y="196" Width="416" Height="28">
+          <Objects>land1 </Objects>
+        </QNode>
+      </QNode>
+      <QNode Id="816" Level="3" X="0" Y="168" Width="832" Height="56">
         <Objects>land1 </Objects>
       </QNode>
     </QNode>
-    <QNode Id="4" Level="1" X="3328" Y="0" Width="3328" Height="224">
-      <QNode Id="4" Level="2" X="3328" Y="0" Width="1664" Height="112" />
-      <QNode Id="20" Level="2" X="4992" Y="0" Width="1664" Height="112" />
-      <QNode Id="36" Level="2" X="4992" Y="112" Width="1664" Height="112">
-        <QNode Id="36" Level="3" X="4992" Y="112" Width="832" Height="56">
-          <Objects>object25 </Objects>
+  </QNode>
+  <QNode Id="4" Level="1" X="3328" Y="0" Width="3328" Height="224">
+    <QNode Id="4" Level="2" X="3328" Y="0" Width="1664" Height="112">
+      <Objects>redCannon2 </Objects>
+    </QNode>
+    <QNode Id="20" Level="2" X="4992" Y="0" Width="1664" Height="112" />
+    <QNode Id="36" Level="2" X="4992" Y="112" Width="1664" Height="112">
+      <QNode Id="36" Level="3" X="4992" Y="112" Width="832" Height="56">
+        <Objects>object25 </Objects>
+      </QNode>
+      <QNode Id="292" Level="3" X="5824" Y="112" Width="832" Height="56" />
+      <QNode Id="548" Level="3" X="5824" Y="168" Width="832" Height="56">
+        <Objects>object34 </Objects>
+      </QNode>
+      <QNode Id="804" Level="3" X="4992" Y="168" Width="832" Height="56">
+        <QNode Id="804" Level="4" X="4992" Y="168" Width="416" Height="28" />
+        <QNode Id="66340" Level="4" X="5408" Y="168" Width="416" Height="28">
+          <Objects>redCannon4 </Objects>
         </QNode>
-        <QNode Id="292" Level="3" X="5824" Y="112" Width="832" Height="56" />
-        <QNode Id="548" Level="3" X="5824" Y="168" Width="832" Height="56">
-          <Objects>object34 </Objects>
+        <QNode Id="131876" Level="4" X="5408" Y="196" Width="416" Height="28">
+          <Objects>redCannon4 </Objects>
         </QNode>
-        <QNode Id="804" Level="3" X="4992" Y="168" Width="832" Height="56">
+        <QNode Id="197412" Level="4" X="4992" Y="196" Width="416" Height="28">
           <Objects>object26 object29 </Objects>
         </QNode>
       </QNode>
-      <QNode Id="52" Level="2" X="3328" Y="112" Width="1664" Height="112">
-        <QNode Id="52" Level="3" X="3328" Y="112" Width="832" Height="56">
-          <Objects>object11 object19 </Objects>
+    </QNode>
+    <QNode Id="52" Level="2" X="3328" Y="112" Width="1664" Height="112">
+      <QNode Id="52" Level="3" X="3328" Y="112" Width="832" Height="56">
+        <Objects>object11 object19 </Objects>
+      </QNode>
+      <QNode Id="308" Level="3" X="4160" Y="112" Width="832" Height="56">
+        <Objects>object19 redCannon2 </Objects>
+      </QNode>
+      <QNode Id="564" Level="3" X="4160" Y="168" Width="832" Height="56">
+        <QNode Id="564" Level="4" X="4160" Y="168" Width="416" Height="28" />
+        <QNode Id="66100" Level="4" X="4576" Y="168" Width="416" Height="28">
+          <Objects>rifleMan3 </Objects>
         </QNode>
-        <QNode Id="308" Level="3" X="4160" Y="112" Width="832" Height="56">
-          <Objects>object19 </Objects>
+        <QNode Id="131636" Level="4" X="4576" Y="196" Width="416" Height="28">
+          <QNode Id="131636" Level="5" X="4576" Y="196" Width="208" Height="14">
+            <Objects>object21 rifleMan3 </Objects>
+          </QNode>
+          <QNode Id="131637" Level="5" X="4784" Y="196" Width="208" Height="14">
+            <Objects>object26 </Objects>
+          </QNode>
+          <QNode Id="131638" Level="5" X="4784" Y="210" Width="208" Height="14" />
+          <QNode Id="131639" Level="5" X="4576" Y="210" Width="208" Height="14">
+            <Objects>rifleMan3 </Objects>
+          </QNode>
         </QNode>
-        <QNode Id="564" Level="3" X="4160" Y="168" Width="832" Height="56">
-          <Objects>object21 object26 </Objects>
+        <QNode Id="197172" Level="4" X="4160" Y="196" Width="416" Height="28">
+          <Objects>object21 </Objects>
         </QNode>
-        <QNode Id="820" Level="3" X="3328" Y="168" Width="832" Height="56">
-          <Objects>object15 </Objects>
-        </QNode>
+      </QNode>
+      <QNode Id="820" Level="3" X="3328" Y="168" Width="832" Height="56">
+        <Objects>object15 wallTurret3 </Objects>
       </QNode>
     </QNode>
-    <QNode Id="8" Level="1" X="3328" Y="224" Width="3328" Height="224">
-      <QNode Id="8" Level="2" X="3328" Y="224" Width="1664" Height="112">
-        <QNode Id="8" Level="3" X="3328" Y="224" Width="832" Height="56">
-          <Objects>object13 </Objects>
+  </QNode>
+  <QNode Id="8" Level="1" X="3328" Y="224" Width="3328" Height="224">
+    <QNode Id="8" Level="2" X="3328" Y="224" Width="1664" Height="112">
+      <QNode Id="8" Level="3" X="3328" Y="224" Width="832" Height="56">
+        <QNode Id="8" Level="4" X="3328" Y="224" Width="416" Height="28">
+          <Objects>wallTurret3 </Objects>
         </QNode>
-        <QNode Id="264" Level="3" X="4160" Y="224" Width="832" Height="56">
-          <Objects>object20 object22 </Objects>
+        <QNode Id="65544" Level="4" X="3744" Y="224" Width="416" Height="28" />
+        <QNode Id="131080" Level="4" X="3744" Y="252" Width="416" Height="28">
+          <Objects>redCannon1 </Objects>
         </QNode>
-        <QNode Id="520" Level="3" X="4160" Y="280" Width="832" Height="56">
-          <Objects>object18 object23 </Objects>
-        </QNode>
-        <QNode Id="776" Level="3" X="3328" Y="280" Width="832" Height="56">
-          <Objects>object16 object17 </Objects>
-        </QNode>
-      </QNode>
-      <QNode Id="24" Level="2" X="4992" Y="224" Width="1664" Height="112">
-        <QNode Id="24" Level="3" X="4992" Y="224" Width="832" Height="56">
-          <Objects>object30 </Objects>
-        </QNode>
-        <QNode Id="280" Level="3" X="5824" Y="224" Width="832" Height="56">
-          <Objects>object33 object35 </Objects>
-        </QNode>
-        <QNode Id="536" Level="3" X="5824" Y="280" Width="832" Height="56">
-          <Objects>object36 object37 </Objects>
-        </QNode>
-        <QNode Id="792" Level="3" X="4992" Y="280" Width="832" Height="56">
-          <Objects>object27 object32 </Objects>
+        <QNode Id="196616" Level="4" X="3328" Y="252" Width="416" Height="28">
+          <Objects>object13 wallTurret3 </Objects>
         </QNode>
       </QNode>
-      <QNode Id="40" Level="2" X="4992" Y="336" Width="1664" Height="112">
-        <QNode Id="40" Level="3" X="4992" Y="336" Width="832" Height="56" />
-        <QNode Id="296" Level="3" X="5824" Y="336" Width="832" Height="56" />
-        <QNode Id="552" Level="3" X="5824" Y="392" Width="832" Height="56">
-          <Objects>object38 </Objects>
+      <QNode Id="264" Level="3" X="4160" Y="224" Width="832" Height="56">
+        <QNode Id="264" Level="4" X="4160" Y="224" Width="416" Height="28" />
+        <QNode Id="65800" Level="4" X="4576" Y="224" Width="416" Height="28">
+          <Objects>rifleMan3 </Objects>
         </QNode>
-        <QNode Id="808" Level="3" X="4992" Y="392" Width="832" Height="56">
-          <Objects>object28 object31 </Objects>
+        <QNode Id="131336" Level="4" X="4576" Y="252" Width="416" Height="28">
+          <Objects>object22 rifleMan3 </Objects>
+        </QNode>
+        <QNode Id="196872" Level="4" X="4160" Y="252" Width="416" Height="28">
+          <Objects>object20 </Objects>
         </QNode>
       </QNode>
-      <QNode Id="56" Level="2" X="3328" Y="336" Width="1664" Height="112">
-        <QNode Id="56" Level="3" X="3328" Y="336" Width="832" Height="56" />
-        <QNode Id="312" Level="3" X="4160" Y="336" Width="832" Height="56" />
-        <QNode Id="568" Level="3" X="4160" Y="392" Width="832" Height="56">
-          <Objects>object24 </Objects>
+      <QNode Id="520" Level="3" X="4160" Y="280" Width="832" Height="56">
+        <Objects>object18 object23 </Objects>
+      </QNode>
+      <QNode Id="776" Level="3" X="3328" Y="280" Width="832" Height="56">
+        <QNode Id="776" Level="4" X="3328" Y="280" Width="416" Height="28" />
+        <QNode Id="66312" Level="4" X="3744" Y="280" Width="416" Height="28">
+          <Objects>redCannon1 </Objects>
         </QNode>
-        <QNode Id="824" Level="3" X="3328" Y="392" Width="832" Height="56">
-          <Objects>object14 water4 </Objects>
+        <QNode Id="131848" Level="4" X="3744" Y="308" Width="416" Height="28">
+          <QNode Id="131848" Level="5" X="3744" Y="308" Width="208" Height="14" />
+          <QNode Id="131849" Level="5" X="3952" Y="308" Width="208" Height="14">
+            <Objects>redCannon1 </Objects>
+          </QNode>
+          <QNode Id="131850" Level="5" X="3952" Y="322" Width="208" Height="14">
+            <Objects>object16 object17 </Objects>
+          </QNode>
+          <QNode Id="131851" Level="5" X="3744" Y="322" Width="208" Height="14">
+            <Objects>object16 </Objects>
+          </QNode>
         </QNode>
+        <QNode Id="197384" Level="4" X="3328" Y="308" Width="416" Height="28" />
       </QNode>
     </QNode>
-    <QNode Id="12" Level="1" X="0" Y="224" Width="3328" Height="224">
-      <QNode Id="12" Level="2" X="0" Y="224" Width="1664" Height="112">
-        <QNode Id="12" Level="3" X="0" Y="224" Width="832" Height="56">
-          <Objects>object1 </Objects>
+    <QNode Id="24" Level="2" X="4992" Y="224" Width="1664" Height="112">
+      <QNode Id="24" Level="3" X="4992" Y="224" Width="832" Height="56">
+        <Objects>object30 redCannon4 </Objects>
+      </QNode>
+      <QNode Id="280" Level="3" X="5824" Y="224" Width="832" Height="56">
+        <Objects>object33 object35 </Objects>
+      </QNode>
+      <QNode Id="536" Level="3" X="5824" Y="280" Width="832" Height="56">
+        <QNode Id="536" Level="4" X="5824" Y="280" Width="416" Height="28">
+          <Objects>object36 </Objects>
         </QNode>
-        <QNode Id="268" Level="3" X="832" Y="224" Width="832" Height="56">
-          <Objects>object5 </Objects>
+        <QNode Id="66072" Level="4" X="6240" Y="280" Width="416" Height="28">
+          <Objects>object36 </Objects>
         </QNode>
-        <QNode Id="524" Level="3" X="832" Y="280" Width="832" Height="56">
-          <Objects>object37 </Objects>
+        <QNode Id="131608" Level="4" X="6240" Y="308" Width="416" Height="28">
+          <Objects>object36 wallTurret5 </Objects>
         </QNode>
-        <QNode Id="780" Level="3" X="0" Y="280" Width="832" Height="56">
-          <Objects>object2 object4 </Objects>
+        <QNode Id="197144" Level="4" X="5824" Y="308" Width="416" Height="28">
+          <Objects>wallTurret4 wallTurret5 </Objects>
         </QNode>
       </QNode>
-      <QNode Id="28" Level="2" X="1664" Y="224" Width="1664" Height="112">
-        <Objects>object12 object13 </Objects>
+      <QNode Id="792" Level="3" X="4992" Y="280" Width="832" Height="56">
+        <Objects>object27 object32 </Objects>
       </QNode>
-      <QNode Id="44" Level="2" X="1664" Y="336" Width="1664" Height="112">
-        <QNode Id="44" Level="3" X="1664" Y="336" Width="832" Height="56" />
-        <QNode Id="300" Level="3" X="2496" Y="336" Width="832" Height="56" />
-        <QNode Id="556" Level="3" X="2496" Y="392" Width="832" Height="56">
-          <QNode Id="556" Level="4" X="2496" Y="392" Width="416" Height="28">
-            <Objects>object10 water3 </Objects>
+    </QNode>
+    <QNode Id="40" Level="2" X="4992" Y="336" Width="1664" Height="112">
+      <QNode Id="40" Level="3" X="4992" Y="336" Width="832" Height="56" />
+      <QNode Id="296" Level="3" X="5824" Y="336" Width="832" Height="56">
+        <QNode Id="296" Level="4" X="5824" Y="336" Width="416" Height="28">
+          <Objects>wallTurret4 wallTurret5 </Objects>
+        </QNode>
+        <QNode Id="65832" Level="4" X="6240" Y="336" Width="416" Height="28">
+          <Objects>object36 wallTurret5 </Objects>
+        </QNode>
+        <QNode Id="131368" Level="4" X="6240" Y="364" Width="416" Height="28">
+          <Objects>wallTurret5 </Objects>
+        </QNode>
+        <QNode Id="196904" Level="4" X="5824" Y="364" Width="416" Height="28">
+          <Objects>wallTurret4 wallTurret5 </Objects>
+        </QNode>
+      </QNode>
+      <QNode Id="552" Level="3" X="5824" Y="392" Width="832" Height="56">
+        <Objects>object38 </Objects>
+      </QNode>
+      <QNode Id="808" Level="3" X="4992" Y="392" Width="832" Height="56">
+        <Objects>object28 object31 </Objects>
+      </QNode>
+    </QNode>
+    <QNode Id="56" Level="2" X="3328" Y="336" Width="1664" Height="112">
+      <QNode Id="56" Level="3" X="3328" Y="336" Width="832" Height="56" />
+      <QNode Id="312" Level="3" X="4160" Y="336" Width="832" Height="56" />
+      <QNode Id="568" Level="3" X="4160" Y="392" Width="832" Height="56">
+        <Objects>object24 </Objects>
+      </QNode>
+      <QNode Id="824" Level="3" X="3328" Y="392" Width="832" Height="56">
+        <Objects>object14 water4 </Objects>
+      </QNode>
+    </QNode>
+  </QNode>
+  <QNode Id="12" Level="1" X="0" Y="224" Width="3328" Height="224">
+    <QNode Id="12" Level="2" X="0" Y="224" Width="1664" Height="112">
+      <QNode Id="12" Level="3" X="0" Y="224" Width="832" Height="56">
+        <Objects>object1 </Objects>
+      </QNode>
+      <QNode Id="268" Level="3" X="832" Y="224" Width="832" Height="56">
+        <Objects>object5 bridge1 </Objects>
+      </QNode>
+      <QNode Id="524" Level="3" X="832" Y="280" Width="832" Height="56">
+        <Objects>object37 rifleMan2 </Objects>
+      </QNode>
+      <QNode Id="780" Level="3" X="0" Y="280" Width="832" Height="56">
+        <QNode Id="780" Level="4" X="0" Y="280" Width="416" Height="28" />
+        <QNode Id="66316" Level="4" X="416" Y="280" Width="416" Height="28" />
+        <QNode Id="131852" Level="4" X="416" Y="308" Width="416" Height="28">
+          <QNode Id="131852" Level="5" X="416" Y="308" Width="208" Height="14" />
+          <QNode Id="131853" Level="5" X="624" Y="308" Width="208" Height="14" />
+          <QNode Id="131854" Level="5" X="624" Y="322" Width="208" Height="14">
+            <Objects>object4 rifleMan1 </Objects>
           </QNode>
-          <QNode Id="66092" Level="4" X="2912" Y="392" Width="416" Height="28">
-            <Objects>object10 water4 </Objects>
-          </QNode>
-          <QNode Id="131628" Level="4" X="2912" Y="420" Width="416" Height="28">
-            <Objects>water4 </Objects>
-          </QNode>
-          <QNode Id="197164" Level="4" X="2496" Y="420" Width="416" Height="28">
-            <Objects>water3 </Objects>
+          <QNode Id="131855" Level="5" X="416" Y="322" Width="208" Height="14">
+            <Objects>object2 </Objects>
           </QNode>
         </QNode>
-        <QNode Id="812" Level="3" X="1664" Y="392" Width="832" Height="56">
+        <QNode Id="197388" Level="4" X="0" Y="308" Width="416" Height="28" />
+      </QNode>
+    </QNode>
+    <QNode Id="28" Level="2" X="1664" Y="224" Width="1664" Height="112">
+      <QNode Id="28" Level="3" X="1664" Y="224" Width="832" Height="56">
+        <Objects>bridge1 bridge2 </Objects>
+      </QNode>
+      <QNode Id="284" Level="3" X="2496" Y="224" Width="832" Height="56">
+        <QNode Id="284" Level="4" X="2496" Y="224" Width="416" Height="28" />
+        <QNode Id="65820" Level="4" X="2912" Y="224" Width="416" Height="28">
+          <Objects>wallTurret2 </Objects>
+        </QNode>
+        <QNode Id="131356" Level="4" X="2912" Y="252" Width="416" Height="28">
+          <Objects>object13 wallTurret2 </Objects>
+        </QNode>
+        <QNode Id="196892" Level="4" X="2496" Y="252" Width="416" Height="28">
+          <Objects>wallTurret1 </Objects>
+        </QNode>
+      </QNode>
+      <QNode Id="540" Level="3" X="2496" Y="280" Width="832" Height="56">
+        <Objects>object12 wallTurret1 </Objects>
+      </QNode>
+      <QNode Id="796" Level="3" X="1664" Y="280" Width="832" Height="56" />
+    </QNode>
+    <QNode Id="44" Level="2" X="1664" Y="336" Width="1664" Height="112">
+      <QNode Id="44" Level="3" X="1664" Y="336" Width="832" Height="56" />
+      <QNode Id="300" Level="3" X="2496" Y="336" Width="832" Height="56" />
+      <QNode Id="556" Level="3" X="2496" Y="392" Width="832" Height="56">
+        <QNode Id="556" Level="4" X="2496" Y="392" Width="416" Height="28">
+          <Objects>object10 water3 </Objects>
+        </QNode>
+        <QNode Id="66092" Level="4" X="2912" Y="392" Width="416" Height="28">
+          <Objects>object10 water4 </Objects>
+        </QNode>
+        <QNode Id="131628" Level="4" X="2912" Y="420" Width="416" Height="28">
+          <Objects>water4 </Objects>
+        </QNode>
+        <QNode Id="197164" Level="4" X="2496" Y="420" Width="416" Height="28">
           <Objects>water3 </Objects>
         </QNode>
       </QNode>
-      <QNode Id="60" Level="2" X="0" Y="336" Width="1664" Height="112">
-        <QNode Id="60" Level="3" X="0" Y="336" Width="832" Height="56" />
-        <QNode Id="316" Level="3" X="832" Y="336" Width="832" Height="56" />
-        <QNode Id="572" Level="3" X="832" Y="392" Width="832" Height="56">
-          <QNode Id="572" Level="4" X="832" Y="392" Width="416" Height="28">
-            <Objects>object38 water2 </Objects>
+      <QNode Id="812" Level="3" X="1664" Y="392" Width="832" Height="56">
+        <Objects>water3 </Objects>
+      </QNode>
+    </QNode>
+    <QNode Id="60" Level="2" X="0" Y="336" Width="1664" Height="112">
+      <QNode Id="60" Level="3" X="0" Y="336" Width="832" Height="56">
+        <Objects>rifleMan1 </Objects>
+      </QNode>
+      <QNode Id="316" Level="3" X="832" Y="336" Width="832" Height="56">
+        <Objects>rifleMan2 </Objects>
+      </QNode>
+      <QNode Id="572" Level="3" X="832" Y="392" Width="832" Height="56">
+        <QNode Id="572" Level="4" X="832" Y="392" Width="416" Height="28">
+          <Objects>object38 water2 </Objects>
+        </QNode>
+        <QNode Id="66108" Level="4" X="1248" Y="392" Width="416" Height="28">
+          <Objects>object38 water3 </Objects>
+        </QNode>
+        <QNode Id="131644" Level="4" X="1248" Y="420" Width="416" Height="28">
+          <Objects>water3 </Objects>
+        </QNode>
+        <QNode Id="197180" Level="4" X="832" Y="420" Width="416" Height="28">
+          <Objects>water2 </Objects>
+        </QNode>
+      </QNode>
+      <QNode Id="828" Level="3" X="0" Y="392" Width="832" Height="56">
+        <QNode Id="828" Level="4" X="0" Y="392" Width="416" Height="28">
+          <Objects>water1 </Objects>
+        </QNode>
+        <QNode Id="66364" Level="4" X="416" Y="392" Width="416" Height="28">
+          <QNode Id="66364" Level="5" X="416" Y="392" Width="208" Height="14">
+            <Objects>object3 </Objects>
           </QNode>
-          <QNode Id="66108" Level="4" X="1248" Y="392" Width="416" Height="28">
-            <Objects>object38 water3 </Objects>
+          <QNode Id="66365" Level="5" X="624" Y="392" Width="208" Height="14">
+            <Objects>object3 </Objects>
           </QNode>
-          <QNode Id="131644" Level="4" X="1248" Y="420" Width="416" Height="28">
-            <Objects>water3 </Objects>
+          <QNode Id="66366" Level="5" X="624" Y="406" Width="208" Height="14">
+            <Objects>object3 water2 </Objects>
           </QNode>
-          <QNode Id="197180" Level="4" X="832" Y="420" Width="416" Height="28">
-            <Objects>water2 </Objects>
+          <QNode Id="66367" Level="5" X="416" Y="406" Width="208" Height="14">
+            <Objects>object3 water1 </Objects>
           </QNode>
         </QNode>
-        <QNode Id="828" Level="3" X="0" Y="392" Width="832" Height="56">
-          <QNode Id="828" Level="4" X="0" Y="392" Width="416" Height="28">
+        <QNode Id="131900" Level="4" X="416" Y="420" Width="416" Height="28">
+          <QNode Id="131900" Level="5" X="416" Y="420" Width="208" Height="14">
+            <Objects>object3 water1 </Objects>
+          </QNode>
+          <QNode Id="131901" Level="5" X="624" Y="420" Width="208" Height="14">
+            <Objects>object3 water2 </Objects>
+          </QNode>
+          <QNode Id="131902" Level="5" X="624" Y="434" Width="208" Height="14">
+            <Objects>water2 </Objects>
+          </QNode>
+          <QNode Id="131903" Level="5" X="416" Y="434" Width="208" Height="14">
             <Objects>water1 </Objects>
           </QNode>
-          <QNode Id="66364" Level="4" X="416" Y="392" Width="416" Height="28">
-            <QNode Id="66364" Level="5" X="416" Y="392" Width="208" Height="14">
-              <Objects>object3 </Objects>
-            </QNode>
-            <QNode Id="66365" Level="5" X="624" Y="392" Width="208" Height="14">
-              <Objects>object3 </Objects>
-            </QNode>
-            <QNode Id="66366" Level="5" X="624" Y="406" Width="208" Height="14">
-              <Objects>object3 water2 </Objects>
-            </QNode>
-            <QNode Id="66367" Level="5" X="416" Y="406" Width="208" Height="14">
-              <Objects>object3 water1 </Objects>
-            </QNode>
-          </QNode>
-          <QNode Id="131900" Level="4" X="416" Y="420" Width="416" Height="28">
-            <QNode Id="131900" Level="5" X="416" Y="420" Width="208" Height="14">
-              <Objects>object3 water1 </Objects>
-            </QNode>
-            <QNode Id="131901" Level="5" X="624" Y="420" Width="208" Height="14">
-              <Objects>object3 water2 </Objects>
-            </QNode>
-            <QNode Id="131902" Level="5" X="624" Y="434" Width="208" Height="14">
-              <Objects>water2 </Objects>
-            </QNode>
-            <QNode Id="131903" Level="5" X="416" Y="434" Width="208" Height="14">
-              <Objects>water1 </Objects>
-            </QNode>
-          </QNode>
-          <QNode Id="197436" Level="4" X="0" Y="420" Width="416" Height="28">
-            <Objects>water1 </Objects>
-          </QNode>
+        </QNode>
+        <QNode Id="197436" Level="4" X="0" Y="420" Width="416" Height="28">
+          <Objects>water1 </Objects>
         </QNode>
       </QNode>
     </QNode>
   </QNode>
+</QNode>

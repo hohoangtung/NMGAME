@@ -67,6 +67,7 @@ public:
 
 private:
 	static int _matrixIndex[2][MAX_WAVE * 2];
+	int* privateIndex[2];
 	StopWatch* _stopwatch;
 	Transformable *_transform;
 	map<string, IComponent*> _listComponent;

@@ -9,7 +9,17 @@
 #include "IComponent.h"
 #include "CollisionBody.h"
 
-#define NORMAL_BULLET_SPEED 400;
+#define NORMAL_BULLET_SPEED 400
+
+#define TOP_SHOOT_ANGLE					0.0f
+#define RIGHT_SHOOT_ANGLE				90.0f
+#define LEFT_SHOOT_ANGLE				-90.0f
+#define BOTTOM_SHOOT_ANGLE				180.0f
+
+#define TOPRIGHT_SHOOT_ANGLE			60.0f
+#define TOPLEFT_SHOOT_ANGLE				-60.0f
+#define BOTRIGHT_SHOOT_ANGLE			120.0f
+#define BOTLEFT_SHOOT_ANGLE				-120.0f
 
 class Bullet : public BaseObject
 {
@@ -26,13 +36,13 @@ public:
 	/*
 	Khởi tạo viên đạn
 		@startPosition: vị trí bắt đầu
-		@type: loại đạn, chia ra đạn của bill (= 0) và enemy (= 1).
+		@type: loại đạn, chia ra đạn của bill (= 1) và enemy (= 2).
 		tuy nhiên còn có các loại đạn khác, nên lúc gán thì gán (BILL_BULLET | SOMETYPE) hoặc (ENEMY_BULLET | SOMETYPE)
 		@degree: hướng viên đạn theo độ, gốc là 12h, theo chiều kim đồng hồ
 	*/
 	Bullet(GVector2 startPosition, eBulletType type, float degree);
 
-	~Bullet();
+	virtual ~Bullet();
 
 	virtual void init();
 	virtual void update(float deltatime);
@@ -40,17 +50,18 @@ public:
 	virtual void release();
 
 	virtual int getDamage();
+	virtual void setDamge(int dmg);
 
 	GVector2 getVelocity();
 	
 	eBulletType getBulletType();
+	float getDegree();
 	bool isBillBullet();
 	bool isEnemyBullet();
 	bool isContainType(eBulletType type);
-
 	void onCollisionBegin(CollisionEventArg* collision_arg);
 
-	float checkCollision(BaseObject* object, float dt);
+	virtual float checkCollision(BaseObject* object, float dt);
 
 protected:
 	GVector2 _startPosition;
@@ -59,8 +70,12 @@ protected:
 	int _damage;
 	eDirection _direction;
 	eBulletType _type;
-private:
+	GVector2 initveloc(float bullet_speed);
+
 	map<string, IComponent*> _componentList;
+
+private:
+	//map<string, IComponent*> _componentList;
 
 };
 

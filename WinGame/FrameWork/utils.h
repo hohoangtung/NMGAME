@@ -23,6 +23,12 @@ bool isRectangleIntersected(RECT rect1, RECT rect2);
 */
 bool isContains(RECT rect1, RECT rect2);
 
+/*
+* Tính khoảng cách giữa hai điểm
+* @return: độ dài khoảng cách được tính theo công thức: d = √((x1 - x2 )² + (y1 - y 2)²)
+*/
+float getdistance(D3DXVECTOR2 p1, D3DXVECTOR2 p2);
+
 std::vector<std::string> splitString(const std::string & input, char seperate);
 
 /*

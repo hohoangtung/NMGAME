@@ -108,4 +108,24 @@ private:
 	GVector2 _linearVeloc;		// vận tốc tuyến tính (= ωA)
 
 };
+
+class RoundMovement : public IComponent
+{
+public:
+	RoundMovement(float radius, float frequency, float radian, Sprite* refSprite);
+	void update(float deltatime);
+	void setRadius(float r);
+	void setAngularVeloc(float frequency);
+	float getRadius();
+	float getAngularVeloc();
+	~RoundMovement();
+
+private:
+	Sprite* _refSprite;
+	float _radius;				// Bán Kính.
+
+	float _radianVeloc;			// vận tốc góc (= ω)
+	float _radian;				// góc xoay (= φ) biến thiên theo thời gian
+};
+
 #endif // !__ICOMPONENT_H__

@@ -110,3 +110,61 @@ void SinMovement::setFrequency(float freq)
 	this->_linearVeloc = _amplitude * _radianVeloc;
 }
 #pragma endregion
+
+#pragma region RoundMovement
+
+RoundMovement::RoundMovement(float radius, float frequency, float radian, Sprite* refSprite)
+{
+	this->setRadius(radius);
+	this->setAngularVeloc(frequency);
+	this->_refSprite = refSprite;
+	_radian = radian;
+}
+
+void RoundMovement::update(float deltatime)
+{
+	/*
+	góc xoay được tính theo công thức
+	φ = ω * t
+	*/
+	_radian += _radianVeloc * deltatime / 1000;
+
+	/*
+	vận tốc tuyến tính được tính theo công thức
+			x = R * cos(φ)
+	và		y = R * sin(φ)
+	*/
+	GVector2 veloc;
+	veloc.x = _radius * cos(_radian);
+	veloc.y = _radius * sin(_radian);
+
+	auto pos = this->_refSprite->getPosition();
+	pos += veloc * deltatime / 1000;
+	this->_refSprite->setPosition(pos);
+}
+
+void RoundMovement::setAngularVeloc(float frequency)
+{
+	_radianVeloc = frequency * 2 * M_PI;
+}
+
+void RoundMovement::setRadius(float r)
+{
+	this->_radius = r;
+}
+
+float RoundMovement::getRadius()
+{
+	return _radius;
+}
+
+float RoundMovement::getAngularVeloc()
+{
+	return _radianVeloc;
+}
+
+RoundMovement::~RoundMovement()
+{
+}
+
+#pragma endregion

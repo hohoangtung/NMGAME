@@ -34,42 +34,44 @@ void Bullet::init()
 	this->setPosition(_startPosition);
 	this->setScale(SCALE_FACTOR);
 
-	GVector2 veloc;
+	GVector2 veloc = this->initveloc(NORMAL_BULLET_SPEED);
 
-	if (_direction != eDirection::NONE)
-	{
-		if ((_direction & eDirection::LEFT) == eDirection::LEFT)
-		{
-			veloc.x = -NORMAL_BULLET_SPEED;
-		}
-		else if ((_direction & eDirection::RIGHT) == eDirection::RIGHT)
-		{
-			veloc.x = NORMAL_BULLET_SPEED;
-		}
-		else
-		{
-			veloc.x = 0;
-		}
+	//// Tung Ho
+	//// 28/11 đoạn code sau được đưa vào initveloc
+	//if (_direction != eDirection::NONE)
+	//{
+	//	if ((_direction & eDirection::LEFT) == eDirection::LEFT)
+	//	{
+	//		veloc.x = -NORMAL_BULLET_SPEED;
+	//	}
+	//	else if ((_direction & eDirection::RIGHT) == eDirection::RIGHT)
+	//	{
+	//		veloc.x = NORMAL_BULLET_SPEED;
+	//	}
+	//	else
+	//	{
+	//		veloc.x = 0;
+	//	}
 
-		if ((_direction & eDirection::TOP) == eDirection::TOP)
-		{
-			veloc.y = NORMAL_BULLET_SPEED;
-		}
-		else if ((_direction & eDirection::BOTTOM) == eDirection::BOTTOM)
-		{
-			veloc.y = -NORMAL_BULLET_SPEED;
-		}
-		else
-		{
-			veloc.y = 0;
-		}
-	}
-	else
-	{
-		auto rad = _degree * M_PI / 180;
-		veloc.x = sin(rad) * NORMAL_BULLET_SPEED;
-		veloc.y = cos(rad) * NORMAL_BULLET_SPEED;
-	}
+	//	if ((_direction & eDirection::TOP) == eDirection::TOP)
+	//	{
+	//		veloc.y = NORMAL_BULLET_SPEED;
+	//	}
+	//	else if ((_direction & eDirection::BOTTOM) == eDirection::BOTTOM)
+	//	{
+	//		veloc.y = -NORMAL_BULLET_SPEED;
+	//	}
+	//	else
+	//	{
+	//		veloc.y = 0;
+	//	}
+	//}
+	//else
+	//{
+	//	auto rad = _degree * M_PI / 180;
+	//	veloc.x = sin(rad) * NORMAL_BULLET_SPEED;
+	//	veloc.y = cos(rad) * NORMAL_BULLET_SPEED;
+	//}
 
 	auto movement = new Movement(GVector2(0, 0), veloc, _sprite);
 	_componentList.insert(pair<string, IComponent*>("Movement",movement));
@@ -81,6 +83,53 @@ void Bullet::init()
 	//_componentList["CollisionBody"] = collisionBody;
 
 	__hook(&CollisionBody::onCollisionBegin, collisionBody, &Bullet::onCollisionBegin);
+}
+
+// KHởi tạo vận tốc ban đầu cho đạn. (copy từ đoạn code trên)
+GVector2 Bullet::initveloc(float bullet_speed)
+{
+	GVector2 result;
+	if (_direction != eDirection::NONE)
+	{
+		if ((_direction & eDirection::LEFT) == eDirection::LEFT)
+		{
+			result.x = -bullet_speed;
+		}
+		else if ((_direction & eDirection::RIGHT) == eDirection::RIGHT)
+		{
+			result.x = bullet_speed;
+		}
+		else
+		{
+			result.x = 0;
+		}
+
+		if ((_direction & eDirection::TOP) == eDirection::TOP)
+		{
+			result.y = bullet_speed;
+		}
+		else if ((_direction & eDirection::BOTTOM) == eDirection::BOTTOM)
+		{
+			result.y = -bullet_speed;
+		}
+		else
+		{
+			result.y = 0;
+		}
+	}
+	else
+	{
+		auto rad = _degree * M_PI / 180;
+		result.x = sin(rad) * bullet_speed;
+		result.y = cos(rad) * bullet_speed;
+	}
+	return result;
+
+}
+
+float Bullet::getDegree()
+{
+	return _degree;
 }
 
 void Bullet::update(float deltatime)
@@ -110,6 +159,11 @@ void Bullet::draw(LPD3DXSPRITE spriteHandle, Viewport *viewport)
 
 void Bullet::release()
 {
+	for each (auto item in _componentList)
+	{
+		SAFE_DELETE(item.second);
+	}
+	_componentList.clear();
 }
 
 int Bullet::getDamage()
@@ -117,6 +171,10 @@ int Bullet::getDamage()
 	return _damage;
 }
 
+void Bullet::setDamge(int dmg)
+{
+	this->_damage = dmg;
+}
 GVector2 Bullet::getVelocity()
 {
 	auto move = (Movement*)this->_componentList.find("Movement")->second;
@@ -149,20 +207,27 @@ void Bullet::onCollisionBegin(CollisionEventArg* collision_arg)
 		switch (objectID)
 		{
 		case AIRCRAFT:
+			if (collision_arg->_otherObject->getStatus() == eStatus::HIDING || collision_arg->_otherObject->getStatus() == eStatus::EXPLORED)
+				return;
 			collision_arg->_otherObject->setStatus(eStatus::BURST);
 			this->setStatus(eStatus::DESTROY);
 			break;
 		case SOLDIER: case RIFLEMAN:
 			if (collision_arg->_otherObject->getStatus() != HIDDEN && collision_arg->_otherObject->getStatus() != EXPOSING)
 				((BaseEnemy*)collision_arg->_otherObject)->dropHitpoint();
-			this->setStatus(eStatus::DESTROY);
+			// Đạn laser đi xuyên qua soldier và rifleman
+			if (this->_type != eBulletType::L_BULLET)
+				this->setStatus(eStatus::DESTROY);
 			break;
 		case REDCANNON: case WALL_TURRET:
 			((BaseEnemy*)collision_arg->_otherObject)->dropHitpoint();
 			this->setStatus(eStatus::DESTROY);
+			if (this->isContainType(eBulletType::L_BULLET) == true && ((BaseEnemy*)collision_arg->_otherObject)->getHitpoint() <= 0)
+				this->setStatus(eStatus::NORMAL);
 			break;
 		}
 	}
+	
 	if (this->isEnemyBullet())
 	{
 
@@ -173,6 +238,8 @@ float Bullet::checkCollision(BaseObject * object, float dt)
 {
 	auto body = (CollisionBody*)_componentList.find("CollisionBody")->second;
 	//auto body = (CollisionBody*)_componentList["CollisionBody"];
+	if (object->getId() == eID::BULLET && object->getStatus() == eStatus::EXPLORED)
+		return 0.0f;
 	body->checkCollision(object, dt);
 
 	return 0.0f;

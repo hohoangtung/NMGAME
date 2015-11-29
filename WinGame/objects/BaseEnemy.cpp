@@ -27,3 +27,8 @@ void BaseEnemy::dropHitpoint()
 {
 	_hitpoint--;
 }
+
+void BaseEnemy::dropHitpoint(int damage)
+{
+	_hitpoint -= damage;
+}

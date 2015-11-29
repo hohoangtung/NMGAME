@@ -17,7 +17,7 @@
 #include "utils.h"
 using namespace std;
 
-#define WINDOW_WIDTH 560
+#define WINDOW_WIDTH 512
 #define WINDOW_HEIGHT 448
 #define SCALE_FACTOR 2.0f
 
@@ -121,6 +121,11 @@ enum eBulletType
 	BILL_BULLET		= (1 << 0),
 	ENEMY_BULLET	= (1 << 1),
 	NORMAL_BULLET   = (1 << 2),
+	L_BULLET		= (1 << 3),
+	F_BULLET		= (1 << 4),
+	S_BULLET		= (1 << 5),
+	R_BULLET		= (1 << 6),
+	M_BULLET		= (1 << 7),
 };
 
 typedef D3DXVECTOR3 GVector3;

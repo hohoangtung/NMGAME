@@ -430,6 +430,11 @@ namespace MapEditor
                 this._mapController.ObjectEditor.MouseUp = e.Location;
             }
             this._mapController.ObjectEditor.InitGameObject();
+            var mapbound = new Rectangle(0, 0,
+                this._mapController.TilesMap.GetMapWidth(),
+                this._mapController.TilesMap.GetMapHeight());
+            this._mapController.ObjectEditor.InitQuadTree(0, mapbound);
+            this.ReDrawMap();
             this.enableSaveButton();
         }
 
@@ -449,6 +454,7 @@ namespace MapEditor
         private void gameObjectproperty_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
         {
             (this.listBoxObject.DataSource as BindingSource).ResetBindings(false);
+            //this.ReDrawMap();
             this.enableSaveButton();
         }
 
