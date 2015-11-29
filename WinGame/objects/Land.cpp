@@ -144,12 +144,12 @@ void Land::setRotate(float degree)
 	// do nothing.
 }
 
-void Land::setZIndex(int z)
+void Land::setZIndex(float z)
 {
 	// do nothing.
 }
 
-int Land::getZIndex()
+float Land::getZIndex()
 {
 	return 1;		// hard code
 }

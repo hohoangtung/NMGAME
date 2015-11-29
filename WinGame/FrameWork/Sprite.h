@@ -56,7 +56,7 @@ public:
 	
 	void setOrigin(GVector2 origin);
 
-	void setZIndex(int z);
+	void setZIndex(float z);
 
 	RECT getBounding();
 

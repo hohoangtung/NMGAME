@@ -137,12 +137,12 @@ void BaseObject::setRotate(float degree)
 	_sprite->setRotate(degree);
 }
 
-void BaseObject::setZIndex(int z)
+void BaseObject::setZIndex(float z)
 {
 	_sprite->setZIndex(z);
 }
 
-int BaseObject::getZIndex()
+float BaseObject::getZIndex()
 {
 	return _sprite->getZIndex();
 }

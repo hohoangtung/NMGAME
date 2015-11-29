@@ -107,12 +107,12 @@ void EmptyObject::setRotate(float degree)
 	// do nothing.
 }
 
-void EmptyObject::setZIndex(int z)
+void EmptyObject::setZIndex(float z)
 {
 	// do nothing.
 }
 
-int EmptyObject::getZIndex()
+float EmptyObject::getZIndex()
 {
 	return 1;
 }

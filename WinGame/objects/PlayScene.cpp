@@ -49,7 +49,7 @@ bool PlayScene::init()
 
 	auto bill = new Bill();
 	bill->init();
-	bill->setPosition(400, 500);
+	bill->setPosition(400, 300);
 	
 	this->_bill = bill;
 	_listControlObject.push_back(bill);
@@ -186,7 +186,10 @@ void PlayScene::update(float dt)
 
 	for (auto object : _listobject)
 	{
-		object->update(dt);
+		if (isContains(this->getViewport()->getBounding(), object->getBounding()))
+		{
+			object->update(dt);
+		}
 	}
 }
 
@@ -247,7 +250,10 @@ void PlayScene::draw(LPD3DXSPRITE spriteHandle)
 
 	for (auto object : _listobject)
 	{
-		object->draw(spriteHandle, _viewport);
+		if (isContains(this->getViewport()->getBounding(), object->getBounding()))
+		{
+			object->draw(spriteHandle, _viewport);
+		}
 	}
 #if _DEBUG
 	_text->draw();

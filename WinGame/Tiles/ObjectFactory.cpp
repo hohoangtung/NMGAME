@@ -41,6 +41,7 @@ vector<BaseObject*>* ObjectFactory::getListObjectFromFile(const string path)
 			continue;
 		}
 		BaseObject* obj = getObjectById(item, enumID);
+		obj->setZIndex(0.5f);
 		if (obj != NULL)
 			listobject->push_back(obj);
 	}

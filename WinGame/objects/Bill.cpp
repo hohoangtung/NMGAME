@@ -17,6 +17,8 @@ void Bill::init()
 	__hook(&InputController::__eventkeyReleased, _input, &Bill::onKeyReleased);
 
 	_sprite = SpriteManager::getInstance()->getSprite(eID::BILL);
+	_sprite->setFrameRect(SpriteManager::getInstance()->getSourceRect(eID::BILL, "normal_01"));
+
 	auto movement = new Movement(GVector2(0, 0), GVector2(0, 0), _sprite);
 	_componentList["Movement"] = movement;
 	_componentList["Gravity"] = new Gravity(GVector2(0, -GRAVITY), movement);
@@ -103,6 +105,9 @@ void Bill::init()
 
 	// create stopWatch
 	_stopWatch = new StopWatch();
+	_shootStopWatch = new StopWatch();
+
+	this->setZIndex(0.0f);
 }
 
 void Bill::update(float deltatime)
@@ -162,6 +167,12 @@ void Bill::updateInput(float dt)
 			_stopWatch->restart();
 		}
 	}
+
+	if (!_input->isKeyDown(DIK_Z) && _shootStopWatch->isStopWatch(200))
+	{
+		this->removeStatus(eStatus::SHOOTING);
+		_shootStopWatch->restart();
+	}
 }
 
 void Bill::draw(LPD3DXSPRITE spriteHandle, Viewport* viewport)
@@ -208,6 +219,7 @@ void Bill::onKeyPressed(KeyEventArg* key_event)
 		{
 			if (_canJumpDown && !this->isInStatus(eStatus::JUMPING))
 			{
+				this->removeStatus(eStatus::SHOOTING);
 				this->addStatus(eStatus::JUMPING);
 				this->addStatus(eStatus::FALLING);
 			}
@@ -292,7 +304,9 @@ void Bill::onKeyReleased(KeyEventArg * key_event)
 	}
 	case DIK_Z:
 	{
-		this->removeStatus(eStatus::SHOOTING);
+		//this->removeStatus(eStatus::SHOOTING);
+		_shootStopWatch->restart();
+
 		break;
 	}
 	default:

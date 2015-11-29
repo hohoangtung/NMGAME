@@ -194,7 +194,7 @@ void Sprite::setOrigin(GVector2 origin)
 	this->updateBounding();
 }
 
-void Sprite::setZIndex(int z)
+void Sprite::setZIndex(float z)
 {
 	if (z != _zIndex)
 		_zIndex = z;

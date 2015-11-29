@@ -75,7 +75,7 @@ RECT Viewport::getBounding()
 {
 	RECT rect;
 	rect.left = _positionWorld.x;
-	rect.bottom = _positionWorld.y;
+	rect.bottom = WINDOW_HEIGHT - _positionWorld.y;
 	rect.top = rect.bottom + _height;
 	rect.right = rect.left + _width;
 
