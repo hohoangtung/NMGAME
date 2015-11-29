@@ -67,21 +67,21 @@ bool PlayScene::init()
 
 	_text = new Text(L"Arial", "", 10, 25);
 
-	auto aircraft = new AirCraft(START_POSITION, HORIZONTAL_VELOC, AIRCRAFT_AMPLITUDE, AIRCRAFT_FREQUENCY, eAirCraftType::M);
-	aircraft->init();
-	_listobject.push_back(aircraft);
+	//auto aircraft = new AirCraft(START_POSITION, HORIZONTAL_VELOC, AIRCRAFT_AMPLITUDE, AIRCRAFT_FREQUENCY, eAirCraftType::I);
+	//aircraft->init();
+	//_listobject.push_back(aircraft);
 
-	auto rifleman = new Rifleman(NORMAL, 500, 200);
-	rifleman->init();
-	_listobject.push_back(rifleman);
+	//auto rifleman = new Rifleman(NORMAL, 500, 200);
+	//rifleman->init();
+	//_listobject.push_back(rifleman);
 
-	auto redcannon = new RedCannon(NORMAL, 900, 200);
-	redcannon->init();
-	_listobject.push_back(redcannon);
+	//auto redcannon = new RedCannon(NORMAL, 900, 200);
+	//redcannon->init();
+	//_listobject.push_back(redcannon);
 
-	auto wall_turret = new WallTurret(NORMAL, 730, 150);
-	wall_turret->init();
-	_listobject.push_back(wall_turret);
+	//auto wall_turret = new WallTurret(NORMAL, 730, 150);
+	//wall_turret->init();
+	//_listobject.push_back(wall_turret);
 
 	//auto land  = new Land(64, 245, 1472, 1, eDirection::TOP, eLandType::GRASS);
 	//land->init();
@@ -168,10 +168,21 @@ void PlayScene::update(float dt)
 
 	for (int i = 1; i < _listobject.size(); i++)
 	{
-		_listobject[4]->checkCollision(_listobject[i], dt);
+		//_listobject[4]->checkCollision(_listobject[i], dt);
+
+		// rifle man
+		_listobject[46]->checkCollision(_listobject[i], dt);
+		_listobject[47]->checkCollision(_listobject[i], dt);
+		_listobject[53]->checkCollision(_listobject[i], dt);
+		_listobject[58]->checkCollision(_listobject[i], dt);
+
+		// aircraft
+		_listobject[59]->checkCollision(_listobject[i], dt);
+		_listobject[60]->checkCollision(_listobject[i], dt);
 	}
 
-	_listobject[3]->checkCollision(_listobject[5], dt);
+	//_listobject[3]->checkCollision(_listobject[5], dt);
+
 
 	for (auto object : _listobject)
 	{
@@ -212,11 +223,13 @@ void PlayScene::updateViewport(BaseObject* objTracker)
 	// Bám theo object.
 	GVector2 new_position = GVector2(max(objTracker->getPositionX() - 260, 0), WINDOW_HEIGHT);		// 200 khoảng cách tối đa giữa object và map -> hardcode
 
+#if(!_DEBUG)
 	// Không cho đi ngược
 	if (new_position.x < current_position.x)
 	{
 		new_position.x = current_position.x;
 	}
+#endif
 
 	// Không cho đi quá map.
 	if (new_position.x + WINDOW_WIDTH > worldsize.x)

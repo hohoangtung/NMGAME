@@ -1,7 +1,4 @@
-﻿
-
-// Nơi chứa các hàm hướng thủ tục.
-
+﻿// Nơi chứa các hàm hướng thủ tục.
 
 #ifndef __UTILS_H__
 #define __UTILS_H__
@@ -12,6 +9,7 @@
 #include <sstream>
 
 using namespace std;
+
 /*
 	Kiểm tra hai hình chữ nhật có chồng lên nhau không.
 	rect1, rect2: hai hình chữ nhật cần kiểm tra.
@@ -25,7 +23,19 @@ bool isRectangleIntersected(RECT rect1, RECT rect2);
 */
 bool isContains(RECT rect1, RECT rect2);
 
+/*
+* Tính khoảng cách giữa hai điểm
+* @return: độ dài khoảng cách được tính theo công thức: d = √((x1 - x2 )² + (y1 - y 2)²)
+*/
 float getdistance(D3DXVECTOR2 p1, D3DXVECTOR2 p2);
 
 std::vector<std::string> splitString(const std::string & input, char seperate);
+
+/*
+	Kiểm tra điểm có nằm trong hcn hay ko
+	@rect: hcn tính theo bottom-left
+	@point: điểm được kiểm tra
+*/
+bool isContain(RECT rect, D3DXVECTOR2 point);
+
 #endif // !__UTILS_H__

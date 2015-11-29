@@ -103,10 +103,6 @@ void SpriteManager::loadResource(LPD3DXSPRITE spriteHandle)
 	sp = new Sprite(spriteHandle, L"Resources\\bridge.png", 6, 3);
 	this->_listSprite[eID::BRIDGE] = sp;
 
-	//TEST
-	auto box = new Sprite(spriteHandle, L"Resources\\box.png", 2, 2);
-	_listSprite[eID::BOX] = box;
-
 	auto bl = new Sprite(spriteHandle, L"Resources\\Bullets.png");
 	this->_listSprite[eID::BULLET] = bl;
 	this->loadSpriteInfo(eID::BULLET, "Resources\\bullets_type.txt");

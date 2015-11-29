@@ -136,6 +136,7 @@
             // 
             // splitContainer1.Panel1
             // 
+            this.splitContainer1.Panel1.AutoScroll = true;
             this.splitContainer1.Panel1.Controls.Add(this.listView1);
             // 
             // splitContainer1.Panel2
@@ -175,32 +176,35 @@
             // 
             // splitContainer2.Panel2
             // 
-            this.splitContainer2.Panel2.AutoScroll = true;
             this.splitContainer2.Panel2.Controls.Add(this.gameObjectproperty);
             this.splitContainer2.Panel2.Controls.Add(this.listBoxObject);
             this.splitContainer2.Size = new System.Drawing.Size(960, 709);
-            this.splitContainer2.SplitterDistance = 434;
+            this.splitContainer2.SplitterDistance = 300;
             this.splitContainer2.TabIndex = 0;
             // 
             // gameObjectproperty
             // 
+            this.gameObjectproperty.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.gameObjectproperty.HelpVisible = false;
-            this.gameObjectproperty.Location = new System.Drawing.Point(661, 0);
+            this.gameObjectproperty.Location = new System.Drawing.Point(626, 0);
             this.gameObjectproperty.Name = "gameObjectproperty";
             this.gameObjectproperty.PropertySort = System.Windows.Forms.PropertySort.Alphabetical;
-            this.gameObjectproperty.Size = new System.Drawing.Size(299, 280);
+            this.gameObjectproperty.Size = new System.Drawing.Size(331, 395);
             this.gameObjectproperty.TabIndex = 1;
             this.gameObjectproperty.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.gameObjectproperty_PropertyValueChanged);
             // 
             // listBoxObject
             // 
-            this.listBoxObject.Dock = System.Windows.Forms.DockStyle.Left;
+            this.listBoxObject.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.listBoxObject.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.25F);
             this.listBoxObject.FormattingEnabled = true;
             this.listBoxObject.ItemHeight = 17;
             this.listBoxObject.Location = new System.Drawing.Point(0, 0);
             this.listBoxObject.Name = "listBoxObject";
-            this.listBoxObject.Size = new System.Drawing.Size(426, 280);
+            this.listBoxObject.Size = new System.Drawing.Size(620, 395);
             this.listBoxObject.TabIndex = 0;
             this.listBoxObject.SelectedIndexChanged += new System.EventHandler(this.listBoxObject_SelectedIndexChanged);
             this.listBoxObject.MouseDown += new System.Windows.Forms.MouseEventHandler(this.listBoxObject_MouseDown);

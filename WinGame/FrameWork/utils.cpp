@@ -1,6 +1,4 @@
-﻿
-
-#include "utils.h"
+﻿#include "utils.h"
 
 bool isRectangleIntersected(RECT rect1, RECT rect2)
 {
@@ -14,6 +12,8 @@ bool isRectangleIntersected(RECT rect1, RECT rect2)
 	//
 	if (left > 0 || right < 0 || top < 0 || bottom > 0)
 		return false;
+
+	return true;
 }
 
 // Cắt chuỗi.
@@ -51,6 +51,14 @@ bool isContains(RECT rect1, RECT rect2)
 		return false;
 	}
 	return true;
+}
+
+bool isContain(RECT rect, D3DXVECTOR2 point)
+{
+	if (point.x >= rect.left && point.x <= rect.right && point.y > rect.bottom && point.y < rect.top)
+	return true;
+
+	return false;
 }
 
 float getdistance(D3DXVECTOR2 p1, D3DXVECTOR2 p2)
