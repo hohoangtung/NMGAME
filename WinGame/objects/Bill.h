@@ -73,6 +73,8 @@ private:
 	void layDown();
 	void falling();
 	void shoot();
+	void die();
+
 	list<bool> _canStand;
 
 	GVector2 getVelocity();
