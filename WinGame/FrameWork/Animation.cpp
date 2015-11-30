@@ -119,7 +119,17 @@ void Animation::addFrameRect(RECT rect)
 {
 	//nếu là rect đầu tiên thì set current luôn
 	if (_frameRectList.empty())
+	{
 		_currentRect = rect;
+
+		// trường hợp kiểm tra _bounding trước khi vẽ lần đầu tiên, nếu ko có setFrameRect thì nó sẽ lấy nguyên spriteSheet
+		// sẽ làm sai kích thước của frame hiện tại
+		// vậy lần đầu gán cho frame đầu. (nhưng bị lỗi ở AirCraft)
+		// cách khác là setframeRect ở object cho sprite.
+
+		// _spriteSheet->setFrameRect(_currentRect);
+	}
+		
 
 	_frameRectList.push_back(rect);
 	_totalFrames = _frameRectList.size();
@@ -174,6 +184,13 @@ void Animation::setLoop(bool isLoop)
 bool Animation::isLoop()
 {
 	return _isLoop;
+}
+
+void Animation::restart()
+{
+	_index = -1;
+	if (_canAnimate == false)
+		_canAnimate = true;
 }
 
 void Animation::draw(LPD3DXSPRITE spriteHandle, Viewport * viewport)

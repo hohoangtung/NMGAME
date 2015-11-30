@@ -8,15 +8,17 @@ Bill::Bill() : BaseObject(eID::BILL)
 
 Bill::~Bill()
 {
-	 
+	
 }
- 
+
 void Bill::init()
 {
 	__hook(&InputController::__eventkeyPressed, _input, &Bill::onKeyPressed);
 	__hook(&InputController::__eventkeyReleased, _input, &Bill::onKeyReleased);
 
 	_sprite = SpriteManager::getInstance()->getSprite(eID::BILL);
+	_sprite->setFrameRect(SpriteManager::getInstance()->getSourceRect(eID::BILL, "normal_01"));
+
 	auto movement = new Movement(GVector2(0, 0), GVector2(0, 0), _sprite);
 	_componentList["Movement"] = movement;
 	_componentList["Gravity"] = new Gravity(GVector2(0, -GRAVITY), movement);
@@ -64,17 +66,19 @@ void Bill::init()
 	_animations[eStatus::SHOOTING | eStatus::RUNNING]->addFrameRect(eID::BILL, "run_shot_01", "run_shot_02", "run_shot_03", "run_shot_01", "run_shot_02", "run_shot_03", NULL);
 
 	_animations[eStatus::SWIMING] = new Animation(_sprite, 0.1f);
-	_animations[eStatus::SWIMING]->addFrameRect(eID::BILL, "swimming", NULL);
+	//_animations[eStatus::SWIMING]->addFrameRect(eID::BILL, "swimming", NULL);
+	_animations[eStatus::SWIMING]->addFrameRect(eID::BILL, "swim_begin", "diving", "swimming", NULL);
+	_animations[eStatus::SWIMING]->setLoop(false);
 
-	_animations[eStatus::SWIMING | RUNNING] = new Animation(_sprite, 0.1f);
-	_animations[eStatus::SWIMING | RUNNING]->addFrameRect(eID::BILL, "swimming", NULL);
+	//_animations[eStatus::SWIMING | RUNNING] = new Animation(_sprite, 0.1f);
+	//_animations[eStatus::SWIMING | RUNNING]->addFrameRect(eID::BILL, "swimming", NULL);
 
 	_animations[eStatus::DIVING] = new Animation(_sprite, 0.1f);
 	_animations[eStatus::DIVING]->addFrameRect(eID::BILL, "diving", NULL);
 
-	_animations[eStatus::FALLING | eStatus::SWIMING] = new Animation(_sprite, 0.1f);
-	_animations[eStatus::FALLING | eStatus::SWIMING]->addFrameRect(eID::BILL, "swim_begin", "diving", "swimming", NULL);
-	_animations[eStatus::FALLING | eStatus::SWIMING]->setLoop(false);
+	//_animations[eStatus::FALLING | eStatus::SWIMING] = new Animation(_sprite, 0.1f);
+	//_animations[eStatus::FALLING | eStatus::SWIMING]->addFrameRect(eID::BILL, "swim_begin", "diving", "swimming", NULL);
+	//_animations[eStatus::FALLING | eStatus::SWIMING]->setLoop(false);
 
 	_animations[eStatus::SWIMING | RUNNING | SHOOTING] = new Animation(_sprite, 0.1f);
 	_animations[eStatus::SWIMING | RUNNING | SHOOTING]->addFrameRect(eID::BILL, "swimming_shot", NULL);
@@ -90,6 +94,7 @@ void Bill::init()
 
 	_animations[eStatus::DYING] = new Animation(_sprite, 0.1f);
 	_animations[eStatus::DYING]->addFrameRect(eID::BILL, "dead_01", "dead_02", "dead_03", "dead_04", NULL);
+	_animations[eStatus::DYING]->setLoop(false);
 
 
 	_sprite->drawBounding(false);
@@ -103,6 +108,9 @@ void Bill::init()
 
 	// create stopWatch
 	_stopWatch = new StopWatch();
+	_shootStopWatch = new StopWatch();
+
+	this->setZIndex(0.0f);
 
 	_currentGun = eBulletType::NORMAL_BULLET;
 }
@@ -121,7 +129,7 @@ void Bill::update(float deltatime)
 	for (auto bullet : _listBullets)
 	{
 		bullet->update(deltatime);
-	}
+		}
 
 	// update component để sau cùng để sửa bên trên sau đó nó cập nhật đúng
 	for (auto it = _componentList.begin(); it != _componentList.end(); it++)
@@ -156,6 +164,9 @@ void Bill::deleteBullet()
 }
 void Bill::updateInput(float dt)
 {
+	if (this->isInStatus(eStatus::DYING))
+		return;
+
 	if (_input->isKeyDown(DIK_Z))
 	{
 		if (_stopWatch->isStopWatch(SHOOT_SPEED))
@@ -163,6 +174,12 @@ void Bill::updateInput(float dt)
 			shoot();
 			_stopWatch->restart();
 		}
+	}
+
+	if (!_input->isKeyDown(DIK_Z) && _shootStopWatch->isStopWatch(200))
+	{
+		this->removeStatus(eStatus::SHOOTING);
+		_shootStopWatch->restart();
 	}
 }
 
@@ -197,6 +214,9 @@ void Bill::release()
 
 void Bill::onKeyPressed(KeyEventArg* key_event)
 {
+	if (this->isInStatus(eStatus::DYING))
+		return;
+
 	switch (key_event->_key)
 	{
 	case DIK_X:
@@ -210,6 +230,7 @@ void Bill::onKeyPressed(KeyEventArg* key_event)
 		{
 			if (_canJumpDown && !this->isInStatus(eStatus::JUMPING))
 			{
+				this->removeStatus(eStatus::SHOOTING);
 				this->addStatus(eStatus::JUMPING);
 				this->addStatus(eStatus::FALLING);
 			}
@@ -269,6 +290,9 @@ void Bill::onKeyPressed(KeyEventArg* key_event)
 
 void Bill::onKeyReleased(KeyEventArg * key_event)
 {
+	if (this->isInStatus(eStatus::DYING))
+		return;
+
 	switch (key_event->_key)
 	{
 	case DIK_RIGHT:
@@ -294,7 +318,9 @@ void Bill::onKeyReleased(KeyEventArg * key_event)
 	}
 	case DIK_Z:
 	{
-		this->removeStatus(eStatus::SHOOTING);
+		//this->removeStatus(eStatus::SHOOTING);
+		_shootStopWatch->restart();
+
 		break;
 	}
 	default:
@@ -314,6 +340,17 @@ void Bill::onCollisionBegin(CollisionEventArg * collision_arg)
 	case eID::LAND:
 	case eID::BRIDGE:
 	{
+
+		break;
+	}
+	case eID::RIFLEMAN:
+	case eID::SOLDIER:
+	{
+		if (!this->isInStatus(eStatus::DYING))
+		{
+			this->setStatus(eStatus::DYING);
+			this->die();
+		}
 
 		break;
 	}
@@ -351,6 +388,7 @@ float Bill::checkCollision(BaseObject * object, float dt)
 {
 	if (object->getStatus() == eStatus::DESTROY)
 		return 0.0f;
+
 	auto collisionBody = (CollisionBody*)_componentList["CollisionBody"];
 	eID objectId = object->getId();
 	eDirection direction;
@@ -388,6 +426,9 @@ float Bill::checkCollision(BaseObject * object, float dt)
 					// lên bờ thì remove swim / nhảy lên
 					this->removeStatus(eStatus::SWIMING);
 					this->setPositionY(object->getPositionY());
+
+					// set lại animation swim
+					_animations[eStatus::SWIMING]->restart();
 				}
 			}
 
@@ -592,7 +633,7 @@ void Bill::shoot()
 
 	if (this->isInStatus(eStatus::SWIMING))
 		pos.y -= 8 * this->getScale().y;
-	
+
 
 	Bullet* bullet = this->getBulletFromGun(pos, angle);
 	if (bullet == nullptr)
@@ -673,6 +714,18 @@ Bullet* Bill::getBulletFromGun(GVector2 position, float angle)
 	return bullet;
 }
 
+void Bill::die()
+{
+	//if (this->isInStatus(eStatus::DYING))
+		//return;
+
+	auto move = (Movement*)this->_componentList["Movement"];
+	move->setVelocity(GVector2(-100, BILL_JUMP_VEL));
+
+	auto g = (Gravity*)this->_componentList["Gravity"];
+	g->setStatus(eGravityStatus::FALLING__DOWN);
+}
+
 GVector2 Bill::getVelocity()
 {
 	auto move = (Movement*)this->_componentList["Movement"];
@@ -681,6 +734,12 @@ GVector2 Bill::getVelocity()
 
 void Bill::updateStatus(float dt)
 {
+	if (this->isInStatus(eStatus::DYING))
+	{
+		//this->die();
+		return;
+	}
+
 	if ((this->getStatus() & eStatus::MOVING_LEFT) == eStatus::MOVING_LEFT)
 	{
 		this->moveLeft();
@@ -725,18 +784,9 @@ void Bill::updateCurrentAnimateIndex()
 	}
 	else
 	{
-		
-		//if (this->isInStatus(eStatus::SWIMING) && (_currentAnimateIndex & eStatus::SWIMING) == eStatus::SWIMING)
-		//{
-		//	_currentAnimateIndex = eStatus(eStatus::SWIMING | eStatus::FALLING);
-		//	return;
-		//}
-		//else
-		{
 			// trường hợp còn lại gán luôn
 			_currentAnimateIndex = this->getStatus();
 		}
-	}
 
 	if ((_currentAnimateIndex & eStatus::FALLING) == eStatus::FALLING)
 	{
@@ -775,6 +825,12 @@ void Bill::updateCurrentAnimateIndex()
 		{
 			_currentAnimateIndex = eStatus::DIVING;
 		}
+	}
+
+	// chết
+	if (this->isInStatus(eStatus::DYING))
+	{
+		_currentAnimateIndex = eStatus::DYING;
 	}
 }
 

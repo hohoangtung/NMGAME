@@ -60,7 +60,7 @@ void Texture::render(LPD3DXSPRITE spriteHandle, const RECT* rect, const GVector3
 		_color);
 }
 
-void Texture::render(LPD3DXSPRITE spriteHandle, RECT * srcRect, GVector2 position, GVector2 scale, float rotate, GVector2 origin, int zIndex)
+void Texture::render(LPD3DXSPRITE spriteHandle, RECT * srcRect, GVector2 position, GVector2 scale, float rotate, GVector2 origin, float zIndex)
 {
 	D3DXMATRIX matFinal;
 	D3DXMATRIX matTransformed;
@@ -87,6 +87,9 @@ void Texture::render(LPD3DXSPRITE spriteHandle, RECT * srcRect, GVector2 positio
 	//set matrix transformed
 	spriteHandle->SetTransform(&matFinal);
 
+	// BEGIN
+	spriteHandle->Begin(D3DXSPRITE_SORT_DEPTH_BACKTOFRONT | D3DXSPRITE_ALPHABLEND | D3DXSPRITE_SORT_TEXTURE);
+	
 	spriteHandle->Draw(
 		this->_texture,
 		srcRect,
@@ -95,9 +98,12 @@ void Texture::render(LPD3DXSPRITE spriteHandle, RECT * srcRect, GVector2 positio
 		_color);
 
 	spriteHandle->SetTransform(&matOld);
+
+	// END
+	spriteHandle->End();
 }
 
-void Texture::render(LPD3DXSPRITE spriteHandle, RECT * srcRect, Viewport viewport, GVector2 position, GVector2 scale, float rotate, GVector2 origin, int zIndex)
+void Texture::render(LPD3DXSPRITE spriteHandle, RECT * srcRect, Viewport viewport, GVector2 position, GVector2 scale, float rotate, GVector2 origin, float zIndex)
 {
 	GVector3 positionViewport;
 	positionViewport = viewport.getPositionInViewport(&GVector3(position.x, position.y, zIndex));

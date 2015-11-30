@@ -58,8 +58,8 @@ public:
 	virtual GVector2 getOrigin();
 	virtual void setOrigin(GVector2 origin);
 
-	virtual void setZIndex(int z);
-	virtual int getZIndex();
+	virtual void setZIndex(float z);
+	virtual float getZIndex();
 
 	virtual GVector2 getAnchorPoint();
 

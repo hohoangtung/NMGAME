@@ -5,14 +5,8 @@ by Luu The Vinh
 - Cập nhật xét ca chạm với Land, Water
 - Chuyển động nhân vật
 
-Chưa xong:
-- Chuyển độn chết
+update 30/11/2015
 - Hiệu ứng nhảy xuông nước
-
-
-Lỗi:
-	Khi bay: bấm bắn nhảy liên tục
-	Khi bay: cần có góc bắn hướng xuống (6 giờ)
 */
 
 #ifndef __BILL_H__
@@ -70,6 +64,7 @@ private:
 	
 	float _movingSpeed;
 	StopWatch* _stopWatch;
+	StopWatch* _shootStopWatch;
 	bool _canJumpDown;
 
 	void standing();
@@ -79,6 +74,8 @@ private:
 	void layDown();
 	void falling();
 	void shoot();
+	void die();
+
 	list<bool> _canStand;
 
 	GVector2 getVelocity();

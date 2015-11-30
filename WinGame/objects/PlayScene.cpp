@@ -113,7 +113,7 @@ bool PlayScene::init()
 
 	//this->_listobject.insert(_listobject.end(), temp->begin(), temp->end());
 	this->_mapobject.insert(maptemp->begin(), maptemp->end());
-	
+
 	_root = QNode::loadQuadTree("Resources//Map//stage1_quadtree.xml");
 
 	background = Map::LoadFromFile("Resources//Map//stage1.xml",eID::MAPSTAGE1);
@@ -130,7 +130,7 @@ void PlayScene::updateInput(float dt)
 
 void PlayScene::update(float dt)
 {
-
+	
 	char str[100];
 	sprintf(str, "delta time: %f", dt);
 	_text->setText(str);
@@ -212,7 +212,7 @@ void PlayScene::update(float dt)
 		_active_object.push_back(obj->second);
 	}
 	_active_object.insert(_active_object.end(), _listobject.begin(), _listobject.end());
-
+	
 	for each (auto obj in _active_object)
 	{
 		obj->update(dt);

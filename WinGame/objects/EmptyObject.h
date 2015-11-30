@@ -37,8 +37,8 @@ public:
 	void setRotate(float degree) override;
 	GVector2 getAnchorPoint() override;
 
-	void setZIndex(int z) override;
-	int getZIndex() override;
+	void setZIndex(float z) override;
+	float getZIndex() override;
 
 	RECT getBounding() override;
 

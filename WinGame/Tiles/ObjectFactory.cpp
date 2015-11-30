@@ -41,6 +41,7 @@ vector<BaseObject*>* ObjectFactory::getListObjectFromFile(const string path)
 			continue;
 		}
 		BaseObject* obj = getObjectById(item, enumID);
+		obj->setZIndex(0.5f);
 		if (obj != NULL)
 			listobject->push_back(obj);
 	}
@@ -431,13 +432,14 @@ BaseObject * ObjectFactory::getBridge(xml_node node)
 		return nullptr;
 
 	int x, y;
-
+	
 	x = stoi(properties["X"]);
 	y = stoi(properties["Y"]);
-
+	
 	// X Cộng 16 Y Trừ 16 vì gameobject set origin là center
 	auto bridge = new Bridge(GVector2(x + 16, y - 16));
 	bridge->init();
+
 	return bridge;
 }
 

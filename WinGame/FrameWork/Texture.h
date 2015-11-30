@@ -52,7 +52,7 @@ public:
 		@origin: điểm neo để transform
 		@zIndex: độ sâu
 	*/
-	void render(LPD3DXSPRITE spriteHandle, RECT* srcRect, GVector2 position, GVector2 scale, float rotate, GVector2 origin, int zIndex = 1);
+	void render(LPD3DXSPRITE spriteHandle, RECT* srcRect, GVector2 position, GVector2 scale, float rotate, GVector2 origin, float zIndex = 0);
 	
 	/*
 	render texture với các tham số tranform, trong viewport
@@ -63,7 +63,7 @@ public:
 		@origin: điểm neo để transform
 		@zIndex: độ sâu
 	*/
-	void render(LPD3DXSPRITE spriteHandle, RECT* srcRect, Viewport viewport, GVector2 position, GVector2 scale, float rotate, GVector2 origin, int zIndex = 1);
+	void render(LPD3DXSPRITE spriteHandle, RECT* srcRect, Viewport viewport, GVector2 position, GVector2 scale, float rotate, GVector2 origin, float zIndex = 0);
 
 	void setColor(D3DXCOLOR);
 	// get width of image

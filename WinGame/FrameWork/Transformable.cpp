@@ -116,13 +116,13 @@ void Transformable::setOrigin(GVector2 origin)
 		_origin = origin;
 }
 
-void Transformable::setZIndex(int z)
+void Transformable::setZIndex(float z)
 {
 	if (z != _zIndex)
 		_zIndex = z;
 }
 
-int Transformable::getZIndex()
+float Transformable::getZIndex()
 {
 	return _zIndex;
 }

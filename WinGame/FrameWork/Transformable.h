@@ -32,8 +32,8 @@ public:
 	virtual GVector2 getOrigin();
 	virtual void setOrigin(GVector2 origin);
 
-	virtual void setZIndex(int z);
-	virtual int getZIndex();
+	virtual void setZIndex(float z);
+	virtual float getZIndex();
 
 	GVector2 getAnchorPoint();
 
@@ -43,7 +43,7 @@ protected:
 	float				_rotate;				// theo độ 0-360
 	GVector2			_origin;				// gốc của Transform, dùng để xoay, scale (anchor: điểm neo)
 	GVector2			_anchorPoint;
-	int					_zIndex;
+	float					_zIndex;
 };
 
 #endif // !__TRANSFORMABLE_H__
