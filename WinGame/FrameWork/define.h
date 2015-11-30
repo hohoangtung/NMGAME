@@ -39,8 +39,12 @@ enum eID
 	BULLET			= 10,
 	WALL_TURRET		= 11,
 	LAND			= 12,				// Đất đi được.
-	CREATOR			= 13
-	
+	CREATOR			= 13,
+
+	// Từ 14 đến 16 dùng cho intro
+	BLANK			= 14,
+	MENU			= 15,
+	YELLOWFALCON	= 16,
 };
  
 enum eStatus

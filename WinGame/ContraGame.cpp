@@ -13,7 +13,7 @@ void ContraGame::init()
 {
 	Game::init();
 	// init game
-	SceneManager::getInstance()->addScene(new PlayScene());
+	SceneManager::getInstance()->addScene(new IntroScene());
 }
 
 void ContraGame::release()

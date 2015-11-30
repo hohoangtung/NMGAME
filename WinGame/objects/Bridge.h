@@ -61,6 +61,8 @@ public:
 	// deltatime: thời gian update vòng lặp game (milisecond)
 	void burst(float deltatime);
 
+
+	void Bridge::setStatus(eStatus status) override;
 	void setPosition(GVector2 position) override;
 	GVector2 getPosition() override;
 	RECT getBounding() override;

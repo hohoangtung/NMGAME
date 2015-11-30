@@ -15,6 +15,7 @@ Bridge::Bridge(GVector2 postion) : BaseObject(eID::BRIDGE)
 	_transform->setPosition(postion);
 
 }
+
 void Bridge::init()
 {
 	_stopwatch = new StopWatch();
@@ -42,7 +43,9 @@ void Bridge::update(float deltatime)
 	if (this->getStatus() == eStatus::DESTROY)
 		return;
 	if (this->getStatus() == eStatus::BURST)
+	{
 		this->burst(deltatime);
+	}
 	else
 	{
 		auto playscene = (PlayScene*) SceneManager::getInstance()->getCurrentScene();
@@ -58,6 +61,7 @@ void Bridge::burst(float deltatime)
 {
 	if (this->getStatus() == eStatus::DESTROY)
 		return;
+
 	privateIndex[0][0 + _wave * 2] =
 		privateIndex[0][1 + _wave * 2] =
 		privateIndex[1][0 + _wave * 2] =
@@ -80,7 +84,10 @@ void Bridge::burst(float deltatime)
 				_explode->setStatus(eStatus::DESTROY);
 				this->setStatus(eStatus::DESTROY);
 			}
-			SoundManager::getInstance()->Play(eSoundId::DESTROY_BRIDGE);
+			else
+			{
+				SoundManager::getInstance()->Play(eSoundId::DESTROY_BRIDGE);
+			}
 		}
 	}
 }
@@ -133,23 +140,14 @@ RECT Bridge::getBounding()
 
 	int framewidth = this->_sprite->getFrameWidth();
 	int frameheight = this->_sprite->getFrameHeight();
-	//rect.left = this->getPosition().x - (framewidth > 1);					// framewidth /2 là origin(Anchor).
-	//rect.bottom = this->getPosition().y - frameheight - (frameheight > 1);
-	//rect.right = rect.left + (framewidth * MAX_WAVE) < 1;					// Nhân 2 vì cách 2 hình có 1 vụ nổ.
-	////rect.top = rect.bottom + frameheight < 1 - frameheight > 1;				// < 1 là nhân 2; > 1 là chia 2. Trừ đi frameheight / 2 đẻ bằng với land
-
-	//if (this->getStatus() == eStatus::BURST)
-	//{
-	//	rect.left += (_wave + 1) * (framewidth < 1);
-	//}
-	rect.left = this->getPosition().x - framewidth / 2;					// framewidth /2 là origin(Anchor).
-	rect.bottom = this->getPosition().y - frameheight - frameheight / 2;
-	rect.right = rect.left + framewidth * 2 * MAX_WAVE;					// Nhân 2 vì cách 2 hình có 1 vụ nổ.
-	rect.top = rect.bottom + frameheight * 2;
+	rect.left = this->getPosition().x - (framewidth >> 1);					// framewidth /2 là origin(Anchor).
+	rect.bottom = this->getPosition().y - frameheight - (frameheight >> 1);
+	rect.right = rect.left + (framewidth * MAX_WAVE) << 1;					// Nhân 2 vì cách 2 hình có 1 vụ nổ.
+	rect.top = rect.bottom + frameheight + (frameheight >> 1) + 2;				// < 1 là nhân 2; > 1 là chia 2. Trừ đi frameheight / 2 đẻ bằng với land
 
 	if (this->getStatus() == eStatus::BURST)
 	{
-		rect.left += (_wave + 1) * framewidth * 2;
+		rect.left += (_wave + 1) * (framewidth << 1);
 	}
 	return rect;
 }
@@ -161,6 +159,15 @@ void Bridge::trackBill(Bill* bill)
 
 	if(billBound.right >= bridgeBound.left)
 		this->setStatus(eStatus::BURST);
+}
+
+void Bridge::setStatus(eStatus status)
+{
+	this->_status = status;
+	if (status == eStatus::BURST)
+	{
+		SoundManager::getInstance()->Play(eSoundId::DESTROY_BRIDGE);
+	}
 }
 Bridge::~Bridge()
 {
@@ -195,6 +202,8 @@ void Bridge::QuadExplose::init()
 	_explosion4->init();
 	_explosion4->setScale(SCALE_FACTOR);
 	_explosion4->setPosition(GVector2(pos.x - 16, pos.y - 16));
+
+
 }
 
 void Bridge::QuadExplose::update(float deltatime)

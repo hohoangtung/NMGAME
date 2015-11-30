@@ -5,6 +5,7 @@
 #include "FrameWork\Managers\SoundManager.h"
 #include "FrameWork\Managers\SceneManager.h"
 #include "objects\PlayScene.h"
+#include "objects\IntroScene.h"
 
 class ContraGame : public Game
 {
