@@ -129,10 +129,11 @@ BaseObject* ObjectFactory::getObjectById(xml_node node, eID id)
 			return getCreator(node);
 			break;
 		default:
-			return NULL;
+			return nullptr;
 			break;
 		}
-}
+		return nullptr;
+}S
 
 BaseObject* ObjectFactory::getLand(xml_node node)
 {

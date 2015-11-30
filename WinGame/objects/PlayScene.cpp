@@ -173,11 +173,19 @@ void PlayScene::update(float dt)
 	*		Hiện tại chúng ta có 2 danh sách object.
 			Một là _listobject chứa các đối tượng hoạt động rộng. không thể đưa vào quadtree
 			Hai là _mapobject chứa các đối tượng đã được đưa vào quadtree. 
-			Quá trình kiểm tra va chạm bao gồm 3 nhóm:
+			Ta có một listobject phụ là _active_object để chứ các object sẽ được update, draw ở mỗi frame. được clear ở đầu hàm update.
 
-				- Kiểm tra va chạm giữa các đối tượng trong _listobject
-				- Kiểm tra va chạm giữa các đối tượng trong các node của quadtree nằm trong màn hình
-				- Kiểm tra va chạm giữa các đối tượng chéo giữa hai nhóm trên
+			Quá trình update gồm các bước.
+				- Kiểm tra và đối tượng hết hiệu lực (Status = Destroy) từ frame trước			(Bước 1)
+				- Clear danh sách _active_object của frame trước, chuẩn bị cho vòng lặp mới.	(Bước 2)
+				- Tìm các tên của đối tượng đã được lưu trong quadtree.							(Bước 3)
+				- Từ danh sách tên ở bước trên, add các đối tượng có tên tương ứng với _mapobject vào _active_object	(Bước 4)
+				- Add danh sách các đối tượng trong _listobject vào _active_object.										(Bước 5)
+				- update các đối tượng trong _active_object																(Bước 6)
+				- Kiểm tra va chạm chéo giữa các đối tượng trong _active_object. Nếu có n đối tượng, thi có n * n lần kiểm tra va chạm..	(Bước 7)
+
+			Vẽ:
+				- Chỉ vẽ các đối tượng có trong _active_object.
 	*/
 
 	GVector2 viewport_position = _viewport->getPositionWorld();
@@ -193,17 +201,23 @@ void PlayScene::update(float dt)
 
 	// getlistobject
 #if _DEBUG
+	// clock_t để test thời gian chạy đoạn code update (milisecond)
 	clock_t t;
 	t = clock();
 #endif
 	//_active_object = _root->getlistObject(screen);
 	//auto listobjectname = _root->getlistObject(screen);
 
+	// [Bước 1]
 	this->destroyobject();
+
+	// [Bước 2]
 	_active_object.clear();
 
+	// [Bước 3]
 	auto listobjectname = _root->GetActiveObject(screen);
 
+	// [Bước 4]
 	for (auto name : listobjectname)
 	{
 		auto obj = _mapobject.find(name);
@@ -211,13 +225,17 @@ void PlayScene::update(float dt)
 			continue;
 		_active_object.push_back(obj->second);
 	}
+
+	// [Bước 5]
 	_active_object.insert(_active_object.end(), _listobject.begin(), _listobject.end());
 	
+	// [Bước 6]
 	for each (auto obj in _active_object)
 	{
 		obj->update(dt);
 	}
 
+	// [Bước 7]
 	for (auto obj : _active_object)
 	{
 		for (auto passiveobj : _active_object)
@@ -225,7 +243,6 @@ void PlayScene::update(float dt)
 			obj->checkCollision(passiveobj, dt);
 		}
 	}
-
 
 #if _DEBUG
 	t = clock() - t;
