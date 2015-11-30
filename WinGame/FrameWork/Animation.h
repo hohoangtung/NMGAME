@@ -107,6 +107,7 @@ public:
 
 	void setLoop(bool isLoop);
 	bool isLoop();
+	void restart();
 
 private:
 	int						_index;									// số thứ tự frame

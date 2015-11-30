@@ -66,17 +66,19 @@ void Bill::init()
 	_animations[eStatus::SHOOTING | eStatus::RUNNING]->addFrameRect(eID::BILL, "run_shot_01", "run_shot_02", "run_shot_03", "run_shot_01", "run_shot_02", "run_shot_03", NULL);
 
 	_animations[eStatus::SWIMING] = new Animation(_sprite, 0.1f);
-	_animations[eStatus::SWIMING]->addFrameRect(eID::BILL, "swimming", NULL);
+	//_animations[eStatus::SWIMING]->addFrameRect(eID::BILL, "swimming", NULL);
+	_animations[eStatus::SWIMING]->addFrameRect(eID::BILL, "swim_begin", "diving", "swimming", NULL);
+	_animations[eStatus::SWIMING]->setLoop(false);
 
-	_animations[eStatus::SWIMING | RUNNING] = new Animation(_sprite, 0.1f);
-	_animations[eStatus::SWIMING | RUNNING]->addFrameRect(eID::BILL, "swimming", NULL);
+	//_animations[eStatus::SWIMING | RUNNING] = new Animation(_sprite, 0.1f);
+	//_animations[eStatus::SWIMING | RUNNING]->addFrameRect(eID::BILL, "swimming", NULL);
 
 	_animations[eStatus::DIVING] = new Animation(_sprite, 0.1f);
 	_animations[eStatus::DIVING]->addFrameRect(eID::BILL, "diving", NULL);
 
-	_animations[eStatus::FALLING | eStatus::SWIMING] = new Animation(_sprite, 0.1f);
-	_animations[eStatus::FALLING | eStatus::SWIMING]->addFrameRect(eID::BILL, "swim_begin", "diving", "swimming", NULL);
-	_animations[eStatus::FALLING | eStatus::SWIMING]->setLoop(false);
+	//_animations[eStatus::FALLING | eStatus::SWIMING] = new Animation(_sprite, 0.1f);
+	//_animations[eStatus::FALLING | eStatus::SWIMING]->addFrameRect(eID::BILL, "swim_begin", "diving", "swimming", NULL);
+	//_animations[eStatus::FALLING | eStatus::SWIMING]->setLoop(false);
 
 	_animations[eStatus::SWIMING | RUNNING | SHOOTING] = new Animation(_sprite, 0.1f);
 	_animations[eStatus::SWIMING | RUNNING | SHOOTING]->addFrameRect(eID::BILL, "swimming_shot", NULL);
@@ -424,6 +426,9 @@ float Bill::checkCollision(BaseObject * object, float dt)
 					// lên bờ thì remove swim / nhảy lên
 					this->removeStatus(eStatus::SWIMING);
 					this->setPositionY(object->getPositionY());
+
+					// set lại animation swim
+					_animations[eStatus::SWIMING]->restart();
 				}
 			}
 

@@ -186,6 +186,13 @@ bool Animation::isLoop()
 	return _isLoop;
 }
 
+void Animation::restart()
+{
+	_index = -1;
+	if (_canAnimate == false)
+		_canAnimate = true;
+}
+
 void Animation::draw(LPD3DXSPRITE spriteHandle, Viewport * viewport)
 {
 	_spriteSheet->setFrameRect(_currentRect);
