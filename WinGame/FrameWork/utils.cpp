@@ -16,6 +16,22 @@ bool isRectangleIntersected(RECT rect1, RECT rect2)
 	return true;
 }
 
+bool isIntersectd(RECT rect1, RECT rect2)
+{
+	float left = rect1.left - rect2.right;
+	float top = rect1.bottom - rect2.top;
+	float right = rect1.right - rect2.left;
+	float bottom = rect1.top - rect2.bottom;
+
+	//  Có chồng lên nhau khi
+	//  left < 0 && right > 0 && top > 0 && bottom < 0
+	//
+	if (left > 0 || right < 0 || top < 0 || bottom > 0)
+		return false;
+
+	return true;
+}
+
 // Cắt chuỗi.
 // inout: chuỗi cần cắt.
 // seperate: kí tự dùng để cắt chuỗi

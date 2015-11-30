@@ -22,17 +22,7 @@ WallTurret::WallTurret(eStatus status, float x, float y) :BaseEnemy(eID::WALL_TU
 }
 WallTurret::~WallTurret()
 {
-	for (auto it = _animation.begin(); it != _animation.end(); it++)
-	{
-		SAFE_DELETE(it->second);
-	}
-	_animation.clear();
-	for (auto it = _listComponent.begin(); it != _listComponent.end(); it++)
-	{
-		SAFE_DELETE(it->second);
-	}
-	_listComponent.clear();
-	SAFE_DELETE(this->_sprite);
+
 }
 void WallTurret::init()
 {
@@ -263,16 +253,25 @@ void WallTurret::draw(LPD3DXSPRITE spritehandle, Viewport* viewport)
 }
 void WallTurret::release()
 {
+	for (auto ani : _animation)
+	{
+		delete ani.second;
+	}
+	_animation.clear();
 	for (auto component : _listComponent)
 	{
 		delete component.second;
 	}
+	for (auto item : _listBullet)
+	{
+		delete item;
+	}
+	_listBullet.clear();
+
 	if (_explosion != NULL)
 		this->_explosion->release();
 	SAFE_DELETE(_explosion);
 	SAFE_DELETE(this->_sprite);
-	_listBullet.clear();
-	_animation.clear();
 }
 
 IComponent* WallTurret::getComponent(string componentname)

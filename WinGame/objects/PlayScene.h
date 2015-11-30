@@ -54,7 +54,13 @@ private:
 	Sprite* sprite;
 	Text* _text;
 	vector<BaseObject*> _listobject;
+
+	// Danh sách đối tượng dùng để tạo quadtree.
 	map <string, BaseObject*> _mapobject;
+
+	// Danh sách đối tượng nằm trong vùng active. Mỗi vòng lặp sẽ được kiểm tra chỉnh sửa tại update, và sử dụng lại tại draw
+	// Dùng class list để sử dụng phương thức unique
+	vector<BaseObject*>   _active_object;
 
 	vector<IControlable*> _listControlObject;
 	Animation* _animation;

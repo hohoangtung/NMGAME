@@ -18,6 +18,11 @@ using namespace std;
 bool isRectangleIntersected(RECT rect1, RECT rect2);
 
 /*
+	Kiểm tra hai hình chữ nhật có chồng lên nhau không.
+	Dùng trong hệ top left
+*/
+bool isIntersectd(RECT rect1, RECT rect2);
+/*
 * Kiểm tra rect1 có chứa rect2 không.
 * @return: true nếu rect1 chứa rect2
 */

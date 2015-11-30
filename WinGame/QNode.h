@@ -13,10 +13,14 @@ private:
 	int _level;
 	QNode* _parent;
 	QNode* _childs[4];
-	vector<BaseObject*>  _listOject;
+	//vector<BaseObject*>  _listOject;
+	vector<string> _listObject;
+
+
 public:
 	QNode(int id, int level, RECT bound, QNode* parent);
 	void insertObject(BaseObject* baseobject);
+	void insertObject(string name);
 	RECT getBound();
 	INT64 getId();
 	int getLevel();
@@ -27,12 +31,20 @@ public:
 	bool isLeaf();
 
 
-	vector<BaseObject*> getAllObject();
-	vector<BaseObject*> getlistObject(RECT bound);
+	vector<string> getAllObject();
 
-	static void loadChild(xml_node& node, QNode* parent, map<string, BaseObject*> listobject);
-	static QNode* loadQuadTree(const string path, map<string, BaseObject*> listobject);
+	// Hàm này gây delay. Không dùng hàm này.
+	vector<string> getlistObject(RECT bound);
+
+
+
+	static void loadChild(xml_node& node, QNode* parent);
+	static QNode* loadQuadTree(const string path);
 	static QNode* initNode(xml_node& node);
+
+	vector<string> GetActiveObject(RECT bound);
+	void fetchActiveObject(RECT bound);
+	static vector<string> ActiveObject;
 	~QNode();
 };
 

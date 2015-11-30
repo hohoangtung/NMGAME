@@ -86,8 +86,8 @@ enum eStatus
 	WT_RIGHT_30 = (1 << 27),
 	WT_RIGHT_60 = (1 << 28),
 	WT_RIGHT_120 = (1 << 29),
-	WT_RIGHT_150 = (1 << 30)
-
+	WT_RIGHT_150 = (1 << 30),
+	WAITING			=(1<<31),
 };
 
 enum eLandType

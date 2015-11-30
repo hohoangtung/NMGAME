@@ -23,17 +23,7 @@ RedCannon::RedCannon(eStatus status, float x, float y) :BaseEnemy(eID::REDCANNON
 }
 RedCannon::~RedCannon()
 {
-	for (auto it = _animation.begin(); it != _animation.end(); it++)
-	{
-		SAFE_DELETE(it->second);
-	}
-	_animation.clear();
-	for (auto it = _listComponent.begin(); it != _listComponent.end(); it++)
-	{
-		SAFE_DELETE(it->second);
-	}
-	_listComponent.clear();
-	SAFE_DELETE(this->_sprite);
+
 }
 void RedCannon::init()
 {
@@ -203,15 +193,24 @@ IComponent* RedCannon::getComponent(string componentname)
 
 void RedCannon::release()
 {
+	for (auto ani : _animation)
+	{
+		delete ani.second;
+	}
+	_animation.clear();
 	for (auto component : _listComponent)
 	{
 		delete component.second;
 	}
-	if (this->_explosion != NULL)
-		this->_explosion->release();
-	SAFE_DELETE(this->_explosion);
+	_listComponent.clear();
+	for (auto item : _listBullets)
+	{
+		delete item;
+	}
 	_listBullets.clear();
-	_animation.clear();
+	if (_explosion != NULL)
+		this->_explosion->release();
+	SAFE_DELETE(_explosion);
 	SAFE_DELETE(this->_sprite);
 }
 

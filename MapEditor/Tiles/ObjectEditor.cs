@@ -422,6 +422,12 @@ namespace MapEditor.Tiles
 
         public void InitQuadTree(int level, Rectangle bound)
         {
+            // Bình thường có thể lấy bound của root bằng với kích thước map.
+            // Ta có thể option cho cái bound là một hình vuông với cạnh là max của width và height của map. để tránh trường hợp map theo chiều dài hoặc chiều rộng.
+
+            int edge = Math.Max(bound.Width, bound.Height);
+            bound.Size = new Size(edge, edge);
+
             this.QuadTree = new QuadTree.QNode(0, bound, null);
             this.QuadTree.ListObject = this.ListItem.ToList();
             this.QuadTree.initChild();

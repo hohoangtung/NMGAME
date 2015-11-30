@@ -1,6 +1,6 @@
 ﻿#include "PlayScene.h"
 #include "..\Tiles\ObjectFactory.h"
-
+#include <time.h>
 //Viewport* PlayScene::_viewport = new Viewport(0, WINDOW_HEIGHT);
  
 PlayScene::PlayScene()
@@ -108,13 +108,13 @@ bool PlayScene::init()
 	//water2->init();
 	//_listobject.push_back(water2);
 
-	vector<BaseObject*>* temp = ObjectFactory::getListObjectFromFile("Resources//Map//stage1.xml");
+	//vector<BaseObject*>* temp = ObjectFactory::getListObjectFromFile("Resources//Map//stage1.xml");
 	map<string, BaseObject*>* maptemp = ObjectFactory::getMapObjectFromFile("Resources//Map//stage1.xml");
 
-	this->_listobject.insert(_listobject.end(), temp->begin(), temp->end());
+	//this->_listobject.insert(_listobject.end(), temp->begin(), temp->end());
 	this->_mapobject.insert(maptemp->begin(), maptemp->end());
-
-	_root = QNode::loadQuadTree("Resources//Map//stage1_quadtree.xml", this->_mapobject);
+	
+	_root = QNode::loadQuadTree("Resources//Map//stage1_quadtree.xml");
 
 	background = Map::LoadFromFile("Resources//Map//stage1.xml",eID::MAPSTAGE1);
 	return true;
@@ -130,14 +130,6 @@ void PlayScene::updateInput(float dt)
 
 void PlayScene::update(float dt)
 {
-	
-	//test sprite
-	//sprite->setPositionX(sprite->getPosition().x + 1);
-	//sprite->nextFrame();
-	//sprite->setRotate(sprite->getRotate() + 1);
-	//sprite->setScale(2);
-	//sprite->nextFrame();
-	//sprite->setRotate(sprite->getRotate() + 10);
 
 	char str[100];
 	sprintf(str, "delta time: %f", dt);
@@ -148,46 +140,97 @@ void PlayScene::update(float dt)
 
 	this->updateViewport(_bill);
 	
-	//_listobject[0]->checkCollision(_listobject[1], dt);
-	//_listobject[0]->checkCollision(_listobject[2], dt);
-	//_listobject[0]->checkCollision(_listobject[3], dt);
-	//_listobject[0]->checkCollision(_listobject[5], dt);
-	//_listobject[0]->checkCollision(_listobject[7], dt);
+	//for (int i = 1; i < _listobject.size(); i++)
+	//{
+	//	// bill check
+	//	this->_bill->checkCollision(_listobject[i], dt);
+	//}
+	//
+	//// sodier
+	//for (int i = 1; i < _listobject.size(); i++)
+	//{
+	//	_listobject[2]->checkCollision(_listobject[i], dt);
+	//}
 
-	for (int i = 1; i < _listobject.size(); i++)
+	//for (int i = 1; i < _listobject.size(); i++)
+	//{
+	//	//_listobject[4]->checkCollision(_listobject[i], dt);
+
+	//	// rifle man
+	//	_listobject[45]->checkCollision(_listobject[i], dt);
+	//	_listobject[46]->checkCollision(_listobject[i], dt);
+	//	_listobject[52]->checkCollision(_listobject[i], dt);
+	//	_listobject[57]->checkCollision(_listobject[i], dt);
+
+	//	// aircraft
+	//	_listobject[58]->checkCollision(_listobject[i], dt);
+	//	_listobject[59]->checkCollision(_listobject[i], dt);
+	//}
+
+	//// IMPORTANT
+
+	/*
+	*		Hiện tại chúng ta có 2 danh sách object.
+			Một là _listobject chứa các đối tượng hoạt động rộng. không thể đưa vào quadtree
+			Hai là _mapobject chứa các đối tượng đã được đưa vào quadtree. 
+			Quá trình kiểm tra va chạm bao gồm 3 nhóm:
+
+				- Kiểm tra va chạm giữa các đối tượng trong _listobject
+				- Kiểm tra va chạm giữa các đối tượng trong các node của quadtree nằm trong màn hình
+				- Kiểm tra va chạm giữa các đối tượng chéo giữa hai nhóm trên
+	*/
+
+	GVector2 viewport_position = _viewport->getPositionWorld();
+	RECT viewport_in_transform = _viewport->getBounding();
+
+	// Hàm getlistobject của quadtree yêu cầu truyền vào một hình chữ nhật theo hệ top left, nên cần tính lại khung màn hình
+	RECT screen;
+	// left right không đổi dù hệ top-left hay hệ bot-left
+	screen.left = viewport_in_transform.left;
+	screen.right = viewport_in_transform.right;
+	screen.bottom = viewport_position.y;
+	screen.top = _viewport->getHeight() - viewport_position.y;
+
+	// getlistobject
+#if _DEBUG
+	clock_t t;
+	t = clock();
+#endif
+	//_active_object = _root->getlistObject(screen);
+	//auto listobjectname = _root->getlistObject(screen);
+
+	this->destroyobject();
+	_active_object.clear();
+
+	auto listobjectname = _root->GetActiveObject(screen);
+
+	for (auto name : listobjectname)
 	{
-		// bill check
-		this->_bill->checkCollision(_listobject[i], dt);
+		auto obj = _mapobject.find(name);
+		if (obj == _mapobject.end() || obj._Ptr == nullptr)
+			continue;
+		_active_object.push_back(obj->second);
 	}
-	
-	// sodier
-	for (int i = 1; i < _listobject.size(); i++)
+	_active_object.insert(_active_object.end(), _listobject.begin(), _listobject.end());
+
+	for each (auto obj in _active_object)
 	{
-		_listobject[2]->checkCollision(_listobject[i], dt);
+		obj->update(dt);
 	}
 
-	for (int i = 1; i < _listobject.size(); i++)
+	for (auto obj : _active_object)
 	{
-		//_listobject[4]->checkCollision(_listobject[i], dt);
-
-		// rifle man
-		_listobject[45]->checkCollision(_listobject[i], dt);
-		_listobject[46]->checkCollision(_listobject[i], dt);
-		_listobject[52]->checkCollision(_listobject[i], dt);
-		_listobject[57]->checkCollision(_listobject[i], dt);
-
-		// aircraft
-		_listobject[58]->checkCollision(_listobject[i], dt);
-		_listobject[59]->checkCollision(_listobject[i], dt);
+		for (auto passiveobj : _active_object)
+		{
+			obj->checkCollision(passiveobj, dt);
+		}
 	}
 
-	//_listobject[3]->checkCollision(_listobject[5], dt);
 
-
-	for (auto object : _listobject)
-	{
-		object->update(dt);
-	}
+#if _DEBUG
+	t = clock() - t;
+	__debugoutput((float)t / CLOCKS_PER_SEC);
+#endif
 }
 
 void PlayScene::destroyobject()
@@ -209,8 +252,23 @@ void PlayScene::destroyobject()
 				auto rs2 = std::remove(_listControlObject.begin(), _listControlObject.end(), (*icontrol));
 				_listControlObject.pop_back();
 			}
+
 			delete object;
 			break;		// sau pop_back phần tử đi thì list bị thay đồi, nên vòng for-each không còn nguyên trạng nữa. -> break (mỗi frame chỉ remove được 1 đối tượng)
+		}
+	}
+	for (auto name : QNode::ActiveObject)
+	{
+		auto object = _mapobject.find(name);
+		if (object == _mapobject.end() || object._Ptr == nullptr)
+			continue;
+		if (object->second->getStatus() == eStatus::DESTROY)	// kiểm tra nếu là destroy thì loại khỏi list
+		{
+			object->second->release();
+			delete object->second;
+			object->second = NULL;
+			_mapobject.erase(name);
+			
 		}
 	}
 }
@@ -245,7 +303,13 @@ void PlayScene::draw(LPD3DXSPRITE spriteHandle)
 	//sprite->render(spriteHandle, _viewport);
 	background->draw(spriteHandle, _viewport);
 
-	for (auto object : _listobject)
+	// Không cần đoạn _listobject nữa vì merge chung trong update rồi.
+
+	//for (auto object : _listobject)
+	//{
+	//	object->draw(spriteHandle, _viewport);
+	//}
+	for (auto object : _active_object)
 	{
 		object->draw(spriteHandle, _viewport);
 	}
