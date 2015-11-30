@@ -556,6 +556,7 @@ void Bill::jump()
 	auto g = (Gravity*)this->_componentList["Gravity"];
 	g->setStatus(eGravityStatus::FALLING__DOWN);
 
+	SoundManager::getInstance()->Play(eSoundId::JUMP_SOUND);
 }
 
 void Bill::layDown()
@@ -649,6 +650,7 @@ void Bill::shoot()
 
 void Bill::changeBulletType(eAirCraftType type)
 {
+	SoundManager::getInstance()->Play(eSoundId::EAT_ITEM);
 	switch (type)
 	{
 	case L:
@@ -684,6 +686,7 @@ Bullet* Bill::getBulletFromGun(GVector2 position, float angle)
 		if (_listBullets.size() >= 4 && (_currentGun & R_BULLET ) != R_BULLET)
 			return nullptr;
 		bullet = new Bullet(position, (eBulletType)(BILL_BULLET | NORMAL_BULLET), angle);
+		SoundManager::getInstance()->Play(eSoundId::BASE_BULLET_FIRE);
 	}
 	else if ((_currentGun & L_BULLET) == L_BULLET)
 	{
@@ -692,24 +695,28 @@ Bullet* Bill::getBulletFromGun(GVector2 position, float angle)
 			_listBullets.clear();
 		}
 		bullet = new LGun(position, angle);
+		SoundManager::getInstance()->Play(eSoundId::LBULLET_FIRE);
 	}
 	else if ((_currentGun & F_BULLET) == F_BULLET)
 	{
 		if (_listBullets.size() >= 2 && (_currentGun & R_BULLET) != R_BULLET)
 			return nullptr; 
 		bullet = new FBullet(position, angle);
+		SoundManager::getInstance()->Play(eSoundId::FBULLET_FIRE);
 	}
 	else if ((_currentGun & S_BULLET) == S_BULLET)
 	{
 		if (_listBullets.size() >= 2 && (_currentGun & R_BULLET) != R_BULLET)
 			return nullptr;
 		bullet = new SBullet(position, angle);
+		SoundManager::getInstance()->Play(eSoundId::SBULLET_FIRE);
 	}
 	else if ((_currentGun & M_BULLET) == M_BULLET)
 	{
 		if (_listBullets.size() >= 6 && (_currentGun & R_BULLET) != R_BULLET)
 			return nullptr;
 		bullet = new MBullet(position, angle);
+		SoundManager::getInstance()->Play(eSoundId::MBULLET_FIRE);
 	}
 	return bullet;
 }

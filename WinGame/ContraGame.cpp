@@ -48,4 +48,6 @@ void ContraGame::loadResource()
 	// Game::init đã gọi hàm này rồi nên không cần gọi lại ContraGame::loadResource
 	// load resource
 	SpriteManager::getInstance()->loadResource(_spriteHandle);
+	SoundManager::getInstance()->loadSound(Game::hWindow->getWnd());
+
 }

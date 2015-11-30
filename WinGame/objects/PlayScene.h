@@ -7,6 +7,7 @@
 #include "../FrameWork/Sprite.h"
 #include "../FrameWork/SpriteManager.h"
 #include "../FrameWork/Managers/SceneManager.h"
+#include "../FrameWork/Managers/SoundManager.h"
 #include "../FrameWork/Text.h"
 #include "../FrameWork/Animation.h"
 #include "../debug.h"
@@ -25,7 +26,6 @@
 #include "WallTurret.h"
 using namespace std;
 US_FRAMEWORK
-
 class PlayScene : public Scene
 {
 public:

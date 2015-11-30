@@ -6,7 +6,8 @@
 #include <d3d9.h>		// d3d9.lib
 #include <d3dx9.h>		// d3dx9.lib
 #include <dinput.h>		// dinput8.lib, dxguid.lib
- 
+#include <dsound.h>		// dsound.lib
+
 #include <windows.h>
 #include <exception>
 #include <math.h>
@@ -128,6 +129,81 @@ enum eBulletType
 	M_BULLET		= (1 << 7),
 };
 
+enum eSoundId
+{
+	// Nhạc nền map 1
+	BACKGROUND_STAGE1,					// Done.
+
+	// Nhạc nền map 2
+	BACKGROUND_STAGE2,
+
+	// Nhạc nền map 3
+	BACKGROUND_STAGE3,
+
+	// Đạn va chạm xe tank, cannon.
+	ATTACK_CANNON,					// Done.
+
+	// Bắn đạn thường
+	BASE_BULLET_FIRE,					// Done.
+
+	// Bắn đạn Lửa (F)
+	FBULLET_FIRE,					// Done.
+
+	// Bắn đạn Chùm (S)
+	SBULLET_FIRE,					// Done.
+
+	// Bắn đạn đạn máy (M)
+	MBULLET_FIRE,					// Done.
+
+	// Bắn đạn la-ze  (L)
+	LBULLET_FIRE,					// Done.
+
+	// ?
+	BOOM,
+
+	// Tiếng rè rè của boss màn 1
+	BOSS_SOUNG1,
+
+	// Thằng Bill chết
+	DEAD,
+
+	// Giết boss
+	DESTROY_BOSS,
+
+	// Cầu nổ
+	DESTROY_BRIDGE,					// Done.
+
+	// Giết thằng lính
+	DESTROY_ENEMY,					// Done. Mà tiếng này nhỏ quá không nghe.
+
+	// Nổ cầu
+	BRIDGE_BURN,					// Done.
+
+	// Ăn đồ, thay đạn.
+	EAT_ITEM,						// Done.
+
+	// ?
+	ENEMY_ATTACK,
+
+	// Thua
+	GAME_OVER,
+
+	// Giết boss cuối ở màn 8
+	GAMEOVER_BOSS,
+
+	// Intro
+	INTRO,
+
+	// Bill nhảy
+	JUMP_SOUND,						// Done.
+
+	// Giết boss
+	PASS_BOSS,
+
+	// Phá đảo.
+	WINGAME
+};
+
 typedef D3DXVECTOR3 GVector3;
 typedef D3DXVECTOR2 GVector2;
 #define VECTOR2ZERO GVector2(0.0f, 0.0f)
@@ -141,12 +217,17 @@ typedef D3DXVECTOR2 GVector2;
 
 #define US_FRAMEWORK		using namespace FrameWork;
 
+#ifndef SAFE_DELETE
+
 #define SAFE_DELETE(p) \
 if(p) \
 {\
 	delete (p); \
 	p = nullptr; \
 } \
+
+#endif // !SAFE_DELETE
+
 
 
 #endif // !__NS_FRAMEWORK__

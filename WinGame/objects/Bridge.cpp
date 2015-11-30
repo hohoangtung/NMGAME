@@ -80,6 +80,7 @@ void Bridge::burst(float deltatime)
 				_explode->setStatus(eStatus::DESTROY);
 				this->setStatus(eStatus::DESTROY);
 			}
+			SoundManager::getInstance()->Play(eSoundId::DESTROY_BRIDGE);
 		}
 	}
 }

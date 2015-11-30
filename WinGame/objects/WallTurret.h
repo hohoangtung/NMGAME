@@ -36,8 +36,6 @@ public:
 	float getBillAngle();
 	void setShootingAngle(float);
 	float getShootingAngle();
-	void drophitpoint();
-
 
 	void setStatus(eStatus);
 	void shoot();

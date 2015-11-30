@@ -1,4 +1,5 @@
 ﻿#include "Bullet.h"
+#include "../FrameWork/Managers/SoundManager.h"
 
 Bullet::Bullet(GVector2 startPosition, eBulletType type,eDirection dir) : BaseObject(eID::BULLET)
 {
@@ -214,16 +215,17 @@ void Bullet::onCollisionBegin(CollisionEventArg* collision_arg)
 			break;
 		case SOLDIER: case RIFLEMAN:
 			if (collision_arg->_otherObject->getStatus() != HIDDEN && collision_arg->_otherObject->getStatus() != EXPOSING)
-				((BaseEnemy*)collision_arg->_otherObject)->dropHitpoint();
+				((BaseEnemy*)collision_arg->_otherObject)->dropHitpoint(_damage);
 			// Đạn laser đi xuyên qua soldier và rifleman
 			if (this->_type != eBulletType::L_BULLET)
 				this->setStatus(eStatus::DESTROY);
 			break;
 		case REDCANNON: case WALL_TURRET:
-			((BaseEnemy*)collision_arg->_otherObject)->dropHitpoint();
+			((BaseEnemy*)collision_arg->_otherObject)->dropHitpoint(_damage);
 			this->setStatus(eStatus::DESTROY);
 			if (this->isContainType(eBulletType::L_BULLET) == true && ((BaseEnemy*)collision_arg->_otherObject)->getHitpoint() <= 0)
 				this->setStatus(eStatus::NORMAL);
+			SoundManager::getInstance()->Play(eSoundId::ATTACK_CANNON);
 			break;
 		}
 	}

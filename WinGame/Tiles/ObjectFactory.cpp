@@ -133,7 +133,7 @@ BaseObject* ObjectFactory::getObjectById(xml_node node, eID id)
 			break;
 		}
 		return nullptr;
-}S
+}
 
 BaseObject* ObjectFactory::getLand(xml_node node)
 {

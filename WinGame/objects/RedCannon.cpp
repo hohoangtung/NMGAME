@@ -288,5 +288,19 @@ void RedCannon::drophitpoint()
 {
 	this->setHitpoint(this->getHitpoint() - 1);
 	if (this->getHitpoint() <= 0)
+	{
 		this->setStatus(eStatus::DYING);
+		SoundManager::getInstance()->Play(eSoundId::DESTROY_ENEMY);
+	}
 }
+void RedCannon::drophitpoint(int damage)
+{
+	this->setHitpoint(this->getHitpoint() - damage);
+	if (this->getHitpoint() <= 0)
+	{
+		this->setStatus(eStatus::DYING);
+		SoundManager::getInstance()->Play(eSoundId::DESTROY_ENEMY);
+	}
+}
+
+

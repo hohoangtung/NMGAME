@@ -1,7 +1,10 @@
 ﻿#include "PlayScene.h"
 #include "..\Tiles\ObjectFactory.h"
+
+#if _DEBUG
 #include <time.h>
-//Viewport* PlayScene::_viewport = new Viewport(0, WINDOW_HEIGHT);
+#endif
+
  
 PlayScene::PlayScene()
 {
@@ -117,6 +120,8 @@ bool PlayScene::init()
 	_root = QNode::loadQuadTree("Resources//Map//stage1_quadtree.xml");
 
 	background = Map::LoadFromFile("Resources//Map//stage1.xml",eID::MAPSTAGE1);
+
+	SoundManager::getInstance()->PlayLoop(eSoundId::BACKGROUND_STAGE1);
 	return true;
 }
 

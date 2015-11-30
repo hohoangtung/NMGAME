@@ -35,6 +35,7 @@ public:
 	
 	void shoot();
 	void drophitpoint();
+	void drophitpoint(int bulletdmg);
 	void setShootingAngle(float);
 	float getShootingAngle();
 	void setBillAngle(float);

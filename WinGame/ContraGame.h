@@ -2,6 +2,7 @@
 #define __CONTRA_GAME_H__
 
 #include "Game.h"
+#include "FrameWork\Managers\SoundManager.h"
 #include "FrameWork\Managers\SceneManager.h"
 #include "objects\PlayScene.h"
 

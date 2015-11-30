@@ -414,9 +414,3 @@ void WallTurret::calculateBillangle()
 	else if (dx<0 && dy>0)
 		_billAngle = -atan(abs(dx) / dy) * 180 / PI + 180;
 }
-
-void WallTurret::drophitpoint()
-{
-	this->setHitpoint(this->getHitpoint() - 1);
-	
-}
