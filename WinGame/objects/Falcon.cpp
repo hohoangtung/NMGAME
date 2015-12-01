@@ -188,10 +188,10 @@ void Falcon::draw(LPD3DXSPRITE spriteHandle, Viewport* viewport)
 		if (_explosion != NULL)
 			_explosion->draw(spriteHandle, viewport);
 	}
-	if (viewport->isContains(this->getBounding()) == false)
-	{
-		this->setStatus(eStatus::DESTROY);
-	}
+	//if (viewport->isContains(this->getBounding()) == false)
+	//{
+	//	this->setStatus(eStatus::DESTROY);
+	//}
 }
 
 void Falcon::release()
