@@ -487,6 +487,30 @@ float Bill::checkCollision(BaseObject * object, float dt)
 			}
 		}
 	}
+	// Test Falcon
+	else if (objectId == eID::FALCON)
+	{
+		if (collisionBody->checkCollision(object, direction, dt))
+		{
+			auto falcon = ((Falcon*)object);
+			auto billstatus = this->getStatus();
+			if (((billstatus | eStatus::SHOOTING) == billstatus) && falcon->getStatus() == eStatus::NORMAL)
+			{
+
+				falcon->setStatus(eStatus::BURST);
+				falcon->setExplored();
+				this->changeBulletType(falcon->getType());
+			}
+			else
+			{
+				if (falcon->getStatus() == eStatus::EXPLORED)
+				{
+					falcon->setStatus(eStatus::DESTROY);
+					this->changeBulletType(falcon->getType());
+				}
+			}
+		}
+	}
 	else
 	{
 		collisionBody->checkCollision(object, dt);

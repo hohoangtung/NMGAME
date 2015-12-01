@@ -70,6 +70,10 @@ bool PlayScene::init()
 
 	_text = new Text(L"Arial", "", 10, 25);
 
+	auto falcon = new Falcon(GVector2(670, 153), GVector2(30.0f, 220.0f), eAirCraftType::M);
+	falcon->init();
+	_listobject.push_back(falcon);
+
 	//auto aircraft = new AirCraft(START_POSITION, HORIZONTAL_VELOC, AIRCRAFT_AMPLITUDE, AIRCRAFT_FREQUENCY, eAirCraftType::I);
 	//aircraft->init();
 	//_listobject.push_back(aircraft);
@@ -144,6 +148,14 @@ void PlayScene::update(float dt)
 	eID objectID;
 
 	this->updateViewport(_bill);
+
+
+	// Test Falcon
+	for (int i = 1; i < _listobject.size(); i++)
+	{
+		
+		//_listobject[2]->checkCollision(_listobject[i], dt);
+	}
 	
 	//for (int i = 1; i < _listobject.size(); i++)
 	//{
