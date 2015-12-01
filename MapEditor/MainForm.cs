@@ -393,6 +393,15 @@ namespace MapEditor
             this._mapController.ObjectEditor.ListItem.ListChanged += (object s, ListChangedEventArgs arg) =>
             {
                 this.enableSaveButton();
+                var mapbound = new Rectangle(0, 0,
+                    this._mapController.TilesMap.GetMapWidth(),
+                    this._mapController.TilesMap.GetMapHeight());
+                this._mapController.ObjectEditor.InitQuadTree(0, mapbound);
+                _mapController.Draw(mapbound);
+                if (toolbar.QuadTree.Pushed)
+                {
+                    this._mapController.RenderQuadTree();
+                }
             };
             _mapController.Draw(getVisibleMap());
             Cursor.Current = Cursors.Default;
@@ -430,11 +439,15 @@ namespace MapEditor
                 this._mapController.ObjectEditor.MouseUp = e.Location;
             }
             this._mapController.ObjectEditor.InitGameObject();
-            var mapbound = new Rectangle(0, 0,
-                this._mapController.TilesMap.GetMapWidth(),
-                this._mapController.TilesMap.GetMapHeight());
-            this._mapController.ObjectEditor.InitQuadTree(0, mapbound);
-            this.ReDrawMap();
+            //var mapbound = new Rectangle(0, 0,
+            //    this._mapController.TilesMap.GetMapWidth(),
+            //    this._mapController.TilesMap.GetMapHeight());
+            //this._mapController.ObjectEditor.InitQuadTree(0, mapbound);
+            //this.ReDrawMap();
+            //if (toolbar.QuadTree.Pushed)
+            //{
+            //    this._mapController.RenderQuadTree();
+            //}
             this.enableSaveButton();
         }
 
@@ -474,7 +487,10 @@ namespace MapEditor
         {
             if (e.ClickedItem.Text == "Delete")
             {
+                var current = (listBoxObject.DataSource as BindingSource).Current as GameObject;
+                this._mapController.ObjectEditor.QuadTree.removeObject(current);
                 (listBoxObject.DataSource as BindingSource).RemoveCurrent();
+
             }
             else if (e.ClickedItem.Text == "Fit Tile")
             {

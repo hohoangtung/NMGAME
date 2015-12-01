@@ -719,7 +719,7 @@
       <ActiveBound X="6208" Y="128" Width="64" Height="64" />
     </Item>
     <Item Id="4" Name="airCraft2" X="2240" Y="320" Width="64" Height="32">
-      <ActiveBound X="2240" Y="320" Width="64" Height="32" />
+      <ActiveBound X="2240" Y="400" Width="1200" Height="200" />
       <Params>
         <Elem Key="type" Value="5" />
       </Params>
@@ -728,7 +728,7 @@
       <ActiveBound X="2560" Y="320" Width="32" Height="64" />
     </Item>
     <Item Id="4" Name="airCraft1" X="480" Y="384" Width="64" Height="32">
-      <ActiveBound X="480" Y="384" Width="64" Height="32" />
+      <ActiveBound X="480" Y="400" Width="1400" Height="200" />
       <Params>
         <Elem Key="type" Value="4" />
       </Params>

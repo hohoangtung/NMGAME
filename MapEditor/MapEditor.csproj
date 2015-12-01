@@ -39,9 +39,14 @@
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
+    <Reference Include="System.Activities" />
+    <Reference Include="System.Activities.Presentation" />
     <Reference Include="System.Core" />
     <Reference Include="System.Design" />
     <Reference Include="System.DirectoryServices" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ServiceModel.Activities" />
+    <Reference Include="System.ServiceModel.Channels" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -117,6 +122,12 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="QuadTree\QNode_getListObject.sequencediagram.layout">
+      <DependentUpon>QNode_getListObject.sequencediagram</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="QuadTree\QNode_initChild.sequencediagram.layout">
+      <DependentUpon>QNode_initChild.sequencediagram</DependentUpon>
+    </EmbeddedResource>
     <None Include="Overview.cd" />
     <None Include="packages.config" />
     <None Include="Properties\DataSources\Tile.datasource" />
@@ -129,6 +140,8 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="QuadTree\QNode_getListObject.sequencediagram" />
+    <None Include="QuadTree\QNode_initChild.sequencediagram" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -140,7 +153,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

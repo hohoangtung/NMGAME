@@ -13,6 +13,7 @@ private:
 	int _level;
 	QNode* _parent;
 	QNode* _childs[4];
+
 	//vector<BaseObject*>  _listOject;
 	vector<string> _listObject;
 

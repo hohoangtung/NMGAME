@@ -136,7 +136,8 @@ namespace MapEditor.Tiles
         // Vẽ các object trong một khung visibleRect, sử dụng đổi hệ trục toạ độ.
         public void draw(Graphics Graphics, Rectangle visilbleRect, int worldheight)
         {
-            var listobject = this.QuadTree.getListObject(visilbleRect);
+            List<GameObject> listobject = new List<GameObject>();
+            this.QuadTree.getListObject(ref listobject, visilbleRect);
             foreach (GameObject GObject in listobject)
             {
                 var activebound = GObject.GetActiveBoundTransform(worldheight);
@@ -162,7 +163,8 @@ namespace MapEditor.Tiles
         // Vẽ các object trong một khung visibleRect, không sử dụng đổi hệ trục toạ độ.
         public void draw(Graphics Graphics, Rectangle visilbleRect)
         {
-            var listobject = this.QuadTree.getListObject(visilbleRect);
+            List<GameObject> listobject = new List<GameObject>();
+            this.QuadTree.getListObject(ref listobject, visilbleRect);
             foreach (GameObject GObject in ListItem)
             {
                 if (GObject.Image == null)

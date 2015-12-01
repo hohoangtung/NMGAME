@@ -186,8 +186,8 @@ void PlayScene::update(float dt)
 				- Tìm các tên của đối tượng đã được lưu trong quadtree.							(Bước 3)
 				- Từ danh sách tên ở bước trên, add các đối tượng có tên tương ứng với _mapobject vào _active_object	(Bước 4)
 				- Add danh sách các đối tượng trong _listobject vào _active_object.										(Bước 5)
-				- update các đối tượng trong _active_object																(Bước 6)
-				- Kiểm tra va chạm chéo giữa các đối tượng trong _active_object. Nếu có n đối tượng, thi có n * n lần kiểm tra va chạm..	(Bước 7)
+				- Kiểm tra va chạm chéo giữa các đối tượng trong _active_object. Nếu có n đối tượng, thi có n * n lần kiểm tra va chạm..	(Bước 6)
+				- update các đối tượng trong _active_object																(Bước 7)
 
 			Vẽ:
 				- Chỉ vẽ các đối tượng có trong _active_object.
@@ -235,18 +235,18 @@ void PlayScene::update(float dt)
 	_active_object.insert(_active_object.end(), _listobject.begin(), _listobject.end());
 	
 	// [Bước 6]
-	for each (auto obj in _active_object)
+	for (BaseObject* obj : _active_object)
 	{
-		obj->update(dt);
-	}
-
-	// [Bước 7]
-	for (auto obj : _active_object)
-	{
-		for (auto passiveobj : _active_object)
+		for (BaseObject* passiveobj : _active_object)
 		{
 			obj->checkCollision(passiveobj, dt);
 		}
+	}
+
+	// [Bước 7]
+	for (BaseObject* obj : _active_object)
+	{
+		obj->update(dt);
 	}
 
 #if _DEBUG
@@ -331,10 +331,13 @@ void PlayScene::draw(LPD3DXSPRITE spriteHandle)
 	//{
 	//	object->draw(spriteHandle, _viewport);
 	//}
-	for (auto object : _active_object)
+
+	for (BaseObject* object : _active_object)
 	{
 		object->draw(spriteHandle, _viewport);
 	}
+
+
 #if _DEBUG
 	_text->draw();
 #endif
