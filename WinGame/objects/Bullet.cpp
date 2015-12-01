@@ -213,6 +213,10 @@ void Bullet::onCollisionBegin(CollisionEventArg* collision_arg)
 			collision_arg->_otherObject->setStatus(eStatus::BURST);
 			this->setStatus(eStatus::DESTROY);
 			break;
+		case FALCON:
+			collision_arg->_otherObject->setStatus(eStatus::BURST);
+			this->setStatus(eStatus::DESTROY);
+			break;
 		case SOLDIER: case RIFLEMAN:
 			if (collision_arg->_otherObject->getStatus() != HIDDEN && collision_arg->_otherObject->getStatus() != EXPOSING)
 				((BaseEnemy*)collision_arg->_otherObject)->dropHitpoint(_damage);
