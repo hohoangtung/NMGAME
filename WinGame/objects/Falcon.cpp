@@ -65,14 +65,8 @@ void Falcon::init2()
 	
 	Movement* movement = new Movement(VECTOR2ZERO, HORIZONTAL_VELOC, _sprite);
 	Gravity* gravity = new Gravity(VECTOR2ZERO, movement);
-	CollisionBody* collisionBody = new CollisionBody(this);
 	this->_listComponent["Movement"] = movement;
 	this->_listComponent["Gravity"] = gravity;
-	this->_listComponent["CollisionBody"] = collisionBody;
-	this->setPhysicsBodySide(eDirection::NONE);
-
-	_explored = false;
-	_explosion = NULL;
 }
 void Falcon::initExplosion()
 {
@@ -112,6 +106,18 @@ void Falcon::update(float deltatime)
 		component.second->update(deltatime);
 	}
 
+	
+	if (this->_status == eStatus::NORMAL)
+	{
+		if (this->_animations->getIndex() == 0)
+			this->setStatus(eStatus::HIDDEN);
+	}
+	if (this->_status == eStatus::HIDDEN)
+	{
+		if (this->_animations->getIndex() != 0)
+			this->setStatus(eStatus::NORMAL);
+	}
+
 	if (this->_status == eStatus::BURST)
 	{
 		if (_explosion == NULL)
@@ -136,25 +142,25 @@ void Falcon::update(float deltatime)
 		switch (_type)
 		{
 		case B:
-			this->_sprite->setFrameRect(SpriteManager::getInstance()->getSourceRect(this->_id, "b_ammo"));
+			this->_sprite->setFrameRect(SpriteManager::getInstance()->getSourceRect(eID::AIRCRAFT, "b_ammo"));
 			break;
 		case F:
-			this->_sprite->setFrameRect(SpriteManager::getInstance()->getSourceRect(this->_id, "f_ammo"));
+			this->_sprite->setFrameRect(SpriteManager::getInstance()->getSourceRect(eID::AIRCRAFT, "f_ammo"));
 			break;
 		case L:
-			this->_sprite->setFrameRect(SpriteManager::getInstance()->getSourceRect(this->_id, "l_ammo"));
+			this->_sprite->setFrameRect(SpriteManager::getInstance()->getSourceRect(eID::AIRCRAFT, "l_ammo"));
 			break;
 		case M:
-			this->_sprite->setFrameRect(SpriteManager::getInstance()->getSourceRect(this->_id, "m_ammo"));
+			this->_sprite->setFrameRect(SpriteManager::getInstance()->getSourceRect(eID::AIRCRAFT, "m_ammo"));
 			break;
 		case R:
-			this->_sprite->setFrameRect(SpriteManager::getInstance()->getSourceRect(this->_id, "r_ammo"));
+			this->_sprite->setFrameRect(SpriteManager::getInstance()->getSourceRect(eID::AIRCRAFT, "r_ammo"));
 			break;
 		case S:
-			this->_sprite->setFrameRect(SpriteManager::getInstance()->getSourceRect(this->_id, "s_ammo"));
+			this->_sprite->setFrameRect(SpriteManager::getInstance()->getSourceRect(eID::AIRCRAFT, "s_ammo"));
 			break;
 		default:
-			_animations->start();
+			//_animations->start();
 			break;
 		}
 
@@ -176,7 +182,7 @@ void Falcon::draw(LPD3DXSPRITE spriteHandle, Viewport* viewport)
 	if (this->getStatus() == eStatus::DESTROY)
 		return;
 
-	if ((_status & (NORMAL | EXPLORING | EXPLORED)) == _status)
+	if ((_status & (NORMAL | EXPLORING | EXPLORED | HIDDEN)) == _status)
 	{
 		if (_animations->isAnimate())
 			_animations->draw(spriteHandle, viewport);
@@ -188,10 +194,10 @@ void Falcon::draw(LPD3DXSPRITE spriteHandle, Viewport* viewport)
 		if (_explosion != NULL)
 			_explosion->draw(spriteHandle, viewport);
 	}
-	//if (viewport->isContains(this->getBounding()) == false)
-	//{
-	//	this->setStatus(eStatus::DESTROY);
-	//}
+	/*if (viewport->isContains(this->getBounding()) == false)
+	{
+		this->setStatus(eStatus::DESTROY);
+	}*/
 }
 
 void Falcon::release()
@@ -269,4 +275,14 @@ void Falcon::setExplored()
 bool Falcon::isInStatus(eStatus status)
 {
 	return (this->getStatus() & status) == status;
+}
+
+void Falcon::onCollisionBegin(CollisionEventArg* collision_event)
+{
+
+}
+
+void Falcon::onCollisionEnd(CollisionEventArg* collision_event)
+{
+
 }

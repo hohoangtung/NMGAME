@@ -214,7 +214,8 @@ void Bullet::onCollisionBegin(CollisionEventArg* collision_arg)
 			this->setStatus(eStatus::DESTROY);
 			break;
 		case FALCON:
-			collision_arg->_otherObject->setStatus(eStatus::BURST);
+			if (collision_arg->_otherObject->getStatus() == NORMAL)
+				collision_arg->_otherObject->setStatus(eStatus::BURST);
 			this->setStatus(eStatus::DESTROY);
 			break;
 		case SOLDIER: case RIFLEMAN:
