@@ -30,8 +30,6 @@ public:
 
 	// Kiểm tra va chạm.
 	float checkCollision(BaseObject* object, float dt);
-	void onCollisionBegin(CollisionEventArg*);
-	void onCollisionEnd(CollisionEventArg*);
 
 	eAirCraftType getType();
 	void setStatus(eStatus status);
