@@ -346,11 +346,6 @@ void Bill::onCollisionBegin(CollisionEventArg * collision_arg)
 	case eID::RIFLEMAN:
 	case eID::SOLDIER:
 	{
-		if (!this->isInStatus(eStatus::DYING))
-		{
-			this->setStatus(eStatus::DYING);
-			this->die();
-		}
 
 		break;
 	}
@@ -463,59 +458,10 @@ float Bill::checkCollision(BaseObject * object, float dt)
 			}
 		}
 	}
-	else if (objectId == eID::AIRCRAFT)
-	{
-		if (collisionBody->checkCollision(object, direction, dt))
-		{
-			auto aircraft = ((AirCraft*) object);
-			auto billstatus = this->getStatus();
-			if (((billstatus | eStatus::SHOOTING) == billstatus) && aircraft->getStatus() == eStatus::NORMAL)
-			{
-				// Trường hợp máy bay còn nguyên, vừa bắn vừa đứng đó ăn luôn.
-				aircraft->setStatus(eStatus::BURST);
-				aircraft->setExplored();
-				this->changeBulletType(aircraft->getType());
-			}
-			else
-			{
-				// Trường hợp bắn máy bay xong chạy lại ăn.
-				if (aircraft->getStatus() == eStatus::EXPLORED)
-				{
-					aircraft->setStatus(eStatus::DESTROY);
-					this->changeBulletType(aircraft->getType());
-				}
-			}
-		}
-	}
-	// Test Falcon
-	else if (objectId == eID::FALCON)
-	{
-		if (collisionBody->checkCollision(object, direction, dt))
-		{
-			auto falcon = ((Falcon*)object);
-			auto billstatus = this->getStatus();
-			if (((billstatus | eStatus::SHOOTING) == billstatus) && falcon->getStatus() == eStatus::NORMAL)
-			{
-
-				falcon->setStatus(eStatus::BURST);
-				falcon->setExplored();
-				this->changeBulletType(falcon->getType());
-			}
-			else
-			{
-				if (falcon->getStatus() == eStatus::EXPLORED)
-				{
-					falcon->setStatus(eStatus::DESTROY);
-					this->changeBulletType(falcon->getType());
-				}
-			}
-		}
-	}
 	else
 	{
 		collisionBody->checkCollision(object, dt);
 	}
-
 
 	for (auto it = _listBullets.begin(); it != _listBullets.end(); it++)
 	{
@@ -755,6 +701,7 @@ void Bill::die()
 
 	auto g = (Gravity*)this->_componentList["Gravity"];
 	g->setStatus(eGravityStatus::FALLING__DOWN);
+	SoundManager::getInstance()->Play(eSoundId::DEAD);
 }
 
 GVector2 Bill::getVelocity()

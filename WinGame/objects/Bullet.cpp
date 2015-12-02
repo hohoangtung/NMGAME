@@ -211,11 +211,17 @@ void Bullet::onCollisionBegin(CollisionEventArg* collision_arg)
 			if (collision_arg->_otherObject->getStatus() == eStatus::HIDING || collision_arg->_otherObject->getStatus() == eStatus::EXPLORED)
 				return;
 			collision_arg->_otherObject->setStatus(eStatus::BURST);
-			this->setStatus(eStatus::DESTROY);
+			if (this->_type != eBulletType::L_BULLET)
+				this->setStatus(eStatus::DESTROY);
 			break;
 		case FALCON:
+			if (collision_arg->_otherObject->getStatus() == eStatus::EXPLORED)
+				return;
+			if (((Falcon*)collision_arg->_otherObject)->isOpenned() == false)
+				return;
 			collision_arg->_otherObject->setStatus(eStatus::BURST);
-			this->setStatus(eStatus::DESTROY);
+			if (this->_type != eBulletType::L_BULLET)
+				this->setStatus(eStatus::DESTROY);
 			break;
 		case SOLDIER: case RIFLEMAN:
 			if (collision_arg->_otherObject->getStatus() != HIDDEN && collision_arg->_otherObject->getStatus() != EXPOSING)

@@ -5,7 +5,7 @@
 #include "BaseObject.h"
 #include "..\FrameWork\Animation.h"
 
-#define SPEED_ANIMATION			0.07f
+#define SPEED_ANIMATION			0.12f
 class Explosion : public BaseObject
 {
 public:
@@ -18,6 +18,7 @@ public:
 	void release();
 
 	void setPosition(GVector2 position);
+	void setTimeAnimated(float);
 private:
 	Animation* _animation;
 	int _type;

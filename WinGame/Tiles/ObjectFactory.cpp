@@ -92,8 +92,6 @@ BaseObject* ObjectFactory::getObjectById(xml_node node, eID id)
 {
 		switch (id)
 		{
-		case BILL:
-			break;
 		case REDCANNON:
 			return getRedCannon(node);
 			break;
@@ -101,23 +99,16 @@ BaseObject* ObjectFactory::getObjectById(xml_node node, eID id)
 			return getSoldier(node);
 			break;
 		case FALCON:
+			return getFalcon(node);
 			break;
 		case AIRCRAFT:
 			return getAirCraft(node);
-			break;
-		case EXPLOSION:
 			break;
 		case RIFLEMAN:
 			return getRifleMan(node);
 			break;
 		case BRIDGE:
 			return getBridge(node);
-			break;
-		case QUADEXPLODE:
-			break;
-		case MAPSTAGE1:
-			break;
-		case BULLET:
 			break;
 		case LAND:
 			return getLand(node);
@@ -224,7 +215,8 @@ BaseObject * ObjectFactory::getSoldier(xml_node node)
 	}
 	else
 	{
-		status = eStatus::NORMAL;
+		status = eStatus::RUNNING;
+		//status = eStatus::NORMAL;
 	}
 
 	if (properties.find("direction") != properties.end())
@@ -426,7 +418,7 @@ BaseObject * ObjectFactory::getCreator(xml_node node)
 	return creator;
 }
 
-BaseObject * ObjectFactory::getBridge(xml_node node)
+BaseObject* ObjectFactory::getBridge(xml_node node)
 {
 	auto properties = getObjectProperties(node);
 	if (properties.size() == 0)
@@ -442,6 +434,30 @@ BaseObject * ObjectFactory::getBridge(xml_node node)
 	bridge->init();
 
 	return bridge;
+}
+
+BaseObject* ObjectFactory::getFalcon(xml_node node)
+{
+	auto properties = getObjectProperties(node);
+	if (properties.size() == 0)
+		return nullptr;
+
+	int x, y, type;
+
+	x = stoi(properties["X"]);
+	y = stoi(properties["Y"]);
+	
+	if (properties.find("type") != properties.end())
+	{
+		type = stoi(properties.find("type")->second);
+	}
+	else
+	{
+		type = eAirCraftType::R;
+	}
+	auto falcon = new Falcon(GVector2(x + 32, y - 32), (eAirCraftType)type);
+	falcon->init();
+	return falcon;
 }
 
 map<string, string> ObjectFactory::getObjectProperties(xml_node node)

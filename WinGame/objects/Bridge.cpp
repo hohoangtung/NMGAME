@@ -187,21 +187,25 @@ void Bridge::QuadExplose::init()
 	_explosion1->init();
 	_explosion1->setScale(SCALE_FACTOR);
 	_explosion1->setPosition(pos);
+	((Explosion*)_explosion1)->setTimeAnimated(0.06f);
 
 	_explosion2 = new Explosion(2);
 	_explosion2->init();
 	_explosion2->setScale(SCALE_FACTOR);
 	_explosion2->setPosition(GVector2(pos.x + 16, pos.y - 16));
+	((Explosion*)_explosion2)->setTimeAnimated(0.06f);
 
 	_explosion3 = new Explosion(2);
 	_explosion3->init();
 	_explosion3->setScale(SCALE_FACTOR);
 	_explosion3->setPosition(GVector2(pos.x, pos.y - 16));
+	((Explosion*)_explosion3)->setTimeAnimated(0.06f);
 
 	_explosion4 = new Explosion(2);
 	_explosion4->init();
 	_explosion4->setScale(SCALE_FACTOR);
 	_explosion4->setPosition(GVector2(pos.x - 16, pos.y - 16));
+	((Explosion*)_explosion4)->setTimeAnimated(0.06f);
 
 
 }

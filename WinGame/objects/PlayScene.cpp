@@ -70,9 +70,9 @@ bool PlayScene::init()
 
 	_text = new Text(L"Arial", "", 10, 25);
 
-	auto falcon = new Falcon(GVector2(670, 153), GVector2(30.0f, 220.0f), eAirCraftType::M);
-	falcon->init();
-	_listobject.push_back(falcon);
+	//auto falcon = new Falcon(GVector2(670, 153), eAirCraftType::M);
+	//falcon->init();
+	//_listobject.push_back(falcon);
 
 	//auto aircraft = new AirCraft(START_POSITION, HORIZONTAL_VELOC, AIRCRAFT_AMPLITUDE, AIRCRAFT_FREQUENCY, eAirCraftType::I);
 	//aircraft->init();
@@ -298,6 +298,10 @@ void PlayScene::destroyobject()
 			continue;
 		if (object->second->getStatus() == eStatus::DESTROY)	// kiểm tra nếu là destroy thì loại khỏi list
 		{
+			if (dynamic_cast<BaseEnemy*> (object->second) != nullptr)
+			{
+				SoundManager::getInstance()->Play(eSoundId::DESTROY_ENEMY);
+			}
 			object->second->release();
 			delete object->second;
 			object->second = NULL;

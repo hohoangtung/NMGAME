@@ -57,6 +57,7 @@ public:
 
 	// Đổi kiểu đạn. 
 	void changeBulletType(eAirCraftType );
+	void die();
 
 private:
 	map<int, Animation*> _animations;
@@ -74,7 +75,6 @@ private:
 	void layDown();
 	void falling();
 	void shoot();
-	void die();
 
 	list<bool> _canStand;
 

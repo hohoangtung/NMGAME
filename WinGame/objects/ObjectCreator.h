@@ -7,6 +7,7 @@
 #include "EmptyObject.h"
 #include "Soldier.h"
 
+[event_receiver(native)]
 class ObjectCreator : public EmptyObject
 {
 public:
@@ -31,6 +32,7 @@ public:
 	virtual float checkCollision(BaseObject* object, float dt);
 
 private:
+
 	BaseObject* getObject(eID id);
 	void deleteObject();
 

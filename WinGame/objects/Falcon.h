@@ -5,22 +5,18 @@
 #include "IComponent.h"
 #include "PlayScene.h"
 #include "Explosion.h"
+#include "Item.h"
 #include "../FrameWork/Animation.h"
 #include "../FrameWork/StopWatch.h"
 #include <map>
 
 using namespace std;
 
-#define FALCON_FORCE			GVector2(25.0f, 225.0f)		// góc ném viên đạn
-#define FALCON_GRAVITY			GVector2(0.0f, -200.0f)
-#define HORIZONTAL_VELOC		GVector2(0.0f, 0.0f)		// vận tốc ngang
-
-
 class Falcon : public BaseObject
 {
 public:
-	Falcon(GVector2 position, GVector2	_horizontalVeloc, eAirCraftType type);
-	Falcon(float x, float y, GVector2	_horizontalVeloc, eAirCraftType type);
+	Falcon(GVector2 position, eAirCraftType type);
+	Falcon(float x, float y, eAirCraftType type);
 	~Falcon();
 
 	// Các phương thức kế thừa từ BaseObject.
@@ -28,8 +24,7 @@ public:
 	void update(float deltatime) override;
 	void draw(LPD3DXSPRITE, Viewport*) override;
 	void release() override;
-	GVector2 getVelocity() override;
-	
+	RECT getBounding() override ;
 
 	IComponent* getComponent(string);
 
@@ -38,13 +33,13 @@ public:
 
 	eAirCraftType getType();
 	void setStatus(eStatus status);
-	void setExplored();
-	void init2();
+	bool isOpenned();
+	void checkifOutofScreen();
 
 private:
-
+	
+	BaseObject* _item;
 	void initExplosion();
-	void updateExplosion(float deltatime);
 	bool isInStatus(eStatus status);
 
 	map<string, IComponent*> _listComponent;
@@ -53,7 +48,6 @@ private:
 	eAirCraftType _type;
 
 	GVector2	_beginPosition;
-	GVector2	_force;
-	bool _explored;
+
 };
 #endif

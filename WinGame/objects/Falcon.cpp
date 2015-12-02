@@ -3,20 +3,17 @@
 
 
 
-Falcon::Falcon(GVector2 position, GVector2	force, eAirCraftType type) : BaseObject(eID::FALCON)
+Falcon::Falcon(GVector2 position, eAirCraftType type) : BaseObject(eID::FALCON)
 {
 	this->_type = type;
 	this->_beginPosition = position;
-	this->_force = force;
 
 }
 
-Falcon::Falcon(float x, float y, GVector2	force, eAirCraftType type) : BaseObject(eID::FALCON)
+Falcon::Falcon(float x, float y, eAirCraftType type) : BaseObject(eID::FALCON)
 {
-	
 	this->_type = type;
 	this->_beginPosition = GVector2(x, y);
-	this->_force = force;
 
 }
 
@@ -26,172 +23,105 @@ Falcon::~Falcon() {
 
 void Falcon::init()
 {
-	
-
 	this->_sprite = SpriteManager::getInstance()->getSprite(eID::FALCON);
 	this->_sprite->setScale(SCALE_FACTOR);
 	this->_sprite->setPosition(this->_beginPosition);
 
-	_animations = new Animation(_sprite, 0.5f);
-	_animations->addFrameRect(SpriteManager::getInstance()->getSourceRect(this->_id, "normal"));
-	_animations->addFrameRect(SpriteManager::getInstance()->getSourceRect(this->_id, "open_01"));
-	_animations->addFrameRect(SpriteManager::getInstance()->getSourceRect(this->_id, "open_02"));
-	_animations->addFrameRect(SpriteManager::getInstance()->getSourceRect(this->_id, "open_03"));
-	_animations->addFrameRect(SpriteManager::getInstance()->getSourceRect(this->_id, "opened_01"));
-	_animations->addFrameRect(SpriteManager::getInstance()->getSourceRect(this->_id, "opened_02"));
-	_animations->addFrameRect(SpriteManager::getInstance()->getSourceRect(this->_id, "opened_03"));
+	_animations = new Animation(_sprite, 0.12f);
 
-
-
-	Movement* movement = new Movement(VECTOR2ZERO, HORIZONTAL_VELOC, _sprite);
-	Gravity* gravity = new Gravity(VECTOR2ZERO, movement);
+	_animations->addFrameRect(eID::FALCON, "normal", "normal", "normal", "normal", "normal", "normal",
+		"open_01", "open_02", "open_03", 
+		"opened_01", "opened_02", "opened_03", "opened_02", "opened_03", "opened_02", "opened_01", 
+		"open_01", NULL);
 	CollisionBody* collisionBody = new CollisionBody(this);
-	this->_listComponent["Movement"] = movement;
-	this->_listComponent["Gravity"] = gravity;
 	this->_listComponent["CollisionBody"] = collisionBody;
 	this->setPhysicsBodySide(eDirection::NONE);
 
-	_explored = false;
-	_explosion = NULL;
+	_explosion = nullptr;
+	_item = nullptr;
 }
 
-void Falcon::init2()
-{
-	// Lấy sprite của AirCraft
-
-	this->_sprite = SpriteManager::getInstance()->getSprite(eID::AIRCRAFT);
-	this->_sprite->setScale(SCALE_FACTOR);
-	this->_sprite->setPosition(this->_beginPosition);
-	
-	Movement* movement = new Movement(VECTOR2ZERO, HORIZONTAL_VELOC, _sprite);
-	Gravity* gravity = new Gravity(VECTOR2ZERO, movement);
-	CollisionBody* collisionBody = new CollisionBody(this);
-	this->_listComponent["Movement"] = movement;
-	this->_listComponent["Gravity"] = gravity;
-	this->_listComponent["CollisionBody"] = collisionBody;
-	this->setPhysicsBodySide(eDirection::NONE);
-
-	_explored = false;
-	_explosion = NULL;
-}
 void Falcon::initExplosion()
 {
-
 	_explosion = new Explosion(2);
 	_explosion->init();
 	((Explosion*)_explosion)->setPosition(this->_sprite->getPosition());
 
-	Movement* move = (Movement*)getComponent("Movement");
-	move->setAccelerate(VECTOR2ZERO);
-	move->setVelocity(VECTOR2ZERO);
-
 }
-
-void Falcon::updateExplosion(float deltatime)
+void Falcon::checkifOutofScreen()
 {
-	_explosion->update(deltatime);
-	if (this->_explosion->getStatus() == eStatus::DESTROY)
+	if (this->getStatus() != eStatus::NORMAL)
+		return;
+	auto viewport = ((PlayScene*)SceneManager::getInstance()->getCurrentScene())->getViewport();
+	RECT screenBound = viewport->getBounding();
+	RECT thisBound = this->getBounding();
+	GVector2 position = this->getPosition();
+	if (thisBound.right < screenBound.left)
 	{
-		if (this->_explored == true)
-			this->setStatus(eStatus::DESTROY);
-		else
-			this->setStatus(eStatus::EXPLORING);
+		this->setStatus(eStatus::DESTROY);
 	}
 }
-
-
 
 void Falcon::update(float deltatime)
 {
+	checkifOutofScreen();
+	auto status = this->getStatus();
 
-	if (this->getStatus() == eStatus::DESTROY)
+	switch (status)
+	{
+	case DESTROY:
 		return;
-
-	for (auto component : _listComponent)
+	case NORMAL:
 	{
-		component.second->update(deltatime);
+		Viewport* viewport = ((PlayScene*)SceneManager::getInstance()->getCurrentScene())->getViewport();
+		RECT screenBound = viewport->getBounding();
+		if (this->getBounding().right > screenBound.right)
+		{
+			break;
+		}
+		_animations->update(deltatime);
+		break;
 	}
-
-	if (this->_status == eStatus::BURST)
-	{
+	case BURST:
 		if (_explosion == NULL)
 			initExplosion();
-		if (_explosion != NULL)
-			updateExplosion(deltatime);
-	}
-	_animations->update(deltatime);
-
-	if (this->_status == eStatus::EXPLORING)
-	{
-		_animations->stop();
-		this->init2();
-		auto bill = ((PlayScene*)SceneManager::getInstance()->getCurrentScene())->getBill();
-		if (isRectangleIntersected(bill->getBounding(), this->getBounding()))
-		{
-			this->setStatus(eStatus::DESTROY);
-			bill->changeBulletType(this->_type);
-			return;
-		}
-		
-		switch (_type)
-		{
-		case B:
-			this->_sprite->setFrameRect(SpriteManager::getInstance()->getSourceRect(this->_id, "b_ammo"));
-			break;
-		case F:
-			this->_sprite->setFrameRect(SpriteManager::getInstance()->getSourceRect(this->_id, "f_ammo"));
-			break;
-		case L:
-			this->_sprite->setFrameRect(SpriteManager::getInstance()->getSourceRect(this->_id, "l_ammo"));
-			break;
-		case M:
-			this->_sprite->setFrameRect(SpriteManager::getInstance()->getSourceRect(this->_id, "m_ammo"));
-			break;
-		case R:
-			this->_sprite->setFrameRect(SpriteManager::getInstance()->getSourceRect(this->_id, "r_ammo"));
-			break;
-		case S:
-			this->_sprite->setFrameRect(SpriteManager::getInstance()->getSourceRect(this->_id, "s_ammo"));
-			break;
-		default:
-			_animations->start();
-			break;
-		}
-
-		Movement* move = (Movement*)getComponent("Movement");
-		move->setVelocity(_force);
-
-		Gravity* gravity = (Gravity*)getComponent("Gravity");
-		gravity->setGravity(FALCON_GRAVITY);
-
+		_item = new Item(this->_sprite->getPosition(), this->_type);
+		_item->init();
 		this->setStatus(eStatus::EXPLORED);
+	default:
+		break;
 	}
 
+	if (_explosion != NULL)
+		_explosion->update(deltatime);
+	if (_item != NULL)
+	{
+		_item->update(deltatime);
+		if (_item->getStatus() == eStatus::DESTROY && _explosion->getStatus() == eStatus::DESTROY)
+		{
+			_item->release();
+			delete _item;
+			_item = nullptr;
+			this->setStatus(eStatus::DESTROY);
+		}
+	}
 }
 
 
 void Falcon::draw(LPD3DXSPRITE spriteHandle, Viewport* viewport)
 {
 
-	if (this->getStatus() == eStatus::DESTROY)
+	if (this->getStatus() == eStatus::DESTROY || this->getStatus() == eStatus::HIDING)
 		return;
 
-	if ((_status & (NORMAL | EXPLORING | EXPLORED)) == _status)
-	{
-		if (_animations->isAnimate())
-			_animations->draw(spriteHandle, viewport);
-		else
-			this->_sprite->render(spriteHandle, viewport);
-	}
-	if (this->_status == eStatus::BURST)
-	{
-		if (_explosion != NULL)
-			_explosion->draw(spriteHandle, viewport);
-	}
-	//if (viewport->isContains(this->getBounding()) == false)
-	//{
-	//	this->setStatus(eStatus::DESTROY);
-	//}
+	if (this->getStatus() == eStatus::NORMAL)
+		_animations->draw(spriteHandle, viewport);
+	if (_explosion != nullptr)
+		_explosion->draw(spriteHandle, viewport);
+	if (_item != nullptr)
+		_item->draw(spriteHandle, viewport);
+
+
 }
 
 void Falcon::release()
@@ -201,9 +131,19 @@ void Falcon::release()
 		delete component.second;
 	}
 	_listComponent.clear();
-	if (this->_explosion != NULL)
-		this->_explosion->release();
-	SAFE_DELETE(this->_explosion);
+	if (_explosion != NULL)
+	{
+		_explosion->release();
+		delete _explosion;
+		_explosion = nullptr;
+	}
+	if (this->_item != NULL)
+	{
+		_item->release();
+		delete _item;
+		_item = nullptr;
+	}
+	SAFE_DELETE(this->_animations);
 	SAFE_DELETE(this->_sprite);
 }
 
@@ -218,37 +158,31 @@ IComponent* Falcon::getComponent(string componentName)
 
 float Falcon::checkCollision(BaseObject * object, float dt)
 {
-	if (this->_status == eStatus::NORMAL)
-		return 0.0f;
-	auto collisionBody = (CollisionBody*)_listComponent["CollisionBody"];
-	auto objeciId = object->getId();
-	eDirection direction;
-
-	if (collisionBody->checkCollision(object, direction, dt))
+	if (_item != nullptr)
 	{
-		if (objeciId == eID::LAND || objeciId == eID::BRIDGE)	
-		{
-			if (direction == eDirection::TOP)
-			{
-				auto gravity = (Gravity*)this->_listComponent["Gravity"];
-				gravity->setStatus(eGravityStatus::SHALLOWED);
-				gravity->setGravity(VECTOR2ZERO);
-
-				auto move = (Movement*) this->_listComponent["Movement"];
-				move->setVelocity(VECTOR2ZERO);
-			}
-		}
+		_item->checkCollision(object, dt);
 	}
-
-
 	return 0.0f;
 }
 
-GVector2 Falcon::getVelocity()
+bool Falcon::isOpenned()
 {
-	auto move = (Movement*)this->_listComponent["Movement"];
-	return move->getVelocity();
+	int index = _animations->getIndex();
+	if (index >= 9 && index <= 15)
+		return true;
+	return false;
 }
+
+RECT Falcon::getBounding()
+{
+	auto baseBound = BaseObject::getBounding();
+	baseBound.left += 7 * this->getScale().x;
+	baseBound.right -= 7 * this->getScale().x;
+	baseBound.top -= 7 * this->getScale().y;
+	baseBound.bottom += 7 * this->getScale().y;
+	return baseBound;
+}
+
 
 void Falcon::setStatus(eStatus status)
 {
@@ -259,11 +193,6 @@ void Falcon::setStatus(eStatus status)
 eAirCraftType Falcon::getType()
 {
 	return _type;
-}
-
-void Falcon::setExplored()
-{
-	this->_explored = true;
 }
 
 bool Falcon::isInStatus(eStatus status)

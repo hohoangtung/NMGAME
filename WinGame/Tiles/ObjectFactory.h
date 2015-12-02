@@ -28,6 +28,7 @@ private:
 	static BaseObject* getAirCraft(xml_node node);
 	static BaseObject* getCreator(xml_node node);
 	static BaseObject* getBridge(xml_node node);
+	static BaseObject* getFalcon(xml_node node);
 
 	static map<string, string> getObjectProperties(xml_node node);
 

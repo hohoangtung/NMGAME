@@ -45,6 +45,8 @@ enum eID
 	BLANK			= 14,
 	MENU			= 15,
 	YELLOWFALCON	= 16,
+
+	ITEM			= 17,
 };
  
 enum eStatus
@@ -107,7 +109,8 @@ enum eDirection
 	TOP				= 1,
 	BOTTOM			= 2,
 	LEFT			= 4,
-	RIGHT			= 8
+	RIGHT			= 8,
+	ALL				= (TOP|BOTTOM|LEFT|RIGHT),
 };
 
 enum eAirCraftType

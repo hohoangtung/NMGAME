@@ -26,17 +26,10 @@ int BaseEnemy::getScore()
 void BaseEnemy::dropHitpoint()
 {
 	_hitpoint--;
-	if (_hitpoint <= 0)
-	{
-		SoundManager::getInstance()->Play(eSoundId::DESTROY_ENEMY);
-	}
 }
 
 void BaseEnemy::dropHitpoint(int damage)
 {
 	_hitpoint -= damage;
-	if (_hitpoint <= 0)
-	{
-		SoundManager::getInstance()->Play(eSoundId::DESTROY_ENEMY);
-	}
+
 }

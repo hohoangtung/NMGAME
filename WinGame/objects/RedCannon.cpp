@@ -116,21 +116,18 @@ void RedCannon::update(float deltatime)
 	
 	if ((_billAngle>=-90 && _billAngle<-75))
 	{
-	this->setScale(SCALE_FACTOR);
-	this->setStatus(NORMAL);
-	_shootingAngle = -90;
+		this->setStatus(NORMAL);
+		_shootingAngle = -90.0f;
 	}
 	else if (_billAngle >=-75 && _billAngle<-45)
 	{
-	this->setScale(SCALE_FACTOR);
-	this->setStatus(WT_LEFT_30);
-	_shootingAngle = -60;
+		this->setStatus(WT_LEFT_30);
+		_shootingAngle = -60.0f;
 	}
 	else if(_billAngle>=-45 && _billAngle<=0)
 	{
-	this->setScale(SCALE_FACTOR);
-	this->setStatus(WT_LEFT_60);
-	_shootingAngle = -30;
+		this->setStatus(WT_LEFT_60);
+		_shootingAngle = -30.0f;
 	}
 
 	if (_shooting == 1 && !this->isInStatus(SHOOTING))
@@ -278,7 +275,8 @@ void RedCannon::calculateBillangle()
 	float dy = this->getPosition().y - (bill->getPosition().y + bill->getSprite()->getFrameHeight() / 2);
 
 	if (dx > 0 && dy < 0)
-		_billAngle = -atan(dx / abs(dy)) * 180 / PI;
+		_billAngle = D3DXToDegree(-atan(dx / -dy));
+		//_billAngle = -atan(dx / abs(dy)) * 180 / PI;
 	else if (dx<0 && dy<0)
 		_billAngle = -30;
 	else _billAngle = -90;
