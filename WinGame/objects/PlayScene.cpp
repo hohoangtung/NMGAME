@@ -76,6 +76,7 @@ bool PlayScene::init()
 	//soldier->setStatus(eStatus::JUMPING);
 	//_listobject.push_back(soldier);
 
+
 	_text = new Text(L"Arial", "", 10, 25);
 
 	//auto falcon = new Falcon(GVector2(670, 153), eAirCraftType::M);

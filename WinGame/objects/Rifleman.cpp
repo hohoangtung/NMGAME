@@ -73,7 +73,7 @@ void Rifleman::draw(LPD3DXSPRITE spritehandle, Viewport* viewport)
 {
 	if (_explosion != NULL)
 		_explosion->draw(spritehandle, viewport);
-	if (this->getStatus() == eStatus::DESTROY)
+	if (this->getStatus() == eStatus::DESTROY || this->getStatus() == eStatus::WAITING)
 		return;
 	this->_sprite->render(spritehandle, viewport);
 	_animations[this->getStatus()]->draw(spritehandle, viewport);
@@ -125,7 +125,7 @@ void Rifleman::update(float deltatime)
 { 
 	if (_explosion != NULL)
 		_explosion->update(deltatime);
-	if (this->getStatus() == eStatus::DESTROY)
+	if (this->getStatus() == eStatus::DESTROY || this->getStatus() == eStatus::WAITING)
 		return;
 	if (this->getHitpoint() <= 0) 
 	{

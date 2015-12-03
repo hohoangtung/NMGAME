@@ -10,6 +10,7 @@ Soldier::Soldier(eStatus status, GVector2 pos, int direction) : BaseEnemy(eID::S
 	this->setPosition(pos);
 	this->setScale(SCALE_FACTOR);
 	this->setScaleX(-direction * SCALE_FACTOR);
+	this->_canShoot = false;
 }
 
 Soldier::Soldier(eStatus status, float x, float y, int direction) : BaseEnemy(eID::SOLDIER) {
@@ -23,6 +24,34 @@ Soldier::Soldier(eStatus status, float x, float y, int direction) : BaseEnemy(eI
 	this->setPosition(pos);
 	this->setScale(SCALE_FACTOR);
 	this->setScaleX(-direction * SCALE_FACTOR);
+	this->_canShoot = false;
+}
+
+Soldier::Soldier(eStatus status, GVector2 pos, int direction, bool shoot) : BaseEnemy(eID::SOLDIER) {
+	_sprite = SpriteManager::getInstance()->getSprite(eID::SOLDIER);
+	_sprite->setFrameRect(0, 0, 32.0f, 16.0f);
+	GVector2 v(direction * SOLDIER_SPEED, 0);
+	GVector2 a(0, 0);
+	this->_listComponent.insert(pair<string, IComponent*>("Movement", new Movement(a, v, this->_sprite)));
+	this->setStatus(status);
+	this->setPosition(pos);
+	this->setScale(SCALE_FACTOR);
+	this->setScaleX(-direction * SCALE_FACTOR);
+	this->_canShoot = shoot;
+}
+
+Soldier::Soldier(eStatus status, float x, float y, int direction, bool shoot) : BaseEnemy(eID::SOLDIER) {
+	_sprite = SpriteManager::getInstance()->getSprite(eID::SOLDIER);
+	_sprite->setFrameRect(0, 0, 32.0f, 16.0f);
+	GVector2 pos(x, y);
+	GVector2 v(direction * SOLDIER_SPEED, 0);
+	GVector2 a(0, 0);
+	this->_listComponent.insert(pair<string, IComponent*>("Movement", new Movement(a, v, this->_sprite)));
+	this->setStatus(status);
+	this->setPosition(pos);
+	this->setScale(SCALE_FACTOR);
+	this->setScaleX(-direction * SCALE_FACTOR);
+	this->_canShoot = shoot;
 }
  
 Soldier::~Soldier() {}
@@ -58,19 +87,26 @@ void Soldier::init()
 	_animations[DYING]->addFrameRect(eID::SOLDIER, "die_01", NULL);
 
 	_stopwatch = new StopWatch();
+	_loopwatch = new StopWatch();
+	_shoot = new StopWatch();
+	_checkShoot = new StopWatch();
 }
 
 void Soldier::draw(LPD3DXSPRITE spritehandle, Viewport* viewport)
 {
 	if (_explosion != NULL)
 		_explosion->draw(spritehandle, viewport);
-	if (this->getStatus() == eStatus::DESTROY)
+	if (this->getStatus() == eStatus::DESTROY || this->getStatus() == eStatus::WAITING)
 		return;
 
 	// animation draw là nó lấy sprite draw nên ko cần phải render sprite nữa.
 	//this->_sprite->render(spritehandle, viewport);
 
 	_animations[this->getStatus()]->draw(spritehandle, viewport);
+	for (auto it = _listBullets.begin(); it != _listBullets.end(); it++)
+	{
+		(*it)->draw(spritehandle, viewport);
+	}
 }
 
 void Soldier::release()
@@ -95,7 +131,7 @@ void Soldier::update(float deltatime)
 {
 	if (_explosion != NULL)
 		_explosion->update(deltatime);
-	if (this->getStatus() == DESTROY)
+	if (this->getStatus() == DESTROY || this->getStatus() == WAITING)
 		return;
 	Gravity *gravity = (Gravity*)this->getComponent("Gravity");
 	Movement *movement = (Movement*)this->getComponent("Movement");
@@ -115,10 +151,40 @@ void Soldier::update(float deltatime)
 			return;
 		}
 	}
-
+	if (this->_shoot->isTimeLoop(1000.0f))
+	{
+		if (this->_canShoot && this->getStatus() == RUNNING)
+		{
+			int chance = rand() % 2;
+			if (chance == 1)			
+			{
+				this->setStatus(SHOOTING);			
+				Movement *move = (Movement*)this->getComponent("Movement");
+				move->setVelocity(GVector2(0, 0));
+			}
+		}
+	}
+	if (this->getStatus() == SHOOTING)
+	{
+		if (_checkShoot->isStopWatch(1000.0f))
+		{
+			Movement *move = (Movement*)this->getComponent("Movement");
+			move->setVelocity(GVector2(-SOLDIER_SPEED * this->getScale().x / 2, 0));
+			this->setStatus(RUNNING);
+			delete _checkShoot;
+			_checkShoot = new StopWatch();
+		}
+	}
+	if (_loopwatch->isTimeLoop(SOLDIER_SHOOTING_DELAY))
+		if (this->getStatus() == SHOOTING)
+			shoot();
 	for (auto it : _listComponent)
 	{
 		it.second->update(deltatime);
+	}
+	for (auto it = _listBullets.begin(); it != _listBullets.end(); it++)
+	{
+		(*it)->update(deltatime);
 	}
 
 	if (this->getStatus() != DESTROY)
@@ -178,9 +244,12 @@ float Soldier::checkCollision(BaseObject * object, float dt)
 		return 0.0f;
 	auto collisionBody = (CollisionBody*)_listComponent["CollisionBody"];
 	eID objectId = object->getId();
+	eLandType land = eLandType::WATER;
+	if (objectId == LAND)
+		land = ((Land*)object)->getType();
 	eDirection direction;
 
-	if (objectId == eID::BRIDGE || objectId == eID::LAND)
+	if (objectId == eID::BRIDGE || land != eLandType::WATER)
 	{
 		if (collisionBody->checkCollision(object, direction, dt))
 		{
@@ -232,4 +301,22 @@ void Soldier::die() {
 	gravity->setStatus(eGravityStatus::SHALLOWED);
 	Movement *movement = (Movement*)this->getComponent("Movement");
 	movement->setVelocity(GVector2(0, 200));
+}
+
+void Soldier::shoot()
+{
+	float angle = -90 * this->getScale().x / 2;
+	auto pos = this->getPosition();
+	if (this->isInStatus(SHOOTING)) 
+	{
+		pos.x += this->getScale().x < 0 ? this->getSprite()->getFrameWidth() / 2 : -this->getSprite()->getFrameWidth() / 2;
+		pos.y += this->getSprite()->getFrameHeight() / 4.5;
+	}
+	else if (this->isInStatus(LAYING_DOWN)) 
+	{
+		pos.x += this->getScale().x < 0 ? this->getSprite()->getFrameWidth() / 2 : -this->getSprite()->getFrameWidth() / 2;
+		pos.y -= this->getSprite()->getFrameHeight() / 4.5;
+	}
+	_listBullets.push_back(new Bullet(pos, (eBulletType)(ENEMY_BULLET | NORMAL_BULLET), angle)); // normalbullet ->hardcode
+	_listBullets.back()->init();
 }
