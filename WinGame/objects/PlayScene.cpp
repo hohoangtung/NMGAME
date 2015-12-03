@@ -60,9 +60,9 @@ bool PlayScene::init()
 	//bridge->setPhysicsBodySide(eDirection::TOP);
 	//_listobject.push_back(bridge);
 
-	auto soldier = new Soldier(RUNNING, 500, 400, -1);
+	auto soldier = new Soldier(RUNNING, 500, 400, -1, true);
 	soldier->init();
-	soldier->setStatus(eStatus::JUMPING);
+	// soldier->setStatus(eStatus::JUMPING);
 	_listobject.push_back(soldier);
 
 	_text = new Text(L"Arial", "", 10, 25);
