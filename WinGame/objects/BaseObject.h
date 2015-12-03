@@ -61,6 +61,9 @@ public:
 	virtual void setZIndex(float z);
 	virtual float getZIndex();
 
+	virtual void setOpacity(float opacity);
+	virtual float getOpacity();
+
 	virtual GVector2 getAnchorPoint();
 
 	Sprite* getSprite();
@@ -84,15 +87,5 @@ protected:
 	eStatus _status;
 	eDirection _physicsSide;
 };
-/*
 
-class Amry : public BaseObject : public IControlable
-{
-public:
-	Amry(): BaseObject(eID::ARMY);
-	void updateInput(float deltatime) override;
-	void update(float deltatime) override;
-	void draw(LPD3DXSPRITE) override;
-}
-*/
 #endif // !__BASEOBJECT_H__

@@ -52,7 +52,7 @@ bool PlayScene::init()
 
 	auto bill = new Bill();
 	bill->init();
-	bill->setPosition(6032, 500);
+	bill->setPosition(200, 500);
 	
 	this->_bill = bill;
 	_listControlObject.push_back(bill);
@@ -327,13 +327,13 @@ void PlayScene::updateViewport(BaseObject* objTracker)
 	// Bám theo object.
 	GVector2 new_position = GVector2(max(objTracker->getPositionX() - 260, 0), WINDOW_HEIGHT);		// 200 khoảng cách tối đa giữa object và map -> hardcode
 
-#if(!_DEBUG)
+//#if(!_DEBUG)
 	// Không cho đi ngược
 	if (new_position.x < current_position.x)
 	{
 		new_position.x = current_position.x;
 	}
-#endif
+//#endif
 
 	// Không cho đi quá map.
 	if (new_position.x + WINDOW_WIDTH > worldsize.x)

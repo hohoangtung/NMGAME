@@ -97,8 +97,12 @@ public:
 
 	void drawBounding(bool draw);
 
+	void setOpacity(float opacity);
+	float getOpacity();
+
 private:
 	Texture				_texture;
+	float				_opacity;						// từ 0.0f đến 1.0f thôi
 
 	RECT				_bound;
 
