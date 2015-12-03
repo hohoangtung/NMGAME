@@ -1,6 +1,9 @@
 frame_name	left	top	right	bottom
-gun_1		15	204	28	209
-gun_2		15	211	26	216
-shield_1	33	186	56	216
-shield_2	61	186	84	216
-shield_3	89	186	112	216
+gun_1		27	42	40	48
+gun_2		48	42	59	48
+shield_1	0	54	23	84
+shield_2	27	54	50	84
+shield_3	54	54	77	84
+moulder_2	19	42	23	47
+moulder_1	0	42	15	50
+big_moulder	0	0	108	38

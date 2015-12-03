@@ -7,6 +7,8 @@ int Bridge::_matrixIndex[2][MAX_WAVE * 2] =
 	{ 1, 4, 4, 4, 4, 4, 4, 5 },
 };
 
+#pragma region Bridge
+
 Bridge::Bridge(GVector2 postion) : BaseObject(eID::BRIDGE)
 {
 	_sprite = SpriteManager::getInstance()->getSprite(eID::BRIDGE);
@@ -120,7 +122,14 @@ void Bridge::draw(LPD3DXSPRITE spritehandle, Viewport* viewport)
 }
 void Bridge::release()
 {
-
+	SAFE_DELETE(_stopwatch);
+	SAFE_DELETE(_transform);
+	for (auto item : _listComponent)
+	{
+		SAFE_DELETE(item.second);
+	}
+	_listComponent.clear();
+	SAFE_DELETE(_sprite);
 }
 void Bridge::setPosition(GVector2 position)
 {
@@ -172,6 +181,11 @@ void Bridge::setStatus(eStatus status)
 Bridge::~Bridge()
 {
 }
+
+#pragma endregion
+
+#pragma region QuadExplose
+
 Bridge::QuadExplose::QuadExplose(GVector2 position) : BaseObject(eID::QUADEXPLODE)
 {
 	_transform = new Transformable();
@@ -262,5 +276,32 @@ void Bridge::QuadExplose::reset()
 }
 void Bridge::QuadExplose::release()
 {
+	if (_explosion1 != nullptr)
+	{
+		_explosion1->release();
+		delete _explosion1;
+		_explosion1 = nullptr;
+	}
+	if (_explosion2 != nullptr)
+	{
+		_explosion2->release();
+		delete _explosion2;
+		_explosion2 = nullptr;
+	}
+	if (_explosion3 != nullptr)
+	{
+		_explosion3->release();
+		delete _explosion3;
+		_explosion3 = nullptr;
+	}
+	if (_explosion4 != nullptr)
+	{
+		_explosion4->release();
+		delete _explosion4;
+		_explosion4 = nullptr;
+	}
+	SAFE_DELETE(_transform);
 
 }
+
+#pragma endregion

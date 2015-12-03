@@ -38,7 +38,10 @@ void Explosion::init()
 		this->_animation->addFrameRect(SpriteManager::getInstance()->getSourceRect(eID::EXPLOSION, "type2_04"));
 		this->_animation->addFrameRect(SpriteManager::getInstance()->getSourceRect(eID::EXPLOSION, "type2_05"));
 		this->_animation->addFrameRect(SpriteManager::getInstance()->getSourceRect(eID::EXPLOSION, "type2_06"));
-
+		this->_animation->addFrameRect(SpriteManager::getInstance()->getSourceRect(eID::EXPLOSION, "type2_04"));
+		this->_animation->addFrameRect(SpriteManager::getInstance()->getSourceRect(eID::EXPLOSION, "type2_03"));
+		this->_animation->addFrameRect(SpriteManager::getInstance()->getSourceRect(eID::EXPLOSION, "type2_01"));
+		this->_animation->addFrameRect(SpriteManager::getInstance()->getSourceRect(eID::EXPLOSION, "type2_02"));
 	}
 }
 
@@ -47,7 +50,11 @@ void Explosion::update(float deltatime)
 	if (this->getStatus() != eStatus::NORMAL)
 		return;
 	this->_animation->update(deltatime);
-	if (this->_animation->getIndex() == 5)
+	if (this->_type == 1 && this->_animation->getIndex() == 5)
+	{
+		this->setStatus(eStatus::DESTROY);
+	}
+	if (this->_type == 2 && this->_animation->getIndex() == 9)
 	{
 		this->setStatus(eStatus::DESTROY);
 	}

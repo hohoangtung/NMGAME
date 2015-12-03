@@ -472,6 +472,7 @@ float Bill::checkCollision(BaseObject * object, float dt)
 				(*it)->checkCollision(((Boss*)object)->getGun1(), dt);
 				(*it)->checkCollision(((Boss*)object)->getGun2(), dt);
 				(*it)->checkCollision(((Boss*)object)->getShield(), dt);
+				(*it)->checkCollision(((Boss*)object)->getRifleMan(), dt);
 			}
 			else
 				(*it)->checkCollision(object, dt);

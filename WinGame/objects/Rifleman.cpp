@@ -31,6 +31,7 @@ void Rifleman::init()
 
 	GVector2 v(0, 0);
 	GVector2 a(0, 0);
+
 	this->_listComponent.insert(pair<string, IComponent*>("Movement", new Movement(a, v, this->_sprite)));
 	this->_listComponent.insert(pair<string, IComponent*>("Gravity", new Gravity(GVector2(0, -ENEMY_GRAVITY), (Movement*)(this->getComponent("Movement")))));
 	_animations[NORMAL] = new Animation(_sprite, RIFLEMAN_ANIMATION_SPEED);
@@ -366,6 +367,7 @@ void Rifleman::shoot()
 }
 
 void Rifleman::die() {
+	_hitpoint = 0;
 	Gravity *gravity = (Gravity*)this->getComponent("Gravity");
 	gravity->setStatus(eGravityStatus::SHALLOWED);
 	Movement *movement = (Movement*)this->getComponent("Movement");

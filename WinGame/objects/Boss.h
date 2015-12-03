@@ -9,11 +9,12 @@
 #include "..\FrameWork\Managers\SoundManager.h"
 #include "Bullet.h"
 #include "BulletManager.h"
+#include "Rifleman.h"
 
 class Boss : public BaseEnemy
 {
 public:
-	Boss(GVector2 position);
+	Boss(GVector2 position, int height);
 	void init();
 	void update(float deltatime);
 	void draw(LPD3DXSPRITE spriteHandle, Viewport* viewport);
@@ -25,6 +26,11 @@ public:
 	BaseObject* getGun1();
 	BaseObject* getGun2();
 	BaseObject* getShield();
+	BaseObject* getRifleMan();
+
+	Sprite* _moulder1;
+	Sprite* _moulder2;
+	Sprite* _bigmoudler;
 
 	Boss();
 	~Boss();
@@ -32,7 +38,8 @@ public:
 	class BossGun : public BaseEnemy
 	{
 	public:
-		BossGun(GVector2 position);
+		// @startstatus: trạng thái bắt đầu (0 là trạng thái lồi, 1 là trạng thái thụt)
+		BossGun(GVector2 position, int startStatus);
 		~BossGun();
 		void init();
 		void update(float deltatime);
@@ -51,6 +58,12 @@ public:
 		BaseObject* _explosion;
 
 		GVector2 _startposition;
+
+		// Tăng lên sau mỗi 1 giây, % 2 = 0 thì set sprite trồi, % 2 = 1 thì set sprite thụt
+		int _statusGun;
+
+		// Kiểm tra _statusGun và set lại frameRect
+		void initFrameRect();
 	};
 
 	class BossBullet : public Bullet
@@ -59,8 +72,9 @@ public:
 
 		void init();
 		void update(float deltatime);
-
+		RECT getBounding();
 		BossBullet(GVector2 startposition, GVector2 force, GVector2 gravity);
+		void draw(LPD3DXSPRITE, Viewport*);
 		~BossBullet();
 
 	private:
@@ -68,6 +82,7 @@ public:
 		GVector2 _startposition;
 		GVector2 _force;
 		GVector2 _gravity;
+		BaseObject* _explosion;
 	};
 
 	class BossShield : public BaseEnemy
@@ -87,13 +102,36 @@ public:
 		GVector2 _startposition;
 		Explosion* _explosion;
 	};
+
+	class OctExplose : public BaseObject
+	{
+	public:
+		OctExplose(GVector2);
+		void init();
+		void update(float deltatime);
+		void draw(LPD3DXSPRITE, Viewport*);
+		void release();
+		GVector2 getPosition();		
+		void reset();
+	private:
+		Transformable* _transform;
+		BaseObject* _explosion[8];
+		float _timer;
+
+	};
 private:
 	GVector2 _startposition;
+	int _height;
+	map<string, IComponent*> _componentList;
 
+	// Cục súng bên phải
 	BaseEnemy* _gun1;
+
+	// Cục súng bên trái
 	BaseEnemy* _gun2;
 	BaseEnemy* _shield;
-
+	BaseEnemy* _rifleman;
+	BaseObject* _octexplose;
 };
 #endif // !__BOSS_H__
 

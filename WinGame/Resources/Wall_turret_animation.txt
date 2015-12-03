@@ -8,7 +8,7 @@ left_up_05		171		68		203			100
 left_up_06		205		68		237			100
 left_up_07		239		68		271			100
 left_up_08		273		68		305			100
-up				1		102		33			134
+up			1		102		33			134
 right_up_01		35		102		67			134
 right_up_02		69		102		101			134
 right_up_03		103		102		135			134
@@ -18,22 +18,22 @@ right_up_06		205		102		237			134
 right_up_07		239		102		271			134
 right_up_08		273		102		305			134
 right			1		0		33			32
-right_down_01	35		0		67			32
-right_down_02	69		0		101			32
-right_down_03	103		0		135			32
-right_down_04	137		0		169			32
-right_down_05	171		0		203			32
-right_down_06	205		0		237			32
-right_down_07	239		0		271			32
-right_down_08	273		0		305			32
+right_down_01		35		0		67			32
+right_down_02		69		0		101			32
+right_down_03		103		0		135			32
+right_down_04		137		0		169			32
+right_down_05		171		0		203			32
+right_down_06		205		0		237			32
+right_down_07		239		0		271			32
+right_down_08		273		0		305			32
 left			1		34		33			66
-left_down_01	35		34		67			66
-left_down_02	69		34		101			66
-left_down_03	103		34		135			66
-left_down_04	137		34		169			66
-left_down_05	171		34		203			66
-left_down_06	205		34		237			66
-left_down_07	239		34		271			66
-left_down_08	273		34		305			66
+left_down_01		35		34		67			66
+left_down_02		69		34		101			66
+left_down_03		103		34		135			66
+left_down_04		137		34		169			66
+left_down_05		171		34		203			66
+left_down_06		205		34		237			66
+left_down_07		239		34		271			66
+left_down_08		273		34		305			66
 
 						

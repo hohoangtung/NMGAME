@@ -41,7 +41,7 @@ Trong lớp này có:
 #define DELAYTIME 500.0f
 
 #define BRIDGE_POSITION GVector2(200.0f, 300.0f)	// test value
-[event_receiver(native)] 
+
 class Bridge : public BaseObject
 {
 public:
