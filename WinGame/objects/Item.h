@@ -23,6 +23,7 @@ public:
 	void draw(LPD3DXSPRITE, Viewport*) override;
 	void release() override;
 	GVector2 getVelocity() override;
+	RECT getBounding() override;
 
 	void checkifOutofScreen();
 

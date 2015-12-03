@@ -137,6 +137,14 @@ void Item::release()
 	SAFE_DELETE(_animation);
 }
 
+RECT Item::getBounding()
+{
+	RECT baseBound = BaseObject::getBounding();
+	baseBound.left += (7 + this->getScale().x);
+	baseBound.right -= (7 - this->getScale().y);
+	return baseBound;
+}
+
 GVector2 Item::getVelocity()
 {
 	auto move = (Movement*)this->_listComponent["Movement"];

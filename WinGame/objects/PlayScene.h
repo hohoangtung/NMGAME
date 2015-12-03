@@ -24,6 +24,9 @@
 #include "Bridge.h"
 #include "Land.h"
 #include "WallTurret.h"
+#include "BulletManager.h"
+#include "Boss.h"
+
 using namespace std;
 US_FRAMEWORK
 class PlayScene : public Scene

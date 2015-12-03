@@ -39,11 +39,11 @@ void AirCraft::initExplosion()
 	_explosion = new Explosion(2);
 	_explosion->init();
 	((Explosion*)_explosion)->setPosition(this->_sprite->getPosition());
-	Movement* move = (Movement*)getComponent("Movement");
+	Movement* move = (Movement*)this->getComponent("Movement");
 	move->setAccelerate(VECTOR2ZERO);
 	move->setVelocity(VECTOR2ZERO);
 
-	SinMovement* sinmove = (SinMovement*)getComponent("Sinmovement");
+	SinMovement* sinmove = (SinMovement*)this->getComponent("Sinmovement");
 	sinmove->setAmplitude(VECTOR2ZERO);
 	sinmove->setFrequency(0.0f);
 
@@ -106,7 +106,7 @@ void AirCraft::update(float deltatime)
 
 	if (this->_status == eStatus::BURST)
 	{
-		if (_explosion == NULL)
+		if (_explosion == nullptr)
 			initExplosion();
 		_item = new Item(this->_sprite->getPosition(), this->_type);
 		_item->init();
@@ -118,9 +118,9 @@ void AirCraft::update(float deltatime)
 		this->setStatus(eStatus::EXPLORED);
 	}
 
-	if (_explosion != NULL)
+	if (_explosion != nullptr)
 		_explosion->update(deltatime);
-	if (_item != NULL)
+	if (_item != nullptr)
 	{
 		_item->update(deltatime);
 		if (_item->getStatus() == eStatus::DESTROY && _explosion->getStatus() == eStatus::DESTROY)

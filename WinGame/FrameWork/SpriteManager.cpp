@@ -104,6 +104,10 @@ void SpriteManager::loadResource(LPD3DXSPRITE spriteHandle)
 	this->_listSprite[eID::RIFLEMAN] = sp;
 	this->loadSpriteInfo(eID::RIFLEMAN, "Resources\\rifleman_animation.txt");
 
+	sp = new Sprite(spriteHandle, L"Resources\\boss_stage1.png");
+	this->_listSprite[eID::BOSS_STAGE1] = sp;
+	this->loadSpriteInfo(eID::BOSS_STAGE1, "Resources\\boss_stage1_animation.txt");
+
 	sp = new Sprite(spriteHandle, L"Resources\\bridge.png", 6, 3);
 	this->_listSprite[eID::BRIDGE] = sp;
 

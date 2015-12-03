@@ -129,7 +129,7 @@ void Bill::update(float deltatime)
 	for (auto bullet : _listBullets)
 	{
 		bullet->update(deltatime);
-		}
+	}
 
 	// update component để sau cùng để sửa bên trên sau đó nó cập nhật đúng
 	for (auto it = _componentList.begin(); it != _componentList.end(); it++)
@@ -465,8 +465,17 @@ float Bill::checkCollision(BaseObject * object, float dt)
 
 	for (auto it = _listBullets.begin(); it != _listBullets.end(); it++)
 	{
-		if(object->getId() != eID::LAND && object->getId() != eID::BRIDGE)
-			(*it)->checkCollision(object, dt);
+		if (object->getId() != eID::LAND && object->getId() != eID::BRIDGE)
+		{
+			if (objectId == eID::BOSS_STAGE1)
+			{
+				(*it)->checkCollision(((Boss*)object)->getGun1(), dt);
+				(*it)->checkCollision(((Boss*)object)->getGun2(), dt);
+				(*it)->checkCollision(((Boss*)object)->getShield(), dt);
+			}
+			else
+				(*it)->checkCollision(object, dt);
+		}
 	}
 
 	return 0.0f;

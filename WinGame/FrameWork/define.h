@@ -47,6 +47,9 @@ enum eID
 	YELLOWFALCON	= 16,
 
 	ITEM			= 17,
+	BOSS_STAGE1		= 18,
+	BOSS_GUN		= 19,
+	BOSS_SHIELD		= 20,
 };
  
 enum eStatus
@@ -134,6 +137,7 @@ enum eBulletType
 	S_BULLET		= (1 << 5),
 	R_BULLET		= (1 << 6),
 	M_BULLET		= (1 << 7),
+	BOSSSTAGE1_BULLET = (1<< 8),
 };
 
 enum eSoundId

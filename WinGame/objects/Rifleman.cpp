@@ -359,8 +359,10 @@ void Rifleman::shoot()
 		//pos.x += this->getScale().x < 0 ? this->getSprite()->getFrameWidth() / 2 : -this->getSprite()->getFrameWidth() / 2;
 		//pos.y += this->getSprite()->getFrameHeight() / 4.5f;
 	}
-	_listBullets.push_back(new Bullet(pos, (eBulletType)(ENEMY_BULLET | NORMAL_BULLET), angle)); // normalbullet ->hardcode
-	_listBullets.back()->init();
+
+	BulletManager::insertBullet(new Bullet(pos, (eBulletType)(ENEMY_BULLET | NORMAL_BULLET), angle));
+	//_listBullets.push_back(new Bullet(pos, (eBulletType)(ENEMY_BULLET | NORMAL_BULLET), angle)); // normalbullet ->hardcode
+	//_listBullets.back()->init();
 }
 
 void Rifleman::die() {

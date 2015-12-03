@@ -214,10 +214,10 @@ void WallTurret::update(float deltatime)
 	{
 		this->removeStatus(SHOOTING);
 	}
-	for (auto it = _listBullet.begin(); it != _listBullet.end(); it++)
-	{
-		(*it)->update(deltatime);
-	}
+	//for (auto it = _listBullet.begin(); it != _listBullet.end(); it++)
+	//{
+	//	(*it)->update(deltatime);
+	//}
 	for (auto it : _listComponent)
 	{
 		it.second->update(deltatime);
@@ -242,10 +242,10 @@ void WallTurret::draw(LPD3DXSPRITE spritehandle, Viewport* viewport)
 		_explosion->draw(spritehandle, viewport);
 	if (this->getStatus() == eStatus::DESTROY)
 		return;
-	for (auto it = _listBullet.begin(); it != _listBullet.end(); it++)
-	{
-		(*it)->draw(spritehandle, viewport);
-	}
+	//for (auto it = _listBullet.begin(); it != _listBullet.end(); it++)
+	//{
+	//	(*it)->draw(spritehandle, viewport);
+	//}
 	//this->_sprite->render(spritehandle, viewport);
 	_animation[this->getStatus()]->draw(spritehandle, viewport);
 }
@@ -262,11 +262,11 @@ void WallTurret::release()
 	{
 		delete component.second;
 	}
-	for (auto item : _listBullet)
-	{
-		delete item;
-	}
-	_listBullet.clear();
+	//for (auto item : _listBullet)
+	//{
+	//	delete item;
+	//}
+	//_listBullet.clear();
 
 	if (_explosion != NULL)
 		this->_explosion->release();
@@ -396,8 +396,9 @@ void WallTurret::shoot()
 		pos.x += this->getScale().x < 0 == this->getSprite()->getFrameWidth() / 2;
 		pos.y += 0;
 	}
-	_listBullet.push_back(new Bullet( pos, (eBulletType)(ENEMY_BULLET|NORMAL_BULLET), angle));
-	_listBullet.back()->init();
+	BulletManager::insertBullet(new Bullet(pos, (eBulletType)(ENEMY_BULLET | NORMAL_BULLET), angle));
+	//_listBullet.push_back(new Bullet( pos, (eBulletType)(ENEMY_BULLET|NORMAL_BULLET), angle));
+	//_listBullet.back()->init();
 }
 void WallTurret::calculateBillangle()
 {

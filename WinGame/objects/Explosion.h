@@ -5,7 +5,7 @@
 #include "BaseObject.h"
 #include "..\FrameWork\Animation.h"
 
-#define SPEED_ANIMATION			0.12f
+#define SPEED_ANIMATION			0.07f
 class Explosion : public BaseObject
 {
 public:

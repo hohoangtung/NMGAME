@@ -185,17 +185,17 @@ GVector2 Bullet::getVelocity()
 
 bool Bullet::isBillBullet()
 {
-	return (_type & (eBulletType::BILL_BULLET) == (eBulletType::BILL_BULLET));
+	return ((_type & eBulletType::BILL_BULLET) == (eBulletType::BILL_BULLET));
 }
 
 bool Bullet::isEnemyBullet()
 {
-	return (_type & (eBulletType::ENEMY_BULLET) == (eBulletType::ENEMY_BULLET));
+	return ((_type & eBulletType::ENEMY_BULLET) == (eBulletType::ENEMY_BULLET));
 }
 
 bool Bullet::isContainType(eBulletType type)
 {
-	return (_type & (type) == type);
+	return ((_type & type) == type);
 }
 
 void Bullet::onCollisionBegin(CollisionEventArg* collision_arg)
@@ -230,7 +230,10 @@ void Bullet::onCollisionBegin(CollisionEventArg* collision_arg)
 			if (this->_type != eBulletType::L_BULLET)
 				this->setStatus(eStatus::DESTROY);
 			break;
-		case REDCANNON: case WALL_TURRET:
+		case BOSS_SHIELD:
+		case BOSS_GUN:
+		case REDCANNON: 
+		case WALL_TURRET:
 			((BaseEnemy*)collision_arg->_otherObject)->dropHitpoint(_damage);
 			this->setStatus(eStatus::DESTROY);
 			if (this->isContainType(eBulletType::L_BULLET) == true && ((BaseEnemy*)collision_arg->_otherObject)->getHitpoint() <= 0)
@@ -242,7 +245,25 @@ void Bullet::onCollisionBegin(CollisionEventArg* collision_arg)
 	
 	if (this->isEnemyBullet())
 	{
-
+		switch (objectID)
+		{
+		case BILL:
+		{
+			if (collision_arg->_otherObject->isInStatus(eStatus::DYING) == false)
+			{
+				collision_arg->_otherObject->setStatus(eStatus::DYING);
+				((Bill*)collision_arg->_otherObject)->die();
+			}
+			break;
+		}
+		case LAND:
+		{
+			if (this->isContainType(eBulletType::BOSSSTAGE1_BULLET))
+			{
+				this->setStatus(eStatus::BURST);
+			}
+		}
+		}
 	}
 }
 
@@ -250,7 +271,7 @@ float Bullet::checkCollision(BaseObject * object, float dt)
 {
 	auto body = (CollisionBody*)_componentList.find("CollisionBody")->second;
 	//auto body = (CollisionBody*)_componentList["CollisionBody"];
-	if (object->getId() == eID::BULLET && object->getStatus() == eStatus::EXPLORED)
+	if (object->getId() == eID::BULLET)
 		return 0.0f;
 	body->checkCollision(object, dt);
 

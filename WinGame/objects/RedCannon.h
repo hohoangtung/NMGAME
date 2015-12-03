@@ -52,7 +52,7 @@ private:
 	float _shootingAngle;
 	float _billAngle;
 	StopWatch* _stopwatch;
-	list<Bullet*> _listBullets;
+	//list<Bullet*> _listBullets;
 
 	void addStatus(eStatus);
 	void removeStatus(eStatus);

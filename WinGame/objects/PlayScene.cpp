@@ -52,21 +52,29 @@ bool PlayScene::init()
 
 	auto bill = new Bill();
 	bill->init();
-	bill->setPosition(120, 500);
+	bill->setPosition(6032, 500);
 	
 	this->_bill = bill;
 	_listControlObject.push_back(bill);
 	_listobject.push_back(bill);
+
+	auto bulletmanager = new BulletManager();
+	bulletmanager->init();
+	_listobject.push_back(bulletmanager);
+
+	auto boss = new Boss(GVector2(6432.0f, 64.0f));
+	boss->init();
+	_listobject.push_back(boss);
 
 	//auto bridge = new Bridge(GVector2(1552, 240));
 	//bridge->init();
 	//bridge->setPhysicsBodySide(eDirection::TOP);
 	//_listobject.push_back(bridge);
 
-	auto soldier = new Soldier(RUNNING, 500, 400, -1);
-	soldier->init();
-	soldier->setStatus(eStatus::JUMPING);
-	_listobject.push_back(soldier);
+	//auto soldier = new Soldier(RUNNING, 500, 400, -1);
+	//soldier->init();
+	//soldier->setStatus(eStatus::JUMPING);
+	//_listobject.push_back(soldier);
 
 	_text = new Text(L"Arial", "", 10, 25);
 

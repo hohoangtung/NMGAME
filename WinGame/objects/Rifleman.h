@@ -8,7 +8,7 @@
 #include "../FrameWork/Animation.h"
 #include "../Framework/StopWatch.h"
 #include "PlayScene.h"
-
+#include "BulletManager.h"
 using namespace std;
 
 #define RIFLEMAN_HITPOINT 1
