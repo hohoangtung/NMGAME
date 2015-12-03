@@ -1,5 +1,5 @@
 #include "BaseEnemy.h"
-
+#include "..\FrameWork\Managers\SoundManager.h"
 
 BaseEnemy::BaseEnemy(eID id) : BaseObject(id) {}
 BaseEnemy::~BaseEnemy() {}
@@ -31,4 +31,5 @@ void BaseEnemy::dropHitpoint()
 void BaseEnemy::dropHitpoint(int damage)
 {
 	_hitpoint -= damage;
+
 }

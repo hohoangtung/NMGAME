@@ -74,11 +74,11 @@ void RedCannon::draw(LPD3DXSPRITE spriteHandle, Viewport* viewport)
 		return;
 	this->_sprite->render(spriteHandle, viewport);
 	_animation[this->getStatus()]->draw(spriteHandle, viewport);
-	for (auto it = _listBullets.begin(); it != _listBullets.end(); it++)
-	{
-		(*it)->draw(spriteHandle, viewport);
-	}
-	
+	//for (auto it = _listBullets.begin(); it != _listBullets.end(); it++)
+	//{
+	//	(*it)->draw(spriteHandle, viewport);
+	//}
+	//
 	
 	
 }
@@ -116,21 +116,18 @@ void RedCannon::update(float deltatime)
 	
 	if ((_billAngle>=-90 && _billAngle<-75))
 	{
-	this->setScale(SCALE_FACTOR);
-	this->setStatus(NORMAL);
-	_shootingAngle = -90;
+		this->setStatus(NORMAL);
+		_shootingAngle = -90.0f;
 	}
 	else if (_billAngle >=-75 && _billAngle<-45)
 	{
-	this->setScale(SCALE_FACTOR);
-	this->setStatus(WT_LEFT_30);
-	_shootingAngle = -60;
+		this->setStatus(WT_LEFT_30);
+		_shootingAngle = -60.0f;
 	}
 	else if(_billAngle>=-45 && _billAngle<=0)
 	{
-	this->setScale(SCALE_FACTOR);
-	this->setStatus(WT_LEFT_60);
-	_shootingAngle = -30;
+		this->setStatus(WT_LEFT_60);
+		_shootingAngle = -30.0f;
 	}
 
 	if (_shooting == 1 && !this->isInStatus(SHOOTING))
@@ -142,10 +139,10 @@ void RedCannon::update(float deltatime)
 		this->removeStatus(SHOOTING);
 	}
 
-	for (auto it = _listBullets.begin(); it != _listBullets.end(); it++)
-	{
-		(*it)->update(deltatime);
-	}
+	//for (auto it = _listBullets.begin(); it != _listBullets.end(); it++)
+	//{
+	//	(*it)->update(deltatime);
+	//}
 	for (auto it : _listComponent)
 	{
 		it.second->update(deltatime);
@@ -203,11 +200,11 @@ void RedCannon::release()
 		delete component.second;
 	}
 	_listComponent.clear();
-	for (auto item : _listBullets)
-	{
-		delete item;
-	}
-	_listBullets.clear();
+	//for (auto item : _listBullets)
+	//{
+	//	delete item;
+	//}
+	//_listBullets.clear();
 	if (_explosion != NULL)
 		this->_explosion->release();
 	SAFE_DELETE(_explosion);
@@ -267,9 +264,10 @@ void RedCannon::shoot()
 		pos.x += this->getScale().x < 0 == this->getSprite()->getFrameWidth() / 2;
 		pos.y += 0;
 	}
-
-	_listBullets.push_back(new Bullet(pos, (eBulletType)(ENEMY_BULLET|NORMAL_BULLET), angle));
-	_listBullets.back()->init();
+	
+	BulletManager::insertBullet(new Bullet(pos, (eBulletType)(ENEMY_BULLET | NORMAL_BULLET), angle));
+	//_listBullets.push_back(new Bullet(pos, (eBulletType)(ENEMY_BULLET|NORMAL_BULLET), angle));
+	//_listBullets.back()->init();
 }
 void RedCannon::calculateBillangle()
 {
@@ -278,7 +276,8 @@ void RedCannon::calculateBillangle()
 	float dy = this->getPosition().y - (bill->getPosition().y + bill->getSprite()->getFrameHeight() / 2);
 
 	if (dx > 0 && dy < 0)
-		_billAngle = -atan(dx / abs(dy)) * 180 / PI;
+		_billAngle = D3DXToDegree(-atan(dx / -dy));
+		//_billAngle = -atan(dx / abs(dy)) * 180 / PI;
 	else if (dx<0 && dy<0)
 		_billAngle = -30;
 	else _billAngle = -90;
@@ -288,5 +287,19 @@ void RedCannon::drophitpoint()
 {
 	this->setHitpoint(this->getHitpoint() - 1);
 	if (this->getHitpoint() <= 0)
+	{
 		this->setStatus(eStatus::DYING);
+		SoundManager::getInstance()->Play(eSoundId::DESTROY_ENEMY);
+	}
 }
+void RedCannon::drophitpoint(int damage)
+{
+	this->setHitpoint(this->getHitpoint() - damage);
+	if (this->getHitpoint() <= 0)
+	{
+		this->setStatus(eStatus::DYING);
+		SoundManager::getInstance()->Play(eSoundId::DESTROY_ENEMY);
+	}
+}
+
+

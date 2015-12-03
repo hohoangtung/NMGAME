@@ -19,6 +19,7 @@ ObjectCreator::~ObjectCreator()
 void ObjectCreator::init()
 {
 
+
 }
 
 void ObjectCreator::update(float deltatime)

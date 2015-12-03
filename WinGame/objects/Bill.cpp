@@ -129,7 +129,7 @@ void Bill::update(float deltatime)
 	for (auto bullet : _listBullets)
 	{
 		bullet->update(deltatime);
-		}
+	}
 
 	// update component để sau cùng để sửa bên trên sau đó nó cập nhật đúng
 	for (auto it = _componentList.begin(); it != _componentList.end(); it++)
@@ -346,11 +346,6 @@ void Bill::onCollisionBegin(CollisionEventArg * collision_arg)
 	case eID::RIFLEMAN:
 	case eID::SOLDIER:
 	{
-		if (!this->isInStatus(eStatus::DYING))
-		{
-			this->setStatus(eStatus::DYING);
-			this->die();
-		}
 
 		break;
 	}
@@ -463,40 +458,24 @@ float Bill::checkCollision(BaseObject * object, float dt)
 			}
 		}
 	}
-	else if (objectId == eID::AIRCRAFT)
-	{
-		if (collisionBody->checkCollision(object, direction, dt))
-		{
-			auto aircraft = ((AirCraft*) object);
-			auto billstatus = this->getStatus();
-			if (((billstatus | eStatus::SHOOTING) == billstatus) && aircraft->getStatus() == eStatus::NORMAL)
-			{
-				// Trường hợp máy bay còn nguyên, vừa bắn vừa đứng đó ăn luôn.
-				aircraft->setStatus(eStatus::BURST);
-				aircraft->setExplored();
-				this->changeBulletType(aircraft->getType());
-			}
-			else
-			{
-				// Trường hợp bắn máy bay xong chạy lại ăn.
-				if (aircraft->getStatus() == eStatus::EXPLORED)
-				{
-					aircraft->setStatus(eStatus::DESTROY);
-					this->changeBulletType(aircraft->getType());
-				}
-			}
-		}
-	}
 	else
 	{
 		collisionBody->checkCollision(object, dt);
 	}
 
-
 	for (auto it = _listBullets.begin(); it != _listBullets.end(); it++)
 	{
-		if(object->getId() != eID::LAND && object->getId() != eID::BRIDGE)
-			(*it)->checkCollision(object, dt);
+		if (object->getId() != eID::LAND && object->getId() != eID::BRIDGE)
+		{
+			if (objectId == eID::BOSS_STAGE1)
+			{
+				(*it)->checkCollision(((Boss*)object)->getGun1(), dt);
+				(*it)->checkCollision(((Boss*)object)->getGun2(), dt);
+				(*it)->checkCollision(((Boss*)object)->getShield(), dt);
+			}
+			else
+				(*it)->checkCollision(object, dt);
+		}
 	}
 
 	return 0.0f;
@@ -556,6 +535,7 @@ void Bill::jump()
 	auto g = (Gravity*)this->_componentList["Gravity"];
 	g->setStatus(eGravityStatus::FALLING__DOWN);
 
+	SoundManager::getInstance()->Play(eSoundId::JUMP_SOUND);
 }
 
 void Bill::layDown()
@@ -649,6 +629,7 @@ void Bill::shoot()
 
 void Bill::changeBulletType(eAirCraftType type)
 {
+	SoundManager::getInstance()->Play(eSoundId::EAT_ITEM);
 	switch (type)
 	{
 	case L:
@@ -684,6 +665,7 @@ Bullet* Bill::getBulletFromGun(GVector2 position, float angle)
 		if (_listBullets.size() >= 4 && (_currentGun & R_BULLET ) != R_BULLET)
 			return nullptr;
 		bullet = new Bullet(position, (eBulletType)(BILL_BULLET | NORMAL_BULLET), angle);
+		SoundManager::getInstance()->Play(eSoundId::BASE_BULLET_FIRE);
 	}
 	else if ((_currentGun & L_BULLET) == L_BULLET)
 	{
@@ -692,24 +674,28 @@ Bullet* Bill::getBulletFromGun(GVector2 position, float angle)
 			_listBullets.clear();
 		}
 		bullet = new LGun(position, angle);
+		SoundManager::getInstance()->Play(eSoundId::LBULLET_FIRE);
 	}
 	else if ((_currentGun & F_BULLET) == F_BULLET)
 	{
 		if (_listBullets.size() >= 2 && (_currentGun & R_BULLET) != R_BULLET)
 			return nullptr; 
 		bullet = new FBullet(position, angle);
+		SoundManager::getInstance()->Play(eSoundId::FBULLET_FIRE);
 	}
 	else if ((_currentGun & S_BULLET) == S_BULLET)
 	{
 		if (_listBullets.size() >= 2 && (_currentGun & R_BULLET) != R_BULLET)
 			return nullptr;
 		bullet = new SBullet(position, angle);
+		SoundManager::getInstance()->Play(eSoundId::SBULLET_FIRE);
 	}
 	else if ((_currentGun & M_BULLET) == M_BULLET)
 	{
 		if (_listBullets.size() >= 6 && (_currentGun & R_BULLET) != R_BULLET)
 			return nullptr;
 		bullet = new MBullet(position, angle);
+		SoundManager::getInstance()->Play(eSoundId::MBULLET_FIRE);
 	}
 	return bullet;
 }
@@ -724,6 +710,7 @@ void Bill::die()
 
 	auto g = (Gravity*)this->_componentList["Gravity"];
 	g->setStatus(eGravityStatus::FALLING__DOWN);
+	SoundManager::getInstance()->Play(eSoundId::DEAD);
 }
 
 GVector2 Bill::getVelocity()

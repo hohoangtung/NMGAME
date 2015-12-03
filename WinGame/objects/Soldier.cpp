@@ -199,7 +199,21 @@ void Soldier::changeDirection()
 }
 
 void Soldier::onCollisionBegin(CollisionEventArg* collision_eventt) {
-
+	eID objectID = collision_eventt->_otherObject->getId();
+	switch (objectID)
+	{
+	case eID::BILL:
+	{
+		if (collision_eventt->_otherObject->isInStatus(eStatus::DYING) == false)
+		{
+			collision_eventt->_otherObject->setStatus(eStatus::DYING);
+			((Bill*)collision_eventt->_otherObject)->die();
+		}
+		break;
+	}
+	default:
+		break;
+	}
 }
 
 void Soldier::onCollisionEnd(CollisionEventArg* collision_event) {

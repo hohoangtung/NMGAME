@@ -37,6 +37,7 @@
             this.cloneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveMapToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadMapToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exportQTreeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.listView1 = new System.Windows.Forms.ListView();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
@@ -50,7 +51,6 @@
             this.MenuItemDelete = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuItemFitTile = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuItemImport = new System.Windows.Forms.ToolStripMenuItem();
-            this.exportQTreeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -127,6 +127,13 @@
             this.loadMapToolStripMenuItem.Size = new System.Drawing.Size(69, 20);
             this.loadMapToolStripMenuItem.Text = "LoadMap";
             this.loadMapToolStripMenuItem.Click += new System.EventHandler(this.loadMapToolStripMenuItem_Click);
+            // 
+            // exportQTreeToolStripMenuItem
+            // 
+            this.exportQTreeToolStripMenuItem.Name = "exportQTreeToolStripMenuItem";
+            this.exportQTreeToolStripMenuItem.Size = new System.Drawing.Size(87, 20);
+            this.exportQTreeToolStripMenuItem.Text = "Export QTree";
+            this.exportQTreeToolStripMenuItem.Click += new System.EventHandler(this.exportQTreeToolStripMenuItem_Click);
             // 
             // splitContainer1
             // 
@@ -242,7 +249,7 @@
             this.MenuItemFitTile,
             this.MenuItemImport});
             this.ContextMenuListBox.Name = "ContextMenuListBox";
-            this.ContextMenuListBox.Size = new System.Drawing.Size(156, 70);
+            this.ContextMenuListBox.Size = new System.Drawing.Size(156, 92);
             this.ContextMenuListBox.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.ContextMenuListBox_ItemClicked);
             // 
             // MenuItemDelete
@@ -262,13 +269,6 @@
             this.MenuItemImport.Name = "MenuItemImport";
             this.MenuItemImport.Size = new System.Drawing.Size(155, 22);
             this.MenuItemImport.Text = "Import Image...";
-            // 
-            // exportQTreeToolStripMenuItem
-            // 
-            this.exportQTreeToolStripMenuItem.Name = "exportQTreeToolStripMenuItem";
-            this.exportQTreeToolStripMenuItem.Size = new System.Drawing.Size(87, 20);
-            this.exportQTreeToolStripMenuItem.Text = "Export QTree";
-            this.exportQTreeToolStripMenuItem.Click += new System.EventHandler(this.exportQTreeToolStripMenuItem_Click);
             // 
             // MainForm
             // 

@@ -1,31 +1,53 @@
-#ifndef _FALCON_H
+﻿#ifndef _FALCON_H
 #define _FALCON_H
 
 #include "BaseObject.h"
 #include "IComponent.h"
 #include "PlayScene.h"
+#include "Explosion.h"
+#include "Item.h"
 #include "../FrameWork/Animation.h"
 #include "../FrameWork/StopWatch.h"
 #include <map>
+
 using namespace std;
 
 class Falcon : public BaseObject
 {
 public:
-	Falcon() : BaseObject(eID::FALCON){}
-	~Falcon() {};
+	Falcon(GVector2 position, eAirCraftType type);
+	Falcon(float x, float y, eAirCraftType type);
+	~Falcon();
 
-	void init();
-	void update(float);
-	void draw(LPD3DXSPRITE, Viewport*);
-	void release();
+	// Các phương thức kế thừa từ BaseObject.
+	void init() override;
+	void update(float deltatime) override;
+	void draw(LPD3DXSPRITE, Viewport*) override;
+	void release() override;
+	RECT getBounding() override ;
 
 	IComponent* getComponent(string);
 
+	// Kiểm tra va chạm.
+	float checkCollision(BaseObject* object, float dt);
+
+	eAirCraftType getType();
+	void setStatus(eStatus status);
+	bool isOpenned();
+	void checkifOutofScreen();
+
 private:
-	int i;
+	
+	BaseObject* _item;
+	void initExplosion();
+	bool isInStatus(eStatus status);
+
 	map<string, IComponent*> _listComponent;
-	StopWatch* _stopwatch;
-	Animation* _animation;
+	Animation* _animations;
+	BaseObject* _explosion;
+	eAirCraftType _type;
+
+	GVector2	_beginPosition;
+
 };
 #endif

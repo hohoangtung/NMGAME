@@ -119,7 +119,7 @@ bool Rifleman::isInStatus(eStatus status)
 
 void Rifleman::setShootingAngle(double angle) 
 {
-	this->_shootingAngle = angle;
+	this->_shootingAngle = (float) angle;
 }
 void Rifleman::update(float deltatime)
 { 
@@ -243,13 +243,17 @@ void Rifleman::calculateShootingAngle() {
 	float dx = (this->getPosition().x) - (bill->getPosition().x);
 	float dy = (this->getPosition().y) - (bill->getPosition().y + bill->getSprite()->getFrameHeight() / 2);
 	if (dx > 0 && dy < 0)
-		_shootingAngle = atan(dx / dy) * 180 / M_PI;
+		_shootingAngle = D3DXToDegree(atan(dx / dy));
+	//_shootingAngle = atan(dx / dy) * 180 / M_PI;
 	else if (dx > 0 && dy > 0)
-		_shootingAngle = -atan(dy / dx) * 180 / M_PI - 90;
+		_shootingAngle = D3DXToDegree(-atan(dy / dx)) - 90;
+	//_shootingAngle = -atan(dy / dx) * 180 / M_PI - 90;
 	else if (dx < 0 && dy < 0)
-		_shootingAngle = atan(dx / dy) * 180 / M_PI;
+		_shootingAngle = D3DXToDegree(atan(dx / dy));
+	//_shootingAngle = atan(dx / dy) * 180 / M_PI;
 	else if (dx < 0 && dy > 0)
-		_shootingAngle = -atan(dy / dx) * 180 / M_PI + 90;
+		_shootingAngle = D3DXToDegree(-atan(dy / dx)) + 90;
+		//_shootingAngle = -atan(dy / dx) * 180 / M_PI + 90;
 	else if (dx == 0 && dy > 0)
 		_shootingAngle = 0;
 	else if (dx == 0 && dy < 0)
@@ -266,6 +270,21 @@ float Rifleman::getShootingAngle()
 
 void Rifleman::onCollisionBegin(CollisionEventArg* collision_event) 
 {
+	eID objectID = collision_event->_otherObject->getId();
+	switch (objectID)
+	{
+	case eID::BILL:
+	{
+		if (collision_event->_otherObject->isInStatus(eStatus::DYING) == false)
+		{
+			collision_event->_otherObject->setStatus(eStatus::DYING);
+			((Bill*)collision_event->_otherObject)->die();
+		}
+		break;
+	}
+	default:
+		break;
+	}
 }
 
 void Rifleman::onCollisionEnd(CollisionEventArg* collision_event) 
@@ -306,30 +325,44 @@ void Rifleman::shoot()
 {
 	float angle = getShootingAngle();
 	auto pos = this->getPosition();
+	int framewidth = this->getSprite()->getFrameWidth();
+	int frameheight = this->getSprite()->getFrameHeight();
 
+	// Tung
+	// Những chỗ này tui sửa chỉ mang tính nân hiệu suất.
 	if (this->isInStatus(AIMING_UP)) 
 	{
-		pos.x += this->getScale().x < 0 ? this->getSprite()->getFrameWidth() / 2 : -this->getSprite()->getFrameWidth() / 2;
-		pos.y += this->getSprite()->getFrameHeight() / 2;
+		pos.x += this->getScale().x < 0 ? (framewidth >> 1) : -(framewidth >> 1);
+		pos.y += (frameheight >> 1);
+		//pos.x += this->getScale().x < 0 ? this->getSprite()->getFrameWidth() / 2 : -this->getSprite()->getFrameWidth() / 2;
+		//pos.y += this->getSprite()->getFrameHeight() / 2.0f;
 	}
 	else if (this->isInStatus(AIMING_DOWN))
 	{
-		pos.x += this->getScale().x < 0 ? this->getSprite()->getFrameWidth() / 2 : -this->getSprite()->getFrameWidth() / 2;
-		pos.y -= this->getSprite()->getFrameHeight() / 4;
+		pos.x += this->getScale().x < 0 ? (framewidth >> 1) : -(framewidth >> 1);
+		pos.y += (frameheight >> 2);
+		//pos.x += this->getScale().x < 0 ? this->getSprite()->getFrameWidth() / 2 : -this->getSprite()->getFrameWidth() / 2;
+		//pos.y -= this->getSprite()->getFrameHeight() / 4.0f;
 	}
 	else if (this->isInStatus(EXPOSING))
 	{
-		pos.x += this->getScale().x < 0 ? this->getSprite()->getFrameWidth() / 2 : -this->getSprite()->getFrameWidth() / 2;
-		pos.y -= this->getSprite()->getFrameHeight() / 4.5;
+		pos.x += this->getScale().x < 0 ? (framewidth >> 1) : -(framewidth >> 1);
+		pos.y -= frameheight / 4.5f;
 		angle = this->getScale().x < 0 ? 90 : -90;
+		//pos.x += this->getScale().x < 0 ? this->getSprite()->getFrameWidth() / 2 : -this->getSprite()->getFrameWidth() / 2;
+		//pos.y -= this->getSprite()->getFrameHeight() / 4.5f;
 	}
 	else if (this->isInStatus(NORMAL))
 	{
-		pos.x += this->getScale().x < 0 ? this->getSprite()->getFrameWidth() / 2 : -this->getSprite()->getFrameWidth() / 2;
-		pos.y += this->getSprite()->getFrameHeight() / 4.5;
+		pos.x += this->getScale().x < 0 ? (framewidth >> 1) : -(framewidth >> 1);
+		pos.y += this->getSprite()->getFrameHeight() / 4.5f;
+		//pos.x += this->getScale().x < 0 ? this->getSprite()->getFrameWidth() / 2 : -this->getSprite()->getFrameWidth() / 2;
+		//pos.y += this->getSprite()->getFrameHeight() / 4.5f;
 	}
-	_listBullets.push_back(new Bullet(pos, (eBulletType)(ENEMY_BULLET | NORMAL_BULLET), angle)); // normalbullet ->hardcode
-	_listBullets.back()->init();
+
+	BulletManager::insertBullet(new Bullet(pos, (eBulletType)(ENEMY_BULLET | NORMAL_BULLET), angle));
+	//_listBullets.push_back(new Bullet(pos, (eBulletType)(ENEMY_BULLET | NORMAL_BULLET), angle)); // normalbullet ->hardcode
+	//_listBullets.back()->init();
 }
 
 void Rifleman::die() {

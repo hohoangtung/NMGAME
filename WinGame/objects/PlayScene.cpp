@@ -1,7 +1,10 @@
 ﻿#include "PlayScene.h"
 #include "..\Tiles\ObjectFactory.h"
+
+#if _DEBUG
 #include <time.h>
-//Viewport* PlayScene::_viewport = new Viewport(0, WINDOW_HEIGHT);
+#endif
+
  
 PlayScene::PlayScene()
 {
@@ -49,23 +52,36 @@ bool PlayScene::init()
 
 	auto bill = new Bill();
 	bill->init();
-	bill->setPosition(120, 500);
+	bill->setPosition(6032, 500);
 	
 	this->_bill = bill;
 	_listControlObject.push_back(bill);
 	_listobject.push_back(bill);
+
+	auto bulletmanager = new BulletManager();
+	bulletmanager->init();
+	_listobject.push_back(bulletmanager);
+
+	auto boss = new Boss(GVector2(6432.0f, 64.0f));
+	boss->init();
+	_listobject.push_back(boss);
 
 	//auto bridge = new Bridge(GVector2(1552, 240));
 	//bridge->init();
 	//bridge->setPhysicsBodySide(eDirection::TOP);
 	//_listobject.push_back(bridge);
 
-	auto soldier = new Soldier(RUNNING, 500, 400, -1, true);
-	soldier->init();
-	// soldier->setStatus(eStatus::JUMPING);
-	_listobject.push_back(soldier);
+	//auto soldier = new Soldier(RUNNING, 500, 400, -1);
+	//soldier->init();
+	//soldier->setStatus(eStatus::JUMPING);
+	//_listobject.push_back(soldier);
+
 
 	_text = new Text(L"Arial", "", 10, 25);
+
+	//auto falcon = new Falcon(GVector2(670, 153), eAirCraftType::M);
+	//falcon->init();
+	//_listobject.push_back(falcon);
 
 	//auto aircraft = new AirCraft(START_POSITION, HORIZONTAL_VELOC, AIRCRAFT_AMPLITUDE, AIRCRAFT_FREQUENCY, eAirCraftType::I);
 	//aircraft->init();
@@ -117,6 +133,8 @@ bool PlayScene::init()
 	_root = QNode::loadQuadTree("Resources//Map//stage1_quadtree.xml");
 
 	background = Map::LoadFromFile("Resources//Map//stage1.xml",eID::MAPSTAGE1);
+
+	SoundManager::getInstance()->PlayLoop(eSoundId::BACKGROUND_STAGE1);
 	return true;
 }
 
@@ -139,6 +157,14 @@ void PlayScene::update(float dt)
 	eID objectID;
 
 	this->updateViewport(_bill);
+
+
+	// Test Falcon
+	for (int i = 1; i < _listobject.size(); i++)
+	{
+		
+		//_listobject[2]->checkCollision(_listobject[i], dt);
+	}
 	
 	//for (int i = 1; i < _listobject.size(); i++)
 	//{
@@ -181,8 +207,8 @@ void PlayScene::update(float dt)
 				- Tìm các tên của đối tượng đã được lưu trong quadtree.							(Bước 3)
 				- Từ danh sách tên ở bước trên, add các đối tượng có tên tương ứng với _mapobject vào _active_object	(Bước 4)
 				- Add danh sách các đối tượng trong _listobject vào _active_object.										(Bước 5)
-				- update các đối tượng trong _active_object																(Bước 6)
-				- Kiểm tra va chạm chéo giữa các đối tượng trong _active_object. Nếu có n đối tượng, thi có n * n lần kiểm tra va chạm..	(Bước 7)
+				- Kiểm tra va chạm chéo giữa các đối tượng trong _active_object. Nếu có n đối tượng, thi có n * n lần kiểm tra va chạm..	(Bước 6)
+				- update các đối tượng trong _active_object																(Bước 7)
 
 			Vẽ:
 				- Chỉ vẽ các đối tượng có trong _active_object.
@@ -230,18 +256,18 @@ void PlayScene::update(float dt)
 	_active_object.insert(_active_object.end(), _listobject.begin(), _listobject.end());
 	
 	// [Bước 6]
-	for each (auto obj in _active_object)
+	for (BaseObject* obj : _active_object)
 	{
-		obj->update(dt);
-	}
-
-	// [Bước 7]
-	for (auto obj : _active_object)
-	{
-		for (auto passiveobj : _active_object)
+		for (BaseObject* passiveobj : _active_object)
 		{
 			obj->checkCollision(passiveobj, dt);
 		}
+	}
+
+	// [Bước 7]
+	for (BaseObject* obj : _active_object)
+	{
+		obj->update(dt);
 	}
 
 #if _DEBUG
@@ -281,6 +307,10 @@ void PlayScene::destroyobject()
 			continue;
 		if (object->second->getStatus() == eStatus::DESTROY)	// kiểm tra nếu là destroy thì loại khỏi list
 		{
+			if (dynamic_cast<BaseEnemy*> (object->second) != nullptr)
+			{
+				SoundManager::getInstance()->Play(eSoundId::DESTROY_ENEMY);
+			}
 			object->second->release();
 			delete object->second;
 			object->second = NULL;
@@ -326,10 +356,13 @@ void PlayScene::draw(LPD3DXSPRITE spriteHandle)
 	//{
 	//	object->draw(spriteHandle, _viewport);
 	//}
-	for (auto object : _active_object)
+
+	for (BaseObject* object : _active_object)
 	{
 		object->draw(spriteHandle, _viewport);
 	}
+
+
 #if _DEBUG
 	_text->draw();
 #endif

@@ -58,6 +58,11 @@ void Explosion::setPosition(GVector2 position)
 	this->_sprite->setPosition(position);
 }
 
+void Explosion::setTimeAnimated(float time)
+{
+	this->_animation->setTimeAnimate(time);
+}
+
 void Explosion::draw(LPD3DXSPRITE spriteHandle, Viewport* viewport)
 {
 	if (this->getStatus() != eStatus::NORMAL)

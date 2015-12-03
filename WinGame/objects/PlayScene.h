@@ -7,6 +7,7 @@
 #include "../FrameWork/Sprite.h"
 #include "../FrameWork/SpriteManager.h"
 #include "../FrameWork/Managers/SceneManager.h"
+#include "../FrameWork/Managers/SoundManager.h"
 #include "../FrameWork/Text.h"
 #include "../FrameWork/Animation.h"
 #include "../debug.h"
@@ -23,9 +24,11 @@
 #include "Bridge.h"
 #include "Land.h"
 #include "WallTurret.h"
+#include "BulletManager.h"
+#include "Boss.h"
+
 using namespace std;
 US_FRAMEWORK
-
 class PlayScene : public Scene
 {
 public:
@@ -53,13 +56,16 @@ private:
 	void destroyobject();				// kiển tra nếu object hết hạn sử dụng thì phá huỷ đối tượng
 	Sprite* sprite;
 	Text* _text;
-	vector<BaseObject*> _listobject;
 
 	// Danh sách đối tượng dùng để tạo quadtree.
 	map <string, BaseObject*> _mapobject;
 
-	// Danh sách đối tượng nằm trong vùng active. Mỗi vòng lặp sẽ được kiểm tra chỉnh sửa tại update, và sử dụng lại tại draw
-	// Dùng class list để sử dụng phương thức unique
+	// Danh sách các đối tượng hoạt động rộng không thể đưa vào quadtree.
+	// (Ví dụ main character)
+	vector<BaseObject*> _listobject;
+
+	// Danh sách đối tượng nằm trong vùng active.
+	// Mỗi vòng lặp sẽ được kiểm tra chỉnh sửa tại update, và sử dụng lại tại draw.
 	vector<BaseObject*>   _active_object;
 
 	vector<IControlable*> _listControlObject;

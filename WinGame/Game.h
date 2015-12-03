@@ -83,8 +83,8 @@ protected:
 	pDeviceManager _devicemanager;
 	pInputController _input;
 	LPD3DXSPRITE _spriteHandle;
-private:
 	static Graphics *hWindow;
+private:
 	float _frameRate;			// time for 1 frame, milisecond
 	float _oldTime;
 	float _deltaTime;

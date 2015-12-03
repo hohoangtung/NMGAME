@@ -87,6 +87,10 @@ void SpriteManager::loadResource(LPD3DXSPRITE spriteHandle)
 	this->_listSprite[eID::AIRCRAFT] = sp;
 	this->loadSpriteInfo(eID::AIRCRAFT, "Resources\\aircraft_animation.txt");
 
+	sp = new Sprite(spriteHandle, L"Resources\\falcon.png", 7, 7);
+	this->_listSprite[eID::FALCON] = sp;
+	this->loadSpriteInfo(eID::FALCON, "Resources\\falcon_animation.txt");
+
 	sp = new Sprite(spriteHandle, L"Resources\\explosion.png");
 	this->_listSprite[eID::EXPLOSION] = sp;
 	this->loadSpriteInfo(eID::EXPLOSION, "Resources\\explosion_animation.txt");
@@ -100,12 +104,25 @@ void SpriteManager::loadResource(LPD3DXSPRITE spriteHandle)
 	this->_listSprite[eID::RIFLEMAN] = sp;
 	this->loadSpriteInfo(eID::RIFLEMAN, "Resources\\rifleman_animation.txt");
 
+	sp = new Sprite(spriteHandle, L"Resources\\boss_stage1.png");
+	this->_listSprite[eID::BOSS_STAGE1] = sp;
+	this->loadSpriteInfo(eID::BOSS_STAGE1, "Resources\\boss_stage1_animation.txt");
+
 	sp = new Sprite(spriteHandle, L"Resources\\bridge.png", 6, 3);
 	this->_listSprite[eID::BRIDGE] = sp;
 
 	auto bl = new Sprite(spriteHandle, L"Resources\\Bullets.png");
 	this->_listSprite[eID::BULLET] = bl;
 	this->loadSpriteInfo(eID::BULLET, "Resources\\bullets_type.txt");
+
+	sp = new Sprite(spriteHandle, L"Resources\\blank.png");
+	this->_listSprite[eID::BLANK] = sp;
+
+	sp = new Sprite(spriteHandle, L"Resources\\intro.png");
+	this->_listSprite[eID::MENU] = sp;
+
+	sp = new Sprite(spriteHandle, L"Resources\\yellowfalcon.png");
+	this->_listSprite[eID::YELLOWFALCON] = sp;
 
 	// Đọc file xml để tạo đối tượng sprite
 	sp = loadXMLDoc(spriteHandle, L"Resources//Map//stage1.xml");

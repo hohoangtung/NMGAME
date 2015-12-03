@@ -1,4 +1,4 @@
-#include"WallTurret.h"
+﻿#include"WallTurret.h"
 int _shooting1 = 1;
 StopWatch* _loopwatch1;
 #define PI 3.14159265
@@ -214,10 +214,10 @@ void WallTurret::update(float deltatime)
 	{
 		this->removeStatus(SHOOTING);
 	}
-	for (auto it = _listBullet.begin(); it != _listBullet.end(); it++)
-	{
-		(*it)->update(deltatime);
-	}
+	//for (auto it = _listBullet.begin(); it != _listBullet.end(); it++)
+	//{
+	//	(*it)->update(deltatime);
+	//}
 	for (auto it : _listComponent)
 	{
 		it.second->update(deltatime);
@@ -242,15 +242,15 @@ void WallTurret::draw(LPD3DXSPRITE spritehandle, Viewport* viewport)
 		_explosion->draw(spritehandle, viewport);
 	if (this->getStatus() == eStatus::DESTROY)
 		return;
-
-	this->_sprite->render(spritehandle, viewport);
+	//for (auto it = _listBullet.begin(); it != _listBullet.end(); it++)
+	//{
+	//	(*it)->draw(spritehandle, viewport);
+	//}
+	//this->_sprite->render(spritehandle, viewport);
 	_animation[this->getStatus()]->draw(spritehandle, viewport);
-	for (auto it = _listBullet.begin(); it != _listBullet.end(); it++)
-	{
-		(*it)->draw(spritehandle, viewport);
-	}
-
 }
+
+
 void WallTurret::release()
 {
 	for (auto ani : _animation)
@@ -262,11 +262,11 @@ void WallTurret::release()
 	{
 		delete component.second;
 	}
-	for (auto item : _listBullet)
-	{
-		delete item;
-	}
-	_listBullet.clear();
+	//for (auto item : _listBullet)
+	//{
+	//	delete item;
+	//}
+	//_listBullet.clear();
 
 	if (_explosion != NULL)
 		this->_explosion->release();
@@ -396,27 +396,28 @@ void WallTurret::shoot()
 		pos.x += this->getScale().x < 0 == this->getSprite()->getFrameWidth() / 2;
 		pos.y += 0;
 	}
-	_listBullet.push_back(new Bullet( pos, (eBulletType)(ENEMY_BULLET|NORMAL_BULLET), angle));
-	_listBullet.back()->init();
+	BulletManager::insertBullet(new Bullet(pos, (eBulletType)(ENEMY_BULLET | NORMAL_BULLET), angle));
+	//_listBullet.push_back(new Bullet( pos, (eBulletType)(ENEMY_BULLET|NORMAL_BULLET), angle));
+	//_listBullet.back()->init();
 }
 void WallTurret::calculateBillangle()
 {
 	auto bill = ((PlayScene*)SceneManager::getInstance()->getCurrentScene())->getBill();
 	float dx = this->getPosition().x - bill->getPosition().x;
-	
 	float dy = this->getPosition().y - (bill->getPosition().y + bill->getSprite()->getFrameHeight() / 2);
-	if (dx > 0 && dy < 0)
-		_billAngle = -atan(dx / (abs(dy))) * 180 / PI;
-	else if (dx < 0 && dy < 0)
-		_billAngle = atan(abs(dx) / abs(dy)) * 180 / PI;
-	else if (dx>0 && dy>0)
-		_billAngle = atan(dx / dy) * 180 / PI - 180;
-	else if (dx<0 && dy>0)
-		_billAngle = -atan(abs(dx) / dy) * 180 / PI + 180;
-}
 
-void WallTurret::drophitpoint()
-{
-	this->setHitpoint(this->getHitpoint() - 1);
-	
+	// Tung
+	// Những chỗ này tui sửa chỉ mang tính nân hiệu suất.
+	if (dx > 0 && dy < 0)
+		_billAngle = D3DXToDegree(-atan(dx / -dy));
+	//_billAngle = -atan(dx / (abs(dy))) * 180 / PI;
+	else if (dx < 0 && dy < 0)
+		_billAngle = D3DXToDegree(atan(dx / dy));
+		//_billAngle = atan(abs(dx) / abs(dy)) * 180 / PI;
+	else if (dx > 0 && dy>0)
+		_billAngle = D3DXToDegree(atan(dx / dy)) - 180;
+	//_billAngle = atan(dx / dy) * 180 / PI - 180;
+	else if (dx < 0 && dy>0)
+		_billAngle = D3DXToDegree(-atan(-dx / dy)) + 180;
+		//_billAngle = -atan(abs(dx) / dy) * 180 / PI + 180;
 }

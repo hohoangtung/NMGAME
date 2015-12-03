@@ -12,6 +12,7 @@
 #include "IComponent.h"
 #include "Explosion.h"
 #include "PlayScene.h"
+#include "Item.h"
 
 // use value
 #define AIRCRAFT_FORCE			GVector2(50.0f, 280.0f)		// góc ném viên đạn
@@ -20,9 +21,8 @@
 #define START_POSITION			GVector2(200.0f, 350.0f)	// vị trí khởi tạo
 #define HORIZONTAL_VELOC		GVector2(200.0f, 0.0f)		// vận tốc ngang
 #define AIRCRAFT_FREQUENCY		0.9f						// tần số
-#define AIRCRAFT_AMPLITUDE		GVector2(0, 100.0f)			// biên độ
+#define AIRCRAFT_AMPLITUDE		GVector2(0, 90.0f)			// biên độ
 
-[event_receiver(native)]
 class AirCraft : public BaseObject
 {
 public:
@@ -51,13 +51,14 @@ public:
 
 	// Kiểm tra va chạm.
 	float checkCollision(BaseObject* object, float dt);
+
 private:
 	map<string, IComponent*> _listComponent;
 	BaseObject* _explosion;
+	BaseObject* _item;
 	eAirCraftType _type;
 	Animation* _animation;
 	void initExplosion();
-	void updateExplosion(float deltatime);
 
 
 	// some init value
@@ -69,9 +70,10 @@ private:
 	bool _explored;
 	void checkifOutofScreen();
 	void updateHiding();
-	void updateBurst(float deltatime);
+
 	void updateExploring(float deltatime);
 };
+
 
 
 #endif // !__AIRCRAFT_H__

@@ -18,6 +18,7 @@ public:
 	void release();
 
 	void setPosition(GVector2 position);
+	void setTimeAnimated(float);
 private:
 	Animation* _animation;
 	int _type;

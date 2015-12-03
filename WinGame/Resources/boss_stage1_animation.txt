@@ -1,0 +1,6 @@
+frame_name	left	top	right	bottom
+gun_1		15	204	28	209
+gun_2		15	211	26	216
+shield_1	33	186	56	216
+shield_2	61	186	84	216
+shield_3	89	186	112	216

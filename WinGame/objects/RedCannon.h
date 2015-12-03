@@ -35,6 +35,7 @@ public:
 	
 	void shoot();
 	void drophitpoint();
+	void drophitpoint(int bulletdmg);
 	void setShootingAngle(float);
 	float getShootingAngle();
 	void setBillAngle(float);
@@ -51,7 +52,7 @@ private:
 	float _shootingAngle;
 	float _billAngle;
 	StopWatch* _stopwatch;
-	list<Bullet*> _listBullets;
+	//list<Bullet*> _listBullets;
 
 	void addStatus(eStatus);
 	void removeStatus(eStatus);
