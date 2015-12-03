@@ -147,6 +147,16 @@ float BaseObject::getZIndex()
 	return _sprite->getZIndex();
 }
 
+void BaseObject::setOpacity(float opacity)
+{
+	_sprite->setOpacity(opacity);
+}
+
+float BaseObject::getOpacity()
+{
+	return _sprite->getOpacity();
+}
+
 GVector2 BaseObject::getAnchorPoint()
 {
 	return _sprite->getAnchorPoint();

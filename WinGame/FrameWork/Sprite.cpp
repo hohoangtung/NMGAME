@@ -299,6 +299,20 @@ void Sprite::drawBounding(bool draw)
 		_isDrawBounding = draw;
 }
 
+void Sprite::setOpacity(float opacity)
+{
+	if (_opacity == opacity)
+		return;
+
+	_opacity = opacity;
+	_texture.setColor(D3DXCOLOR(1.0f, 1.0f, 1.0f, _opacity));
+}
+
+float Sprite::getOpacity()
+{
+	return _opacity;
+}
+
 void Sprite::setFrameRect()
 {
 	this->_frameRect.left = (long)_currentFrame.x * _frameWidth;

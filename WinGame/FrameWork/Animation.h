@@ -109,6 +109,17 @@ public:
 	bool isLoop();
 	void restart();
 
+	/*
+	Tạo hiệu ứng chớp cho sprite, sau khi set enable = true, phải đặt giá trị thay đổi ở hàm setValueFlashes
+	*/
+	void enableFlashes(bool enable);
+
+	/*
+	Gán giá trị chớp tắt
+		@value: giá trị thay đổi để chớp, từ 0 đến < 1 (giá trị bình thường là 1)
+	*/
+	void setValueFlashes(float value);
+
 private:
 	int						_index;									// số thứ tự frame
 	int						_totalFrames;
@@ -123,6 +134,9 @@ private:
 	vector<RECT>			_frameRectList;
 	string					_nameAnimation;
 	RECT					_currentRect;
+
+	bool					_canFlashes;
+	float					_valueFlashes;
 };
 
 #endif // !__ANIMATION_H__

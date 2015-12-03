@@ -10,6 +10,7 @@ Animation::Animation(Sprite * spriteSheet, float timeAnimate)
 	_totalFrames = 0;
 	_index = 0;
 	_timer = 0;
+	_valueFlashes = 0.5f;
 	 
 	this->setIndex(0);
 	this->setLoop(true);
@@ -23,6 +24,7 @@ Animation::Animation(Sprite * spriteSheet, int totalFrames, int cols, float time
 	_totalFrames = totalFrames;
 	_index = 0;
 	_timer = 0;
+	_valueFlashes = 0.5f;
 
 	int frameW = spriteSheet->getTextureWidth() / cols;
 	int frameH = spriteSheet->getTextureHeight() * cols / totalFrames;
@@ -80,6 +82,14 @@ void Animation::update(float dt)
 	{
 		this->nextFrame();
 		_timer -= _timeAnimate;				// không thể gán bằng 0. vì như vậy là làm tròn. sẽ có sai số
+
+		if (_canFlashes)
+		{
+			if (_spriteSheet->getOpacity() != _valueFlashes)
+				_spriteSheet->setOpacity(_valueFlashes);
+			else
+				_spriteSheet->setOpacity(1.0f);
+		}
 	}
 }
 
@@ -191,6 +201,21 @@ void Animation::restart()
 	_index = -1;
 	if (_canAnimate == false)
 		_canAnimate = true;
+}
+
+void Animation::enableFlashes(bool enable)
+{
+	if (_canFlashes == enable)
+		return;
+
+	_canFlashes = enable;
+	_spriteSheet->setOpacity(1.0f);
+}
+
+void Animation::setValueFlashes(float value)
+{
+	if (_valueFlashes != value)
+		_valueFlashes = value;
 }
 
 void Animation::draw(LPD3DXSPRITE spriteHandle, Viewport * viewport)

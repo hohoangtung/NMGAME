@@ -213,8 +213,8 @@ float CollisionBody::isCollide(BaseObject * otherSprite, eDirection & direction,
 	{
 		// xét x
 		// khoảng cách gần nhất mà nhỏ hơn 0 nghĩa là thằng kia đang nằm bên trái object này => va chạm bên phải nó
-		//if (_dxEntry < 0.0f)
-		if(_dxExit < 0)
+		if (_dxEntry <= 0.0f)
+		//if(_dxExit < 0)
 		{
 			direction = eDirection::RIGHT;
 		}
@@ -226,8 +226,8 @@ float CollisionBody::isCollide(BaseObject * otherSprite, eDirection & direction,
 	else
 	{
 		// xét y
-		//if (_dyEntry <= 0.0f)
-		if(_dyExit < 0.0f)
+		if (_dyEntry <= 0.0f)
+		//if(_dyExit < 0.0f)
 		{
 			direction = eDirection::TOP;
 		}

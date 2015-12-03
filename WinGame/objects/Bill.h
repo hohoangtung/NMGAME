@@ -26,17 +26,19 @@ update 30/11/2015
 #include "S_Bullet.h"
 #include "M_Bullet.h"
 
-#define BILL_MOVE_SPEED 120
-#define BILL_JUMP_VEL 400
-#define TEST_LAND 200
+#define BILL_MOVE_SPEED 115
+#define BILL_JUMP_VEL 450
 #define GRAVITY 800
 #define SHOOT_SPEED 200.0f
+#define MAX_BULLET 4
+#define REVIVE_TIME 2000
+#define PROTECT_TIME 3000
 
 [event_receiver(native)]
 class Bill : public BaseObject, public IControlable
 {
 public:
-	Bill();
+	Bill(int life = 3);
 	~Bill();
 
 	void init();
@@ -44,8 +46,6 @@ public:
 	void update(float deltatime);
 	void draw(LPD3DXSPRITE spriteHandle, Viewport* viewport);
 	void release();
-
-	//void setPosition(float x, float y);
 
 	void onKeyPressed(KeyEventArg* key_event);
 	void onKeyReleased(KeyEventArg* key_event);
@@ -59,6 +59,17 @@ public:
 	void changeBulletType(eAirCraftType );
 	void die();
 
+	void setLifeNumber(int number);
+	int getLifeNumber();
+
+	void setShootSpeed(float speed);
+	float getShootSpeed();
+
+	void setMaxBullet(int number);
+	int getMaxBullet();
+
+	void setStatus(eStatus status) override;
+
 private:
 	map<int, Animation*> _animations;
 	map<string, IComponent*> _componentList;
@@ -66,7 +77,20 @@ private:
 	float _movingSpeed;
 	StopWatch* _stopWatch;
 	StopWatch* _shootStopWatch;
+	StopWatch* _reviveStopWatch;
+
 	bool _canJumpDown;
+	eStatus _currentAnimateIndex;
+
+	list<Bullet* > _listBullets;
+
+	// Dùng để tạo ra đạn, nếu ăn máy bay tiếp đạn thì thay đổi thông số này, nếu bắn đạn thì dựa trên thuộc tính này để chọn loại đạn khởi tạo
+	eBulletType _currentGun;
+
+	int _lifeNum;
+	float _shootSpeed;
+	int _maxBullet;
+	float _protectTime;
 
 	void standing();
 	void moveLeft();
@@ -75,26 +99,18 @@ private:
 	void layDown();
 	void falling();
 	void shoot();
-
-	list<bool> _canStand;
+	void revive();
 
 	GVector2 getVelocity();
+
 	void updateStatus(float dt);
 
-	eStatus _currentAnimateIndex;
 	void updateCurrentAnimateIndex();
-
-	bool _sideCollide;
-
-	list<Bullet* > _listBullets;
 
 	eDirection getAimingDirection();
 
-
 	Bullet* getBulletFromGun(GVector2 position, float angle);
 
-	// Dùng để tạo ra đạn, nếu ăn máy bay tiếp đạn thì thay đổi thông số này, nếu bắn đạn thì dựa trên thuộc tính này để chọn loại đạn khởi tạo
-	eBulletType _currentGun;
 	// Tung Ho: kiểm tra và xoá đạn hết hiệu lực.
 	void deleteBullet();
 };
