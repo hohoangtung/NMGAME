@@ -50,6 +50,7 @@ enum eID
 	BOSS_STAGE1		= 18,
 	BOSS_GUN		= 19,
 	BOSS_SHIELD		= 20,
+	ROCKFLY			= 21
 };
  
 enum eStatus

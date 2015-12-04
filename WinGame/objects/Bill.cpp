@@ -397,7 +397,7 @@ float Bill::checkCollision(BaseObject * object, float dt)
 	eID objectId = object->getId();
 	eDirection direction;
 
-	if (objectId == eID::BRIDGE || objectId == eID::LAND)
+	if (objectId == eID::BRIDGE || objectId == eID::LAND || objectId == eID::ROCKFLY)
 	{
 		// nếu ko phải là nhảy xuống, mới dừng gravity
 		if (!this->isInStatus(eStatus(eStatus::JUMPING | eStatus::FALLING)) && collisionBody->checkCollision(object, direction, dt))
@@ -434,6 +434,13 @@ float Bill::checkCollision(BaseObject * object, float dt)
 					// set lại animation swim
 					_animations[eStatus::SWIMING]->restart();
 				}
+			}
+
+			if (objectId == eID::ROCKFLY)
+			{
+				_canJumpDown = false;
+				
+			
 			}
 
 			if (direction == eDirection::TOP && this->getVelocity().y < 0)
@@ -947,3 +954,4 @@ eDirection Bill::getAimingDirection()
 
 	return direction;
 }
+

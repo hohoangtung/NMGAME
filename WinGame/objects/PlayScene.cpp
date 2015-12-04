@@ -76,6 +76,10 @@ bool PlayScene::init()
 	//soldier->setStatus(eStatus::JUMPING);
 	//_listobject.push_back(soldier);
 
+	auto rockfly = new RockFly(GVector2(100, 350), GVector2(300, 350));
+	rockfly->init();
+	_listobject.push_back(rockfly);
+
 
 	_text = new Text(L"Arial", "", 10, 25);
 

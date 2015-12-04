@@ -26,6 +26,7 @@
 #include "WallTurret.h"
 #include "BulletManager.h"
 #include "Boss.h"
+#include "RockFly.h"
 
 using namespace std;
 US_FRAMEWORK
