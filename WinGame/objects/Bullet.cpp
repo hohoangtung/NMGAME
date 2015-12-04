@@ -232,7 +232,7 @@ void Bullet::onCollisionBegin(CollisionEventArg* collision_arg)
 			break;
 		case BOSS_SHIELD:
 		case BOSS_GUN:
-		case REDCANNON: 
+		case REDCANNON:
 		case WALL_TURRET:
 			((BaseEnemy*)collision_arg->_otherObject)->dropHitpoint(_damage);
 			this->setStatus(eStatus::DESTROY);

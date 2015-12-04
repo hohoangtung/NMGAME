@@ -13,9 +13,9 @@
 #include <math.h>
 #include "PlayScene.h"
 using namespace std;
-#define CANNON_HITPOINT 12
+#define CANNON_HITPOINT 3
 #define CANNON_SCORE 500
-#define CANNON_SHOOTING_DELAY 1000.0f
+#define CANNON_SHOOTING_DELAY 2000.0f
 #define CANNON_ANIMATION_SPEED 0.5f
 class RedCannon : public BaseEnemy
 {
@@ -23,6 +23,8 @@ public:
 	
 	RedCannon(eStatus status, GVector2 pos);
 	RedCannon(eStatus status, float x, float y);
+	RedCannon(eWT_Status wtstatus, GVector2 pos);
+	RedCannon(eWT_Status wtstatus, float x, float y);
 	~RedCannon();
 	void init();
 	void update(float deltatime);
@@ -33,6 +35,7 @@ public:
 	void onCollisionEnd(CollisionEventArg*);
 
 	
+	
 	void shoot();
 	void drophitpoint();
 	void drophitpoint(int bulletdmg);
@@ -41,22 +44,33 @@ public:
 	void setBillAngle(float);
 	float getBillAngle();
 	void setStatus(eStatus);
+	void setStatus(eWT_Status);
+	eWT_Status getWT_Status();
 
 	IComponent* getComponent(string);
 private:
 	map<string, IComponent*> _listComponent;
 	map<int, Animation*> _animation;
 	BaseObject* _explosion;
-
+	BaseObject* _redcannon_inactived;
+	eWT_Status _wtstatus;
 
 	float _shootingAngle;
 	float _billAngle;
 	StopWatch* _stopwatch;
-	//list<Bullet*> _listBullets;
+	list<Bullet*> _listBullets;
+
+	void initRedcannon_inactived();
+	void updateRedcannon_inactived(float);
+	void initExplosion();
+	void updateExplosion(float);
 
 	void addStatus(eStatus);
+	void addStatus(eWT_Status);
 	void removeStatus(eStatus);
+	void removeStatus(eWT_Status);
 	bool isInStatus(eStatus);
+	bool isInStatus(eWT_Status);
 	void calculateBillangle();
 	
 };

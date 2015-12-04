@@ -1,0 +1,8 @@
+frame_name		left	top		right		bottom
+run_01			1		0		32			31
+run_02			35		0		66			31
+run_03			69		0		100			31
+run_04			103		0		134			31
+run_05			137		0		168			31
+run_06			171		0		202			31
+

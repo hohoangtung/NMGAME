@@ -66,6 +66,13 @@ bool PlayScene::init()
 	boss->init();
 	_listobject.push_back(boss);
 
+	auto redcannon = new RedCannon(WT_APPEAR, 400, 200);
+	redcannon->init();
+	_listobject.push_back(redcannon);
+
+	auto wall_turret = new WallTurret(WT_APPEAR, 430, 150);
+	wall_turret->init();
+	_listobject.push_back(wall_turret);
 	//auto bridge = new Bridge(GVector2(1552, 240));
 	//bridge->init();
 	//bridge->setPhysicsBodySide(eDirection::TOP);
