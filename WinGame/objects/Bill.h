@@ -25,6 +25,7 @@ update 30/11/2015
 #include "F_Bullet.h"
 #include "S_Bullet.h"
 #include "M_Bullet.h"
+#include "LifeUI.h"
 
 #define BILL_MOVE_SPEED 115
 #define BILL_JUMP_VEL 450
@@ -91,6 +92,8 @@ private:
 	float _shootSpeed;
 	int _maxBullet;
 	float _protectTime;
+
+	LifeUI* _lifeUI;
 
 	void standing();
 	void moveLeft();
