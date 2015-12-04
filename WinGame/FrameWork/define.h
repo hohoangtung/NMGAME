@@ -88,6 +88,10 @@ enum eStatus
 	SWIMING			= (1 << 18),
 	DIVING			= (1 << 19),
 	HIDDEN			= (1 << 20),
+};
+
+enum eWT_Status
+{
 	WT_LEFT_30 = (1 << 20),
 	WT_LEFT_60 = (1 << 21),
 	WT_LEFT_150 = (1 << 22),
@@ -99,9 +103,8 @@ enum eStatus
 	WT_RIGHT_60 = (1 << 28),
 	WT_RIGHT_120 = (1 << 29),
 	WT_RIGHT_150 = (1 << 30),
-	WAITING			=(1<<31),
+	WAITING = (1 << 31),
 };
-
 enum eLandType
 {
 	GRASS,
