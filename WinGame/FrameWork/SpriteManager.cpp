@@ -133,6 +133,14 @@ void SpriteManager::loadResource(LPD3DXSPRITE spriteHandle)
 	sp = new Sprite(spriteHandle, L"Resources\\yellowfalcon.png");
 	this->_listSprite[eID::YELLOWFALCON] = sp;
 
+	sp = new Sprite(spriteHandle, L"Resources\\stage3_elements.png", 5, 5);
+	this->_listSprite[eID::ROCKFLY] = sp;
+	this->loadSpriteInfo(eID::ROCKFLY, "Resources\\rockfly_animation.txt");
+
+	sp = new Sprite(spriteHandle, L"Resources\\Life.png");
+	this->_listSprite[eID::LIFE_ICON] = sp;
+	this->loadSpriteInfo(eID::LIFE_ICON, "Resources\\life_info.txt");
+
 	// Đọc file xml để tạo đối tượng sprite
 	sp = loadXMLDoc(spriteHandle, L"Resources//Map//stage1.xml");
 	sp->setOrigin(VECTOR2ZERO);

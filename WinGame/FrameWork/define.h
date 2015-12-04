@@ -50,8 +50,8 @@ enum eID
 	BOSS_STAGE1		= 18,
 	BOSS_GUN		= 19,
 	BOSS_SHIELD		= 20,
-	RED_CANNON_APPEAR=21,
-	WALL_TURRET_INACTIVED=22,
+	ROCKFLY			= 21,
+	LIFE_ICON
 };
  
 enum eStatus
@@ -88,7 +88,17 @@ enum eStatus
 	SWIMING			= (1 << 18),
 	DIVING			= (1 << 19),
 	HIDDEN			= (1 << 20),
-	
+	WT_LEFT_30 = (1 << 20),
+	WT_LEFT_60 = (1 << 21),
+	WT_LEFT_150 = (1 << 22),
+	WT_LEFT_120 = (1 << 23),
+	WT_UP = (1 << 24),
+	WT_DOWN = (1 << 25),
+	WT_RIGHT = (1 << 26),
+	WT_RIGHT_30 = (1 << 27),
+	WT_RIGHT_60 = (1 << 28),
+	WT_RIGHT_120 = (1 << 29),
+	WT_RIGHT_150 = (1 << 30),
 	WAITING			=(1<<31),
 };
 
@@ -206,25 +216,7 @@ enum eSoundId
 	// Phá đảo.
 	WINGAME
 };
-enum eWT_Status
-{
-	
-	WT_NORMAL = 0,
-	WT_LEFT_30 = (1 << 0),
-	WT_LEFT_60 = (1 << 1),
-	WT_LEFT_150 = (1 << 2),
-	WT_LEFT_120 = (1 << 3),
-	WT_UP = (1 << 4),
-	WT_DOWN = (1 << 5),
-	WT_RIGHT = (1 << 6),
-	WT_RIGHT_30 = (1 << 7),
-	WT_RIGHT_60 = (1 << 8),
-	WT_RIGHT_120 = (1 << 9),
-	WT_RIGHT_150 = (1 << 10),
-	WT_APPEAR = (1 << 11),
-	WT_CLOSE = (1 << 12),
-	WT_SHOOTING = (1 << 13),
-};
+
 typedef D3DXVECTOR3 GVector3;
 typedef D3DXVECTOR2 GVector2;
 #define VECTOR2ZERO GVector2(0.0f, 0.0f)

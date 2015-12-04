@@ -74,13 +74,15 @@ void Animation::setIndex(int index)
 
 void Animation::update(float dt)
 {
-	if (!_canAnimate)
+	if (!_canFlashes && !_canAnimate)
 		return;
 
 	_timer += dt / 1000;
 	if (_timer >= _timeAnimate)
 	{
-		this->nextFrame();
+		if (_canAnimate)
+			this->nextFrame();
+
 		_timer -= _timeAnimate;				// không thể gán bằng 0. vì như vậy là làm tròn. sẽ có sai số
 
 		if (_canFlashes)

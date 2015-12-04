@@ -1,0 +1,2 @@
+frame_name	left	top	right	bottom
+normal		3	2	36	33

@@ -1,5 +1,6 @@
 ﻿#include "PlayScene.h"
 #include "..\Tiles\ObjectFactory.h"
+//#include "LifeUI.h"
 
 #if _DEBUG
 #include <time.h>
@@ -83,6 +84,13 @@ bool PlayScene::init()
 	//soldier->setStatus(eStatus::JUMPING);
 	//_listobject.push_back(soldier);
 
+	auto rockfly = new RockFly(GVector2(100, 350), GVector2(300, 350));
+	rockfly->init();
+	_listobject.push_back(rockfly);
+
+	//auto lifeUI = new LifeUI(GVector2(20, 30), bill->getLifeNumber());
+	//lifeUI->init();
+	//_listobject.push_back(lifeUI);
 
 	_text = new Text(L"Arial", "", 10, 25);
 

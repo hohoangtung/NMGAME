@@ -26,8 +26,8 @@
 #include "WallTurret.h"
 #include "BulletManager.h"
 #include "Boss.h"
-#include "WallTurret_inactived.h"
-#include "RedCannon_appear.h"
+#include "RockFly.h"
+
 using namespace std;
 US_FRAMEWORK
 class PlayScene : public Scene
