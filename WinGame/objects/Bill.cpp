@@ -100,6 +100,11 @@ void Bill::init()
 	_shootStopWatch = new StopWatch();
 
 	_currentGun = eBulletType::NORMAL_BULLET;
+
+	// UI
+	// tạo ở đây cho dễ cập nhật khi chết, khỏi trỏ lung tung
+	_lifeUI = new LifeUI(GVector2(20, 30), this->getLifeNumber());
+	_lifeUI->init();
 }
 
 void Bill::update(float deltatime)
@@ -194,6 +199,9 @@ void Bill::draw(LPD3DXSPRITE spriteHandle, Viewport* viewport)
 	{
 		(*it)->draw(spriteHandle, viewport);
 	}
+
+	// DRAW Life
+	_lifeUI->draw(spriteHandle, viewport);
 }
 
 void Bill::release()
@@ -215,6 +223,7 @@ void Bill::release()
 	SAFE_DELETE(_stopWatch);
 	SAFE_DELETE(_shootStopWatch);
 	SAFE_DELETE(_reviveStopWatch);
+	SAFE_DELETE(_lifeUI);
 }
 
 void Bill::onKeyPressed(KeyEventArg* key_event)
@@ -427,12 +436,15 @@ float Bill::checkCollision(BaseObject * object, float dt)
 				}
 				else if (this->isInStatus(eStatus::SWIMING))
 				{
-					// lên bờ thì remove swim / nhảy lên
-					this->removeStatus(eStatus::SWIMING);
-					this->setPositionY(object->getPositionY());
+					if (direction == eDirection::TOP)
+					{
+						// lên bờ thì remove swim / nhảy lên
+						this->removeStatus(eStatus::SWIMING);
+						this->setPositionY(object->getPositionY());
 
-					// set lại animation swim
-					_animations[eStatus::SWIMING]->restart();
+						// set lại animation swim
+						_animations[eStatus::SWIMING]->restart();
+					}
 				}
 			}
 
@@ -449,7 +461,7 @@ float Bill::checkCollision(BaseObject * object, float dt)
 				gravity->setStatus(eGravityStatus::SHALLOWED);
 
 				this->standing();
-
+				
 				preObject = object;
 			}
 		}
@@ -650,7 +662,9 @@ void Bill::revive()
 	this->setScaleX(SCALE_FACTOR);
 	this->setStatus(eStatus::JUMPING);
 	this->setLifeNumber(_lifeNum - 1);
-	
+
+	preObject = nullptr;
+
 	_currentGun = eBulletType::NORMAL_BULLET;
 	_protectTime = PROTECT_TIME;
 
@@ -659,6 +673,11 @@ void Bill::revive()
 	auto move = (Movement*)this->_componentList["Movement"];
 	move->setVelocity(GVector2(100, 0));
 
+	auto gravity = (Gravity*)this->_componentList["Gravity"];
+	gravity->setStatus(eGravityStatus::FALLING__DOWN);
+
+	// cập nhật UI
+	_lifeUI->setLifeNumber(_lifeNum);
 }
 
 void Bill::changeBulletType(eAirCraftType type)
@@ -749,11 +768,8 @@ void Bill::die()
 	if (_protectTime > 0)
 		return;
 
-	// hướng về trc
-	this->setScaleX(SCALE_FACTOR);
-
 	auto move = (Movement*)this->_componentList["Movement"];
-	move->setVelocity(GVector2(-100, BILL_JUMP_VEL));
+	move->setVelocity(GVector2(-BILL_MOVE_SPEED * (this->getScale().x / SCALE_FACTOR), BILL_JUMP_VEL));
 
 	auto g = (Gravity*)this->_componentList["Gravity"];
 	g->setStatus(eGravityStatus::FALLING__DOWN);
