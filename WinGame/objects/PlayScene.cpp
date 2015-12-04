@@ -73,7 +73,6 @@ bool PlayScene::init()
 
 	//auto soldier = new Soldier(RUNNING, 500, 400, -1);
 	//soldier->init();
-	//soldier->setStatus(eStatus::JUMPING);
 	//_listobject.push_back(soldier);
 
 	auto rockfly = new RockFly(GVector2(100, 350), GVector2(300, 350));
