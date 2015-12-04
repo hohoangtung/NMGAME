@@ -32,8 +32,10 @@ void Rifleman::init()
 	GVector2 v(0, 0);
 	GVector2 a(0, 0);
 
-	this->_listComponent.insert(pair<string, IComponent*>("Movement", new Movement(a, v, this->_sprite)));
-	this->_listComponent.insert(pair<string, IComponent*>("Gravity", new Gravity(GVector2(0, -ENEMY_GRAVITY), (Movement*)(this->getComponent("Movement")))));
+	Movement *movement = new Movement(a, v, this->_sprite);
+	this->_listComponent.insert(pair<string, IComponent*>("Movement", movement));
+	if (this->getStatus() != eStatus::HIDDEN || this->getStatus() != eStatus::HIDING)
+		this->_listComponent.insert(pair<string, IComponent*>("Gravity", new Gravity(GVector2(0, -ENEMY_GRAVITY), movement)));
 	_animations[NORMAL] = new Animation(_sprite, RIFLEMAN_ANIMATION_SPEED);
 	_animations[NORMAL]->addFrameRect(eID::RIFLEMAN, "normal_01", NULL);
 
@@ -74,7 +76,7 @@ void Rifleman::draw(LPD3DXSPRITE spritehandle, Viewport* viewport)
 {
 	if (_explosion != NULL)
 		_explosion->draw(spritehandle, viewport);
-	if (this->getStatus() == eStatus::DESTROY || this->getStatus() == eStatus::WAITING)
+	if (this->getStatus() == eStatus::DESTROY || this->getStatus() == eStatus::WAITING || this->getStatus() == eStatus::BURST)
 		return;
 	this->_sprite->render(spritehandle, viewport);
 	_animations[this->getStatus()]->draw(spritehandle, viewport);
@@ -126,6 +128,22 @@ void Rifleman::update(float deltatime)
 { 
 	if (_explosion != NULL)
 		_explosion->update(deltatime);
+	if (this->getStatus() == eStatus::BURST)
+	{
+		if (_explosion == nullptr)
+		{
+			auto pos = this->getPosition();
+			_explosion = new Explosion(1);
+			_explosion->init();
+			_explosion->setScale(SCALE_FACTOR);
+			_explosion->setPosition(pos);
+		}
+		else if (_explosion->getStatus() == eStatus::DESTROY)
+		{
+			this->setStatus(eStatus::DESTROY);
+		}
+		return;
+	}
 	if (this->getStatus() == eStatus::DESTROY || this->getStatus() == eStatus::WAITING)
 		return;
 	if (this->getHitpoint() <= 0) 
@@ -135,14 +153,9 @@ void Rifleman::update(float deltatime)
 		this->die();
 		if (this->_stopwatch->isStopWatch(200)) 
 		{
-			auto pos = this->getPosition();
 			Movement *movement = (Movement*)this->getComponent("Movement");
 			movement->setVelocity(GVector2(0, 0));
-			_explosion = new Explosion(1);
-			_explosion->init();
-			_explosion->setScale(SCALE_FACTOR);
-			_explosion->setPosition(pos);
-			this->setStatus(eStatus::DESTROY);
+			this->setStatus(eStatus::BURST);
 			return;
 		}
 	}
@@ -341,7 +354,7 @@ void Rifleman::shoot()
 	else if (this->isInStatus(AIMING_DOWN))
 	{
 		pos.x += this->getScale().x < 0 ? (framewidth >> 1) : -(framewidth >> 1);
-		pos.y += (frameheight >> 2);
+		pos.y -= (frameheight >> 2);
 		//pos.x += this->getScale().x < 0 ? this->getSprite()->getFrameWidth() / 2 : -this->getSprite()->getFrameWidth() / 2;
 		//pos.y -= this->getSprite()->getFrameHeight() / 4.0f;
 	}
