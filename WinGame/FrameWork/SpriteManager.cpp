@@ -141,6 +141,10 @@ void SpriteManager::loadResource(LPD3DXSPRITE spriteHandle)
 	this->_listSprite[eID::LIFE_ICON] = sp;
 	this->loadSpriteInfo(eID::LIFE_ICON, "Resources\\life_info.txt");
 
+	sp = new Sprite(spriteHandle, L"Resources\\stage3_elements.png", 5, 5);
+	this->_listSprite[eID::FIRE] = sp;
+	this->loadSpriteInfo(eID::FIRE, "Resources\\fire_animation.txt");
+
 	// Đọc file xml để tạo đối tượng sprite
 	sp = loadXMLDoc(spriteHandle, L"Resources//Map//stage1.xml");
 	sp->setOrigin(VECTOR2ZERO);

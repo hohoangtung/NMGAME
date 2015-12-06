@@ -29,6 +29,7 @@
 #include "RockFly.h"
 #include "WallTurret_inactived.h"
 #include "RedCannon_appear.h"
+#include "Fire.h"
 
 using namespace std;
 US_FRAMEWORK

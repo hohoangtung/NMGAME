@@ -102,7 +102,8 @@ void RedCannon::draw(LPD3DXSPRITE spriteHandle, Viewport* viewport)
 
 void RedCannon::update(float deltatime)
 {
-
+	if (_explosion != nullptr)
+		updateExplosion(deltatime);
 	if (this->_wtstatus == eWT_Status::WT_APPEAR||this->_wtstatus==eWT_Status::WT_CLOSE)
 	{
 		if (_redcannon_inactived == NULL)
@@ -114,20 +115,28 @@ void RedCannon::update(float deltatime)
 	if (this->getStatus() == eStatus::DESTROY)
 		return;
 	
+	if (this->getStatus() == eStatus::BURST)
+	{
+		if (_explosion == nullptr)
+			initExplosion();
+		else
+		{
+			/*updateExplosion(deltatime);*/
+			if (_explosion->getStatus() == eStatus::DESTROY)
+			{
+				this->setStatus(eStatus::DESTROY);
+			}
+		}
+		return;
+	}
 	if (this->getHitpoint()<=0)
 	{
+		if (this->_stopwatch->isStopWatch(200))
+		{
+			this->setStatus(eStatus::BURST);
+			return;
+		}
 			
-			if (_explosion == NULL)
-				initExplosion();
-			else
-			{
-				updateExplosion(deltatime);
-				if (_explosion->getStatus() == eStatus::DESTROY)
-				{
-					this->setStatus(eStatus::DESTROY);
-					
-				}
-			}	
 	}
 	
 	if (this->_redcannon_inactived->getStatus() == eStatus::WAITING)

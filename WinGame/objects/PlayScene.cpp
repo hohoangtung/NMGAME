@@ -87,6 +87,14 @@ bool PlayScene::init()
 	rockfly->init();
 	_listobject.push_back(rockfly);
 
+	auto fire = new Fire(GVector2(200, 280), GVector2(400, 280),200,280);
+	fire->init();
+	_listobject.push_back(fire);
+
+	auto fire1 = new Fire(GVector2(200, 280), GVector2(400, 280),400,280);
+	fire1->init();
+	_listobject.push_back(fire1);
+
 	//auto lifeUI = new LifeUI(GVector2(20, 30), bill->getLifeNumber());
 	//lifeUI->init();
 	//_listobject.push_back(lifeUI);
