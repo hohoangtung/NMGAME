@@ -13,7 +13,7 @@ using namespace std;
 class Fire:public BaseObject
 {
 public:
-	Fire(GVector2,GVector2,float x,float y);
+	Fire(GVector2,GVector2,GVector2,int);
 
 	void init();
 	void update(float);
@@ -26,6 +26,7 @@ private:
 	map<string, IComponent*> _listComponent;
 	GVector2 _leftPosition;
 	GVector2 _rightPosition;
+	int _veloc;
 
 };
 #endif

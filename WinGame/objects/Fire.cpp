@@ -1,14 +1,14 @@
 #include "Fire.h"
 
 
-Fire::Fire(GVector2 leftposition, GVector2  rightposition,float x, float y) :BaseObject(eID::FIRE)
+Fire::Fire(GVector2 leftposition, GVector2  rightposition,GVector2 pos,int veloc) :BaseObject(eID::FIRE)
 {
 	_leftPosition = leftposition;
 	_rightPosition = rightposition;
 	this->_sprite = SpriteManager::getInstance()->getSprite(eID::FIRE);
 	this->_sprite->setScale(SCALE_FACTOR);
-	GVector2 pos(x, y);
 	this->_sprite->setPosition(pos);
+	_veloc = veloc;
 }
 
 void Fire::init()
@@ -28,15 +28,27 @@ void Fire::update(float deltatime)
 	if (this->getStatus() == eStatus::DESTROY)
 		return;
 	auto pos = this->getPosition();
+	auto move = (Movement*) this->_listComponent["Movement"];
+	if (_veloc == 1)
+	{
+		
+		move->setVelocity(HORIZONTAL_VELOC);
+	}
+	else
+	{
+		move->setVelocity(HORIZONTAL_VELOC_PRE);
+	}
 	if (pos.x <= _leftPosition.x)
 	{
-		auto move = (Movement*) this->_listComponent["Movement"];
+	/*	auto move = (Movement*) this->_listComponent["Movement"];*/
 		move->setVelocity(HORIZONTAL_VELOC);
+		_veloc = 1;
 	}
 	if (pos.x >= _rightPosition.x)
 	{
-		auto move = (Movement*) this->_listComponent["Movement"];
+	/*	auto move = (Movement*) this->_listComponent["Movement"];*/
 		move->setVelocity(HORIZONTAL_VELOC_PRE);
+		_veloc = -1;
 	}
 	for (auto component : _listComponent)
 	{
