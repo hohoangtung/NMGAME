@@ -55,6 +55,7 @@ enum eID
 	WALL_TURRET_INACTIVED =23,
 	RED_CANNON_APPEAR =24,
 	FIRE			=25,
+	ROCKFALL = 26,
 };
  
 enum eStatus

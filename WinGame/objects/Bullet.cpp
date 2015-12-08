@@ -240,6 +240,13 @@ void Bullet::onCollisionBegin(CollisionEventArg* collision_arg)
 				this->setStatus(eStatus::NORMAL);
 			SoundManager::getInstance()->Play(eSoundId::ATTACK_CANNON);
 			break;
+		// RockFall: map 2
+		case ROCKFALL:
+			((BaseEnemy*)collision_arg->_otherObject)->dropHitpoint(_damage);
+			this->setStatus(eStatus::DESTROY);
+			if (((BaseEnemy*)collision_arg->_otherObject)->getHitpoint() <= 0)
+				this->setStatus(eStatus::NORMAL);
+			break;
 		}
 	}
 	
