@@ -62,9 +62,9 @@ bool PlayScene::init()
 	bulletmanager->init();
 	_listobject.push_back(bulletmanager);
 
-	auto boss = new Boss(GVector2(6432.0f, 64.0f), 400);
-	boss->init();
-	_listobject.push_back(boss);
+	//auto boss = new Boss(GVector2(6432.0f, 64.0f), 400);
+	//boss->init();
+	//_listobject.push_back(boss);
 
 	//auto bridge = new Bridge(GVector2(1552, 240));
 	//bridge->init();

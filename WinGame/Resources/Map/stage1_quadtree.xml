@@ -140,7 +140,9 @@
         <QNode Id="65552" Level="4" X="2080" Y="0" Width="416" Height="416">
           <QNode Id="65552" Level="5" X="2080" Y="0" Width="208" Height="208">
             <QNode Id="65552" Level="6" X="2080" Y="0" Width="104" Height="104" />
-            <QNode Id="65553" Level="6" X="2184" Y="0" Width="104" Height="104" />
+            <QNode Id="65553" Level="6" X="2184" Y="0" Width="104" Height="104">
+              <Objects>airCraft2 </Objects>
+            </QNode>
             <QNode Id="65554" Level="6" X="2184" Y="104" Width="104" Height="104">
               <Objects>airCraft2 bridge2 </Objects>
             </QNode>
@@ -168,10 +170,43 @@
       <QNode Id="272" Level="3" X="2496" Y="0" Width="832" Height="832">
         <QNode Id="272" Level="4" X="2496" Y="0" Width="416" Height="416">
           <QNode Id="272" Level="5" X="2496" Y="0" Width="208" Height="208">
-            <Objects>land38 airCraft2 rifleMan4 </Objects>
+            <QNode Id="272" Level="6" X="2496" Y="0" Width="104" Height="104">
+              <Objects>airCraft2 </Objects>
+            </QNode>
+            <QNode Id="273" Level="6" X="2600" Y="0" Width="104" Height="104">
+              <Objects>airCraft2 </Objects>
+            </QNode>
+            <QNode Id="274" Level="6" X="2600" Y="104" Width="104" Height="104">
+              <Objects>land38 airCraft2 rifleMan5 </Objects>
+            </QNode>
+            <QNode Id="275" Level="6" X="2496" Y="104" Width="104" Height="104">
+              <Objects>land38 airCraft2 rifleMan4 </Objects>
+            </QNode>
           </QNode>
           <QNode Id="273" Level="5" X="2704" Y="0" Width="208" Height="208">
-            <Objects>land8 land38 airCraft2 </Objects>
+            <QNode Id="273" Level="6" X="2704" Y="0" Width="104" Height="104">
+              <Objects>airCraft2 </Objects>
+            </QNode>
+            <QNode Id="273" Level="6" X="2808" Y="0" Width="104" Height="104">
+              <Objects>airCraft2 </Objects>
+            </QNode>
+            <QNode Id="275" Level="6" X="2808" Y="104" Width="104" Height="104">
+              <Objects>land8 land38 airCraft2 </Objects>
+            </QNode>
+            <QNode Id="275" Level="6" X="2704" Y="104" Width="104" Height="104">
+              <QNode Id="275" Level="7" X="2704" Y="104" Width="52" Height="52">
+                <Objects>land8 airCraft2 rifleMan5 </Objects>
+              </QNode>
+              <QNode Id="275" Level="7" X="2756" Y="104" Width="52" Height="52">
+                <Objects>land8 airCraft2 </Objects>
+              </QNode>
+              <QNode Id="275" Level="7" X="2756" Y="156" Width="52" Height="52">
+                <Objects>land38 airCraft2 </Objects>
+              </QNode>
+              <QNode Id="275" Level="7" X="2704" Y="156" Width="52" Height="52">
+                <Objects>land38 airCraft2 rifleMan5 </Objects>
+              </QNode>
+            </QNode>
           </QNode>
           <QNode Id="274" Level="5" X="2704" Y="208" Width="208" Height="208">
             <Objects>land7 water3 airCraft2 </Objects>
@@ -182,7 +217,7 @@
         </QNode>
         <QNode Id="65808" Level="4" X="2912" Y="0" Width="416" Height="416">
           <QNode Id="65808" Level="5" X="2912" Y="0" Width="208" Height="208">
-            <Objects>land8 airCraft2 </Objects>
+            <Objects>land8 airCraft2 rifleMan6 </Objects>
           </QNode>
           <QNode Id="65809" Level="5" X="3120" Y="0" Width="208" Height="208">
             <Objects>land8 wallTurret2 airCraft2 </Objects>
@@ -206,10 +241,10 @@
               <Objects>land10 wallTurret2 airCraft2 </Objects>
             </QNode>
             <QNode Id="65810" Level="6" X="3224" Y="312" Width="104" Height="104">
-              <Objects>water4 airCraft2 </Objects>
+              <Objects>water4 </Objects>
             </QNode>
             <QNode Id="65811" Level="6" X="3120" Y="312" Width="104" Height="104">
-              <Objects>water4 airCraft2 falcon2 </Objects>
+              <Objects>water4 falcon2 </Objects>
             </QNode>
           </QNode>
           <QNode Id="65811" Level="5" X="2912" Y="208" Width="208" Height="208">
@@ -220,10 +255,10 @@
               <Objects>land9 airCraft2 </Objects>
             </QNode>
             <QNode Id="65811" Level="6" X="3016" Y="312" Width="104" Height="104">
-              <Objects>water4 airCraft2 </Objects>
+              <Objects>water4 </Objects>
             </QNode>
             <QNode Id="65811" Level="6" X="2912" Y="312" Width="104" Height="104">
-              <Objects>land7 water4 airCraft2 </Objects>
+              <Objects>land7 water4 </Objects>
             </QNode>
           </QNode>
         </QNode>
@@ -306,10 +341,10 @@
               <Objects>aircraft3 aircraft4 </Objects>
             </QNode>
             <QNode Id="65798" Level="6" X="4888" Y="312" Width="104" Height="104">
-              <Objects>land20 aircraft3 aircraft4 </Objects>
+              <Objects>land20 aircraft4 </Objects>
             </QNode>
             <QNode Id="65799" Level="6" X="4784" Y="312" Width="104" Height="104">
-              <Objects>land20 aircraft3 aircraft4 </Objects>
+              <Objects>land20 aircraft4 </Objects>
             </QNode>
           </QNode>
           <QNode Id="65799" Level="5" X="4576" Y="208" Width="208" Height="208">
@@ -318,51 +353,27 @@
             </QNode>
             <QNode Id="65799" Level="6" X="4680" Y="208" Width="104" Height="104">
               <QNode Id="65799" Level="7" X="4680" Y="208" Width="52" Height="52">
-                <Objects>aircraft3 </Objects>
+                <Objects>aircraft3 aircraft4 </Objects>
               </QNode>
               <QNode Id="65799" Level="7" X="4732" Y="208" Width="52" Height="52">
-                <Objects>rifleMan3 aircraft3 </Objects>
+                <Objects>rifleMan3 aircraft3 aircraft4 </Objects>
               </QNode>
               <QNode Id="65799" Level="7" X="4732" Y="260" Width="52" Height="52">
-                <Objects>land19 aircraft3 aircraft4 </Objects>
+                <Objects>land19 aircraft4 </Objects>
               </QNode>
               <QNode Id="65799" Level="7" X="4680" Y="260" Width="52" Height="52">
-                <Objects>land19 aircraft3 aircraft4 </Objects>
+                <Objects>land19 aircraft4 </Objects>
               </QNode>
             </QNode>
             <QNode Id="65799" Level="6" X="4680" Y="312" Width="104" Height="104">
-              <QNode Id="65799" Level="7" X="4680" Y="312" Width="52" Height="52">
-                <Objects>aircraft3 aircraft4 </Objects>
-              </QNode>
-              <QNode Id="65799" Level="7" X="4732" Y="312" Width="52" Height="52">
-                <Objects>land20 aircraft3 aircraft4 </Objects>
-              </QNode>
-              <QNode Id="65799" Level="7" X="4732" Y="364" Width="52" Height="52">
-                <Objects>land21 aircraft4 </Objects>
-              </QNode>
-              <QNode Id="65799" Level="7" X="4680" Y="364" Width="52" Height="52">
-                <Objects>land21 aircraft4 </Objects>
-              </QNode>
+              <Objects>land20 land21 aircraft4 </Objects>
             </QNode>
             <QNode Id="65799" Level="6" X="4576" Y="312" Width="104" Height="104">
-              <QNode Id="65799" Level="7" X="4576" Y="312" Width="52" Height="52">
-                <Objects>falcon3 </Objects>
-              </QNode>
-              <QNode Id="65799" Level="7" X="4628" Y="312" Width="52" Height="52">
-                <Objects>aircraft3 aircraft4 </Objects>
-              </QNode>
-              <QNode Id="65799" Level="7" X="4628" Y="364" Width="52" Height="52">
-                <Objects>land21 aircraft4 </Objects>
-              </QNode>
-              <QNode Id="65799" Level="7" X="4576" Y="364" Width="52" Height="52">
-                <Objects>falcon3 </Objects>
-              </QNode>
+              <Objects>land21 falcon3 aircraft4 </Objects>
             </QNode>
           </QNode>
         </QNode>
-        <QNode Id="131332" Level="4" X="4576" Y="416" Width="416" Height="416">
-          <Objects>aircraft4 </Objects>
-        </QNode>
+        <QNode Id="131332" Level="4" X="4576" Y="416" Width="416" Height="416" />
         <QNode Id="196868" Level="4" X="4160" Y="416" Width="416" Height="416" />
       </QNode>
       <QNode Id="516" Level="3" X="4160" Y="832" Width="832" Height="832" />
@@ -372,8 +383,12 @@
       <QNode Id="20" Level="3" X="4992" Y="0" Width="832" Height="832">
         <QNode Id="20" Level="4" X="4992" Y="0" Width="416" Height="416">
           <QNode Id="20" Level="5" X="4992" Y="0" Width="208" Height="208">
-            <QNode Id="20" Level="6" X="4992" Y="0" Width="104" Height="104" />
-            <QNode Id="21" Level="6" X="5096" Y="0" Width="104" Height="104" />
+            <QNode Id="20" Level="6" X="4992" Y="0" Width="104" Height="104">
+              <Objects>aircraft3 </Objects>
+            </QNode>
+            <QNode Id="21" Level="6" X="5096" Y="0" Width="104" Height="104">
+              <Objects>aircraft3 </Objects>
+            </QNode>
             <QNode Id="22" Level="6" X="5096" Y="104" Width="104" Height="104">
               <Objects>land22 land26 aircraft3 </Objects>
             </QNode>
@@ -395,10 +410,10 @@
               <Objects>land24 aircraft3 aircraft4 </Objects>
             </QNode>
             <QNode Id="23" Level="6" X="5096" Y="312" Width="104" Height="104">
-              <Objects>aircraft3 aircraft4 </Objects>
+              <Objects>aircraft4 </Objects>
             </QNode>
             <QNode Id="23" Level="6" X="4992" Y="312" Width="104" Height="104">
-              <Objects>land25 aircraft3 aircraft4 </Objects>
+              <Objects>land25 aircraft4 </Objects>
             </QNode>
           </QNode>
         </QNode>
@@ -418,61 +433,48 @@
               <Objects>land29 </Objects>
             </QNode>
             <QNode Id="65559" Level="6" X="5616" Y="312" Width="104" Height="104">
-              <QNode Id="65559" Level="7" X="5616" Y="312" Width="52" Height="52">
-                <Objects>aircraft3 aircraft4 </Objects>
-              </QNode>
-              <QNode Id="65559" Level="7" X="5668" Y="312" Width="52" Height="52">
-                <Objects>land29 </Objects>
-              </QNode>
-              <QNode Id="65559" Level="7" X="5668" Y="364" Width="52" Height="52" />
-              <QNode Id="65559" Level="7" X="5616" Y="364" Width="52" Height="52">
-                <Objects>land28 aircraft4 </Objects>
-              </QNode>
+              <Objects>land28 land29 aircraft4 </Objects>
             </QNode>
           </QNode>
           <QNode Id="65559" Level="5" X="5408" Y="208" Width="208" Height="208">
             <QNode Id="65559" Level="6" X="5408" Y="208" Width="104" Height="104">
               <QNode Id="65559" Level="7" X="5408" Y="208" Width="52" Height="52">
-                <Objects>aircraft3 </Objects>
+                <Objects>aircraft3 aircraft4 </Objects>
               </QNode>
               <QNode Id="65559" Level="7" X="5460" Y="208" Width="52" Height="52">
-                <Objects>redCannon4 aircraft3 </Objects>
+                <Objects>redCannon4 aircraft3 aircraft4 </Objects>
               </QNode>
               <QNode Id="65559" Level="7" X="5460" Y="260" Width="52" Height="52">
-                <Objects>land27 aircraft3 aircraft4 </Objects>
+                <Objects>land27 aircraft4 </Objects>
               </QNode>
               <QNode Id="65559" Level="7" X="5408" Y="260" Width="52" Height="52">
-                <Objects>land27 aircraft3 aircraft4 </Objects>
+                <Objects>land27 aircraft4 </Objects>
               </QNode>
             </QNode>
             <QNode Id="65559" Level="6" X="5512" Y="208" Width="104" Height="104">
               <QNode Id="65559" Level="7" X="5512" Y="208" Width="52" Height="52">
-                <Objects>redCannon4 aircraft3 </Objects>
+                <Objects>redCannon4 aircraft3 aircraft4 </Objects>
               </QNode>
               <QNode Id="65559" Level="7" X="5564" Y="208" Width="52" Height="52">
-                <Objects>redCannon4 aircraft3 </Objects>
+                <Objects>redCannon4 aircraft3 aircraft4 </Objects>
               </QNode>
               <QNode Id="65559" Level="7" X="5564" Y="260" Width="52" Height="52">
-                <Objects>land27 aircraft3 aircraft4 </Objects>
+                <Objects>land27 aircraft4 </Objects>
               </QNode>
               <QNode Id="65559" Level="7" X="5512" Y="260" Width="52" Height="52">
-                <Objects>land27 aircraft3 aircraft4 </Objects>
+                <Objects>land27 aircraft4 </Objects>
               </QNode>
             </QNode>
             <QNode Id="65559" Level="6" X="5512" Y="312" Width="104" Height="104">
-              <Objects>land28 aircraft3 aircraft4 </Objects>
+              <Objects>land28 aircraft4 </Objects>
             </QNode>
             <QNode Id="65559" Level="6" X="5408" Y="312" Width="104" Height="104">
-              <Objects>land28 aircraft3 aircraft4 </Objects>
+              <Objects>land28 aircraft4 </Objects>
             </QNode>
           </QNode>
         </QNode>
-        <QNode Id="131092" Level="4" X="5408" Y="416" Width="416" Height="416">
-          <Objects>aircraft4 </Objects>
-        </QNode>
-        <QNode Id="196628" Level="4" X="4992" Y="416" Width="416" Height="416">
-          <Objects>aircraft4 </Objects>
-        </QNode>
+        <QNode Id="131092" Level="4" X="5408" Y="416" Width="416" Height="416" />
+        <QNode Id="196628" Level="4" X="4992" Y="416" Width="416" Height="416" />
       </QNode>
       <QNode Id="276" Level="3" X="5824" Y="0" Width="832" Height="832">
         <QNode Id="276" Level="4" X="5824" Y="0" Width="416" Height="416">
@@ -491,19 +493,23 @@
         </QNode>
         <QNode Id="65812" Level="4" X="6240" Y="0" Width="416" Height="416">
           <QNode Id="65812" Level="5" X="6240" Y="0" Width="208" Height="208">
-            <Objects>land31 </Objects>
+            <Objects>land31 greatwall </Objects>
           </QNode>
-          <QNode Id="65813" Level="5" X="6448" Y="0" Width="208" Height="208" />
+          <QNode Id="65813" Level="5" X="6448" Y="0" Width="208" Height="208">
+            <Objects>greatwall </Objects>
+          </QNode>
           <QNode Id="65814" Level="5" X="6448" Y="208" Width="208" Height="208">
-            <Objects>land35 </Objects>
+            <Objects>land35 greatwall </Objects>
           </QNode>
           <QNode Id="65815" Level="5" X="6240" Y="208" Width="208" Height="208">
             <QNode Id="65815" Level="6" X="6240" Y="208" Width="104" Height="104">
               <Objects>land32 land33 </Objects>
             </QNode>
-            <QNode Id="65815" Level="6" X="6344" Y="208" Width="104" Height="104" />
+            <QNode Id="65815" Level="6" X="6344" Y="208" Width="104" Height="104">
+              <Objects>greatwall </Objects>
+            </QNode>
             <QNode Id="65815" Level="6" X="6344" Y="312" Width="104" Height="104">
-              <Objects>land34 land35 </Objects>
+              <Objects>land34 land35 greatwall </Objects>
             </QNode>
             <QNode Id="65815" Level="6" X="6240" Y="312" Width="104" Height="104">
               <Objects>land34 land35 wallTurret5 </Objects>

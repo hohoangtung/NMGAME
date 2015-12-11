@@ -119,6 +119,8 @@ BaseObject* ObjectFactory::getObjectById(xml_node node, eID id)
 		case CREATOR:
 			return getCreator(node);
 			break;
+		case BOSS_STAGE1:
+			return getGreatWall(node);
 		default:
 			return nullptr;
 			break;
@@ -459,6 +461,24 @@ BaseObject* ObjectFactory::getFalcon(xml_node node)
 	falcon->init();
 	return falcon;
 }
+
+BaseObject* ObjectFactory::getGreatWall(xml_node node)
+{
+	auto properties = getObjectProperties(node);
+	if (properties.size() == 0)
+		return nullptr;
+
+	int x, y, height;
+
+	x = stoi(properties["X"]);
+	y = stoi(properties["Y"]) - stoi(properties["Height"]);
+	height = stoi(properties["Height"]);
+
+	auto greatwall = new Boss(GVector2(x, y), height);
+	greatwall->init();
+	return greatwall;
+}
+
 
 map<string, string> ObjectFactory::getObjectProperties(xml_node node)
 {

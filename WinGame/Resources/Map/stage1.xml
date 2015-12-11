@@ -718,8 +718,8 @@
     <Item Id="11" Name="wallTurret5" X="6208" Y="128" Width="64" Height="64">
       <ActiveBound X="6208" Y="128" Width="64" Height="64" />
     </Item>
-    <Item Id="4" Name="airCraft2" X="2240" Y="320" Width="64" Height="32">
-      <ActiveBound X="2240" Y="320" Width="1024" Height="200" />
+    <Item Id="4" Name="airCraft2" X="2240" Y="384" Width="64" Height="32">
+      <ActiveBound X="2240" Y="384" Width="1024" Height="200" />
       <Params>
         <Elem Key="type" Value="5" />
       </Params>
@@ -766,14 +766,14 @@
         <Elem Key="type" Value="5" />
       </Params>
     </Item>
-    <Item Id="4" Name="aircraft3" X="4640" Y="320" Width="64" Height="32">
-      <ActiveBound X="4640" Y="320" Width="1024" Height="192" />
+    <Item Id="4" Name="aircraft3" X="4640" Y="384" Width="64" Height="32">
+      <ActiveBound X="4640" Y="384" Width="1024" Height="192" />
       <Params>
         <Elem Key="type" Value="4" />
       </Params>
     </Item>
-    <Item Id="4" Name="aircraft4" X="4640" Y="160" Width="64" Height="32">
-      <ActiveBound X="4640" Y="160" Width="1024" Height="160" />
+    <Item Id="4" Name="aircraft4" X="4640" Y="192" Width="64" Height="32">
+      <ActiveBound X="4640" Y="192" Width="1024" Height="160" />
       <Params>
         <Elem Key="type" Value="2" />
       </Params>
@@ -789,6 +789,21 @@
         <Elem Key="time" Value="3000" />
         <Elem Key="number" Value="-1" />
       </Params>
+    </Item>
+    <Item Id="6" Name="rifleMan5" X="2688" Y="320" Width="32" Height="64">
+      <ActiveBound X="2688" Y="320" Width="32" Height="64" />
+      <Params>
+        <Elem Key="status" Value="1048576" />
+      </Params>
+    </Item>
+    <Item Id="6" Name="rifleMan6" X="3072" Y="384" Width="32" Height="64">
+      <ActiveBound X="3072" Y="384" Width="32" Height="64" />
+      <Params>
+        <Elem Key="status" Value="1048576" />
+      </Params>
+    </Item>
+    <Item Id="18" Name="greatwall" X="6432" Y="384" Width="128" Height="320">
+      <ActiveBound X="6432" Y="384" Width="128" Height="320" />
     </Item>
   </Objects>
 </Tilesmap>
