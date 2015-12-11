@@ -54,8 +54,9 @@ void Explosion::update(float deltatime)
 	{
 		this->setStatus(eStatus::DESTROY);
 	}
+	
 	if (this->_type == 2 && this->_animation->getIndex() == 9)
-	{
+	{	
 		this->setStatus(eStatus::DESTROY);
 	}
 }

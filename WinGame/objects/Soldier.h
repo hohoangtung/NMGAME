@@ -55,6 +55,7 @@ private:
 	BaseObject *_explosion;
 	BaseObject* prevObject;
 	list<Bullet*> _listBullets;
+	Sprite *_divingSprite;
 	bool _canShoot;
 	
 	void shoot();
