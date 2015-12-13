@@ -43,7 +43,13 @@ public:
 	static QNode* loadQuadTree(const string path);
 	static QNode* initNode(xml_node& node);
 
-	vector<string> GetActiveObject(RECT bound);
+	/*
+	L?y object mà bound ?è lên
+		@bound: hcn
+		@botleft: b?ng true n?u hcn tính theo bot-left, false là top-left
+		thêm ?? kh?i m?t công chuy?n bên ngoài
+	*/
+	vector<string> GetActiveObject(RECT bound, bool botleft = false);
 	void fetchActiveObject(RECT bound);
 	static vector<string> ActiveObject;
 	~QNode();
