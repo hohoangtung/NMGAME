@@ -27,6 +27,7 @@
 #include "BulletManager.h"
 #include "Boss.h"
 #include "RockFly.h"
+#include "ScubaSoldier.h"
 
 using namespace std;
 US_FRAMEWORK

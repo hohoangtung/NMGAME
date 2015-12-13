@@ -319,12 +319,12 @@ float Soldier::checkCollision(BaseObject * object, float dt)
 						gravity->setStatus(eGravityStatus::FALLING__DOWN);
 						this->setStatus(FALLING);
 					}
-					else
+					/*else
 					{
 						Movement* movement = (Movement*)this->getComponent("Movement");
 						movement->setVelocity(GVector2(-movement->getVelocity().x, movement->getVelocity().y));
 						this->setScaleX(-SCALE_FACTOR);
-					}
+					}*/
 				}
 			}
 			else if (land == eLandType::WATER)

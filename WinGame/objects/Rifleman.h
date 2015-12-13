@@ -42,7 +42,6 @@ public:
 
 	void die();
 	void shoot();
-	void setStatus(eStatus);
 	
 	IComponent* getComponent(string);
 
@@ -55,9 +54,6 @@ private:
 	BaseObject *_explosion;
 	list<Bullet*> _listBullets;
 
-	void addStatus(eStatus status);
-	void removeStatus(eStatus status);
-	bool isInStatus(eStatus status);
 	void calculateShootingAngle();
 	void calculatingShootingDirection();
 };

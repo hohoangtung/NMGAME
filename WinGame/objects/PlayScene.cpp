@@ -83,6 +83,10 @@ bool PlayScene::init()
 	//soldier->init();
 	//_listobject.push_back(soldier);
 
+	auto scubasoldier = new ScubaSoldier(GVector2(200, 50));
+	scubasoldier->init();
+	_listobject.push_back(scubasoldier);
+
 	auto rockfly = new RockFly(GVector2(100, 350), GVector2(300, 350));
 	rockfly->init();
 	_listobject.push_back(rockfly);

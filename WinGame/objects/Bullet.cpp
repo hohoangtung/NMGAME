@@ -223,7 +223,7 @@ void Bullet::onCollisionBegin(CollisionEventArg* collision_arg)
 			if (this->_type != eBulletType::L_BULLET)
 			this->setStatus(eStatus::DESTROY);
 			break;
-		case SOLDIER: case RIFLEMAN:
+		case SOLDIER: case RIFLEMAN: case SCUBASOLDIER:
 			if (collision_arg->_otherObject->getStatus() != HIDDEN && collision_arg->_otherObject->getStatus() != EXPOSING)
 				((BaseEnemy*)collision_arg->_otherObject)->dropHitpoint(_damage);
 			// Đạn laser đi xuyên qua soldier và rifleman
