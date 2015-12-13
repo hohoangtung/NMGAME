@@ -83,13 +83,28 @@ bool PlayScene::init()
 	//soldier->init();
 	//_listobject.push_back(soldier);
 
+
 	auto scubasoldier = new ScubaSoldier(GVector2(200, 50));
 	scubasoldier->init();
 	_listobject.push_back(scubasoldier);
 
 	auto rockfly = new RockFly(GVector2(100, 350), GVector2(300, 350));
+
+	/*auto rockfly = new RockFly(GVector2(100, 350), GVector2(300, 350));
 	rockfly->init();
-	_listobject.push_back(rockfly);
+	_listobject.push_back(rockfly);*/
+
+	auto rockfall = new RockFall(GVector2(350, 400));
+	rockfall->init();
+	_listobject.push_back(rockfall);
+
+	auto fire = new Fire(GVector2(200, 280), GVector2(400, 280),GVector2(300,280),1);
+	fire->init();
+	_listobject.push_back(fire);
+
+	auto fire1 = new Fire(GVector2(200, 280), GVector2(400, 280),GVector2( 300,280),-1);
+	fire1->init();
+	_listobject.push_back(fire1);
 
 	//auto lifeUI = new LifeUI(GVector2(20, 30), bill->getLifeNumber());
 	//lifeUI->init();

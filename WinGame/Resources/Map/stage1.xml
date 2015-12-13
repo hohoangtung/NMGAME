@@ -407,6 +407,7 @@
       <Params>
         <Elem Key="physicBodyDirection" Value="1" />
         <Elem Key="type" Value="0" />
+        <Elem Key="canJumpDown" Value="0" />
       </Params>
     </Item>
     <Item Id="12" Name="land5" X="704" Y="117" Width="64" Height="5">
@@ -435,6 +436,7 @@
       <Params>
         <Elem Key="physicBodyDirection" Value="1" />
         <Elem Key="type" Value="0" />
+        <Elem Key="canJumpDown" Value="0" />
       </Params>
     </Item>
     <Item Id="12" Name="land8" X="2752" Y="309" Width="1024" Height="5">
@@ -463,6 +465,7 @@
       <Params>
         <Elem Key="physicBodyDirection" Value="1" />
         <Elem Key="type" Value="0" />
+        <Elem Key="canJumpDown" Value="0" />
       </Params>
     </Item>
     <Item Id="12" Name="land12" X="3712" Y="245" Width="448" Height="5">
@@ -477,6 +480,7 @@
       <Params>
         <Elem Key="physicBodyDirection" Value="1" />
         <Elem Key="type" Value="0" />
+        <Elem Key="canJumpDown" Value="0" />
       </Params>
     </Item>
     <Item Id="12" Name="land14" X="4032" Y="117" Width="128" Height="5">
@@ -484,6 +488,7 @@
       <Params>
         <Elem Key="physicBodyDirection" Value="1" />
         <Elem Key="type" Value="0" />
+        <Elem Key="canJumpDown" Value="0" />
       </Params>
     </Item>
     <Item Id="12" Name="land15" X="4224" Y="149" Width="64" Height="5">
@@ -491,6 +496,7 @@
       <Params>
         <Elem Key="physicBodyDirection" Value="1" />
         <Elem Key="type" Value="0" />
+        <Elem Key="canJumpDown" Value="0" />
       </Params>
     </Item>
     <Item Id="12" Name="land16" X="4096" Y="309" Width="320" Height="5">
@@ -505,6 +511,7 @@
       <Params>
         <Elem Key="physicBodyDirection" Value="1" />
         <Elem Key="type" Value="0" />
+        <Elem Key="canJumpDown" Value="0" />
       </Params>
     </Item>
     <Item Id="12" Name="land18" X="4480" Y="245" Width="128" Height="5">
@@ -526,6 +533,7 @@
       <Params>
         <Elem Key="physicBodyDirection" Value="1" />
         <Elem Key="type" Value="0" />
+        <Elem Key="canJumpDown" Value="0" />
       </Params>
     </Item>
     <Item Id="12" Name="land21" X="4672" Y="53" Width="64" Height="5">
@@ -533,6 +541,7 @@
       <Params>
         <Elem Key="physicBodyDirection" Value="1" />
         <Elem Key="type" Value="0" />
+        <Elem Key="canJumpDown" Value="0" />
       </Params>
     </Item>
     <Item Id="12" Name="land22" X="4992" Y="309" Width="128" Height="5">
@@ -554,6 +563,7 @@
       <Params>
         <Elem Key="physicBodyDirection" Value="1" />
         <Elem Key="type" Value="0" />
+        <Elem Key="canJumpDown" Value="0" />
       </Params>
     </Item>
     <Item Id="12" Name="land25" X="4992" Y="53" Width="64" Height="5">
@@ -561,6 +571,7 @@
       <Params>
         <Elem Key="physicBodyDirection" Value="1" />
         <Elem Key="type" Value="0" />
+        <Elem Key="canJumpDown" Value="0" />
       </Params>
     </Item>
     <Item Id="12" Name="land26" X="5184" Y="245" Width="128" Height="5">
@@ -582,6 +593,7 @@
       <Params>
         <Elem Key="physicBodyDirection" Value="1" />
         <Elem Key="type" Value="0" />
+        <Elem Key="canJumpDown" Value="0" />
       </Params>
     </Item>
     <Item Id="12" Name="land29" X="5696" Y="117" Width="128" Height="5">
@@ -589,6 +601,7 @@
       <Params>
         <Elem Key="physicBodyDirection" Value="1" />
         <Elem Key="type" Value="0" />
+        <Elem Key="canJumpDown" Value="0" />
       </Params>
     </Item>
     <Item Id="12" Name="land30" X="5888" Y="181" Width="128" Height="5">
@@ -596,6 +609,7 @@
       <Params>
         <Elem Key="physicBodyDirection" Value="1" />
         <Elem Key="type" Value="0" />
+        <Elem Key="canJumpDown" Value="0" />
       </Params>
     </Item>
     <Item Id="12" Name="land31" X="6016" Y="245" Width="256" Height="5">
@@ -631,6 +645,7 @@
       <Params>
         <Elem Key="physicBodyDirection" Value="1" />
         <Elem Key="type" Value="0" />
+        <Elem Key="canJumpDown" Value="0" />
       </Params>
     </Item>
     <Item Id="12" Name="land36" X="1280" Y="149" Width="192" Height="5">
@@ -645,6 +660,7 @@
       <Params>
         <Elem Key="physicBodyDirection" Value="1" />
         <Elem Key="type" Value="0" />
+        <Elem Key="canJumpDown" Value="0" />
       </Params>
     </Item>
     <Item Id="12" Name="land38" X="2368" Y="245" Width="512" Height="5">
@@ -733,7 +749,7 @@
         <Elem Key="type" Value="4" />
       </Params>
     </Item>
-    <Item Id="13" Name="sodierCreator1" X="896" Y="320" Width="64" Height="64">
+    <Item Id="0" Name="sodierCreator1" X="896" Y="320" Width="64" Height="64">
       <ActiveBound X="896" Y="320" Width="64" Height="64" />
       <Params>
         <Elem Key="type" Value="2" />
@@ -781,7 +797,7 @@
     <Item Id="2" Name="sodlier1" X="480" Y="320" Width="64" Height="64">
       <ActiveBound X="480" Y="320" Width="64" Height="64" />
     </Item>
-    <Item Id="13" Name="sodierCreator2" X="2048" Y="320" Width="64" Height="64">
+    <Item Id="0" Name="sodierCreator2" X="2048" Y="320" Width="64" Height="64">
       <ActiveBound X="2048" Y="320" Width="64" Height="64" />
       <Params>
         <Elem Key="type" Value="2" />

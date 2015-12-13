@@ -96,6 +96,22 @@ public:
 	*/
 	RECT getCollisionRect();
 
+	/*
+	Cập nhật target position khi va chạm
+	@otherObject: đối tượng va chạm
+	@direction: hướng bị va chạm của otherObject
+	@withVelocity: TRUE khi kt va chạm với vận tốc, tham số move ko cần. FALSE khi va chạm bằng kt RECT
+	@move: khoảng chồng lấp của 2 object.
+	*/
+	void updateTargetPosition(BaseObject* otherObject, eDirection direction, bool withVelocity, GVector2 move = GVector2(0, 0));
+
+	float isCollide(BaseObject* otherObject, eDirection& direction, float dt);
+	bool isColliding(RECT myRect, RECT otherRect);
+	bool isColliding(BaseObject* otherObject, float& moveX, float& moveY, float dt);
+
+	RECT getSweptBroadphaseRect(BaseObject* object, float dt);
+	eDirection getSide(BaseObject* otherObject);
+
 private:
 	BaseObject* _target;
 	RECT _collisionBodyRect;
@@ -104,22 +120,6 @@ private:
 	float _txEntry, _tyEntry, _txExit, _tyExit;
 
 	map<BaseObject*, bool> _listColliding;
-
-	float isCollide(BaseObject* otherObject, eDirection& direction, float dt);
-	bool isColliding(RECT myRect, RECT otherRect);
-	bool isColliding(BaseObject* otherObject, float& moveX, float& moveY, float dt);
-
-	/*
-	Cập nhật target position khi va chạm
-		@otherObject: đối tượng va chạm
-		@direction: hướng bị va chạm của otherObject
-		@withVelocity: TRUE khi kt va chạm với vận tốc, tham số move ko cần. FALSE khi va chạm bằng kt RECT
-		@move: khoảng chồng lấp của 2 object.
-	*/
-	void updateTargetPosition(BaseObject* otherObject, eDirection direction, bool withVelocity, GVector2 move = GVector2(0, 0));
-
-	RECT getSweptBroadphaseRect(BaseObject* object, float dt);
-	eDirection getSide(BaseObject* otherObject);
 
 };
 

@@ -28,6 +28,10 @@
 #include "Boss.h"
 #include "RockFly.h"
 #include "ScubaSoldier.h"
+#include "WallTurret_inactived.h"
+#include "RedCannon_appear.h"
+#include "Fire.h"
+#include "RockFall.h"
 
 using namespace std;
 US_FRAMEWORK
