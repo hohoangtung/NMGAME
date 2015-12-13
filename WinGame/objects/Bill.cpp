@@ -538,6 +538,7 @@ void Bill::checkPosition()
 	auto viewport = SceneManager::getInstance()->getCurrentScene()->getViewport();
 	if (this->getPositionY() < viewport->getBounding().bottom)
 	{
+		this->die();
 		this->setStatus(eStatus::DYING);
 	}
 }
