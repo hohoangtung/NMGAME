@@ -53,7 +53,7 @@ private:
 	StopWatch *_stopwatch;
 	StopWatch *_loopwatch;
 	BaseObject *_explosion;
-	list<Bullet*> _listBullets;
+	//list<Bullet*> _listBullets;
 
 	void addStatus(eStatus status);
 	void removeStatus(eStatus status);

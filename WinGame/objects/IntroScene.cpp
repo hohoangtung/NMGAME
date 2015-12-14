@@ -82,6 +82,7 @@ void IntroScene::update(float dt)
 		if (SoundManager::getInstance()->IsPlaying(eSoundId::DESTROY_BRIDGE) == false)
 		{
 			auto play = new PlayScene();
+			play->init();
 			SceneManager::getInstance()->addScene(play);
 		}
 	}
@@ -122,6 +123,7 @@ void IntroScene::release()
 	_introtable->release();
 	SAFE_DELETE(_introtable);
 	SAFE_DELETE(_movement);
+	SAFE_DELETE(_access);
 }
 
 IntroScene::IntroScene()

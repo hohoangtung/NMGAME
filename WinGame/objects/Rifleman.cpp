@@ -34,8 +34,11 @@ void Rifleman::init()
 
 	Movement *movement = new Movement(a, v, this->_sprite);
 	this->_listComponent.insert(pair<string, IComponent*>("Movement", movement));
-	if (this->getStatus() != eStatus::HIDDEN || this->getStatus() != eStatus::HIDING)
+	if (this->getStatus() != eStatus::HIDDEN && this->getStatus() != eStatus::HIDING)
 		this->_listComponent.insert(pair<string, IComponent*>("Gravity", new Gravity(GVector2(0, -ENEMY_GRAVITY), movement)));
+	else
+		this->_listComponent.insert(pair<string, IComponent*>("Gravity", new Gravity(VECTOR2ZERO, movement)));
+
 	_animations[NORMAL] = new Animation(_sprite, RIFLEMAN_ANIMATION_SPEED);
 	_animations[NORMAL]->addFrameRect(eID::RIFLEMAN, "normal_01", NULL);
 
@@ -81,10 +84,10 @@ void Rifleman::draw(LPD3DXSPRITE spritehandle, Viewport* viewport)
 	this->_sprite->render(spritehandle, viewport);
 	_animations[this->getStatus()]->draw(spritehandle, viewport);
 
-	for (auto it = _listBullets.begin(); it != _listBullets.end(); it++)
-	{
-		(*it)->draw(spritehandle, viewport);
-	}
+	//for (auto it = _listBullets.begin(); it != _listBullets.end(); it++)
+	//{
+	//	(*it)->draw(spritehandle, viewport);
+	//}
 }
 
 void Rifleman::release()
@@ -234,10 +237,10 @@ void Rifleman::update(float deltatime)
 		if (this->isInStatus(SHOOTING))
 			shoot();
 	}
-	for (auto it = _listBullets.begin(); it != _listBullets.end(); it++)
-	{
-		(*it)->update(deltatime);
-	}
+	//for (auto it = _listBullets.begin(); it != _listBullets.end(); it++)
+	//{
+	//	(*it)->update(deltatime);
+	//}
 
 	for (auto it : _listComponent)
 	{

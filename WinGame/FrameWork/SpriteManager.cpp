@@ -124,15 +124,6 @@ void SpriteManager::loadResource(LPD3DXSPRITE spriteHandle)
 	this->_listSprite[eID::BULLET] = bl;
 	this->loadSpriteInfo(eID::BULLET, "Resources\\bullets_type.txt");
 
-	sp = new Sprite(spriteHandle, L"Resources\\blank.png");
-	this->_listSprite[eID::BLANK] = sp;
-
-	sp = new Sprite(spriteHandle, L"Resources\\intro.png");
-	this->_listSprite[eID::MENU] = sp;
-
-	sp = new Sprite(spriteHandle, L"Resources\\yellowfalcon.png");
-	this->_listSprite[eID::YELLOWFALCON] = sp;
-
 	sp = new Sprite(spriteHandle, L"Resources\\stage3_elements.png", 5, 5);
 	this->_listSprite[eID::ROCKFLY] = sp;
 	this->loadSpriteInfo(eID::ROCKFLY, "Resources\\rockfly_animation.txt");
@@ -148,6 +139,18 @@ void SpriteManager::loadResource(LPD3DXSPRITE spriteHandle)
 	sp = new Sprite(spriteHandle, L"Resources\\stage3_elements.png", 5, 5);
 	this->_listSprite[eID::ROCKFALL] = sp;
 	this->loadSpriteInfo(eID::ROCKFALL, "Resources\\rockfall_animation.txt");
+
+	sp = new Sprite(spriteHandle, L"Resources\\BeginState3.png");
+	this->_listSprite[eID::BEGIN_STAGE3] = sp;
+
+	sp = new Sprite(spriteHandle, L"Resources\\blank.png");
+	this->_listSprite[eID::BLANK] = sp;
+
+	sp = new Sprite(spriteHandle, L"Resources\\intro.png");
+	this->_listSprite[eID::MENU] = sp;
+
+	sp = new Sprite(spriteHandle, L"Resources\\yellowfalcon.png");
+	this->_listSprite[eID::YELLOWFALCON] = sp;
 
 	// Đọc file xml để tạo đối tượng sprite
 	sp = loadXMLDoc(spriteHandle, L"Resources//Map//stage1.xml");

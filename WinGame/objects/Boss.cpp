@@ -34,8 +34,8 @@ void Boss::init()
 	// Thanh niên núp lùm
 	_rifleman = new Rifleman(eStatus::HIDDEN, _startposition.x + 32.0f, _startposition.y + 282.0f);
 	_rifleman->init();
-	auto gravity = ((Rifleman*)_rifleman)->getComponent("Gravity");
-	((Gravity*)gravity)->setGravity(VECTOR2ZERO);
+	//auto gravity = ((Rifleman*)_rifleman)->getComponent("Gravity");
+	//((Gravity*)gravity)->setGravity(VECTOR2ZERO);
 
 	_octexplose = nullptr;
 
@@ -76,6 +76,7 @@ void Boss::update(float deltatime)
 		{
 			_octexplose = new OctExplose(GVector2(_shield->getPositionX(), _shield->getPositionY()));
 			_octexplose->init();
+			SoundManager::getInstance()->Stop(eSoundId::BACKGROUND_STAGE1);
 			SoundManager::getInstance()->Play(eSoundId::DESTROY_BOSS);
 		}
 	}
@@ -86,6 +87,11 @@ void Boss::update(float deltatime)
 	if (_octexplose != nullptr)
 	{
 		_octexplose->update(deltatime);
+		if (_octexplose->getStatus() == eStatus::DESTROY)
+		{
+			this->setStatus(eStatus::DYING);
+			this->setPhysicsBodySide(eDirection::NONE);
+		}
 	}
 
 	for (auto it = _componentList.begin(); it != _componentList.end(); it++)
@@ -336,6 +342,7 @@ void Boss::BossGun::dropHitpoint(int damage)
 
 void Boss::BossGun::init()
 {
+	this->_hitpoint = BOSS_GUN_HP;
 	_sprite = SpriteManager::getInstance()->getSprite(eID::BOSS_STAGE1);
 	this->setPosition(_startposition);
 	//_animation = new Animation(_sprite, 0.5f);
@@ -464,6 +471,7 @@ Boss::BossGun::~BossGun()
 
 void Boss::BossShield::init()
 {
+	this->_hitpoint = BOSS_SHIELD_HP;
 	_sprite = SpriteManager::getInstance()->getSprite(eID::BOSS_STAGE1);
 	_animation = new Animation(_sprite, 0.09f);
 	this->setPosition(_startposition);
@@ -539,6 +547,17 @@ void Boss::BossShield::dropHitpoint(int damage)
 		this->setStatus(eStatus::BURST);
 	}
 }
+RECT Boss::BossShield::getBounding()
+{
+	RECT basebound = BaseObject::getBounding();
+	basebound.top -= 18;
+	basebound.bottom += 14;
+	basebound.right += 8;
+	basebound.left -= 18;
+	return basebound;
+}
+
+
 Boss::BossShield::BossShield(GVector2 position) : BaseEnemy(eID::BOSS_SHIELD)
 {
 	_startposition = position;

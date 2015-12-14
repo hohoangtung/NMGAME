@@ -8,7 +8,7 @@ LGun::LBullet::LBullet(GVector2 startPosition, float degree)
 
 void LGun::LBullet::init()
 {
-	_damage = 3;
+	_damage = 1;
 
 	_sprite = SpriteManager::getInstance()->getSprite(eID::BULLET);
 	_sprite->setFrameRect(SpriteManager::getInstance()->getSourceRect(eID::BULLET, "l_bullet"));

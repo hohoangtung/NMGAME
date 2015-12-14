@@ -28,7 +28,7 @@ update 30/11/2015
 #include "LifeUI.h"
 
 #define BILL_MOVE_SPEED 115
-#define BILL_JUMP_VEL 450
+#define BILL_JUMP_VEL 400
 #define GRAVITY 800
 #define SHOOT_SPEED 200.0f
 #define MAX_BULLET 4
@@ -58,7 +58,6 @@ public:
 
 	// Đổi kiểu đạn. 
 	void changeBulletType(eAirCraftType );
-	void die();
 
 	void setLifeNumber(int number);
 	int getLifeNumber();
@@ -70,6 +69,22 @@ public:
 	int getMaxBullet();
 
 	void setStatus(eStatus status) override;
+
+
+	void forceMoveRight();
+	void forceMoveLeft();
+	void forceJump();
+	void unhookinputevent();
+	// Character action.
+	void standing();
+	void moveLeft();
+	void moveRight();
+	void jump();
+	void layDown();
+	void falling();
+	void shoot();
+	void revive();
+	void die();
 
 private:
 	map<int, Animation*> _animations;
@@ -94,15 +109,6 @@ private:
 	float _protectTime;
 
 	LifeUI* _lifeUI;
-
-	void standing();
-	void moveLeft();
-	void moveRight();
-	void jump();
-	void layDown();
-	void falling();
-	void shoot();
-	void revive();
 
 	GVector2 getVelocity();
 

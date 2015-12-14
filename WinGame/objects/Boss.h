@@ -11,6 +11,9 @@
 #include "BulletManager.h"
 #include "Rifleman.h"
 
+#define BOSS_SHIELD_HP		32
+#define BOSS_GUN_HP			16;
+
 class Boss : public BaseEnemy
 {
 public:
@@ -95,6 +98,8 @@ public:
 
 		void dropHitpoint();
 		void dropHitpoint(int damage);
+
+		RECT getBounding();
 		BossShield(GVector2 position);
 		~BossShield();
 	private :

@@ -971,3 +971,20 @@ eDirection Bill::getAimingDirection()
 	return direction;
 }
 
+void Bill::forceMoveRight()
+{
+	onKeyPressed(new KeyEventArg(DIK_RIGHT));
+}
+void Bill::forceMoveLeft()
+{
+	onKeyPressed(new KeyEventArg(DIK_LEFT));
+}
+void Bill::forceJump()
+{
+	onKeyPressed(new KeyEventArg(DIK_X));
+}
+
+void Bill::unhookinputevent()
+{
+	__unhook(_input);
+}

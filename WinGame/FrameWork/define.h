@@ -54,8 +54,10 @@ enum eID
 	LIFE_ICON       =22,
 	WALL_TURRET_INACTIVED =23,
 	RED_CANNON_APPEAR =24,
-	FIRE			=25,
+	FIRE			= 25,
 	ROCKFALL = 26,
+
+	BEGIN_STAGE3	= 27,
 };
  
 enum eStatus
@@ -232,6 +234,8 @@ typedef D3DXVECTOR3 GVector3;
 typedef D3DXVECTOR2 GVector2;
 #define VECTOR2ZERO GVector2(0.0f, 0.0f)
 #define VECTOR2ONE  GVector2(1.0f, 1.0f)
+
+#define ACTOR_SCENARIO [event_receiver(native)]
 
 #define NS_FRAMEWORK		namespace FrameWork
 

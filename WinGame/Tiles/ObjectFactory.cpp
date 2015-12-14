@@ -339,7 +339,7 @@ BaseObject * ObjectFactory::getAirCraft(xml_node node)
 	}
 	else
 	{
-		hVeloc = HORIZONTAL_VELOC;
+		hVeloc = AIRCRAFT_HORIZONTAL_VELOC;
 	}
 
 	// freq
@@ -353,6 +353,7 @@ BaseObject * ObjectFactory::getAirCraft(xml_node node)
 	}
 
 	auto airCraft = new AirCraft(pos, hVeloc, ampl, freq, type);
+
 	airCraft->init();
 
 	return airCraft;
@@ -458,6 +459,7 @@ BaseObject* ObjectFactory::getFalcon(xml_node node)
 		type = eAirCraftType::R;
 	}
 	auto falcon = new Falcon(GVector2(x + 32, y - 32), (eAirCraftType)type);
+
 	falcon->init();
 	return falcon;
 }
