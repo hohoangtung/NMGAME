@@ -67,11 +67,11 @@ bool PlayScene::init()
 	boss->init();
 	_listobject.push_back(boss);
 
-	auto redcannon = new RedCannon(WT_APPEAR, 400, 200);
+	auto redcannon = new RedCannon(WT_APPEAR, GVector2(400,200));
 	redcannon->init();
 	_listobject.push_back(redcannon);
 
-	auto wall_turret = new WallTurret(WT_APPEAR, 430, 150);
+	auto wall_turret = new WallTurret(WT_APPEAR, 450, 150);
 	wall_turret->init();
 	_listobject.push_back(wall_turret);
 	//auto bridge = new Bridge(GVector2(1552, 240));
@@ -87,13 +87,13 @@ bool PlayScene::init()
 	rockfly->init();
 	_listobject.push_back(rockfly);
 
-	auto fire = new Fire(GVector2(200, 280), GVector2(400, 280),GVector2(300,280),1);
+	/*auto fire = new Fire(GVector2(200, 280), GVector2(400, 280),GVector2(300,280),1);
 	fire->init();
 	_listobject.push_back(fire);
 
 	auto fire1 = new Fire(GVector2(200, 280), GVector2(400, 280),GVector2( 300,280),-1);
 	fire1->init();
-	_listobject.push_back(fire1);
+	_listobject.push_back(fire1);*/
 
 	//auto lifeUI = new LifeUI(GVector2(20, 30), bill->getLifeNumber());
 	//lifeUI->init();

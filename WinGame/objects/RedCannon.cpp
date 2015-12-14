@@ -1,10 +1,18 @@
 
 #include"RedCannon.h"
 
-int _shooting = 1;
 #define PI 3.14159265
 StopWatch *_loopwatch;
+bool _live = true;
 
+RedCannon::RedCannon(GVector2 pos) :BaseEnemy(eID::REDCANNON)
+{
+	_sprite = SpriteManager::getInstance()->getSprite(eID::REDCANNON);
+
+	_sprite->setFrameRect(0, 0, 32, 32);
+	this->setPosition(pos);
+	
+}
 RedCannon::RedCannon(eStatus status, GVector2 position) :BaseEnemy(eID::REDCANNON)
 {
 	_sprite = SpriteManager::getInstance()->getSprite(eID::REDCANNON);
@@ -49,31 +57,36 @@ void RedCannon::init()
 	__hook(&CollisionBody::onCollisionBegin, collisionBody, &RedCannon::onCollisionBegin);
 	__hook(&CollisionBody::onCollisionEnd, collisionBody, &RedCannon::onCollisionEnd);
 
-	_animation[WT_APPEAR] = new Animation(_sprite, CANNON_ANIMATION_SPEED);
-	
-	_animation[WT_CLOSE] = new Animation(_sprite, CANNON_ANIMATION_SPEED);
+	_animation[WT_APPEAR] = new Animation(_sprite, CANNON_APPEAR_SPEED);
+	_animation[WT_APPEAR]->addFrameRect(eID::REDCANNON, "appear_01", "appear_02", "appear_03", "appear_04", "appear_05", "appear_06", NULL);
+	_animation[WT_APPEAR]->setLoop(false);
+
+	_animation[WT_CLOSE] = new Animation(_sprite, CANNON_APPEAR_SPEED);
+	_animation[WT_CLOSE]->addFrameRect(eID::REDCANNON, "appear_06", "appear_05", "appear_04", "appear_03", "appear_02", "appear_01", NULL);
+	_animation[WT_CLOSE]->setLoop(false);
 
 	_animation[WT_NORMAL] = new Animation(_sprite, CANNON_ANIMATION_SPEED);
 	_animation[WT_NORMAL]->addFrameRect(eID::REDCANNON, "run_01", "run_02", "run_03", NULL);
 
 	_animation[WT_NORMAL | WT_SHOOTING] = new Animation(_sprite, CANNON_ANIMATION_SPEED);
-	_animation[WT_NORMAL | WT_SHOOTING]->addFrameRect(eID::REDCANNON, "run_03", /*"run_02",*/ NULL);
+	_animation[WT_NORMAL | WT_SHOOTING]->addFrameRect(eID::REDCANNON, "run_01", "run_02","run_03", NULL);
 
 	_animation[WT_LEFT_60] = new Animation(_sprite, CANNON_ANIMATION_SPEED);
 	_animation[WT_LEFT_60]->addFrameRect(eID::REDCANNON, "run_04", "run_05", "run_06", NULL);
 
 	_animation[WT_LEFT_60 | WT_SHOOTING] = new Animation(_sprite, CANNON_ANIMATION_SPEED);
-	_animation[WT_LEFT_60 | WT_SHOOTING]->addFrameRect(eID::REDCANNON, "run_06", NULL);
+	_animation[WT_LEFT_60 | WT_SHOOTING]->addFrameRect(eID::REDCANNON, "run_04","run_05","run_06", NULL);
 
 	_animation[WT_LEFT_30] = new Animation(_sprite, CANNON_ANIMATION_SPEED);
 	_animation[WT_LEFT_30]->addFrameRect(eID::REDCANNON, "run_07", "run_08", "run_09", NULL);
 
 	_animation[WT_LEFT_30 | WT_SHOOTING] = new Animation(_sprite, CANNON_ANIMATION_SPEED);
-	_animation[WT_LEFT_30 | WT_SHOOTING]->addFrameRect(eID::REDCANNON/*, "run_08"*/, "run_09", NULL);
+	_animation[WT_LEFT_30 | WT_SHOOTING]->addFrameRect(eID::REDCANNON,"run_07", "run_08", "run_09", NULL);
 	_animation[this->getStatus()]->stop();
-
+	
 	_stopwatch = new StopWatch();
 	_loopwatch = new StopWatch();
+
 	_explosion = NULL;
 	this->setHitpoint(CANNON_HITPOINT);
 	this->setScore(CANNON_SCORE);
@@ -84,15 +97,13 @@ void RedCannon::draw(LPD3DXSPRITE spriteHandle, Viewport* viewport)
 {
 	if (_explosion != NULL)
 		_explosion->draw(spriteHandle, viewport);
-	if (this->_wtstatus == eWT_Status::WT_APPEAR || this->_wtstatus == eWT_Status::WT_CLOSE)
-	{
-		if (_redcannon_inactived != NULL)
-			_redcannon_inactived->draw(spriteHandle, viewport);
-	}
 	if (this->getStatus() == eStatus::DESTROY)
 		return;
-	this->_sprite->render(spriteHandle, viewport);
-	_animation[this->getWT_Status()]->draw(spriteHandle, viewport);
+	if (this->getHitpoint()>0)
+	{
+		this->_sprite->render(spriteHandle, viewport);
+		_animation[this->getWT_Status()]->draw(spriteHandle, viewport);
+	}
 	for (auto it = _listBullets.begin(); it != _listBullets.end(); it++)
 	{
 		(*it)->draw(spriteHandle, viewport);
@@ -102,79 +113,65 @@ void RedCannon::draw(LPD3DXSPRITE spriteHandle, Viewport* viewport)
 
 void RedCannon::update(float deltatime)
 {
-	if (_explosion != nullptr)
-		updateExplosion(deltatime);
-	if (this->_wtstatus == eWT_Status::WT_APPEAR||this->_wtstatus==eWT_Status::WT_CLOSE)
-	{
-		if (_redcannon_inactived == NULL)
-			initRedcannon_inactived();
-		else updateRedcannon_inactived(deltatime);
-		this->_billAngle = -90;
-	}
-
-	if (this->getStatus() == eStatus::DESTROY)
-		return;
 	
-	if (this->getStatus() == eStatus::BURST)
+	rangeattack();
+
+	if (this->getHitpoint()<=0)
 	{
 		if (_explosion == nullptr)
 			initExplosion();
 		else
 		{
-			/*updateExplosion(deltatime);*/
+			updateExplosion(deltatime);
 			if (_explosion->getStatus() == eStatus::DESTROY)
 			{
 				this->setStatus(eStatus::DESTROY);
 			}
-		}
+		}	
+	}
+
+	if (_animation[WT_CLOSE]->isAnimate() == false)
+	{
+		this->setStatus(eStatus::DESTROY);
+	}
+	if (this->getStatus() == eStatus::DESTROY)
 		return;
-	}
-	if (this->getHitpoint()<=0)
+	if (_animation[WT_APPEAR]->isAnimate() == true)
 	{
-		if (this->_stopwatch->isStopWatch(200))
-		{
-			this->setStatus(eStatus::BURST);
-			return;
-		}
-			
+		_billAngle = -90;
 	}
-	
-	if (this->_redcannon_inactived->getStatus() == eStatus::WAITING)
+	if (_animation[WT_APPEAR]->isAnimate() == false && _live==true)
 	{
+		
 		if (_loopwatch->isTimeLoop(2000.0f))
 		{
 			calculateBillangle();
 		}
-		
+
 		if ((_billAngle >= -90 && _billAngle < -75))
 		{
 			this->setScale(SCALE_FACTOR);
 			this->setStatus(WT_NORMAL);
 			_shootingAngle = -90;
+			
 		}
 		else if (_billAngle >= -75 && _billAngle < -45)
 		{
 			this->setScale(SCALE_FACTOR);
 			this->setStatus(WT_LEFT_60);
 			_shootingAngle = -60;
+			
 		}
 		else if (_billAngle >= -45 && _billAngle < 0)
 		{
 			this->setScale(SCALE_FACTOR);
 			this->setStatus(WT_LEFT_30);
 			_shootingAngle = -30;
+			
 		}
-
-		if (_shooting == 1 && !this->isInStatus(WT_SHOOTING))
-		{
-			this->addStatus(WT_SHOOTING);
-		}
-		else if (this->isInStatus(WT_SHOOTING))
-		{
-			this->removeStatus(WT_SHOOTING);
-		}
+		this->addStatus(WT_SHOOTING);
 	}
-
+	
 		for (auto it = _listBullets.begin(); it != _listBullets.end(); it++)
 		{
 			(*it)->update(deltatime);
@@ -183,46 +180,27 @@ void RedCannon::update(float deltatime)
 		{
 			it.second->update(deltatime);
 		}
-
 		
-			if (_stopwatch->isStopWatch(CANNON_SHOOTING_DELAY))
+		
+			if (_stopwatch->isStopWatch(CANNON_SHOOTING_DELAY)) //2000 ms
 			{
-
 				if (this->isInStatus(WT_SHOOTING))
 				{
 					shoot();
 				}
-
 				_stopwatch->restart();
 			}
-			
-	_animation[this->getWT_Status()]->update(deltatime);
 
+		_animation[this->getWT_Status()]->update(deltatime);
 }
 
-void RedCannon::initRedcannon_inactived()
-{
-	if (this->_wtstatus == eWT_Status::WT_APPEAR)
-	{
-		_redcannon_inactived = new RedCannon_appear(1, this->_sprite->getPosition());
-		_redcannon_inactived->init();
-	}
-	if (this->_wtstatus == eWT_Status::WT_CLOSE)
-	{
-		_redcannon_inactived = new RedCannon_appear(2, this->_sprite->getPosition());
-		_redcannon_inactived->init();
-	}
-}
-void RedCannon::updateRedcannon_inactived(float deltatime)
-{
-	_redcannon_inactived->update(deltatime);
-}
 void RedCannon::initExplosion()
 {
-	_explosion = new Explosion(2);
+	this->_explosion = new Explosion(2);
 	_explosion->init();
 	_explosion->setScale(SCALE_FACTOR);
-	((Explosion*)_explosion)->setPosition(this->_sprite->getPosition());
+	_explosion->setPosition(this->_sprite->getPosition());
+	
 }
 void RedCannon::updateExplosion(float deltatime)
 {
@@ -279,10 +257,32 @@ void RedCannon::release()
 
 void RedCannon::onCollisionBegin(CollisionEventArg* collision_event)
 {
-	
+	eID objectID = collision_event->_otherObject->getId();
+	switch (objectID)
+	{
+	case eID::BILL:
+	{
+				if (collision_event->_otherObject->isInStatus(eStatus::DYING) == false)
+					{
+						  collision_event->_otherObject->setStatus(eStatus::DYING);
+						  ((Bill*)collision_event->_otherObject)->die();
+					}
+					  break;
+	}
+	default:
+		break;
+	}
 }
 void RedCannon::onCollisionEnd(CollisionEventArg* collision_event)
 {}
+float RedCannon::checkCollision(BaseObject* object,float dt)
+{
+	/*auto collisionBody = (CollisionBody*)_listComponent["CollisionBody"];
+	eID objectId = object->getId();
+	if (objectId==eID::BILL)
+	collisionBody->checkCollision(object, dt);*/
+	return 0.0f;
+}
 eWT_Status RedCannon::getWT_Status()
 {
 	return this->_wtstatus;
@@ -331,9 +331,9 @@ void RedCannon::shoot()
 	{
 		pos.y += this->getSprite()->getFrameHeight() / 2;
 	}
-	
-	_listBullets.push_back(new Bullet(pos, (eBulletType)(ENEMY_BULLET|NORMAL_BULLET), angle));
-	_listBullets.back()->init();
+	BulletManager::insertBullet(new Bullet(pos, (eBulletType)(ENEMY_BULLET | NORMAL_BULLET), angle));
+	/*_listBullets.push_back(new Bullet(pos, (eBulletType)(ENEMY_BULLET|NORMAL_BULLET), angle));
+	_listBullets.back()->init();*/
 }
 void RedCannon::calculateBillangle()
 {
@@ -347,6 +347,19 @@ void RedCannon::calculateBillangle()
 		_billAngle = -30;
 	else _billAngle = -90;
 }
+void RedCannon::rangeattack()
+{
+	auto bill = ((PlayScene*)SceneManager::getInstance()->getCurrentScene())->getBill();
+	float dx = this->getPosition().x - bill->getPosition().x;
+	float dy = this->getPosition().y - (bill->getPosition().y + bill->getSprite()->getFrameHeight() / 2);
+	
+	if (dx < 0 && abs(dx)>=(WINDOW_WIDTH/2-50) )
+	{
+		this->setStatus(eWT_Status::WT_CLOSE);
+		_live = false;
+	}
+}
+
 
 void RedCannon::drophitpoint()
 {

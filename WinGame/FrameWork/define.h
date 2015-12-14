@@ -52,8 +52,7 @@ enum eID
 	BOSS_SHIELD		= 20,
 	ROCKFLY			= 21,
 	LIFE_ICON       =22,
-	WALL_TURRET_INACTIVED =23,
-	RED_CANNON_APPEAR =24,
+	
 	FIRE			=25,
 };
  
