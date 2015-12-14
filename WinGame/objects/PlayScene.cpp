@@ -55,7 +55,7 @@ bool PlayScene::init()
 
 	auto bill = new Bill();
 	bill->init();
-	bill->setPosition(6000, 500);
+	bill->setPosition(200, 500);
 	
 	this->_bill = bill;
 	_listControlObject.push_back(bill);
