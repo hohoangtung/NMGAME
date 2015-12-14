@@ -28,7 +28,7 @@ void CollisionBody::checkCollision(BaseObject * otherObject, float dt, bool upda
 
 	if (time < 1.0f)
 	{
-		if (otherObject->getPhysicsBodySide() != eDirection::NONE || (direction & otherObject->getPhysicsBodySide()) == direction)
+		if (otherObject->getPhysicsBodySide() != eDirection::NONE && (direction & otherObject->getPhysicsBodySide()) == direction)
 		{
 			// cập nhật tọa độ
 			updateTargetPosition(otherObject, direction, true);
@@ -85,7 +85,7 @@ bool CollisionBody::checkCollision(BaseObject * otherObject, eDirection & direct
 
 	if (time < 1.0f)
 	{
-		if (otherObject->getPhysicsBodySide() != eDirection::NONE || (direction & otherObject->getPhysicsBodySide()) == direction)
+		if (otherObject->getPhysicsBodySide() != eDirection::NONE && (direction & otherObject->getPhysicsBodySide()) == direction)
 		{
 			// cập nhật tọa độ
 			updateTargetPosition(otherObject, direction, true);
@@ -104,11 +104,11 @@ bool CollisionBody::checkCollision(BaseObject * otherObject, eDirection & direct
 			if (otherObject->getPhysicsBodySide() == eDirection::NONE || (side & otherObject->getPhysicsBodySide()) != side)
 				return true;
 
-			// cập nhật tọa độ
-			if (updatePosition)
-				updateTargetPosition(otherObject, direction, false, GVector2(moveX, moveY));
+				// cập nhật tọa độ
+				if (updatePosition)
+					updateTargetPosition(otherObject, direction, false, GVector2(moveX, moveY));
 
-			return true;
+				return true;
 		}
 	}
 
@@ -213,7 +213,7 @@ float CollisionBody::isCollide(BaseObject * otherSprite, eDirection & direction,
 	{
 		// xét x
 		// khoảng cách gần nhất mà nhỏ hơn 0 nghĩa là thằng kia đang nằm bên trái object này => va chạm bên phải nó
-		if (_dxEntry <= 0.0f)
+		if (_dxEntry < 0.0f)
 		//if(_dxExit < 0)
 		{
 			direction = eDirection::RIGHT;
@@ -226,7 +226,7 @@ float CollisionBody::isCollide(BaseObject * otherSprite, eDirection & direction,
 	else
 	{
 		// xét y
-		if (_dyEntry <= 0.0f)
+		if (_dyEntry < 0.0f)
 		//if(_dyExit < 0.0f)
 		{
 			direction = eDirection::TOP;

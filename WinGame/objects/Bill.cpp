@@ -1,5 +1,6 @@
 ﻿#include "Bill.h"
 #include "AirCraft.h"
+#include "../debug.h"
 
 Bill::Bill(int life) : BaseObject(eID::BILL)
 {
@@ -114,6 +115,8 @@ void Bill::update(float deltatime)
 	{
 		_protectTime -= deltatime;
 	}
+
+	this->checkPosition();
 
 	this->updateStatus(deltatime);
 
@@ -401,7 +404,7 @@ void Bill::onCollisionEnd(CollisionEventArg * collision_event)
 
 float Bill::checkCollision(BaseObject * object, float dt)
 {
-	if (object->getStatus() == eStatus::DESTROY)
+	if (object->getStatus() == eStatus::DESTROY || this->isInStatus(eStatus::DYING))
 		return 0.0f;
 
 	auto collisionBody = (CollisionBody*)_componentList["CollisionBody"];
@@ -411,7 +414,7 @@ float Bill::checkCollision(BaseObject * object, float dt)
 	if (objectId == eID::BRIDGE || objectId == eID::LAND || objectId == eID::ROCKFLY)
 	{
 		// nếu ko phải là nhảy xuống, mới dừng gravity
-		if (!this->isInStatus(eStatus(eStatus::JUMPING | eStatus::FALLING)) && collisionBody->checkCollision(object, direction, dt))
+		if (!this->isInStatus(eStatus(eStatus::JUMPING | eStatus::FALLING)) && collisionBody->checkCollision(object, direction, dt, false))
 		{
 			// kt coi chổ đứng có cho nhảy xuống ko
 			if (objectId == eID::LAND)
@@ -433,8 +436,17 @@ float Bill::checkCollision(BaseObject * object, float dt)
 				if (land->getType() == eLandType::WATER)
 				{
 					// nếu trước đó không phải là nước thì mới cho bơi
-					if(preType == eLandType::GRASS || preObject == nullptr || preObject->getId() == eID::BRIDGE)
+					if (preType == eLandType::GRASS || preObject == nullptr || preObject->getId() == eID::BRIDGE)
+					{
 						this->addStatus(eStatus::SWIMING);
+
+						if (this->isInStatus(eStatus::SHOOTING))
+						{
+							_animations[eStatus::SWIMING]->setIndex(2);
+							_animations[eStatus::SWIMING]->canAnimate(false);
+						}
+					}
+						
 				}
 				else if (this->isInStatus(eStatus::SWIMING))
 				{
@@ -442,7 +454,7 @@ float Bill::checkCollision(BaseObject * object, float dt)
 					{
 						// lên bờ thì remove swim / nhảy lên
 						this->removeStatus(eStatus::SWIMING);
-						this->setPositionY(object->getPositionY());
+						this->setPositionY(object->getBounding().top);
 
 						// set lại animation swim
 						_animations[eStatus::SWIMING]->restart();
@@ -453,12 +465,20 @@ float Bill::checkCollision(BaseObject * object, float dt)
 			if (objectId == eID::ROCKFLY)
 			{
 				_canJumpDown = false;
-				
-			
 			}
 
-			if (direction == eDirection::TOP && this->getVelocity().y < 0)
+			// nếu chạm top mà trừ trường hợp nhảy lên vận tốc rớt xuống nhỏ hơn 200
+			if (direction == eDirection::TOP && !(this->getVelocity().y > -200 && this->isInStatus(eStatus::JUMPING)))
 			{
+				// vận tốc lớn hơn 200 hướng xuống => cho trường hợp nhảy từ dưới lên
+				// xử lý đặc biệt, Collision body update position bt ko được
+				// khi vào đây mới update position cho nó
+				float moveX, moveY;
+				if (collisionBody->isColliding(object, moveX, moveY, dt))
+				{
+					collisionBody->updateTargetPosition(object, direction, false, GVector2(moveX, moveY));
+				}
+
 				auto gravity = (Gravity*)this->_componentList["Gravity"];
 				gravity->setStatus(eGravityStatus::SHALLOWED);
 
@@ -510,6 +530,19 @@ float Bill::checkCollision(BaseObject * object, float dt)
 	}
 
 	return 0.0f;
+}
+
+void Bill::checkPosition()
+{
+	if (this->isInStatus(eStatus::DYING))
+		return;
+
+	auto viewport = SceneManager::getInstance()->getCurrentScene()->getViewport();
+	if (this->getPositionY() < viewport->getBounding().bottom)
+	{
+		this->die();
+		this->setStatus(eStatus::DYING);
+	}
 }
 
 void Bill::standing()

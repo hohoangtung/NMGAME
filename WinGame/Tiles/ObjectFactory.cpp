@@ -128,45 +128,92 @@ BaseObject* ObjectFactory::getObjectById(xml_node node, eID id)
 
 BaseObject* ObjectFactory::getLand(xml_node node)
 {
-	Land* land = NULL;
-	int x, y, width, height;
-	x = node.attribute("X").as_int();
-	y = node.attribute("Y").as_int();
-	width = node.attribute("Width").as_int();
-	height = node.attribute("Height").as_int();
-	
-	map<string, string> parametter;
-	xml_node params = node.child("Params");
-	string key = "";
-	string value = "";
-	for (auto item : params)
-	{
-		key = item.attribute("Key").as_string();
-		value = item.attribute("Value").as_string();
-		parametter.insert(pair<string,string>(key, value));
-	}
+	//Land* land = NULL;
+	//int x, y, width, height;
+	//x = node.attribute("X").as_int();
+	//y = node.attribute("Y").as_int();
+	//width = node.attribute("Width").as_int();
+	//height = node.attribute("Height").as_int();
+	//
+	//map<string, string> parametter;
+	//xml_node params = node.child("Params");
+	//string key = "";
+	//string value = "";
+	//for (auto item : params)
+	//{
+	//	key = item.attribute("Key").as_string();
+	//	value = item.attribute("Value").as_string();
+	//	parametter.insert(pair<string,string>(key, value));
+	//}
 
+	//eDirection dir;
+	//eLandType type;
+	//try
+	//{
+	//	dir = (eDirection) std::stoi(parametter.find("physicBodyDirection")->second);
+	//}
+	//catch(exception e)
+	//{
+	//	dir = eDirection::TOP;
+	//}
+
+	//try
+	//{
+	//	type = (eLandType) std::stoi(parametter.find("type")->second);
+	//}
+	//catch(exception e)
+	//{
+	//	type = eLandType::GRASS;
+	//}
+	//land = new Land(x, y, width, height, dir, type);
+	//land->init();
+	//return land;
+
+	auto properties = getObjectProperties(node);
+	if (properties.size() == 0)
+		return nullptr;
+
+	int x, y, width, height;
 	eDirection dir;
 	eLandType type;
-	try
+	bool canJumpDown;
+
+	x = stoi(properties["X"]);
+	y = stoi(properties["Y"]);
+	width = stoi(properties["Width"]);
+	height = stoi(properties["Height"]);
+
+	if (properties.find("type") != properties.end())
 	{
-		dir = (eDirection) std::stoi(parametter.find("physicBodyDirection")->second);
+		type = (eLandType)(stoi(properties.find("type")->second));
 	}
-	catch(exception e)
+	else
+	{
+		type = eLandType::GRASS;
+	}
+
+	if (properties.find("physicBodyDirection") != properties.end())
+	{
+		dir = (eDirection)(stoi(properties.find("physicBodyDirection")->second));
+	}
+	else
 	{
 		dir = eDirection::TOP;
 	}
 
-	try
+	if (properties.find("canJumpDown") != properties.end())
 	{
-		type = (eLandType) std::stoi(parametter.find("type")->second);
+		canJumpDown = (bool)(stoi(properties.find("canJumpDown")->second));
 	}
-	catch(exception e)
+	else
 	{
-		type = eLandType::GRASS;
+		canJumpDown = true;
 	}
-	land = new Land(x, y, width, height, dir, type);
+
+	auto land = new Land(x, y, width, height, dir, type);
 	land->init();
+	land->enableJump(canJumpDown);
+
 	return land;
 }
 

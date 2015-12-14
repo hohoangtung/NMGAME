@@ -27,7 +27,7 @@ update 30/11/2015
 #include "M_Bullet.h"
 #include "LifeUI.h"
 
-#define BILL_MOVE_SPEED 115
+#define BILL_MOVE_SPEED 120
 #define BILL_JUMP_VEL 450
 #define GRAVITY 800
 #define SHOOT_SPEED 200.0f
@@ -55,6 +55,7 @@ public:
 	void onCollisionEnd(CollisionEventArg* collision_arg);
 
 	float checkCollision(BaseObject* object, float dt);
+	void checkPosition();
 
 	// Đổi kiểu đạn. 
 	void changeBulletType(eAirCraftType );

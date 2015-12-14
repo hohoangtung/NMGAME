@@ -83,9 +83,13 @@ bool PlayScene::init()
 	//soldier->init();
 	//_listobject.push_back(soldier);
 
-	auto rockfly = new RockFly(GVector2(100, 350), GVector2(300, 350));
+	/*auto rockfly = new RockFly(GVector2(100, 350), GVector2(300, 350));
 	rockfly->init();
-	_listobject.push_back(rockfly);
+	_listobject.push_back(rockfly);*/
+
+	auto rockfall = new RockFall(GVector2(350, 400));
+	rockfall->init();
+	_listobject.push_back(rockfall);
 
 	/*auto fire = new Fire(GVector2(200, 280), GVector2(400, 280),GVector2(300,280),1);
 	fire->init();

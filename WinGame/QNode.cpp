@@ -133,8 +133,15 @@ void QNode::fetchActiveObject(RECT bound)
 	}
 }
 
-vector<string> QNode::GetActiveObject(RECT bound)
+vector<string> QNode::GetActiveObject(RECT bound, bool botleft)
 {
+	if (botleft)
+	{
+		// đổi từ bot-left sang top-left
+		bound.bottom = WINDOW_HEIGHT - bound.bottom;
+		bound.top = WINDOW_HEIGHT - bound.top;
+	}
+
 	QNode::ActiveObject.clear();
 	this->fetchActiveObject(bound);
 	return QNode::ActiveObject;

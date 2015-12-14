@@ -54,6 +54,7 @@ enum eID
 	LIFE_ICON       =22,
 	
 	FIRE			=25,
+	ROCKFALL = 26,
 };
  
 enum eStatus

@@ -28,6 +28,7 @@
 #include "Boss.h"
 #include "RockFly.h"
 #include "Fire.h"
+#include "RockFall.h"
 
 using namespace std;
 US_FRAMEWORK
