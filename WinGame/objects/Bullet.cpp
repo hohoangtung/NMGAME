@@ -223,7 +223,7 @@ void Bullet::onCollisionBegin(CollisionEventArg* collision_arg)
 			if (this->_type != eBulletType::L_BULLET)
 			this->setStatus(eStatus::DESTROY);
 			break;
-		case SOLDIER: case RIFLEMAN:
+		case SOLDIER: case RIFLEMAN: case SCUBASOLDIER:
 			if (collision_arg->_otherObject->getStatus() != HIDDEN && collision_arg->_otherObject->getStatus() != EXPOSING)
 				((BaseEnemy*)collision_arg->_otherObject)->dropHitpoint(_damage);
 			// Đạn laser đi xuyên qua soldier và rifleman
@@ -290,8 +290,11 @@ float Bullet::checkCollision(BaseObject * object, float dt)
 {
 	auto body = (CollisionBody*)_componentList.find("CollisionBody")->second;
 	//auto body = (CollisionBody*)_componentList["CollisionBody"];
-	if (object->getId() == eID::BULLET)
+	if (object->getId() == eID::BULLET || object->getId() == eID::LAND)
 		return 0.0f;
+	if (object->getId() == eID::RIFLEMAN || object->getId() == eID::SCUBASOLDIER || object->getId() == eID::SOLDIER)
+		if (object->isInStatus(eStatus::HIDDEN) || object->isInStatus(eStatus::BURST))
+			return 0.0f;
 	body->checkCollision(object, dt);
 
 	return 0.0f;

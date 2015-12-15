@@ -55,6 +55,7 @@ enum eID
 	
 	FIRE			=25,
 	ROCKFALL = 26,
+	SCUBASOLDIER = 27
 };
  
 enum eStatus
@@ -90,11 +91,9 @@ enum eStatus
 	HOLDING			= (1 << 17),
 	SWIMING			= (1 << 18),
 	DIVING			= (1 << 19),
-	HIDDEN			= (1 << 20),
-	
-	WAITING			=(1<<31),
+	HIDDEN			= (1 << 20),	
+	WAITING			= (1<<31),
 };
-
 enum eLandType
 {
 	GRASS,

@@ -1,6 +1,8 @@
 ﻿#include "Rifleman.h" 
 
 float animationTime = 0;
+int bullets = 0;
+float delay = RIFLEMAN_SHOOTING_DELAY;
 
 Rifleman::Rifleman(eStatus status, GVector2 position) : BaseEnemy(eID::RIFLEMAN) {
 	_sprite = SpriteManager::getInstance()->getSprite(eID::RIFLEMAN);
@@ -68,6 +70,7 @@ void Rifleman::init()
 
 	_stopwatch = new StopWatch();
 	_loopwatch = new StopWatch();
+	_shootingWatch = new StopWatch();
 	this->setHitpoint(RIFLEMAN_HITPOINT);
 	this->setScore(RIFLEMAN_SCORE);
 }
@@ -78,13 +81,7 @@ void Rifleman::draw(LPD3DXSPRITE spritehandle, Viewport* viewport)
 		_explosion->draw(spritehandle, viewport);
 	if (this->getStatus() == eStatus::DESTROY || this->getStatus() == eStatus::WAITING || this->getStatus() == eStatus::BURST)
 		return;
-	this->_sprite->render(spritehandle, viewport);
 	_animations[this->getStatus()]->draw(spritehandle, viewport);
-
-	for (auto it = _listBullets.begin(); it != _listBullets.end(); it++)
-	{
-		(*it)->draw(spritehandle, viewport);
-	}
 }
 
 void Rifleman::release()
@@ -98,6 +95,9 @@ void Rifleman::release()
 		this->_explosion->release();
 	SAFE_DELETE(this->_explosion);
 	SAFE_DELETE(this->_sprite);
+	SAFE_DELETE(this->_stopwatch);
+	SAFE_DELETE(this->_loopwatch);
+	SAFE_DELETE(this->_shootingWatch);
 }
 
 IComponent* Rifleman::getComponent(string componentName)
@@ -105,20 +105,6 @@ IComponent* Rifleman::getComponent(string componentName)
 	return _listComponent.find(componentName)->second;
 }
 
-void Rifleman::addStatus(eStatus status)
-{
-	this->setStatus(eStatus(this->getStatus() | status));
-}
-
-void Rifleman::removeStatus(eStatus status)
-{
-	this->setStatus(eStatus(this->getStatus() & ~status));
-}
-
-bool Rifleman::isInStatus(eStatus status)
-{
-	return (this->getStatus() & status) == status;
-}
 
 void Rifleman::setShootingAngle(double angle) 
 {
@@ -161,38 +147,21 @@ void Rifleman::update(float deltatime)
 	}
 	if (!this->isInStatus(eStatus::EXPOSING) && !this->isInStatus(eStatus::HIDING) && !this->isInStatus(eStatus::HIDDEN))
 	{
-		if (_shootingAngle >= 70 && _shootingAngle <= 110)
-		{
-			this->setScaleX(-SCALE_FACTOR);
-			this->setStatus(NORMAL);
-		}
-		else if (_shootingAngle >= 0 && _shootingAngle < 70)
-		{
-			this->setScaleX(-SCALE_FACTOR);
-			this->setStatus(AIMING_UP);
-		}
-		else if (_shootingAngle < 0 && _shootingAngle >= -70)
-		{
-			this->setScaleX(SCALE_FACTOR);
-			this->setStatus(AIMING_UP);
-		}
-		else if (_shootingAngle < -70 && _shootingAngle >= -110)
-		{
-			this->setScaleX(SCALE_FACTOR);
-			this->setStatus(NORMAL);
-		}
-		else if (_shootingAngle < -110 && _shootingAngle >= -180)
-		{
-			this->setScaleX(SCALE_FACTOR);
-			this->setStatus(AIMING_DOWN);
-		}
-		else if (_shootingAngle >= 110 && _shootingAngle < 180)
-		{
-			this->setScaleX(-SCALE_FACTOR);
-			this->setStatus(AIMING_DOWN);
-		}
-		this->addStatus(SHOOTING);
+		changeShootingStance();
 		calculateShootingAngle();
+		if (bullets >= 3)
+		{
+			bullets = 0;
+			delay = RIFLEMAN_BULLET_BURST_DELAY;
+			this->removeStatus(SHOOTING);
+		}
+		if (_loopwatch->isTimeLoop(delay))
+		{
+			this->addStatus(SHOOTING);
+			shoot();
+			bullets++;
+			delay = RIFLEMAN_SHOOTING_DELAY;			
+		}
 	}
 	else 
 	{
@@ -228,16 +197,15 @@ void Rifleman::update(float deltatime)
 				animationTime = GameTime::getInstance()->getTotalGameTime();
 			}
 		}
+		if (_loopwatch->isTimeLoop(RIFLEMAN_BULLET_BURST_DELAY))
+		{
+			if (this->isInStatus(SHOOTING))
+			{
+				shoot();
+			}
+		}
 	}
-	if (_loopwatch->isTimeLoop(RIFLEMAN_SHOOTING_DELAY))
-	{
-		if (this->isInStatus(SHOOTING))
-			shoot();
-	}
-	for (auto it = _listBullets.begin(); it != _listBullets.end(); it++)
-	{
-		(*it)->update(deltatime);
-	}
+
 
 	for (auto it : _listComponent)
 	{
@@ -247,27 +215,18 @@ void Rifleman::update(float deltatime)
 	_animations[this->getStatus()]->update(deltatime);
 }
 
-void Rifleman::setStatus(eStatus status) 
-{
-	if (_status != status)
-		_status = status;
-}
 void Rifleman::calculateShootingAngle() {
 	auto bill = ((PlayScene*)SceneManager::getInstance()->getCurrentScene())->getBill();
 	float dx = (this->getPosition().x) - (bill->getPosition().x);
 	float dy = (this->getPosition().y) - (bill->getPosition().y + bill->getSprite()->getFrameHeight() / 2);
 	if (dx > 0 && dy < 0)
 		_shootingAngle = D3DXToDegree(atan(dx / dy));
-	//_shootingAngle = atan(dx / dy) * 180 / M_PI;
 	else if (dx > 0 && dy > 0)
 		_shootingAngle = D3DXToDegree(-atan(dy / dx)) - 90;
-	//_shootingAngle = -atan(dy / dx) * 180 / M_PI - 90;
 	else if (dx < 0 && dy < 0)
 		_shootingAngle = D3DXToDegree(atan(dx / dy));
-	//_shootingAngle = atan(dx / dy) * 180 / M_PI;
 	else if (dx < 0 && dy > 0)
 		_shootingAngle = D3DXToDegree(-atan(dy / dx)) + 90;
-		//_shootingAngle = -atan(dy / dx) * 180 / M_PI + 90;
 	else if (dx == 0 && dy > 0)
 		_shootingAngle = 0;
 	else if (dx == 0 && dy < 0)
@@ -276,6 +235,8 @@ void Rifleman::calculateShootingAngle() {
 		_shootingAngle = -90;
 	else if (dx > 0 && dy == 0)
 		_shootingAngle = 90;
+	if (bill->isInStatus(eStatus::SWIMING) || bill->isInStatus(eStatus::DIVING))
+		_shootingAngle = dx < 0 ? 90 : -90;
 }
 float Rifleman::getShootingAngle() 
 {
@@ -342,41 +303,29 @@ void Rifleman::shoot()
 	int framewidth = this->getSprite()->getFrameWidth();
 	int frameheight = this->getSprite()->getFrameHeight();
 
-	// Tung
-	// Những chỗ này tui sửa chỉ mang tính nân hiệu suất.
 	if (this->isInStatus(AIMING_UP)) 
 	{
 		pos.x += this->getScale().x < 0 ? (framewidth >> 1) : -(framewidth >> 1);
 		pos.y += (frameheight >> 1);
-		//pos.x += this->getScale().x < 0 ? this->getSprite()->getFrameWidth() / 2 : -this->getSprite()->getFrameWidth() / 2;
-		//pos.y += this->getSprite()->getFrameHeight() / 2.0f;
 	}
 	else if (this->isInStatus(AIMING_DOWN))
 	{
 		pos.x += this->getScale().x < 0 ? (framewidth >> 1) : -(framewidth >> 1);
 		pos.y -= (frameheight >> 2);
-		//pos.x += this->getScale().x < 0 ? this->getSprite()->getFrameWidth() / 2 : -this->getSprite()->getFrameWidth() / 2;
-		//pos.y -= this->getSprite()->getFrameHeight() / 4.0f;
 	}
 	else if (this->isInStatus(EXPOSING))
 	{
 		pos.x += this->getScale().x < 0 ? (framewidth >> 1) : -(framewidth >> 1);
 		pos.y -= frameheight / 4.5f;
-		angle = this->getScale().x < 0 ? 90 : -90;
-		//pos.x += this->getScale().x < 0 ? this->getSprite()->getFrameWidth() / 2 : -this->getSprite()->getFrameWidth() / 2;
-		//pos.y -= this->getSprite()->getFrameHeight() / 4.5f;
+		if (angle >= 140 && angle <= 180)
+			angle = this->getScale().x < 0 ? 90 : -90;
 	}
 	else if (this->isInStatus(NORMAL))
 	{
 		pos.x += this->getScale().x < 0 ? (framewidth >> 1) : -(framewidth >> 1);
 		pos.y += this->getSprite()->getFrameHeight() / 4.5f;
-		//pos.x += this->getScale().x < 0 ? this->getSprite()->getFrameWidth() / 2 : -this->getSprite()->getFrameWidth() / 2;
-		//pos.y += this->getSprite()->getFrameHeight() / 4.5f;
 	}
-
 	BulletManager::insertBullet(new Bullet(pos, (eBulletType)(ENEMY_BULLET | NORMAL_BULLET), angle));
-	//_listBullets.push_back(new Bullet(pos, (eBulletType)(ENEMY_BULLET | NORMAL_BULLET), angle)); // normalbullet ->hardcode
-	//_listBullets.back()->init();
 }
 
 void Rifleman::die() {
@@ -395,4 +344,38 @@ void Rifleman::calculatingShootingDirection()
 		this->setScaleX(SCALE_FACTOR);
 	else
 		this->setScaleX(-SCALE_FACTOR);
+}
+
+void Rifleman::changeShootingStance()
+{
+	if (_shootingAngle >= 70 && _shootingAngle <= 110)
+	{
+		this->setScaleX(-SCALE_FACTOR);
+		this->setStatus(NORMAL);
+	}
+	else if (_shootingAngle >= 0 && _shootingAngle < 70)
+	{
+		this->setScaleX(-SCALE_FACTOR);
+		this->setStatus(AIMING_UP);
+	}
+	else if (_shootingAngle < 0 && _shootingAngle >= -70)
+	{
+		this->setScaleX(SCALE_FACTOR);
+		this->setStatus(AIMING_UP);
+	}
+	else if (_shootingAngle < -70 && _shootingAngle >= -110)
+	{
+		this->setScaleX(SCALE_FACTOR);
+		this->setStatus(NORMAL);
+	}
+	else if (_shootingAngle < -110 && _shootingAngle >= -180)
+	{
+		this->setScaleX(SCALE_FACTOR);
+		this->setStatus(AIMING_DOWN);
+	}
+	else if (_shootingAngle >= 110 && _shootingAngle < 180)
+	{
+		this->setScaleX(-SCALE_FACTOR);
+		this->setStatus(AIMING_DOWN);
+	}
 }
