@@ -288,18 +288,18 @@ BaseObject * ObjectFactory::getRedCannon(xml_node node)
 		return nullptr;
 
 	int x, y;
-	eWT_Status status;
+	eStatus status;
 
 	x = stoi(properties["X"]) + 32;
 	y = stoi(properties["Y"]) - 32;
 
 	if (properties.find("status") != properties.end())
 	{
-		status = (eWT_Status)(stoi(properties.find("status")->second));
+		status = (eStatus)(stoi(properties.find("status")->second));
 	}
 	else
 	{
-		status = eWT_Status::WT_APPEAR;
+		status = eStatus::WAITING;
 	}
 
 	auto cannon = new RedCannon(status, GVector2(x, y));
@@ -315,18 +315,18 @@ BaseObject * ObjectFactory::getWallTurret(xml_node node)
 		return nullptr;
 
 	int x, y;
-	eWT_Status status;
+	eStatus status;
 
 	x = stoi(properties["X"]) + 32;
 	y = stoi(properties["Y"]) - 32;
 
 	if (properties.find("status") != properties.end())
 	{
-		status = (eWT_Status)(stoi(properties.find("status")->second));
+		status = (eStatus)(stoi(properties.find("status")->second));
 	}
 	else
 	{
-		status = eWT_Status::WT_APPEAR;
+		status = eStatus::WAITING;
 	}
 
 	auto turret = new WallTurret(status, GVector2(x, y));

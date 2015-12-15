@@ -67,14 +67,14 @@ bool PlayScene::init()
 	boss->init();
 	_listobject.push_back(boss);
 
-	auto redcannon = new RedCannon(WT_APPEAR, GVector2(400,200));
+	auto redcannon = new RedCannon(WAITING, GVector2(900,200));
 	redcannon->init();
 	_listobject.push_back(redcannon);
 
-	auto wall_turret = new WallTurret(WT_APPEAR, 450, 150);
+	auto wall_turret = new WallTurret(WAITING, 500, 150);
 	wall_turret->init();
 	_listobject.push_back(wall_turret);
-	//auto bridge = new Bridge(GVector2(1552, 240));
+	/*auto bridge = new Bridge(GVector2(1552, 240));*/
 	//bridge->init();
 	//bridge->setPhysicsBodySide(eDirection::TOP);
 	//_listobject.push_back(bridge);
@@ -87,9 +87,9 @@ bool PlayScene::init()
 	rockfly->init();
 	_listobject.push_back(rockfly);*/
 
-	auto rockfall = new RockFall(GVector2(350, 400));
+	/*auto rockfall = new RockFall(GVector2(350, 400));
 	rockfall->init();
-	_listobject.push_back(rockfall);
+	_listobject.push_back(rockfall);*/
 
 	/*auto fire = new Fire(GVector2(200, 280), GVector2(400, 280),GVector2(300,280),1);
 	fire->init();
