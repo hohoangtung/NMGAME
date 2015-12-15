@@ -370,6 +370,8 @@ void Bill::onCollisionBegin(CollisionEventArg * collision_arg)
 
 		break;
 	}
+	case eID::REDCANNON:
+	case eID::WALL_TURRET:
 	default:
 		break;
 	}

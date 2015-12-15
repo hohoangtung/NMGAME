@@ -15,8 +15,9 @@
 #include "RedCannon_appear.h"
 #define WALL_TURRET_HITPOINT 3
 #define WALL_TURRET_SCORE 1000
-#define WALL_TURRET_SHOOTING_DELAY 2000.0f
-#define WALL_TURRET_ANIMATION_SPEED 0.5f
+#define WALL_TURRET_SHOOTING_DELAY 3000.0f
+#define WALL_TURRET_ANIMATION_SPEED 0.3f
+#define WALL_TURRET_APPEAR_SPEED 0.15f
 using namespace std;
 class WallTurret :public BaseEnemy
 {
@@ -45,7 +46,10 @@ public:
 	void setStatus(eWT_Status);
 	eWT_Status getWT_Status();
 	void shoot();
-	
+	RECT getBounding();
+	void rangeAttack();
+	/*float checkCollision(BaseObject*, float);*/
+	void checkPosition();
 
 	IComponent* getComponent(string);
 private:
@@ -55,15 +59,14 @@ private:
 	float _billAngle;
 	eWT_Status _wtstatus;
 	BaseObject* _explosion;
-	BaseObject* _wallturret_inactived;
+	
 	list<Bullet*> _listBullet;
 	StopWatch* _stopwatch;
 	
 
-	void initWallTurret_inactived();
-	void updateWallTurret_inactived(float);
+	
 	void initExplosion();
-	void updateExplision(float);
+	void updateExplosion(float);
 
 	void addStatus(eStatus);
 	void addStatus(eWT_Status);

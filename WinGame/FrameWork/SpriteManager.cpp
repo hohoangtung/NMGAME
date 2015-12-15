@@ -74,23 +74,17 @@ void SpriteManager::loadResource(LPD3DXSPRITE spriteHandle)
 	this->_listSprite.insert(pair<eID, Sprite*>(eID::FALCON, sp));
 	this->loadSpriteInfo(eID::FALCON, "Resources\\falcon_animation.txt");
 
-	sp = new Sprite(spriteHandle, L"Resources\\Cannon.png", 9, 9);
+	sp = new Sprite(spriteHandle, L"Resources\\Cannon_all.png", 15, 5);
 	//this->_listSprite.insert(pair<eID, Sprite*>(eID::REDCANON, sp));
 	this->_listSprite[eID::REDCANNON] = sp;
 	this->loadSpriteInfo(eID::REDCANNON, "Resources\\cannon_animation.txt");
 
-	sp = new Sprite(spriteHandle, L"Resources\\Cannon_appear.png", 6, 3);
-	//this->_listSprite.insert(pair<eID, Sprite*>(eID::REDCANON, sp));
-	this->_listSprite[eID::RED_CANNON_APPEAR] = sp;
-	this->loadSpriteInfo(eID::RED_CANNON_APPEAR, "Resources\\Redcannon_appear.txt");
 
-	sp = new Sprite(spriteHandle, L"Resources\\Wall_turret.png", 36, 9);
+	sp = new Sprite(spriteHandle, L"Resources\\wall_turret_all.png", 42, 9);
 	this->_listSprite[eID::WALL_TURRET] = sp;
 	this->loadSpriteInfo(eID::WALL_TURRET, "Resources\\Wall_turret_animation.txt");
 
-	sp = new Sprite(spriteHandle, L"Resources\\Wall_turret_inactived.png", 36, 9);
-	this->_listSprite[eID::WALL_TURRET_INACTIVED] = sp;
-	this->loadSpriteInfo(eID::WALL_TURRET_INACTIVED, "Resources\\Wall_turret_inactived_animation.txt");
+	
 
 	sp = new Sprite(spriteHandle, L"Resources\\aircraft.png", 10, 10);
 	this->_listSprite[eID::AIRCRAFT] = sp;
