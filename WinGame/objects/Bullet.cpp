@@ -278,8 +278,11 @@ float Bullet::checkCollision(BaseObject * object, float dt)
 {
 	auto body = (CollisionBody*)_componentList.find("CollisionBody")->second;
 	//auto body = (CollisionBody*)_componentList["CollisionBody"];
-	if (object->getId() == eID::BULLET)
+	if (object->getId() == eID::BULLET || object->getId() == eID::LAND)
 		return 0.0f;
+	if (object->getId() == eID::RIFLEMAN || object->getId() == eID::SCUBASOLDIER || object->getId() == eID::SOLDIER)
+		if (object->isInStatus(eStatus::HIDDEN) || object->isInStatus(eStatus::BURST))
+			return 0.0f;
 	body->checkCollision(object, dt);
 
 	return 0.0f;

@@ -87,6 +87,11 @@ void ScubaSoldier::update(float deltatime)
 		this->setStatus(eStatus::BURST);
 		return;
 	}
+	auto bill = ((PlayScene*)SceneManager::getInstance()->getCurrentScene())->getBill();
+	if (this->getPositionY() < bill->getPositionY())
+		this->setStatus(eStatus::SHOOTING);
+	else
+		this->setStatus(eStatus::HIDDEN);
 }
 
 void ScubaSoldier::onCollisionBegin(CollisionEventArg* collision_event) {}
