@@ -1,2 +1,5 @@
 frame_name	left	top	right	bottom
-normal		38	6	64	33
+normal		5	2	28	28
+fall_01		35	4	61	27
+fall_02		69	2	92	28
+fall_03		99	4	125	27

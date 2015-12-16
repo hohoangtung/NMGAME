@@ -71,9 +71,9 @@ bool PlayScene::init()
 	redcannon->init();
 	_listobject.push_back(redcannon);
 
-	auto wall_turret = new WallTurret(WAITING, 500, 150);
+	/*auto wall_turret = new WallTurret(WAITING, 500, 150);
 	wall_turret->init();
-	_listobject.push_back(wall_turret);
+	_listobject.push_back(wall_turret);*/
 	/*auto bridge = new Bridge(GVector2(1552, 240));*/
 	//bridge->init();
 	//bridge->setPhysicsBodySide(eDirection::TOP);
@@ -88,15 +88,15 @@ bool PlayScene::init()
 	scubasoldier->init();
 	_listobject.push_back(scubasoldier);
 
-	auto rockfly = new RockFly(GVector2(100, 350), GVector2(300, 350));
+	//auto rockfly = new RockFly(GVector2(100, 350), GVector2(300, 350));
 
 	/*auto rockfly = new RockFly(GVector2(100, 350), GVector2(300, 350));
 	rockfly->init();
 	_listobject.push_back(rockfly);*/
 
-	/*auto rockfall = new RockFall(GVector2(350, 400));
+	auto rockfall = new RockFall(GVector2(350, 400));
 	rockfall->init();
-	_listobject.push_back(rockfall);*/
+	_listobject.push_back(rockfall);
 
 	/*auto fire = new Fire(GVector2(200, 280), GVector2(400, 280),GVector2(300,280),1);
 	fire->init();

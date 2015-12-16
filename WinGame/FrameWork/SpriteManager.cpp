@@ -144,7 +144,7 @@ void SpriteManager::loadResource(LPD3DXSPRITE spriteHandle)
 	this->_listSprite[eID::FIRE] = sp;
 	this->loadSpriteInfo(eID::FIRE, "Resources\\fire_animation.txt");
 
-	sp = new Sprite(spriteHandle, L"Resources\\stage3_elements.png", 5, 5);
+	sp = new Sprite(spriteHandle, L"Resources\\rockfall.png", 4, 4);
 	this->_listSprite[eID::ROCKFALL] = sp;
 	this->loadSpriteInfo(eID::ROCKFALL, "Resources\\rockfall_animation.txt");
 
