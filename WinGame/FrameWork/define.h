@@ -58,6 +58,7 @@ enum eID
 
 	BEGIN_STAGE3	= 27,
 	GAME_OVER_SCENE		= 28,
+	SCUBASOLDIER = 29
 };
  
 enum eStatus
@@ -94,10 +95,8 @@ enum eStatus
 	SWIMING			= (1 << 18),
 	DIVING			= (1 << 19),
 	HIDDEN			= (1 << 20),
-	
-	WAITING			=(1<<31),
+	WAITING			= (1<<31),
 };
-
 enum eLandType
 {
 	GRASS,

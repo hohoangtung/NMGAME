@@ -27,6 +27,7 @@
 #include "BulletManager.h"
 #include "Boss.h"
 #include "RockFly.h"
+#include "ScubaSoldier.h"
 #include "Fire.h"
 #include "RockFall.h"
 #include "../FrameWork/Scenario.h"

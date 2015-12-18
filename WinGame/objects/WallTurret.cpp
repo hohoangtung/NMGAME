@@ -1,7 +1,7 @@
 #include"WallTurret.h"
 StopWatch* _loopwatch1;
 #define PI 3.14159265
-bool _mlive = true;
+
 
 WallTurret::WallTurret(eStatus status, GVector2 position) :BaseEnemy(eID::WALL_TURRET)
 {
@@ -127,10 +127,9 @@ void WallTurret::init()
 }
 void WallTurret::update(float deltatime)
 {
-	rangeAttack();
+	this->rangeAttack();
+	this->checkIfOutofScreen();
 	
-	if (this->getStatus() == eStatus::DESTROY)
-		return;
 	if (this->getHitpoint() <= 0)
 	{
 	
@@ -142,6 +141,8 @@ void WallTurret::update(float deltatime)
 			this->setStatus(DESTROY);
 		}		
 	}
+	if (this->getStatus() == eStatus::DESTROY)
+		return;
 	if (_animation[WT_APPEAR]->isAnimate() == true)
 	{
 		_billAngle = -90;
@@ -149,14 +150,13 @@ void WallTurret::update(float deltatime)
 	
 	if (_animation[WT_CLOSE]->isAnimate() == false)
 	{
-		this->setStatus(eStatus::WAITING);
-		_animation[WT_CLOSE]->setLoop(false);
+		this->setStatus(eStatus::HIDDEN);
 	}
 
-	if (_animation[WT_APPEAR]->isAnimate() == false && _mlive == true)
+	if (_animation[WT_APPEAR]->isAnimate() == false && this->isRange())
 	{
 		
-		if (_loopwatch1->isTimeLoop(500.0f))
+		if (_loopwatch1->isTimeLoop(800.0f))
 		{
 			calculateBillangle();
 		}
@@ -237,12 +237,11 @@ void WallTurret::update(float deltatime)
 		}
 		this->addStatus(eWT_Status::WT_SHOOTING);
 	}
-	
-		
-	//for (auto it = _listBullet.begin(); it != _listBullet.end(); it++)
-	//{
-	//	(*it)->update(deltatime);
-	//}
+		this->checkBill();
+		//for (auto it = _listBullet.begin(); it != _listBullet.end(); it++)
+		//{
+		//	(*it)->update(deltatime);
+		//}
 	for (auto it : _listComponent)
 	{
 		it.second->update(deltatime);
@@ -266,17 +265,18 @@ void WallTurret::draw(LPD3DXSPRITE spritehandle, Viewport* viewport)
 	
 	if (this->getStatus() == eStatus::DESTROY)
 		return;
-	if (this->getHitpoint() > 0)
+	if (this->getHitpoint() > 0 && this->getStatus() != eStatus::WAITING)
 	{
 
 		this->_sprite->render(spritehandle, viewport);
 		_animation[this->getWT_Status()]->draw(spritehandle, viewport);
-	}
+	//}
 	//for (auto it = _listBullet.begin(); it != _listBullet.end(); it++)
 	//{
 	//	(*it)->draw(spritehandle, viewport);
 	//}
 
+	}
 }
 void WallTurret::release()
 {
@@ -386,12 +386,12 @@ void WallTurret::onCollisionBegin(CollisionEventArg* collision_event)
 	{
 	case eID::BILL:
 	{
-		if (collision_event->_otherObject->isInStatus(eStatus::DYING) == false)
-		{
-			collision_event->_otherObject->setStatus(eStatus::DYING);
-			((Bill*)collision_event->_otherObject)->die();
-		}
-		break;
+					  if (collision_event->_otherObject->isInStatus(eStatus::DYING) == false)
+					  {
+						  collision_event->_otherObject->setStatus(eStatus::DYING);
+						  ((Bill*)collision_event->_otherObject)->die();
+					  }
+					  break;
 	}
 	default:
 		break;
@@ -456,38 +456,41 @@ void WallTurret::rangeAttack()
 	float dx = this->getPosition().x - bill->getPosition().x;
 	float dy = this->getPosition().y - (bill->getPosition().y + bill->getSprite()->getFrameHeight() / 2);
 
-	if (dx < 0 && abs(dx) >= (WINDOW_WIDTH / 2 - 50))
+	if (abs(dx) >= (WINDOW_WIDTH / 2))
 	{
 		this->setStatus(eWT_Status::WT_CLOSE);
-		_mlive = false;
+		this->setStatus(eStatus::HIDDEN);
 	}
-	else if (dx < 0 && abs(dx) < (WINDOW_WIDTH / 2 - 50))
+	else if (dx >= 0 && abs(dx) < (WINDOW_WIDTH / 2 ))
 	{
 		this->setStatus(eWT_Status::WT_APPEAR);
-		_mlive = true;
-		this->_animation[WT_APPEAR]->setLoop(true);
+		this->setStatus(eStatus::HIDDEN);
 	}
+	}
+bool WallTurret::isRange()
+{
+	auto bill = ((PlayScene*)SceneManager::getInstance()->getCurrentScene())->getBill();
+	float dx = this->getPosition().x - bill->getPosition().x;
+	float dy = this->getPosition().y - (bill->getPosition().y + bill->getSprite()->getFrameHeight() / 2);
+	if (abs(dx) <= (WINDOW_WIDTH / 2 ))
+		return true;
 }
-void WallTurret::checkPosition()
+void WallTurret::checkIfOutofScreen()
 {
 	auto viewport = ((PlayScene*)SceneManager::getInstance()->getCurrentScene())->getViewport();
-	auto bill = ((PlayScene*)SceneManager::getInstance()->getCurrentScene())->getBill();
 	RECT screenBound = viewport->getBounding();
+	RECT thisBound = this->getBounding();
 	GVector2 position = this->getPosition();
-	
-	if (isRectangleIntersected(bill->getBounding(), this->getBounding()))
+	if (thisBound.right < screenBound.left)
 	{
-		if (position.x < bill->getPositionX())
+		this->setStatus(eStatus::DESTROY);
+	}
+}
+void WallTurret::checkBill()
+	{
+	auto bill = ((PlayScene*)SceneManager::getInstance()->getCurrentScene())->getBill();
+	if (bill->getStatus() == eStatus::DYING)
 		{
-			_mlive = false;
 			this->setStatus(eWT_Status::WT_CLOSE);
-			/*this->_animation[WT_CLOSE]->setLoop(true);*/
-		}
-
-		if (bill->isInStatus(MOVING_LEFT))
-		{
-			this->setStatus(WT_APPEAR);
-			this->_animation[WT_APPEAR]->setLoop(true);
-		}
 	}
 }

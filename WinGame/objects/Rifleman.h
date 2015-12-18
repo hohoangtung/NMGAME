@@ -13,7 +13,8 @@ using namespace std;
 
 #define RIFLEMAN_HITPOINT 1
 #define RIFLEMAN_SCORE 500
-#define RIFLEMAN_SHOOTING_DELAY 1050.0f
+#define RIFLEMAN_SHOOTING_DELAY 250.0f
+#define RIFLEMAN_BULLET_BURST_DELAY 3050.0f
 #define RIFLEMAN_ANIMATION_SPEED 0.4755f
 
 class Rifleman : public BaseEnemy
@@ -42,7 +43,6 @@ public:
 
 	void die();
 	void shoot();
-	void setStatus(eStatus);
 	
 	IComponent* getComponent(string);
 
@@ -52,13 +52,11 @@ private:
 	float _shootingAngle;
 	StopWatch *_stopwatch;
 	StopWatch *_loopwatch;
+	StopWatch *_shootingWatch;
 	BaseObject *_explosion;
-	//list<Bullet*> _listBullets;
 
-	void addStatus(eStatus status);
-	void removeStatus(eStatus status);
-	bool isInStatus(eStatus status);
 	void calculateShootingAngle();
 	void calculatingShootingDirection();
+	void changeShootingStance();
 };
 #endif

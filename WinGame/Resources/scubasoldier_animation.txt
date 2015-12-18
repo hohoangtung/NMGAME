@@ -1,0 +1,3 @@
+frame_name	left	top	right	bottom
+hidden		2	0	17	30
+shooting		20	0	35	30

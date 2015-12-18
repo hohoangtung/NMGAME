@@ -15,7 +15,7 @@
 #define WALL_TURRET_SCORE 1000
 #define WALL_TURRET_SHOOTING_DELAY 3000.0f
 #define WALL_TURRET_ANIMATION_SPEED 0.3f
-#define WALL_TURRET_APPEAR_SPEED 0.15f
+#define WALL_TURRET_APPEAR_SPEED 0.1f
 using namespace std;
 class WallTurret :public BaseEnemy
 {
@@ -45,10 +45,9 @@ public:
 	eWT_Status getWT_Status();
 	void shoot();
 	RECT getBounding();
-	void rangeAttack();
+	
 	/*float checkCollision(BaseObject*, float);*/
-	void checkPosition();
-
+	void checkIfOutofScreen();
 	IComponent* getComponent(string);
 private:
 	map < string, IComponent*> _listComponent;
@@ -61,8 +60,6 @@ private:
 	//list<Bullet*> _listBullet;
 	StopWatch* _stopwatch;
 	
-
-	
 	void initExplosion();
 	void updateExplosion(float);
 
@@ -73,5 +70,9 @@ private:
 	bool isInStatus(eStatus);
 	bool isInStatus(eWT_Status);
 	void calculateBillangle();
+
+	void checkBill();
+	void rangeAttack();
+	bool isRange();
 };
 #endif
