@@ -49,6 +49,7 @@ public:
 	void draw(LPD3DXSPRITE spriteHandle) override;
 	void release() override;
 
+
 	void setViewport(Viewport* viewport);
 	//static Viewport* getViewport();
 
@@ -101,6 +102,9 @@ private:
 	
 	// Xử lý thằng bill tự đi sau khi giết boss
 	void ScenarioKillBoss(float deltatime);
+
+	bool checkGameLife();
+
 };
 
 #endif // !__PLAY_SCENE_H__

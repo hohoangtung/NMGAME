@@ -59,7 +59,7 @@ private:
 	float _shootingAngle;
 	float _billAngle;
 	StopWatch* _stopwatch;
-	list<Bullet*> _listBullets;
+	//list<Bullet*> _listBullets;
 
 	/*void initRedcannon_inactived();
 	void updateRedcannon_inactived(float);*/

@@ -1010,14 +1010,32 @@ void Bill::forceMoveRight()
 {
 	onKeyPressed(new KeyEventArg(DIK_RIGHT));
 }
+void Bill::unforceMoveRight()
+{
+	onKeyReleased(new KeyEventArg(DIK_RIGHT));
+}
 void Bill::forceMoveLeft()
 {
 	onKeyPressed(new KeyEventArg(DIK_LEFT));
+}
+void Bill::unforceMoveLeft()
+{
+	onKeyReleased(new KeyEventArg(DIK_LEFT));
 }
 void Bill::forceJump()
 {
 	onKeyPressed(new KeyEventArg(DIK_X));
 }
+void Bill::unforceJump()
+{
+	onKeyReleased(new KeyEventArg(DIK_X));
+}
+void Bill::removeGravity()
+{
+	auto graivity = (Gravity*)(this->_componentList.find("Gravity")->second);
+	graivity->setGravity(VECTOR2ZERO);
+}
+
 
 void Bill::unhookinputevent()
 {

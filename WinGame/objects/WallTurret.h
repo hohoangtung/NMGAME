@@ -58,7 +58,7 @@ private:
 	eWT_Status _wtstatus;
 	BaseObject* _explosion;
 	
-	list<Bullet*> _listBullet;
+	//list<Bullet*> _listBullet;
 	StopWatch* _stopwatch;
 	
 

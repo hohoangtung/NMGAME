@@ -1,6 +1,7 @@
 ﻿#include "PlayScene.h"
 #include "..\Tiles\ObjectFactory.h"
 #include "BeginState3Scene.h"
+#include "GameOverScene.h"
 
 //#include "LifeUI.h"
 
@@ -69,9 +70,9 @@ bool PlayScene::init()
 	//boss->init();
 	//_listobject.push_back(boss);
 
-	//auto redcannon = new RedCannon(WT_APPEAR, 400, 200);
-	//redcannon->init();
-	//_listobject.push_back(redcannon);
+	auto redcannon = new RedCannon(WT_APPEAR, 400, 200);
+	redcannon->init();
+	_listobject.push_back(redcannon);
 
 	//auto wall_turret = new WallTurret(WT_APPEAR, 430, 150);
 	//wall_turret->init();
@@ -216,13 +217,26 @@ void PlayScene::killbossScene_Bill(float deltatime, bool& isFinish)
 {
 	auto bill = (Bill*)_bill;
 
-	if (bill->getPositionX() < 6448)
-		bill->forceMoveRight();
+
+	if (bill->getBounding().left < _viewport->getBounding().right)
+	{
+		if (bill->getPositionX() < 6448)
+			bill->forceMoveRight();
+		else
+		{
+			if (bill->getPositionX() < 6500)
+				bill->forceJump();
+		}
+	}
 	else
 	{
-		if (bill->getPositionX() < 6500)
-			bill->forceJump();
+		bill->unforceMoveRight();
+		bill->unforceJump();
+		bill->removeGravity();
 	}
+
+
+
 	if (SoundManager::getInstance()->IsPlaying(eSoundId::PASS_BOSS) == false)
 	{
 		//chuyển scene
@@ -370,6 +384,9 @@ void PlayScene::update(float dt)
 	__debugoutput((float)t / CLOCKS_PER_SEC);
 #endif
 
+	if (this->checkGameLife() == true)
+		return;
+
 
 	this->ScenarioMoveViewport(dt);
 	this->ScenarioKillBoss(dt);
@@ -427,8 +444,6 @@ void PlayScene::updateViewport(BaseObject* objTracker)
 	// Bám theo object.
 	GVector2 new_position = GVector2(max(objTracker->getPositionX() - 260, 0), WINDOW_HEIGHT);		// 200 khoảng cách tối đa giữa object và map -> hardcode
 
-
-
 //#if(!_DEBUG)
 	// Không cho đi ngược
 	if (new_position.x < current_position.x)
@@ -481,6 +496,7 @@ void PlayScene::ScenarioMoveViewport(float deltatime)
 {
 	if (_director == nullptr)
 		return;
+
 	if (((Bill*)_bill)->getPositionX() > BOSS_VIEWPORT_ANCHOR)
 	{
 		flagbossScenario = true;
@@ -499,7 +515,7 @@ void PlayScene::ScenarioKillBoss(float deltatime)
 	if (_directorKillBoss == nullptr)
 		return;
 	auto boss = getObject(eID::BOSS_STAGE1);
-	if (boss != nullptr && boss->isInStatus(eStatus::DYING) == true && (SoundManager::getInstance()->IsPlaying(eSoundId::DESTROY_BOSS) == false))
+	if ((SoundManager::getInstance()->IsPlaying(eSoundId::DESTROY_BOSS) == false) && boss != nullptr && boss->isInStatus(eStatus::DYING) == true)
 	{
 		this->_directorKillBoss->update(deltatime);
 		if (this->_directorKillBoss->isFinish() == true)
@@ -507,6 +523,17 @@ void PlayScene::ScenarioKillBoss(float deltatime)
 			SAFE_DELETE(_directorKillBoss);
 		}
 	}
+}
+bool PlayScene::checkGameLife()
+{
+	if (((Bill*)_bill)->getLifeNumber() == 0)
+	{
+		auto gameoverScene = new GameOverScene(1000, 1);		// hardcode test: 1000 = số điểm
+		SoundManager::getInstance()->Stop(eSoundId::BACKGROUND_STAGE1);
+		SceneManager::getInstance()->replaceScene(gameoverScene);
+		return true;
+	}
+	return false;
 }
 BaseObject* PlayScene::getObject(eID id)
 {

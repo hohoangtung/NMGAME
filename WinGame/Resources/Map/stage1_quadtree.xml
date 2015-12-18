@@ -139,7 +139,9 @@
         </QNode>
         <QNode Id="65552" Level="4" X="2080" Y="0" Width="416" Height="416">
           <QNode Id="65552" Level="5" X="2080" Y="0" Width="208" Height="208">
-            <QNode Id="65552" Level="6" X="2080" Y="0" Width="104" Height="104" />
+            <QNode Id="65552" Level="6" X="2080" Y="0" Width="104" Height="104">
+              <Objects>airCraft2 </Objects>
+            </QNode>
             <QNode Id="65553" Level="6" X="2184" Y="0" Width="104" Height="104">
               <Objects>airCraft2 </Objects>
             </QNode>
@@ -147,7 +149,18 @@
               <Objects>airCraft2 bridge2 </Objects>
             </QNode>
             <QNode Id="65555" Level="6" X="2080" Y="104" Width="104" Height="104">
-              <Objects>land39 bridge2 sodierCreator2 </Objects>
+              <QNode Id="65555" Level="7" X="2080" Y="104" Width="52" Height="52">
+                <Objects>sodierCreator2 </Objects>
+              </QNode>
+              <QNode Id="65555" Level="7" X="2132" Y="104" Width="52" Height="52">
+                <Objects>airCraft2 </Objects>
+              </QNode>
+              <QNode Id="65555" Level="7" X="2132" Y="156" Width="52" Height="52">
+                <Objects>airCraft2 bridge2 </Objects>
+              </QNode>
+              <QNode Id="65555" Level="7" X="2080" Y="156" Width="52" Height="52">
+                <Objects>land39 bridge2 sodierCreator2 </Objects>
+              </QNode>
             </QNode>
           </QNode>
           <QNode Id="65553" Level="5" X="2288" Y="0" Width="208" Height="208">
@@ -238,7 +251,7 @@
               </QNode>
             </QNode>
             <QNode Id="65811" Level="6" X="3224" Y="208" Width="104" Height="104">
-              <Objects>land10 wallTurret2 airCraft2 </Objects>
+              <Objects>land10 wallTurret2 </Objects>
             </QNode>
             <QNode Id="65810" Level="6" X="3224" Y="312" Width="104" Height="104">
               <Objects>water4 </Objects>

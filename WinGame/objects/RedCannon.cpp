@@ -23,6 +23,7 @@ RedCannon::RedCannon(eStatus status, GVector2 position) :BaseEnemy(eID::REDCANNO
 }
 RedCannon::RedCannon(eStatus status, float x, float y) :BaseEnemy(eID::REDCANNON)
 {
+	//un-use
 	_sprite = SpriteManager::getInstance()->getSprite(eID::REDCANNON);
 	_sprite->setFrameRect(0, 0, 32, 32);
 	GVector2 pos(x, y);
@@ -104,10 +105,10 @@ void RedCannon::draw(LPD3DXSPRITE spriteHandle, Viewport* viewport)
 		this->_sprite->render(spriteHandle, viewport);
 		_animation[this->getWT_Status()]->draw(spriteHandle, viewport);
 	}
-	for (auto it = _listBullets.begin(); it != _listBullets.end(); it++)
-	{
-		(*it)->draw(spriteHandle, viewport);
-	}
+	//for (auto it = _listBullets.begin(); it != _listBullets.end(); it++)
+	//{
+	//	(*it)->draw(spriteHandle, viewport);
+	//}
 		
 }
 
@@ -172,10 +173,10 @@ void RedCannon::update(float deltatime)
 		this->addStatus(WT_SHOOTING);
 	}
 	
-		for (auto it = _listBullets.begin(); it != _listBullets.end(); it++)
-		{
-			(*it)->update(deltatime);
-		}
+		//for (auto it = _listBullets.begin(); it != _listBullets.end(); it++)
+		//{
+		//	(*it)->update(deltatime);
+		//}
 		for (auto it : _listComponent)
 		{
 			it.second->update(deltatime);
@@ -244,11 +245,11 @@ void RedCannon::release()
 		delete component.second;
 	}
 	_listComponent.clear();
-	for (auto item : _listBullets)
-	{
-		delete item;
-	}
-	_listBullets.clear();
+	//for (auto item : _listBullets)
+	//{
+	//	delete item;
+	//}
+	//_listBullets.clear();
 	if (_explosion != NULL)
 		this->_explosion->release();
 	SAFE_DELETE(_explosion);

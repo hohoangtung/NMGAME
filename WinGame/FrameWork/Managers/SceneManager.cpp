@@ -63,6 +63,7 @@ void SceneManager::removeScene()
 	if (!_scenes.empty())
 	{
 		_scenes.back()->release();
+		delete _scenes.back();
 		_scenes.pop_back();
 	}
 }
@@ -78,6 +79,7 @@ void SceneManager::clearScenes()
 	while (!_scenes.empty())
 	{
 		_scenes.back()->release();
+		delete _scenes.back();
 		_scenes.pop_back();
 	}
 }

@@ -734,14 +734,14 @@
     <Item Id="11" Name="wallTurret5" X="6208" Y="128" Width="64" Height="64">
       <ActiveBound X="6208" Y="128" Width="64" Height="64" />
     </Item>
-    <Item Id="4" Name="airCraft2" X="2240" Y="384" Width="64" Height="32">
-      <ActiveBound X="2240" Y="384" Width="1024" Height="200" />
+    <Item Id="4" Name="airCraft2" X="2176" Y="384" Width="64" Height="32">
+      <ActiveBound X="2176" Y="384" Width="1024" Height="200" />
       <Params>
         <Elem Key="type" Value="5" />
       </Params>
     </Item>
-    <Item Id="6" Name="rifleMan4" X="2560" Y="320" Width="32" Height="64">
-      <ActiveBound X="2560" Y="320" Width="32" Height="64" />
+    <Item Id="6" Name="rifleMan4" X="2496" Y="320" Width="32" Height="64">
+      <ActiveBound X="2496" Y="320" Width="32" Height="64" />
     </Item>
     <Item Id="4" Name="airCraft1" X="480" Y="384" Width="64" Height="32">
       <ActiveBound X="480" Y="384" Width="1200" Height="200" />

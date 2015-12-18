@@ -137,6 +137,9 @@ void SpriteManager::loadResource(LPD3DXSPRITE spriteHandle)
 	sp = new Sprite(spriteHandle, L"Resources\\BeginState3.png");
 	this->_listSprite[eID::BEGIN_STAGE3] = sp;
 
+	sp = new Sprite(spriteHandle, L"Resources\\GameOver.png");
+	this->_listSprite[eID::GAME_OVER_SCENE] = sp;
+
 	sp = new Sprite(spriteHandle, L"Resources\\blank.png");
 	this->_listSprite[eID::BLANK] = sp;
 

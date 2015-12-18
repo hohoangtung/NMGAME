@@ -239,10 +239,10 @@ void WallTurret::update(float deltatime)
 	}
 	
 		
-	for (auto it = _listBullet.begin(); it != _listBullet.end(); it++)
-	{
-		(*it)->update(deltatime);
-	}
+	//for (auto it = _listBullet.begin(); it != _listBullet.end(); it++)
+	//{
+	//	(*it)->update(deltatime);
+	//}
 	for (auto it : _listComponent)
 	{
 		it.second->update(deltatime);
@@ -272,10 +272,10 @@ void WallTurret::draw(LPD3DXSPRITE spritehandle, Viewport* viewport)
 		this->_sprite->render(spritehandle, viewport);
 		_animation[this->getWT_Status()]->draw(spritehandle, viewport);
 	}
-	for (auto it = _listBullet.begin(); it != _listBullet.end(); it++)
-	{
-		(*it)->draw(spritehandle, viewport);
-	}
+	//for (auto it = _listBullet.begin(); it != _listBullet.end(); it++)
+	//{
+	//	(*it)->draw(spritehandle, viewport);
+	//}
 
 }
 void WallTurret::release()
@@ -289,11 +289,11 @@ void WallTurret::release()
 	{
 		delete component.second;
 	}
-	for (auto item : _listBullet)
-	{
-		delete item;
-	}
-	_listBullet.clear();
+	//for (auto item : _listBullet)
+	//{
+	//	delete item;
+	//}
+	//_listBullet.clear();
 
 	if (_explosion != NULL)
 		this->_explosion->release();
@@ -386,12 +386,12 @@ void WallTurret::onCollisionBegin(CollisionEventArg* collision_event)
 	{
 	case eID::BILL:
 	{
-					  if (collision_event->_otherObject->isInStatus(eStatus::DYING) == false)
-					  {
-						  collision_event->_otherObject->setStatus(eStatus::DYING);
-						  ((Bill*)collision_event->_otherObject)->die();
-					  }
-					  break;
+		if (collision_event->_otherObject->isInStatus(eStatus::DYING) == false)
+		{
+			collision_event->_otherObject->setStatus(eStatus::DYING);
+			((Bill*)collision_event->_otherObject)->die();
+		}
+		break;
 	}
 	default:
 		break;
@@ -452,10 +452,11 @@ void WallTurret::calculateBillangle()
 void WallTurret::rangeAttack()
 {
 	auto bill = ((PlayScene*)SceneManager::getInstance()->getCurrentScene())->getBill();
+
 	float dx = this->getPosition().x - bill->getPosition().x;
 	float dy = this->getPosition().y - (bill->getPosition().y + bill->getSprite()->getFrameHeight() / 2);
 
-	if (dx < 0 && abs(dx) >= (WINDOW_WIDTH / 2-50))
+	if (dx < 0 && abs(dx) >= (WINDOW_WIDTH / 2 - 50))
 	{
 		this->setStatus(eWT_Status::WT_CLOSE);
 		_mlive = false;

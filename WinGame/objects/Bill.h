@@ -71,10 +71,13 @@ public:
 
 	void setStatus(eStatus status) override;
 
-
+	void removeGravity();
 	void forceMoveRight();
+	void unforceMoveRight();
 	void forceMoveLeft();
+	void unforceMoveLeft();
 	void forceJump();
+	void unforceJump();
 	void unhookinputevent();
 	// Character action.
 	void standing();

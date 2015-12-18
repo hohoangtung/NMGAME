@@ -57,6 +57,7 @@ enum eID
 	ROCKFALL = 26,
 
 	BEGIN_STAGE3	= 27,
+	GAME_OVER_SCENE		= 28,
 };
  
 enum eStatus
