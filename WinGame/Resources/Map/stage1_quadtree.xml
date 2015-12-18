@@ -512,7 +512,7 @@
             <Objects>greatwall </Objects>
           </QNode>
           <QNode Id="65814" Level="5" X="6448" Y="208" Width="208" Height="208">
-            <Objects>land35 greatwall land39 </Objects>
+            <Objects>land35 greatwall land40 </Objects>
           </QNode>
           <QNode Id="65815" Level="5" X="6240" Y="208" Width="208" Height="208">
             <QNode Id="65815" Level="6" X="6240" Y="208" Width="104" Height="104">
