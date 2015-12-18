@@ -8,6 +8,15 @@
 #include "..\FrameWork\Managers\SoundManager.h"
 #include "..\FrameWork\InputController.h"
 #include "..\FrameWork\StopWatch.h"
+#include "TextSprite.h"
+
+class HighScore
+{
+public:
+	static char* filehighscore;
+	static int loadHighScore(const char* fileInfoPath);
+	static bool saveHighScore(const char* fileInfoPath, int score);
+};
 
 class BeginStage3Scene : public Scene
 {
@@ -26,16 +35,17 @@ public:
 	void release() override;
 	void updateInput(float deltatime);
 
-	int loadHighScore(const char* fileInfoPath);
-	bool saveHighScore(const char* fileInfoPath, int score);
 private:
-	const char* filehighscore = "Resources\\highscore.txt";
 	const float delaytime = 3000;
 	int _score;
 	int _highscore;
 	int _rest;
 	Sprite* _waitscreen;
 	StopWatch* _access;
+
+	TextSprite* _textscore;
+	TextSprite* _textrest;
+	TextSprite* _texthighscore;
 };
 
 

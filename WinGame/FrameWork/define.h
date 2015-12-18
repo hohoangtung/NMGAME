@@ -58,7 +58,9 @@ enum eID
 
 	BEGIN_STAGE3	= 27,
 	GAME_OVER_SCENE		= 28,
-	SCUBASOLDIER = 29
+	SCUBASOLDIER = 29,
+	FONTEX			= 30,
+	FONTFULL		= 31,
 };
  
 enum eStatus

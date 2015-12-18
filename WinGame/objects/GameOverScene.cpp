@@ -1,6 +1,7 @@
 
 #include "GameOverScene.h"
 #include "IntroScene.h"
+#include "BeginState3Scene.h"
 
 GameOverScene::GameOverScene(int score, int prePlayScene)
 {
@@ -64,8 +65,25 @@ bool GameOverScene::init()
 	_background->setScale(SCALE_FACTOR);
 	_background->setOrigin(GVector2(0.0f, 1.0f));
 
-
 	_flash = new StopWatch();
+
+	_highscore = HighScore::loadHighScore(HighScore::filehighscore);
+
+	if (_score > _highscore)
+	{
+		_highscore = _score;
+		HighScore::saveHighScore(HighScore::filehighscore, _highscore);
+	}
+
+	_textscore = new TextSprite(eID::FONTFULL, std::to_string(_score), GVector2(160, 68));
+	_textscore->init();
+	_textscore->setScale(SCALE_FACTOR);
+	_textscore->getSprite()->setOpacity(0.7f);
+
+	_texthighscore = new TextSprite(eID::FONTFULL, std::to_string(_highscore), GVector2(288, 144));
+	_texthighscore->init();
+	_texthighscore->setScale(SCALE_FACTOR);
+	_texthighscore->getSprite()->setOpacity(0.7f);
 
 	return true;
 }
@@ -89,6 +107,8 @@ void GameOverScene::draw(LPD3DXSPRITE spriteHandle)
 {
 	_background->render(spriteHandle);
 	_yellowfancon->render(spriteHandle);
+	_textscore->draw(spriteHandle);
+	_texthighscore->draw(spriteHandle);
 }
 void GameOverScene::release()
 {

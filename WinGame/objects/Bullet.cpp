@@ -295,7 +295,7 @@ float Bullet::checkCollision(BaseObject * object, float dt)
 	if (object->getId() == eID::RIFLEMAN || object->getId() == eID::SCUBASOLDIER || object->getId() == eID::SOLDIER)
 		if (object->isInStatus(eStatus::HIDDEN) || object->isInStatus(eStatus::BURST))
 		return 0.0f;
-	body->checkCollision(object, dt);
+	body->checkCollision(object, dt, false);
 
 	return 0.0f;
 }

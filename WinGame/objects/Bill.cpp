@@ -1,11 +1,12 @@
 ﻿#include "Bill.h"
 #include "AirCraft.h"
 #include "../debug.h"
+#include "GameOverScene.h"
 
 Bill::Bill(int life) : BaseObject(eID::BILL)
 {
 	_canJumpDown = true;
-	_lifeNum = life;
+	_lifeNum = 1;
 }
 
 Bill::~Bill()
@@ -227,6 +228,7 @@ void Bill::release()
 	SAFE_DELETE(_shootStopWatch);
 	SAFE_DELETE(_reviveStopWatch);
 	SAFE_DELETE(_lifeUI);
+	this->unhookinputevent();
 }
 
 void Bill::onKeyPressed(KeyEventArg* key_event)
@@ -863,8 +865,9 @@ void Bill::updateStatus(float dt)
 {
 	if (this->isInStatus(eStatus::DYING))
 	{
-		if (_lifeNum <= 0)
+		if (_lifeNum < 0)
 		{
+			//this->setStatus(eStatus::BURST);
 			// thua cnmr
 			return;
 		}
@@ -1036,8 +1039,9 @@ void Bill::removeGravity()
 	graivity->setGravity(VECTOR2ZERO);
 }
 
-
 void Bill::unhookinputevent()
 {
-	__unhook(_input);
+	if (_input != nullptr)
+		__unhook(_input);
+
 }

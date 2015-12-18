@@ -44,7 +44,7 @@ void LifeUI::release()
 
 void LifeUI::setLifeNumber(int number)
 {
-	if (_listIcons.size() == number)
+	if (_listIcons.size() == number || number < 0)
 		return;
 
 	if (_listIcons.size() < number)

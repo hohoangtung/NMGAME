@@ -7,6 +7,7 @@ Scenario::Scenario(string name)
 
 Scenario::~Scenario()
 {
+	
 }
 
 
@@ -38,4 +39,5 @@ bool ScenarioManager::isFinish()
 
 ScenarioManager::~ScenarioManager()
 {
+
 }

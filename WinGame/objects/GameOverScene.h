@@ -11,6 +11,7 @@
 
 #include "IComponent.h"
 #include "BaseObject.h"
+#include "TextSprite.h"
 #include "Scene.h"
 
 [event_receiver(native)]
@@ -33,6 +34,10 @@ private:
 	Sprite* _background;
 
 	StopWatch* _flash;
+	TextSprite* _textscore;
+	TextSprite* _texthighscore;
+	int _highscore;
+
 	int _score;
 	int _index;
 	int _prePlayScene;

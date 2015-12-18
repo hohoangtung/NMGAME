@@ -62,9 +62,7 @@ public:
 	// Lấy đối tượng bill.
 	Bill* getBill();
 private:
-	//static Viewport* _viewport;
 	void destroyobject();				// kiển tra nếu object hết hạn sử dụng thì phá huỷ đối tượng
-	Sprite* sprite;
 	Text* _text;
 
 	// Danh sách đối tượng dùng để tạo quadtree.
@@ -79,7 +77,6 @@ private:
 	vector<BaseObject*>   _active_object;
 
 	vector<IControlable*> _listControlObject;
-	Animation* _animation;
 	Map* background;
 
 	// quadtree
@@ -97,7 +94,7 @@ private:
 	void killbossScene_Bill(float deltatime, bool& isFinish);
 	void bossScene_Viewport(float dt, bool& finish);
 	void playPassBossSound(float dt, bool& finish);
-
+	void playBossStage1Sound(float dt, bool& finish);
 	// Xử lý kéo màn hình khi gặp bốt.
 	void ScenarioMoveViewport(float deltatime);
 	

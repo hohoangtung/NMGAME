@@ -304,6 +304,23 @@ void Boss::BossBullet::draw(LPD3DXSPRITE spriteHandle, Viewport* viewport)
 	}
 }
 
+float Boss::BossBullet::checkCollision(BaseObject* object, float dt)
+{
+	auto body = (CollisionBody*)_componentList.find("CollisionBody")->second;
+	if (object->getId() == eID::LAND)
+	{
+		if (((Land*)object)->canJump() == false)
+		{
+			body->checkCollision(object, dt, false);
+		}
+	}
+	else if (object->getId() == eID::BILL)
+	{
+		body->checkCollision(object, dt, false);
+	}
+
+	return 0.0f;
+}
 
 RECT Boss::BossBullet::getBounding()
 {
@@ -358,8 +375,9 @@ void Boss::BossGun::init()
 	this->setScale(SCALE_FACTOR);
 	this->setOrigin(GVector2(1.0f, 0.5f));
 
-	_forceBullet.push_back(pair<GVector2, GVector2>(GVector2(-100.0f, 30.0f), GVector2(0.0f, -200.0f)));
-	_forceBullet.push_back(pair<GVector2, GVector2>(GVector2(-220.0f, 50.0f), GVector2(0.0f, -200.0f)));
+	_forceBullet.push_back(pair<GVector2, GVector2>(GVector2(-50.0f, 100.0f), GVector2(0.0f, -450.0f)));
+	_forceBullet.push_back(pair<GVector2, GVector2>(GVector2(-100.0f, 120.0f), GVector2(0.0f, -420.0f)));
+	_forceBullet.push_back(pair<GVector2, GVector2>(GVector2(-130.0f, 150.0f), GVector2(0.0f, -400.0f)));
 
 }
 
@@ -396,7 +414,7 @@ void Boss::BossGun::update(float deltatime)
 	if (status == eStatus::NORMAL)
 	{
 		//_animation->update(deltatime);
-		if (_stopWatch->isTimeLoop(1000.0f))
+		if (_stopWatch->isTimeLoop(750.0f))
 		{
 			_statusGun++;
 			this->initFrameRect();

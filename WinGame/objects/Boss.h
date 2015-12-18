@@ -78,6 +78,7 @@ public:
 		RECT getBounding();
 		BossBullet(GVector2 startposition, GVector2 force, GVector2 gravity);
 		void draw(LPD3DXSPRITE, Viewport*);
+		float checkCollision(BaseObject* object, float dt);
 		~BossBullet();
 
 	private:
