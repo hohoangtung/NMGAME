@@ -52,7 +52,7 @@ enum eID
 	BOSS_SHIELD		= 20,
 	ROCKFLY			= 21,
 	LIFE_ICON       =22,
-	
+
 	FIRE			=25,
 	ROCKFALL = 26,
 	SCUBASOLDIER = 27

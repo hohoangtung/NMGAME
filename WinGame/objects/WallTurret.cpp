@@ -156,7 +156,7 @@ void WallTurret::update(float deltatime)
 	if (_animation[WT_APPEAR]->isAnimate() == false && this->isRange())
 	{
 
-		if (_loopwatch1->isTimeLoop(800.0f))
+		if (_loopwatch1->isTimeLoop(1000.0f))
 		{
 			calculateBillangle();
 		}
@@ -472,6 +472,8 @@ bool WallTurret::isRange()
 	float dy = this->getPosition().y - (bill->getPosition().y + bill->getSprite()->getFrameHeight() / 2);
 	if (abs(dx) <= (WINDOW_WIDTH / 2 ))
 		return true;
+	else 
+		return false;
 }
 void WallTurret::checkIfOutofScreen()
 {
