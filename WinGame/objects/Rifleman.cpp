@@ -322,8 +322,8 @@ void Rifleman::shoot()
 	{
 		pos.x += this->getScale().x < 0 ? (framewidth >> 1) : -(framewidth >> 1);
 		pos.y -= frameheight / 4.5f;
-		if (angle >= 140 && angle <= 180)
-		angle = this->getScale().x < 0 ? 90 : -90;
+		if ((angle >= 130 && angle <= 180) || (angle <= -130 && angle >= -180))
+			angle = this->getScale().x < 0 ? 90 : -90;
 	}
 	else if (this->isInStatus(NORMAL))
 	{

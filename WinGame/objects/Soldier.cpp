@@ -96,7 +96,7 @@ void Soldier::init()
 	_animations[DYING]->addFrameRect(eID::SOLDIER, "die_01", NULL);
 
 	_animations[DIVING] = new Animation(_divingSprite, 0.15f);
-	_animations[DIVING]->addFrameRect(eID::BILL, "swim_begin", "diving", NULL);
+	_animations[DIVING]->addFrameRect(eID::BILL, "swim_begin", "diving", "swim_begin", NULL);
 
 	_stopwatch = new StopWatch();
 	_loopwatch = new StopWatch();
@@ -111,14 +111,8 @@ void Soldier::draw(LPD3DXSPRITE spritehandle, Viewport* viewport)
 	if (this->getStatus() == eStatus::DESTROY || this->getStatus() == eStatus::WAITING || this->getStatus() == eStatus::BURST)
 		return;
 
-	// animation draw là nó lấy sprite draw nên ko cần phải render sprite nữa.
-	//this->_sprite->render(spritehandle, viewport);
-
 	_animations[this->getStatus()]->draw(spritehandle, viewport);
-	for (auto it = _listBullets.begin(); it != _listBullets.end(); it++)
-	{
-		(*it)->draw(spritehandle, viewport);
-	}
+
 }
 
 void Soldier::release()
@@ -161,7 +155,7 @@ void Soldier::update(float deltatime)
 	}
 	if (this->getStatus() == eStatus::DIVING)
 	{
-		if (_animations[DIVING]->getIndex() == 1)
+		if (_animations[DIVING]->getIndex() == 2)
 		{
 			this->setStatus(eStatus::DESTROY);
 		}
@@ -227,15 +221,16 @@ void Soldier::update(float deltatime)
 	{
 		it.second->update(deltatime);
 	}
-	for (auto it = _listBullets.begin(); it != _listBullets.end(); it++)
-	{
-		(*it)->update(deltatime);
-	}
 
 	if (this->getStatus() != DESTROY)
 		_animations[this->getStatus()]->update(deltatime);
 }
 
+void Soldier::setPosition(GVector2 pos)
+{
+	_sprite->setPosition(pos);
+	_divingSprite->setPosition(pos);
+}
 void Soldier::changeDirection()
 {
 	_sprite->setScaleX(-this->getScale().x);
@@ -338,8 +333,8 @@ float Soldier::checkCollision(BaseObject * object, float dt)
 
 				if (flagend == true)
 				{
-					int chance = rand() % 2;
-					if (chance == 1)
+					int chance = rand() % 1;
+					if (chance == 0)
 					{
 						jump();
 						auto gravity = (Gravity*)this->_listComponent["Gravity"];
@@ -353,14 +348,14 @@ float Soldier::checkCollision(BaseObject * object, float dt)
 						this->setScaleX(-SCALE_FACTOR);
 					}
 				}
-				else if (land == eLandType::WATER)
-				{
-					auto gravity = (Gravity*)this->_listComponent["Gravity"];
-					auto movement = (Movement*)this->_listComponent["Movement"];
-					gravity->setStatus(eGravityStatus::SHALLOWED);
-					movement->setVelocity(VECTOR2ZERO);
-					this->setStatus(DIVING);
-				}
+			}
+			else if (land == eLandType::WATER)
+			{
+				auto gravity = (Gravity*)this->_listComponent["Gravity"];
+				auto movement = (Movement*)this->_listComponent["Movement"];
+				gravity->setStatus(eGravityStatus::SHALLOWED);
+				movement->setVelocity(VECTOR2ZERO);
+				this->setStatus(DIVING);
 			}
 		}
 	}

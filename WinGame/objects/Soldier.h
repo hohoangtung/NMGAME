@@ -42,6 +42,7 @@ public:
 	float checkCollision(BaseObject*, float);
 	void jump();
 	void die();
+	void setPosition(GVector2);
 	GVector2 getVelocity();
 	IComponent* getComponent(string);
 
