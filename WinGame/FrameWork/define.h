@@ -102,7 +102,8 @@ enum eStatus
 enum eLandType
 {
 	GRASS,
-	WATER
+	WATER,
+	BRIDGELAND
 };
 
 enum eDirection
