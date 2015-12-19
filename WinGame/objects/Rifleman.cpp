@@ -167,6 +167,7 @@ void Rifleman::update(float deltatime)
 	{
 		float time = GameTime::getInstance()->getTotalGameTime() - animationTime;
 		calculatingShootingDirection();
+		calculateShootingAngle();
 		if (this->getStatus() == HIDDEN)
 		{
 			if (time > 2000.0f)

@@ -11,8 +11,6 @@
 #include "../FrameWork/StopWatch.h"
 #include <map>
 #include <math.h>
-#include "WallTurret_inactived.h"
-#include "RedCannon_appear.h"
 #define WALL_TURRET_HITPOINT 3
 #define WALL_TURRET_SCORE 1000
 #define WALL_TURRET_SHOOTING_DELAY 3000.0f
