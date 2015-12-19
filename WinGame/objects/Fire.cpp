@@ -67,6 +67,17 @@ float Fire::checkCollision(BaseObject* object, float dt)
 	_singleFire2->checkCollision(object, dt);
 	return 0.0f;
 }
+void Fire::checkIfOutofScreen()
+{
+	auto viewport = ((PlayScene*)SceneManager::getInstance()->getCurrentScene())->getViewport();
+	RECT screenBound = viewport->getBounding();
+	RECT thisBound = this->getBounding();
+	GVector2 position = this->getPosition();
+	if (thisBound.right < screenBound.left)
+	{
+		this->setStatus(eStatus::DESTROY);
+	}
+}
 IComponent* Fire::getComponent(string componentName)
 {
 	auto it = _listComponent.find(componentName);

@@ -20,6 +20,7 @@ public:
 	void draw(LPD3DXSPRITE, Viewport*);
 	void release();
 	float checkCollision(BaseObject*, float);
+	void checkIfOutofScreen();
 	IComponent* getComponent(string);
 	~Fire();
 
@@ -36,6 +37,7 @@ public:
 		void onCollisionBegin(CollisionEventArg*);
 		void onCollisionEnd(CollisionEventArg*);
 		float checkCollision(BaseObject*,float);
+		
 		IComponent* getComponent(string);
 
 		~SingleFire();
