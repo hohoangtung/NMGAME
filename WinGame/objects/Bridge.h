@@ -38,7 +38,7 @@ Trong lớp này có:
 
 // nếu sửa max_wave thì phải sửa _matrixIndex
 #define MAX_WAVE 4		// số lần nổ
-#define DELAYTIME 500.0f
+#define DELAYTIME 50.0f	// Thời gian khoảng cách giữa hai vụ nổ
 
 #define BRIDGE_POSITION GVector2(200.0f, 300.0f)	// test value
 

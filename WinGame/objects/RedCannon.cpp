@@ -3,16 +3,8 @@
 
 #define PI 3.14159265
 StopWatch *_loopwatch;
-bool _live = true;
 
-RedCannon::RedCannon(GVector2 pos) :BaseEnemy(eID::REDCANNON)
-{
-	_sprite = SpriteManager::getInstance()->getSprite(eID::REDCANNON);
 
-	_sprite->setFrameRect(0, 0, 32, 32);
-	this->setPosition(pos);
-	
-}
 RedCannon::RedCannon(eStatus status, GVector2 position) :BaseEnemy(eID::REDCANNON)
 {
 	_sprite = SpriteManager::getInstance()->getSprite(eID::REDCANNON);
@@ -23,6 +15,7 @@ RedCannon::RedCannon(eStatus status, GVector2 position) :BaseEnemy(eID::REDCANNO
 }
 RedCannon::RedCannon(eStatus status, float x, float y) :BaseEnemy(eID::REDCANNON)
 {
+	//un-use
 	_sprite = SpriteManager::getInstance()->getSprite(eID::REDCANNON);
 	_sprite->setFrameRect(0, 0, 32, 32);
 	GVector2 pos(x, y);
@@ -82,7 +75,6 @@ void RedCannon::init()
 
 	_animation[WT_LEFT_30 | WT_SHOOTING] = new Animation(_sprite, CANNON_ANIMATION_SPEED);
 	_animation[WT_LEFT_30 | WT_SHOOTING]->addFrameRect(eID::REDCANNON,"run_07", "run_08", "run_09", NULL);
-	_animation[this->getStatus()]->stop();
 	
 	_stopwatch = new StopWatch();
 	_loopwatch = new StopWatch();
@@ -90,7 +82,6 @@ void RedCannon::init()
 	_explosion = NULL;
 	this->setHitpoint(CANNON_HITPOINT);
 	this->setScore(CANNON_SCORE);
-	
 }
 
 void RedCannon::draw(LPD3DXSPRITE spriteHandle, Viewport* viewport)
@@ -99,23 +90,22 @@ void RedCannon::draw(LPD3DXSPRITE spriteHandle, Viewport* viewport)
 		_explosion->draw(spriteHandle, viewport);
 	if (this->getStatus() == eStatus::DESTROY)
 		return;
-	if (this->getHitpoint()>0)
+	if (this->getHitpoint()>0 && this->getStatus()!=eStatus::WAITING )
 	{
 		this->_sprite->render(spriteHandle, viewport);
 		_animation[this->getWT_Status()]->draw(spriteHandle, viewport);
 	}
-	for (auto it = _listBullets.begin(); it != _listBullets.end(); it++)
-	{
-		(*it)->draw(spriteHandle, viewport);
-	}
+	//for (auto it = _listBullets.begin(); it != _listBullets.end(); it++)
+	//{
+	//	(*it)->draw(spriteHandle, viewport);
+	//}
 		
 }
 
 void RedCannon::update(float deltatime)
 {
-	
-	rangeattack();
-
+	this->rangeattack();
+	this->checkIfOutofScreen();
 	if (this->getHitpoint()<=0)
 	{
 		if (_explosion == nullptr)
@@ -140,49 +130,45 @@ void RedCannon::update(float deltatime)
 	{
 		_billAngle = -90;
 	}
-	if (_animation[WT_APPEAR]->isAnimate() == false && _live==true)
+
+	if (_animation[WT_APPEAR]->isAnimate() == false && this->isRange())
 	{
 		
 		if (_loopwatch->isTimeLoop(2000.0f))
 		{
 			calculateBillangle();
 		}
-
 		if ((_billAngle >= -90 && _billAngle < -75))
 		{
 			this->setScale(SCALE_FACTOR);
 			this->setStatus(WT_NORMAL);
 			_shootingAngle = -90;
-			
 		}
 		else if (_billAngle >= -75 && _billAngle < -45)
 		{
 			this->setScale(SCALE_FACTOR);
 			this->setStatus(WT_LEFT_60);
 			_shootingAngle = -60;
-			
 		}
 		else if (_billAngle >= -45 && _billAngle < 0)
 		{
 			this->setScale(SCALE_FACTOR);
 			this->setStatus(WT_LEFT_30);
 			_shootingAngle = -30;
-			
 		}
 		this->addStatus(WT_SHOOTING);
 	}
 	
-		for (auto it = _listBullets.begin(); it != _listBullets.end(); it++)
-		{
-			(*it)->update(deltatime);
-		}
+		//for (auto it = _listBullets.begin(); it != _listBullets.end(); it++)
+		//{
+		//	(*it)->update(deltatime);
+		//}
 		for (auto it : _listComponent)
 		{
 			it.second->update(deltatime);
 		}
 		
-		
-			if (_stopwatch->isStopWatch(CANNON_SHOOTING_DELAY)) //2000 ms
+			if (_stopwatch->isStopWatch(CANNON_SHOOTING_DELAY)) 
 			{
 				if (this->isInStatus(WT_SHOOTING))
 				{
@@ -244,11 +230,11 @@ void RedCannon::release()
 		delete component.second;
 	}
 	_listComponent.clear();
-	for (auto item : _listBullets)
-	{
-		delete item;
-	}
-	_listBullets.clear();
+	//for (auto item : _listBullets)
+	//{
+	//	delete item;
+	//}
+	//_listBullets.clear();
 	if (_explosion != NULL)
 		this->_explosion->release();
 	SAFE_DELETE(_explosion);
@@ -277,10 +263,10 @@ void RedCannon::onCollisionEnd(CollisionEventArg* collision_event)
 {}
 float RedCannon::checkCollision(BaseObject* object,float dt)
 {
-	/*auto collisionBody = (CollisionBody*)_listComponent["CollisionBody"];
+	auto collisionBody = (CollisionBody*)_listComponent["CollisionBody"];
 	eID objectId = object->getId();
 	if (objectId==eID::BILL)
-	collisionBody->checkCollision(object, dt);*/
+	collisionBody->checkCollision(object, dt);
 	return 0.0f;
 }
 eWT_Status RedCannon::getWT_Status()
@@ -353,14 +339,38 @@ void RedCannon::rangeattack()
 	float dx = this->getPosition().x - bill->getPosition().x;
 	float dy = this->getPosition().y - (bill->getPosition().y + bill->getSprite()->getFrameHeight() / 2);
 	
-	if (dx < 0 && abs(dx)>=(WINDOW_WIDTH/2-50) )
+	if (dx < 0 && abs(dx)>=(WINDOW_WIDTH/2-100) )
 	{
 		this->setStatus(eWT_Status::WT_CLOSE);
-		_live = false;
+	}
+	if (dx >= 0 && dx <= (WINDOW_WIDTH / 2 ))
+	{
+		this->setStatus(eWT_Status::WT_APPEAR);
+		this->setStatus(eStatus::HIDDEN);
 	}
 }
+bool RedCannon::isRange()
+{
+	auto bill = ((PlayScene*)SceneManager::getInstance()->getCurrentScene())->getBill();
+	float dx = this->getPosition().x - bill->getPosition().x;
+	float dy = this->getPosition().y - (bill->getPosition().y + bill->getSprite()->getFrameHeight() / 2);
 
-
+	if (dx>0 && abs(dx) <= (WINDOW_WIDTH / 2 ))
+		return true;
+	else 
+		return false;
+}
+void RedCannon::checkIfOutofScreen()
+{
+	auto viewport = ((PlayScene*)SceneManager::getInstance()->getCurrentScene())->getViewport();
+	RECT screenBound = viewport->getBounding();
+	RECT thisBound = this->getBounding();
+	GVector2 position = this->getPosition();
+	if (thisBound.right < screenBound.left)
+	{
+		this->setStatus(eStatus::DESTROY);
+	}
+}
 void RedCannon::drophitpoint()
 {
 	this->setHitpoint(this->getHitpoint() - 1);

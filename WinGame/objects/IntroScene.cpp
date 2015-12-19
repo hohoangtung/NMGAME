@@ -82,7 +82,7 @@ void IntroScene::update(float dt)
 		if (SoundManager::getInstance()->IsPlaying(eSoundId::DESTROY_BRIDGE) == false)
 		{
 			auto play = new PlayScene();
-			SceneManager::getInstance()->addScene(play);
+			SceneManager::getInstance()->replaceScene(play);
 		}
 	}
 	else if (_ok == 2)
@@ -113,15 +113,11 @@ void IntroScene::draw(LPD3DXSPRITE spriteHandle)
 }
 void IntroScene::release()
 {
-	_blank->release();
 	SAFE_DELETE(_blank);
-
-	_yellowfancon->release();
 	SAFE_DELETE(_yellowfancon);
-
-	_introtable->release();
 	SAFE_DELETE(_introtable);
 	SAFE_DELETE(_movement);
+	SAFE_DELETE(_access);
 }
 
 IntroScene::IntroScene()

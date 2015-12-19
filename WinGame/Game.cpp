@@ -133,7 +133,10 @@ void Game::loadResource()
 void Game::release()
 {
 	_devicemanager->release();
+	//SAFE_DELETE(_devicemanager);
 	_gametime->release();
-	_input->release();
+	//SAFE_DELETE(_gametime);
+	//_input->release();
+	//SAFE_DELETE(_input);
 }
 

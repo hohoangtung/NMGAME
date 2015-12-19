@@ -36,8 +36,11 @@ void Rifleman::init()
 
 	Movement *movement = new Movement(a, v, this->_sprite);
 	this->_listComponent.insert(pair<string, IComponent*>("Movement", movement));
-	if (this->getStatus() != eStatus::HIDDEN || this->getStatus() != eStatus::HIDING)
+	if (this->getStatus() != eStatus::HIDDEN && this->getStatus() != eStatus::HIDING)
 		this->_listComponent.insert(pair<string, IComponent*>("Gravity", new Gravity(GVector2(0, -ENEMY_GRAVITY), movement)));
+	else
+		this->_listComponent.insert(pair<string, IComponent*>("Gravity", new Gravity(VECTOR2ZERO, movement)));
+
 	_animations[NORMAL] = new Animation(_sprite, RIFLEMAN_ANIMATION_SPEED);
 	_animations[NORMAL]->addFrameRect(eID::RIFLEMAN, "normal_01", NULL);
 
@@ -81,6 +84,7 @@ void Rifleman::draw(LPD3DXSPRITE spritehandle, Viewport* viewport)
 		_explosion->draw(spritehandle, viewport);
 	if (this->getStatus() == eStatus::DESTROY || this->getStatus() == eStatus::WAITING || this->getStatus() == eStatus::BURST)
 		return;
+	//this->_sprite->render(spritehandle, viewport);
 	_animations[this->getStatus()]->draw(spritehandle, viewport);
 }
 
@@ -157,11 +161,11 @@ void Rifleman::update(float deltatime)
 		}
 		if (_loopwatch->isTimeLoop(delay))
 		{
-			this->addStatus(SHOOTING);
+		this->addStatus(SHOOTING);
 			shoot();
 			bullets++;
 			delay = RIFLEMAN_SHOOTING_DELAY;			
-		}
+	}
 	}
 	else 
 	{
@@ -202,7 +206,7 @@ void Rifleman::update(float deltatime)
 		{
 			if (this->isInStatus(SHOOTING))
 			{
-				shoot();
+			shoot();
 			}
 		}
 	}
@@ -319,7 +323,7 @@ void Rifleman::shoot()
 		pos.x += this->getScale().x < 0 ? (framewidth >> 1) : -(framewidth >> 1);
 		pos.y -= frameheight / 4.5f;
 		if (angle >= 140 && angle <= 180)
-			angle = this->getScale().x < 0 ? 90 : -90;
+		angle = this->getScale().x < 0 ? 90 : -90;
 	}
 	else if (this->isInStatus(NORMAL))
 	{

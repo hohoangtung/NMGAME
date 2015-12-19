@@ -233,12 +233,24 @@ void Bullet::onCollisionBegin(CollisionEventArg* collision_arg)
 		case BOSS_SHIELD:
 		case BOSS_GUN:
 		case REDCANNON:
+			if (((RedCannon*)collision_arg->_otherObject)->getWT_Status() != eWT_Status::WT_APPEAR && ((RedCannon*)collision_arg->_otherObject)->getWT_Status() != eWT_Status::WT_CLOSE)
+			{
+				((BaseEnemy*)collision_arg->_otherObject)->dropHitpoint(_damage);
+				this->setStatus(eStatus::DESTROY);
+				if (this->isContainType(eBulletType::L_BULLET) == true && ((BaseEnemy*)collision_arg->_otherObject)->getHitpoint() <= 0)
+					this->setStatus(eStatus::NORMAL);
+				SoundManager::getInstance()->Play(eSoundId::ATTACK_CANNON);
+			}
+			break;
 		case WALL_TURRET:
+			if (((WallTurret*)collision_arg->_otherObject)->getWT_Status() != eWT_Status::WT_APPEAR && ((WallTurret*)collision_arg->_otherObject)->getWT_Status() != eWT_Status::WT_CLOSE)
+			{
 			((BaseEnemy*)collision_arg->_otherObject)->dropHitpoint(_damage);
 			this->setStatus(eStatus::DESTROY);
 			if (this->isContainType(eBulletType::L_BULLET) == true && ((BaseEnemy*)collision_arg->_otherObject)->getHitpoint() <= 0)
 				this->setStatus(eStatus::NORMAL);
 			SoundManager::getInstance()->Play(eSoundId::ATTACK_CANNON);
+			}
 			break;
 		// RockFall: map 2
 		case ROCKFALL:
@@ -282,8 +294,8 @@ float Bullet::checkCollision(BaseObject * object, float dt)
 		return 0.0f;
 	if (object->getId() == eID::RIFLEMAN || object->getId() == eID::SCUBASOLDIER || object->getId() == eID::SOLDIER)
 		if (object->isInStatus(eStatus::HIDDEN) || object->isInStatus(eStatus::BURST))
-			return 0.0f;
-	body->checkCollision(object, dt);
+		return 0.0f;
+	body->checkCollision(object, dt, false);
 
 	return 0.0f;
 }

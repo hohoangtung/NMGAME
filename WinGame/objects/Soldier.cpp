@@ -66,6 +66,7 @@ Soldier::~Soldier() {}
 
 void Soldier::init()
 {
+	srand(599999);
 	this->setHitpoint(SOLDIER_HITPOINT);
 	this->setScore(SOLDIER_SCORE);
 	this->_listComponent.insert(pair<string, IComponent*>("Gravity", new Gravity(GVector2(0, -ENEMY_GRAVITY), (Movement*)(this->getComponent("Movement")))));
@@ -271,8 +272,20 @@ void Soldier::onCollisionEnd(CollisionEventArg* collision_event) {
 	{
 		if (prevObject == collision_event->_otherObject)
 		{
+			int chance = rand() % 2;
+			if (chance == 1)
+			{
+				jump();
+			auto gravity = (Gravity*)this->_listComponent["Gravity"];
+			gravity->setStatus(eGravityStatus::FALLING__DOWN);
 			this->setStatus(FALLING);
-			prevObject = nullptr;
+			}
+			else
+			{
+			Movement* movement = (Movement*)this->getComponent("Movement");
+			movement->setVelocity(GVector2(-movement->getVelocity().x, movement->getVelocity().y));
+			this->setScaleX(-SCALE_FACTOR);
+			}
 		}
 	}
 	break;
@@ -289,14 +302,15 @@ float Soldier::checkCollision(BaseObject * object, float dt)
 	auto collisionBody = (CollisionBody*)_listComponent["CollisionBody"];
 	eID objectId = object->getId();
 	eDirection direction;
-
+	eLandType land = ((Land*)object)->getType();
 	if (objectId == eID::LAND)
 	{
 		if (collisionBody->checkCollision(object, direction, dt))
 		{
-			eLandType land = ((Land*)object)->getType();
+
 			if (land == eLandType::GRASS)
 			{
+				bool flagend = false;
 				if (direction == eDirection::TOP && this->getVelocity().y < 0)
 				{
 					auto gravity = (Gravity*)this->_listComponent["Gravity"];
@@ -307,10 +321,23 @@ float Soldier::checkCollision(BaseObject * object, float dt)
 					this->setStatus(eStatus::RUNNING);
 					prevObject = object;
 				}
-
-				else if (prevObject == object)
+				else if (this->getVelocity().y == 0 && this->getVelocity().x < 0)
 				{
-					prevObject = nullptr;
+					if (this->getBounding().left - object->getBounding().left < 8)
+					{
+						flagend = true;
+					}
+				}
+				else if (this->getVelocity().y == 0 && this->getVelocity().x > 0)
+				{
+					if (this->getBounding().right - object->getBounding().right > 8)
+					{
+						flagend = true;
+					}
+				}
+
+				if (flagend == true)
+				{
 					int chance = rand() % 2;
 					if (chance == 1)
 					{
@@ -319,24 +346,25 @@ float Soldier::checkCollision(BaseObject * object, float dt)
 						gravity->setStatus(eGravityStatus::FALLING__DOWN);
 						this->setStatus(FALLING);
 					}
-					/*else
+					else
 					{
 						Movement* movement = (Movement*)this->getComponent("Movement");
 						movement->setVelocity(GVector2(-movement->getVelocity().x, movement->getVelocity().y));
 						this->setScaleX(-SCALE_FACTOR);
-					}*/
+					}
+				}
+				else if (land == eLandType::WATER)
+				{
+					auto gravity = (Gravity*)this->_listComponent["Gravity"];
+					auto movement = (Movement*)this->_listComponent["Movement"];
+					gravity->setStatus(eGravityStatus::SHALLOWED);
+					movement->setVelocity(VECTOR2ZERO);
+					this->setStatus(DIVING);
 				}
 			}
-			else if (land == eLandType::WATER)
-			{
-				auto gravity = (Gravity*)this->_listComponent["Gravity"];
-				auto movement = (Movement*)this->_listComponent["Movement"];
-				gravity->setStatus(eGravityStatus::SHALLOWED);
-				movement->setVelocity(GVector2(0, 0));
-				this->setStatus(DIVING);
-			}
-		}		
+		}
 	}
+
 	else if (objectId == eID::BRIDGE)
 	{
 		if (collisionBody->checkCollision(object, direction, dt))

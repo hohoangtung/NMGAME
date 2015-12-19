@@ -11,6 +11,9 @@
 #include "BulletManager.h"
 #include "Rifleman.h"
 
+#define BOSS_SHIELD_HP		32
+#define BOSS_GUN_HP			16;
+
 class Boss : public BaseEnemy
 {
 public:
@@ -75,6 +78,7 @@ public:
 		RECT getBounding();
 		BossBullet(GVector2 startposition, GVector2 force, GVector2 gravity);
 		void draw(LPD3DXSPRITE, Viewport*);
+		float checkCollision(BaseObject* object, float dt);
 		~BossBullet();
 
 	private:
@@ -95,6 +99,8 @@ public:
 
 		void dropHitpoint();
 		void dropHitpoint(int damage);
+
+		RECT getBounding();
 		BossShield(GVector2 position);
 		~BossShield();
 	private :

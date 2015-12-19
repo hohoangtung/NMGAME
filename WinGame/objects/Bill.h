@@ -59,7 +59,6 @@ public:
 
 	// Đổi kiểu đạn. 
 	void changeBulletType(eAirCraftType );
-	void die();
 
 	void setLifeNumber(int number);
 	int getLifeNumber();
@@ -71,6 +70,25 @@ public:
 	int getMaxBullet();
 
 	void setStatus(eStatus status) override;
+
+	void removeGravity();
+	void forceMoveRight();
+	void unforceMoveRight();
+	void forceMoveLeft();
+	void unforceMoveLeft();
+	void forceJump();
+	void unforceJump();
+	void unhookinputevent();
+	// Character action.
+	void standing();
+	void moveLeft();
+	void moveRight();
+	void jump();
+	void layDown();
+	void falling();
+	void shoot();
+	void revive();
+	void die();
 
 private:
 	map<int, Animation*> _animations;
@@ -95,15 +113,6 @@ private:
 	float _protectTime;
 
 	LifeUI* _lifeUI;
-
-	void standing();
-	void moveLeft();
-	void moveRight();
-	void jump();
-	void layDown();
-	void falling();
-	void shoot();
-	void revive();
 
 	GVector2 getVelocity();
 

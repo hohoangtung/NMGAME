@@ -1,5 +1,6 @@
 ﻿#include "utils.h"
 
+// hệ decac
 bool isRectangleIntersected(RECT rect1, RECT rect2)
 {
 	float left = rect1.left - rect2.right;
@@ -16,6 +17,7 @@ bool isRectangleIntersected(RECT rect1, RECT rect2)
 	return true;
 }
 
+// hệ top-left
 bool isIntersectd(RECT rect1, RECT rect2)
 {
 	float left = rect1.left - rect2.right;

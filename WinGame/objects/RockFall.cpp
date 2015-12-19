@@ -21,6 +21,13 @@ void RockFall::init()
 	this->_sprite->setPosition(_beginPosition);
 	this->_sprite->setFrameRect(SpriteManager::getInstance()->getSourceRect(this->_id, "normal"));
 
+	_animation = new Animation(_sprite, 0.07f);
+	_animation->addFrameRect(SpriteManager::getInstance()->getSourceRect(this->_id, "normal"));
+	_animation->addFrameRect(SpriteManager::getInstance()->getSourceRect(this->_id, "fall_01"));
+	_animation->addFrameRect(SpriteManager::getInstance()->getSourceRect(this->_id, "fall_02"));
+	_animation->addFrameRect(SpriteManager::getInstance()->getSourceRect(this->_id, "fall_03"));
+	_animation->stop();
+
 	Movement* movement = new Movement(VECTOR2ZERO, VECTOR2ZERO, _sprite);
 	Gravity* gravity = new Gravity(VECTOR2ZERO, movement);
 	CollisionBody* collisionBody = new CollisionBody(this);
@@ -74,7 +81,7 @@ void RockFall::update(float deltatime)
 			}
 		}
 	}
-
+	_animation->update(deltatime);
 	if (this->getStatus() == eStatus::HOLDING)
 	{
 		this->moveAround(deltatime);
@@ -89,6 +96,7 @@ void RockFall::update(float deltatime)
 	
 	if (this->getStatus() == eStatus::FALLING)
 	{
+		_animation->start();
 		auto gravity = (Gravity*)this->_listComponent["Gravity"];
 		gravity->setGravity(ROCKFALL_GRAVITY);
 
@@ -96,6 +104,7 @@ void RockFall::update(float deltatime)
 
 	if (this->getStatus() == eStatus::JUMPING)
 	{
+		_animation->start();
 		auto gravity = (Gravity*)this->_listComponent["Gravity"];
 		gravity->setStatus(eGravityStatus::FALLING__DOWN);
 		gravity->setGravity(ROCKFALL_GRAVITY);
@@ -114,7 +123,12 @@ void RockFall::draw(LPD3DXSPRITE spriteHandle, Viewport* viewport)
 	if (_explosion != NULL && this->getStatus() == eStatus::BURST)
 		_explosion->draw(spriteHandle, viewport);
 	if (this->getStatus() == NORMAL || this->getStatus() == FALLING || this->getStatus() == JUMPING || this->getStatus() == HOLDING)
-		_sprite->render(spriteHandle, viewport);
+	{
+		if (_animation->isAnimate())
+			_animation->draw(spriteHandle, viewport);
+		else
+			_sprite->render(spriteHandle, viewport);
+	}
 }
 
 // release
@@ -158,7 +172,7 @@ void RockFall::moveAround(float deltatime)
 		auto move = (Movement*) this->_listComponent["Movement"];
 		auto gravity = (Gravity*)this->_listComponent["Gravity"];
 
-		move->setVelocity(HORIZONTAL_VELOC);
+		move->setVelocity(ROCKFALL_HORIZONTAL_VELOC);
 		gravity->setGravity(VECTOR2ZERO);
 	}
 
@@ -167,7 +181,7 @@ void RockFall::moveAround(float deltatime)
 		auto move = (Movement*) this->_listComponent["Movement"];
 		auto gravity = (Gravity*)this->_listComponent["Gravity"];
 
-		move->setVelocity(HORIZONTAL_VELOC_PRE);
+		move->setVelocity(ROCKFALL_HORIZONTAL_VELOC_PRE);
 		gravity->setGravity(VECTOR2ZERO);
 	}
 	
