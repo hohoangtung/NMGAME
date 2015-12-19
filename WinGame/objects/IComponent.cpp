@@ -119,14 +119,27 @@ RoundMovement::RoundMovement(float radius, float frequency, float radian, Sprite
 	this->setAngularVeloc(frequency);
 	this->_refSprite = refSprite;
 	_radian = radian;
+	_roundposition = GVector2(_radius * cos(_radian), _radius * sin(_radian));
 }
 
 void RoundMovement::update(float deltatime)
 {
+	//float oldRadian = _radian;
+	//_radian += _radianVeloc * deltatime / 1000;
+
+	//float deltaX = _radius * cos(_radian) - _roundposition.x;
+	//float deltaY = _radius * sin(_radian) - _roundposition.y;
+
+	//_roundposition = GVector2(deltaX, deltaY);
+	//auto position= this->_refSprite->getPosition();
+	//position += _roundposition;
+	//this->_refSprite->setPosition(position);
+	//return;
 	/*
 	góc xoay được tính theo công thức
 	φ = ω * t
 	*/
+
 	_radian += _radianVeloc * deltatime / 1000;
 
 	/*
@@ -135,8 +148,8 @@ void RoundMovement::update(float deltatime)
 	và		y = R * sin(φ)
 	*/
 	GVector2 veloc;
-	veloc.x = _radius * cos(_radian);
-	veloc.y = _radius * sin(_radian);
+	veloc.x = _radius * sin(_radian);
+	veloc.y =  - _radius *cos  (_radian);
 
 	auto pos = this->_refSprite->getPosition();
 	pos += veloc * deltatime / 1000;
@@ -168,3 +181,17 @@ RoundMovement::~RoundMovement()
 }
 
 #pragma endregion
+
+CircleMovement::CircleMovement(float radius, float frequency, Sprite* refSpirte)
+{
+	sinX = new SinMovement(GVector2(0, radius), frequency, refSpirte);
+	sinY = new SinMovement(GVector2(radius, 0), frequency, refSpirte);
+}
+void CircleMovement::update(float deltatime)
+{
+	sinX->update(deltatime);
+	sinY->update(deltatime);
+}
+CircleMovement::~CircleMovement()
+{
+}

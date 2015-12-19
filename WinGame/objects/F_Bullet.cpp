@@ -8,7 +8,7 @@ FBullet::FBullet(GVector2 startPosition,  float degree)
 
 void FBullet::init()
 {
-	_damage = 3;
+	_damage = 1;
 
 	_sprite = SpriteManager::getInstance()->getSprite(eID::BULLET);
 	_sprite->setFrameRect(SpriteManager::getInstance()->getSourceRect(eID::BULLET, "f_bullet"));
@@ -23,9 +23,10 @@ void FBullet::init()
 	
 	float radian = this->initRadian();
 
-	auto roundmovement = new RoundMovement(ROUND_RADIAN, ROUND_FREQUENCE, radian, _sprite);
+	auto roundmovement = new RoundMovement(ROUND_RADIUS, ROUND_FREQUENCE, radian, _sprite);
 	_componentList["RoundMovement"] = roundmovement;
-
+	//auto circlemovement = new CircleMovement(150.0f, 1.0f, _sprite);
+	//_componentList["RoundMovement"] = circlemovement;
 	auto collisionBody = new CollisionBody(this);
 	_componentList.insert(pair<string, IComponent*>("CollisionBody", collisionBody));
 
@@ -36,31 +37,34 @@ float FBullet::initRadian()
 {
 	if (this->_degree == RIGHT_SHOOT_ANGLE)
 	{
-		return -M_PI / 2;
+		return -M_PI_4;
 	}
 	else if (this->_degree == LEFT_SHOOT_ANGLE)
 	{
-		return M_PI / 2;
+		return M_PI - M_PI_4;
 	}
 	else if (this->_degree == TOPRIGHT_SHOOT_ANGLE)
 	{
-		return -M_PI / 2;
+		return 0;
 	}
 	else if (this->_degree == TOPLEFT_SHOOT_ANGLE)
 	{
-		return M_PI / 2;
+		return 0;
+		//return M_PI / 2;
 	}
 	else if (this->_degree == BOTRIGHT_SHOOT_ANGLE)
 	{
-		return -M_PI / 2;
+		return 0;
+		//return -M_PI / 2;
 	}
 	else if (this->_degree == BOTLEFT_SHOOT_ANGLE)
 	{
-		return M_PI / 2;
+		return 0;
+		//return M_PI / 2;
 	}
 	else if (this->_degree == TOP_SHOOT_ANGLE)
 	{
-		return M_PI;
+		return M_PI_2;
 	}
 	else if (this->_degree == BOTTOM_SHOOT_ANGLE)
 	{

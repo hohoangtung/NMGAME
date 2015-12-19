@@ -11,9 +11,7 @@
 #include "../FrameWork/StopWatch.h"
 #include <map>
 #include <math.h>
-
-
-#define WALL_TURRET_HITPOINT 3
+#define WALL_TURRET_HITPOINT 8
 #define WALL_TURRET_SCORE 1000
 #define WALL_TURRET_SHOOTING_DELAY 3000.0f
 #define WALL_TURRET_ANIMATION_SPEED 0.3f
@@ -58,9 +56,10 @@ private:
 	float _billAngle;
 	eWT_Status _wtstatus;
 	BaseObject* _explosion;
-	list<Bullet*> _listBullet;
+	
+	//list<Bullet*> _listBullet;
 	StopWatch* _stopwatch;
-
+	
 	void initExplosion();
 	void updateExplosion(float);
 

@@ -1,5 +1,6 @@
 ﻿#include "ContraGame.h"
-
+#include "objects\GameOverScene.h"
+#include "objects\BeginState3Scene.h"
 ContraGame::ContraGame(HINSTANCE hInstance, LPWSTR title) : Game(hInstance, title, WINDOW_WIDTH, WINDOW_HEIGHT)
 {
 

@@ -155,8 +155,8 @@ void WallTurret::update(float deltatime)
 
 	if (_animation[WT_APPEAR]->isAnimate() == false && this->isRange())
 	{
-
-		if (_loopwatch1->isTimeLoop(1000.0f))
+		
+		if (_loopwatch1->isTimeLoop(800.0f))
 		{
 			calculateBillangle();
 		}
@@ -165,7 +165,7 @@ void WallTurret::update(float deltatime)
 		{
 			this->setScale(SCALE_FACTOR);
 			this->setStatus(WT_NORMAL);
-			_shootingAngle = -90;
+			_shootingAngle = -90;	
 		}
 		else if (_billAngle >= -75 && _billAngle < -45)
 		{
@@ -177,7 +177,7 @@ void WallTurret::update(float deltatime)
 		{
 			this->setScale(SCALE_FACTOR);
 			this->setStatus(WT_LEFT_30);
-			_shootingAngle = -30;
+			_shootingAngle = -30;	
 		}
 		else if (_billAngle >= -15 && _billAngle < 15)
 		{
@@ -207,54 +207,54 @@ void WallTurret::update(float deltatime)
 		{
 			this->setScale(SCALE_FACTOR);
 			this->setStatus(WT_RIGHT_120);
-			_shootingAngle = 120;
+			_shootingAngle = 120;	
 		}
 		else if (_billAngle >= 135 && _billAngle < 165)
 		{
 			this->setScale(SCALE_FACTOR);
 			this->setStatus(WT_RIGHT_150);
-			_shootingAngle = 150;
+			_shootingAngle = 150;	
 		}
 
 		else if (_billAngle >= 165 || _billAngle < -165)
 		{
 			this->setScale(SCALE_FACTOR);
 			this->setStatus(WT_DOWN);
-			_shootingAngle = 180;
+			_shootingAngle = 180;			
 		}
 		else if (_billAngle >= -165 && _billAngle < -135)
 		{
 			this->setScale(SCALE_FACTOR);
 			this->setStatus(WT_LEFT_150);
-			_shootingAngle = -150;
+			_shootingAngle = -150;		
 		}
 
 		else if (_billAngle >= -135 && _billAngle < -105)
 		{
 			this->setScale(SCALE_FACTOR);
 			this->setStatus(WT_LEFT_120);
-			_shootingAngle = -120;
+			_shootingAngle = -120;	
 		}
 		this->addStatus(eWT_Status::WT_SHOOTING);
 	}
 		this->checkBill();
-		for (auto it = _listBullet.begin(); it != _listBullet.end(); it++)
+		//for (auto it = _listBullet.begin(); it != _listBullet.end(); it++)
+		//{
+		//	(*it)->update(deltatime);
+		//}
+	for (auto it : _listComponent)
+	{
+		it.second->update(deltatime);
+	}
+
+	if (_stopwatch->isStopWatch(WALL_TURRET_SHOOTING_DELAY))
+	{
+		if (this->isInStatus(WT_SHOOTING))
 		{
-			(*it)->update(deltatime);
+			shoot();
 		}
-		for (auto it : _listComponent)
-		{
-			it.second->update(deltatime);
-		}
-		
-		if (_stopwatch->isStopWatch(WALL_TURRET_SHOOTING_DELAY))
-		{
-			if (this->isInStatus(WT_SHOOTING))
-			{
-				shoot();
-			}
 			_stopwatch->restart();
-		}
+	}
 	
 	_animation[this->getWT_Status()]->update(deltatime);
 }
@@ -270,11 +270,12 @@ void WallTurret::draw(LPD3DXSPRITE spritehandle, Viewport* viewport)
 
 		this->_sprite->render(spritehandle, viewport);
 		_animation[this->getWT_Status()]->draw(spritehandle, viewport);
+	//}
+	//for (auto it = _listBullet.begin(); it != _listBullet.end(); it++)
+	//{
+	//	(*it)->draw(spritehandle, viewport);
+	//}
 
-		for (auto it = _listBullet.begin(); it != _listBullet.end(); it++)
-		{
-			(*it)->draw(spritehandle, viewport);
-		}
 	}
 }
 void WallTurret::release()
@@ -288,11 +289,11 @@ void WallTurret::release()
 	{
 		delete component.second;
 	}
-	for (auto item : _listBullet)
-	{
-		delete item;
-	}
-	_listBullet.clear();
+	//for (auto item : _listBullet)
+	//{
+	//	delete item;
+	//}
+	//_listBullet.clear();
 
 	if (_explosion != NULL)
 		this->_explosion->release();
@@ -451,6 +452,7 @@ void WallTurret::calculateBillangle()
 void WallTurret::rangeAttack()
 {
 	auto bill = ((PlayScene*)SceneManager::getInstance()->getCurrentScene())->getBill();
+
 	float dx = this->getPosition().x - bill->getPosition().x;
 	float dy = this->getPosition().y - (bill->getPosition().y + bill->getSprite()->getFrameHeight() / 2);
 
@@ -464,7 +466,7 @@ void WallTurret::rangeAttack()
 		this->setStatus(eWT_Status::WT_APPEAR);
 		this->setStatus(eStatus::HIDDEN);
 	}
-}
+	}
 bool WallTurret::isRange()
 {
 	auto bill = ((PlayScene*)SceneManager::getInstance()->getCurrentScene())->getBill();
@@ -472,8 +474,6 @@ bool WallTurret::isRange()
 	float dy = this->getPosition().y - (bill->getPosition().y + bill->getSprite()->getFrameHeight() / 2);
 	if (abs(dx) <= (WINDOW_WIDTH / 2 ))
 		return true;
-	else 
-		return false;
 }
 void WallTurret::checkIfOutofScreen()
 {
@@ -487,10 +487,10 @@ void WallTurret::checkIfOutofScreen()
 	}
 }
 void WallTurret::checkBill()
-{
+	{
 	auto bill = ((PlayScene*)SceneManager::getInstance()->getCurrentScene())->getBill();
 	if (bill->getStatus() == eStatus::DYING)
-	{
-		this->setStatus(eWT_Status::WT_CLOSE);
+		{
+			this->setStatus(eWT_Status::WT_CLOSE);
 	}
 }

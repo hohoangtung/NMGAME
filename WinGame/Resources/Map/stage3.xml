@@ -1,0 +1,1114 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Tilesmap columns="16" rows="136">
+  <MatrixIndex>
+    <Row id="0">1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1</Row>
+    <Row id="1">1	1	1	1	1	1	63	77	90	103	1	1	1	1	1	1</Row>
+    <Row id="2">1	1	1	1	1	54	64	78	91	104	114	1	1	1	1	1</Row>
+    <Row id="3">1	1	1	1	37	1	65	79	92	105	1	121	1	1	1	1</Row>
+    <Row id="4">1	1	1	1	38	45	66	80	93	106	115	122	1	1	1	1</Row>
+    <Row id="5">1	1	1	37	44	55	67	81	94	107	116	123	121	1	1	1</Row>
+    <Row id="6">1	1	1	38	45	56	68	82	95	108	117	115	127	1	1	1</Row>
+    <Row id="7">1	1	16	39	46	47	69	83	96	109	118	124	128	130	1	1</Row>
+    <Row id="8">1	16	31	40	47	57	70	84	97	110	119	118	129	131	130	1</Row>
+    <Row id="9">2	17	2	17	2	58	71	85	98	111	120	19	2	17	2	17</Row>
+    <Row id="10">3	18	3	18	3	58	72	86	99	112	120	18	3	18	3	18</Row>
+    <Row id="11">2	19	2	19	2	58	73	87	100	88	120	19	2	19	2	19</Row>
+    <Row id="12">3	18	3	18	3	58	73	88	73	88	120	18	3	18	3	18</Row>
+    <Row id="13">4	4	4	4	4	4	4	4	4	4	4	4	4	4	4	4</Row>
+    <Row id="14">5	20	5	20	5	20	5	20	5	20	5	20	5	20	5	20</Row>
+    <Row id="15">6	21	6	21	6	21	6	21	6	21	6	21	6	21	6	21</Row>
+    <Row id="16">4	4	4	4	4	4	4	4	4	4	4	4	4	4	4	4</Row>
+    <Row id="17">5	20	5	20	5	20	5	20	5	20	5	20	5	20	5	20</Row>
+    <Row id="18">6	21	6	21	6	21	6	21	6	21	6	21	6	21	6	21</Row>
+    <Row id="19">5	20	5	20	5	20	5	20	4	4	4	4	4	4	4	4</Row>
+    <Row id="20">6	21	6	21	6	21	6	21	6	21	6	21	6	21	6	21</Row>
+    <Row id="21">5	20	4	4	4	4	5	20	5	20	5	20	5	20	5	20</Row>
+    <Row id="22">6	21	6	21	6	21	6	21	6	21	6	21	6	21	6	21</Row>
+    <Row id="23">5	20	5	20	5	20	5	20	5	20	4	4	4	4	4	4</Row>
+    <Row id="24">4	4	4	4	4	4	4	4	6	21	6	21	6	21	6	21</Row>
+    <Row id="25">5	20	5	20	5	20	5	20	5	20	5	20	5	20	5	20</Row>
+    <Row id="26">6	21	6	21	6	21	4	4	4	4	4	4	6	21	6	21</Row>
+    <Row id="27">5	20	5	20	5	20	5	20	5	20	5	20	5	20	5	20</Row>
+    <Row id="28">4	4	4	4	4	4	6	21	6	21	6	21	6	21	6	21</Row>
+    <Row id="29">5	20	5	20	5	20	5	20	4	4	4	4	4	4	4	4</Row>
+    <Row id="30">6	21	6	21	6	21	6	21	6	21	6	21	6	21	6	21</Row>
+    <Row id="31">4	4	4	4	4	4	4	4	4	4	4	4	4	4	6	21</Row>
+    <Row id="32">5	20	5	20	5	20	5	20	5	20	5	20	5	20	5	20</Row>
+    <Row id="33">6	21	6	21	6	22	32	1	101	21	4	4	4	4	4	4</Row>
+    <Row id="34">5	20	5	20	7	23	1	1	102	113	5	20	5	20	5	20</Row>
+    <Row id="35">6	22	32	1	1	1	1	1	1	1	1	1	4	4	4	4</Row>
+    <Row id="36">7	23	1	1	1	1	1	1	1	1	1	1	102	113	5	20</Row>
+    <Row id="37">1	1	1	1	1	1	1	1	1	1	1	1	1	1	101	21</Row>
+    <Row id="38">1	1	1	1	1	1	1	1	1	1	1	1	1	1	102	113</Row>
+    <Row id="39">8	8	8	8	8	8	8	8	8	8	8	8	8	8	8	8</Row>
+    <Row id="40">4	4	4	4	4	4	34	13	13	13	13	13	13	13	13	13</Row>
+    <Row id="41">9	24	9	24	9	26	34	13	13	13	13	13	13	13	13	13</Row>
+    <Row id="42">10	25	10	25	11	27	13	13	13	13	13	13	13	13	13	13</Row>
+    <Row id="43">9	24	4	4	4	4	4	4	34	13	13	13	13	13	13	13</Row>
+    <Row id="44">10	25	10	25	10	25	10	25	34	28	4	4	4	4	4	4</Row>
+    <Row id="45">9	24	9	24	9	26	33	41	13	28	9	24	9	24	9	24</Row>
+    <Row id="46">9	24	33	41	48	41	13	13	13	13	48	59	4	4	9	24</Row>
+    <Row id="47">10	25	34	13	13	13	13	13	13	13	13	28	10	25	10	25</Row>
+    <Row id="48">9	26	13	28	4	4	4	4	4	4	34	28	4	4	4	4</Row>
+    <Row id="49">11	27	13	28	10	25	10	25	10	25	34	28	10	25	10	25</Row>
+    <Row id="50">12	13	13	28	9	24	9	26	33	41	13	13	48	59	9	24</Row>
+    <Row id="51">13	13	4	4	4	4	4	4	34	13	13	13	13	28	10	25</Row>
+    <Row id="52">13	28	14	24	9	24	9	26	34	13	13	13	13	13	48	41</Row>
+    <Row id="53">13	13	15	29	4	4	4	4	4	4	4	4	4	4	34	13</Row>
+    <Row id="54">13	13	13	30	9	24	9	24	9	24	9	24	9	26	34	13</Row>
+    <Row id="55">13	13	13	28	10	25	10	25	10	25	10	25	11	27	13	13</Row>
+    <Row id="56">13	13	13	28	14	24	9	24	4	4	4	4	49	13	13	13</Row>
+    <Row id="57">13	13	13	13	15	29	10	25	10	25	10	25	34	13	13	13</Row>
+    <Row id="58">4	4	34	28	4	4	4	4	4	4	9	26	34	13	13	13</Row>
+    <Row id="59">10	25	34	28	10	25	10	25	10	25	11	27	13	13	13	13</Row>
+    <Row id="60">9	24	34	13	48	59	9	24	9	24	4	4	4	4	34	13</Row>
+    <Row id="61">9	24	34	13	13	28	14	24	9	24	9	24	9	24	34	13</Row>
+    <Row id="62">10	25	34	13	13	13	15	29	4	4	4	4	10	25	34	13</Row>
+    <Row id="63">9	14	34	13	13	13	13	12	14	24	9	24	9	26	34	13</Row>
+    <Row id="64">10	25	34	13	13	13	13	13	15	29	10	25	11	27	13	13</Row>
+    <Row id="65">9	26	34	13	13	13	13	13	13	30	4	4	49	13	13	13</Row>
+    <Row id="66">11	27	13	13	13	13	13	13	13	28	10	25	34	13	13	13</Row>
+    <Row id="67">12	13	13	13	13	13	13	13	13	13	48	41	13	13	13	13</Row>
+    <Row id="68">13	13	13	13	13	13	13	13	13	13	13	13	13	13	13	13</Row>
+    <Row id="69">4	4	4	4	4	4	34	13	13	13	13	13	13	13	13	13</Row>
+    <Row id="70">10	25	10	25	10	25	34	13	13	13	13	13	13	13	13	13</Row>
+    <Row id="71">14	24	4	4	4	4	4	4	34	28	4	4	4	4	4	4</Row>
+    <Row id="72">15	29	10	25	10	25	10	25	34	28	10	25	10	25	10	25</Row>
+    <Row id="73">13	30	9	24	9	26	48	41	13	28	14	24	9	24	9	26</Row>
+    <Row id="74">13	28	10	25	11	27	13	13	13	13	15	29	4	4	4	4</Row>
+    <Row id="75">4	4	4	4	49	13	13	13	13	13	13	12	14	24	9	24</Row>
+    <Row id="76">9	24	9	24	34	13	13	13	13	13	13	13	48	41	48	41</Row>
+    <Row id="77">10	25	4	4	4	4	34	13	13	13	13	13	13	13	13	13</Row>
+    <Row id="78">9	24	9	24	9	26	34	28	4	4	4	4	4	4	34	13</Row>
+    <Row id="79">4	4	4	4	11	27	13	28	10	25	10	25	10	25	34	13</Row>
+    <Row id="80">14	24	9	26	12	13	13	28	14	24	4	4	4	4	4	4</Row>
+    <Row id="81">15	29	11	27	13	13	13	13	15	29	10	25	10	25	10	25</Row>
+    <Row id="82">13	12	12	13	13	13	13	13	13	12	14	24	4	4	4	4</Row>
+    <Row id="83">13	13	13	13	13	13	13	13	13	13	15	29	10	25	10	25</Row>
+    <Row id="84">4	4	4	4	50	60	74	89	74	89	60	125	4	4	4	4</Row>
+    <Row id="85">10	25	10	25	51	8	8	8	8	8	8	126	10	25	10	25</Row>
+    <Row id="86">9	24	9	26	34	13	13	13	13	13	13	28	14	24	9	24</Row>
+    <Row id="87">4	4	4	4	34	13	13	13	13	13	13	13	15	29	10	25</Row>
+    <Row id="88">9	24	9	26	34	13	13	13	13	13	13	13	13	12	14	24</Row>
+    <Row id="89">10	25	4	4	4	4	4	4	34	13	13	13	13	13	15	29</Row>
+    <Row id="90">9	24	9	24	9	24	9	26	34	13	13	13	13	13	13	12</Row>
+    <Row id="91">9	24	9	24	9	24	9	24	4	4	4	4	4	4	4	4</Row>
+    <Row id="92">10	25	10	25	10	25	10	25	10	25	10	25	10	25	10	25</Row>
+    <Row id="93">14	24	4	4	4	4	9	26	48	41	48	41	48	41	48	41</Row>
+    <Row id="94">15	29	10	25	10	25	11	27	13	13	13	13	13	13	13	13</Row>
+    <Row id="95">13	12	14	24	4	4	4	4	4	4	4	4	4	4	4	4</Row>
+    <Row id="96">13	13	15	29	10	25	10	25	10	25	10	25	10	25	10	25</Row>
+    <Row id="97">4	4	4	4	4	4	4	4	9	26	14	24	9	26	14	24</Row>
+    <Row id="98">10	25	10	25	10	25	10	25	11	27	15	29	11	27	15	29</Row>
+    <Row id="99">9	24	9	26	33	41	48	41	12	13	13	12	12	13	13	12</Row>
+    <Row id="100">4	4	4	4	34	13	13	13	13	13	13	13	13	13	13	13</Row>
+    <Row id="101">9	24	9	24	52	61	75	61	75	61	75	61	75	61	75	61</Row>
+    <Row id="102">10	25	10	25	53	62	76	62	76	62	76	62	76	62	76	62</Row>
+    <Row id="103">4	4	4	4	4	4	4	4	4	4	4	4	4	4	4	4</Row>
+    <Row id="104">10	25	10	25	10	25	10	25	10	25	10	25	10	25	10	25</Row>
+    <Row id="105">9	24	9	24	9	24	9	24	9	24	4	4	4	4	4	4</Row>
+    <Row id="106">4	4	4	4	4	4	4	4	35	42	9	24	9	24	9	24</Row>
+    <Row id="107">10	25	10	25	10	25	10	25	36	43	10	25	10	25	10	25</Row>
+    <Row id="108">14	24	4	4	4	4	9	24	9	24	9	26	14	24	9	26</Row>
+    <Row id="109">15	29	10	25	10	25	10	25	10	25	11	27	15	29	11	27</Row>
+    <Row id="110">13	30	4	4	35	42	9	24	4	4	4	4	4	4	4	4</Row>
+    <Row id="111">13	28	10	25	36	43	10	25	10	25	10	25	10	25	10	25</Row>
+    <Row id="112">13	28	9	24	9	24	9	24	9	24	35	42	9	24	9	26</Row>
+    <Row id="113">4	4	4	4	10	25	10	25	10	25	36	43	4	4	4	4</Row>
+    <Row id="114">9	24	9	24	9	24	9	24	9	24	9	24	35	42	9	26</Row>
+    <Row id="115">10	25	4	4	4	4	4	4	4	4	4	4	36	43	11	27</Row>
+    <Row id="116">9	24	9	24	9	24	9	24	9	24	9	24	9	24	49	13</Row>
+    <Row id="117">4	4	4	4	4	4	4	4	10	25	10	25	10	25	34	13</Row>
+    <Row id="118">14	24	35	42	9	24	9	24	9	24	9	24	9	26	34	13</Row>
+    <Row id="119">15	29	36	43	4	4	4	4	4	4	10	25	11	27	13	13</Row>
+    <Row id="120">13	30	14	24	9	24	9	24	9	24	9	24	4	4	4	4</Row>
+    <Row id="121">4	4	4	4	9	24	9	24	9	24	9	24	9	24	9	26</Row>
+    <Row id="122">10	25	10	25	10	25	10	25	4	4	4	4	4	4	4	4</Row>
+    <Row id="123">9	24	4	4	4	4	9	24	9	24	9	26	14	24	9	24</Row>
+    <Row id="124">10	25	10	25	10	25	10	25	10	25	11	27	15	29	10	25</Row>
+    <Row id="125">4	4	4	4	4	4	4	4	9	24	4	4	4	4	4	4</Row>
+    <Row id="126">10	25	10	25	10	25	10	25	10	25	10	25	10	25	10	25</Row>
+    <Row id="127">14	24	9	24	9	24	4	4	4	4	4	4	4	4	9	24</Row>
+    <Row id="128">15	29	10	25	10	25	10	25	10	25	10	25	10	25	10	25</Row>
+    <Row id="129">13	30	9	24	9	24	9	24	4	4	4	4	4	4	9	26</Row>
+    <Row id="130">13	28	10	25	10	25	10	25	10	25	10	25	10	25	11	27</Row>
+    <Row id="131">13	28	14	24	9	24	9	24	9	24	4	4	4	4	4	4</Row>
+    <Row id="132">13	13	15	29	10	25	10	25	10	25	10	25	10	25	10	25</Row>
+    <Row id="133">4	4	4	4	4	4	4	4	4	4	4	4	4	4	4	4</Row>
+    <Row id="134">10	25	10	25	10	25	10	25	10	25	10	25	10	25	10	25</Row>
+    <Row id="135">9	24	9	24	9	24	9	24	9	24	9	24	9	24	9	24</Row>
+  </MatrixIndex>
+  <TileSet Columns="10" Rows="14" Widthtile="16" Heighttile="16" FileName="Stage3.png">
+    <Tiles>
+      <Tile Id="1" Name="tile_1">
+        <Rect X="0" Y="0" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="2" Name="tile_2">
+        <Rect X="16" Y="0" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="3" Name="tile_3">
+        <Rect X="32" Y="0" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="4" Name="tile_4">
+        <Rect X="48" Y="0" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="5" Name="tile_5">
+        <Rect X="64" Y="0" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="6" Name="tile_6">
+        <Rect X="80" Y="0" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="7" Name="tile_7">
+        <Rect X="96" Y="0" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="8" Name="tile_8">
+        <Rect X="112" Y="0" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="9" Name="tile_9">
+        <Rect X="128" Y="0" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="10" Name="tile_10">
+        <Rect X="144" Y="0" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="11" Name="tile_11">
+        <Rect X="0" Y="16" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="12" Name="tile_12">
+        <Rect X="16" Y="16" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="13" Name="tile_13">
+        <Rect X="32" Y="16" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="14" Name="tile_14">
+        <Rect X="48" Y="16" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="15" Name="tile_15">
+        <Rect X="64" Y="16" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="16" Name="tile_16">
+        <Rect X="80" Y="16" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="17" Name="tile_17">
+        <Rect X="96" Y="16" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="18" Name="tile_18">
+        <Rect X="112" Y="16" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="19" Name="tile_19">
+        <Rect X="128" Y="16" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="20" Name="tile_20">
+        <Rect X="144" Y="16" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="21" Name="tile_21">
+        <Rect X="0" Y="32" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="22" Name="tile_22">
+        <Rect X="16" Y="32" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="23" Name="tile_23">
+        <Rect X="32" Y="32" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="24" Name="tile_24">
+        <Rect X="48" Y="32" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="25" Name="tile_25">
+        <Rect X="64" Y="32" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="26" Name="tile_26">
+        <Rect X="80" Y="32" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="27" Name="tile_27">
+        <Rect X="96" Y="32" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="28" Name="tile_28">
+        <Rect X="112" Y="32" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="29" Name="tile_29">
+        <Rect X="128" Y="32" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="30" Name="tile_30">
+        <Rect X="144" Y="32" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="31" Name="tile_31">
+        <Rect X="0" Y="48" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="32" Name="tile_32">
+        <Rect X="16" Y="48" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="33" Name="tile_33">
+        <Rect X="32" Y="48" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="34" Name="tile_34">
+        <Rect X="48" Y="48" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="35" Name="tile_35">
+        <Rect X="64" Y="48" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="36" Name="tile_36">
+        <Rect X="80" Y="48" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="37" Name="tile_37">
+        <Rect X="96" Y="48" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="38" Name="tile_38">
+        <Rect X="112" Y="48" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="39" Name="tile_39">
+        <Rect X="128" Y="48" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="40" Name="tile_40">
+        <Rect X="144" Y="48" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="41" Name="tile_41">
+        <Rect X="0" Y="64" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="42" Name="tile_42">
+        <Rect X="16" Y="64" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="43" Name="tile_43">
+        <Rect X="32" Y="64" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="44" Name="tile_44">
+        <Rect X="48" Y="64" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="45" Name="tile_45">
+        <Rect X="64" Y="64" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="46" Name="tile_46">
+        <Rect X="80" Y="64" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="47" Name="tile_47">
+        <Rect X="96" Y="64" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="48" Name="tile_48">
+        <Rect X="112" Y="64" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="49" Name="tile_49">
+        <Rect X="128" Y="64" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="50" Name="tile_50">
+        <Rect X="144" Y="64" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="51" Name="tile_51">
+        <Rect X="0" Y="80" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="52" Name="tile_52">
+        <Rect X="16" Y="80" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="53" Name="tile_53">
+        <Rect X="32" Y="80" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="54" Name="tile_54">
+        <Rect X="48" Y="80" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="55" Name="tile_55">
+        <Rect X="64" Y="80" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="56" Name="tile_56">
+        <Rect X="80" Y="80" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="57" Name="tile_57">
+        <Rect X="96" Y="80" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="58" Name="tile_58">
+        <Rect X="112" Y="80" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="59" Name="tile_59">
+        <Rect X="128" Y="80" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="60" Name="tile_60">
+        <Rect X="144" Y="80" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="61" Name="tile_61">
+        <Rect X="0" Y="96" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="62" Name="tile_62">
+        <Rect X="16" Y="96" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="63" Name="tile_63">
+        <Rect X="32" Y="96" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="64" Name="tile_64">
+        <Rect X="48" Y="96" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="65" Name="tile_65">
+        <Rect X="64" Y="96" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="66" Name="tile_66">
+        <Rect X="80" Y="96" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="67" Name="tile_67">
+        <Rect X="96" Y="96" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="68" Name="tile_68">
+        <Rect X="112" Y="96" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="69" Name="tile_69">
+        <Rect X="128" Y="96" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="70" Name="tile_70">
+        <Rect X="144" Y="96" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="71" Name="tile_71">
+        <Rect X="0" Y="112" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="72" Name="tile_72">
+        <Rect X="16" Y="112" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="73" Name="tile_73">
+        <Rect X="32" Y="112" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="74" Name="tile_74">
+        <Rect X="48" Y="112" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="75" Name="tile_75">
+        <Rect X="64" Y="112" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="76" Name="tile_76">
+        <Rect X="80" Y="112" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="77" Name="tile_77">
+        <Rect X="96" Y="112" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="78" Name="tile_78">
+        <Rect X="112" Y="112" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="79" Name="tile_79">
+        <Rect X="128" Y="112" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="80" Name="tile_80">
+        <Rect X="144" Y="112" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="81" Name="tile_81">
+        <Rect X="0" Y="128" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="82" Name="tile_82">
+        <Rect X="16" Y="128" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="83" Name="tile_83">
+        <Rect X="32" Y="128" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="84" Name="tile_84">
+        <Rect X="48" Y="128" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="85" Name="tile_85">
+        <Rect X="64" Y="128" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="86" Name="tile_86">
+        <Rect X="80" Y="128" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="87" Name="tile_87">
+        <Rect X="96" Y="128" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="88" Name="tile_88">
+        <Rect X="112" Y="128" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="89" Name="tile_89">
+        <Rect X="128" Y="128" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="90" Name="tile_90">
+        <Rect X="144" Y="128" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="91" Name="tile_91">
+        <Rect X="0" Y="144" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="92" Name="tile_92">
+        <Rect X="16" Y="144" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="93" Name="tile_93">
+        <Rect X="32" Y="144" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="94" Name="tile_94">
+        <Rect X="48" Y="144" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="95" Name="tile_95">
+        <Rect X="64" Y="144" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="96" Name="tile_96">
+        <Rect X="80" Y="144" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="97" Name="tile_97">
+        <Rect X="96" Y="144" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="98" Name="tile_98">
+        <Rect X="112" Y="144" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="99" Name="tile_99">
+        <Rect X="128" Y="144" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="100" Name="tile_100">
+        <Rect X="144" Y="144" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="101" Name="tile_101">
+        <Rect X="0" Y="160" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="102" Name="tile_102">
+        <Rect X="16" Y="160" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="103" Name="tile_103">
+        <Rect X="32" Y="160" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="104" Name="tile_104">
+        <Rect X="48" Y="160" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="105" Name="tile_105">
+        <Rect X="64" Y="160" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="106" Name="tile_106">
+        <Rect X="80" Y="160" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="107" Name="tile_107">
+        <Rect X="96" Y="160" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="108" Name="tile_108">
+        <Rect X="112" Y="160" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="109" Name="tile_109">
+        <Rect X="128" Y="160" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="110" Name="tile_110">
+        <Rect X="144" Y="160" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="111" Name="tile_111">
+        <Rect X="0" Y="176" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="112" Name="tile_112">
+        <Rect X="16" Y="176" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="113" Name="tile_113">
+        <Rect X="32" Y="176" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="114" Name="tile_114">
+        <Rect X="48" Y="176" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="115" Name="tile_115">
+        <Rect X="64" Y="176" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="116" Name="tile_116">
+        <Rect X="80" Y="176" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="117" Name="tile_117">
+        <Rect X="96" Y="176" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="118" Name="tile_118">
+        <Rect X="112" Y="176" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="119" Name="tile_119">
+        <Rect X="128" Y="176" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="120" Name="tile_120">
+        <Rect X="144" Y="176" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="121" Name="tile_121">
+        <Rect X="0" Y="192" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="122" Name="tile_122">
+        <Rect X="16" Y="192" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="123" Name="tile_123">
+        <Rect X="32" Y="192" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="124" Name="tile_124">
+        <Rect X="48" Y="192" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="125" Name="tile_125">
+        <Rect X="64" Y="192" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="126" Name="tile_126">
+        <Rect X="80" Y="192" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="127" Name="tile_127">
+        <Rect X="96" Y="192" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="128" Name="tile_128">
+        <Rect X="112" Y="192" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="129" Name="tile_129">
+        <Rect X="128" Y="192" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="130" Name="tile_130">
+        <Rect X="144" Y="192" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="131" Name="tile_131">
+        <Rect X="0" Y="208" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="132" Name="tile_132">
+        <Rect X="16" Y="208" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="133" Name="tile_133">
+        <Rect X="32" Y="208" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="134" Name="tile_134">
+        <Rect X="48" Y="208" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="135" Name="tile_135">
+        <Rect X="64" Y="208" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="136" Name="tile_136">
+        <Rect X="80" Y="208" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="137" Name="tile_137">
+        <Rect X="96" Y="208" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="138" Name="tile_138">
+        <Rect X="112" Y="208" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="139" Name="tile_139">
+        <Rect X="128" Y="208" Width="15" Height="15" />
+      </Tile>
+      <Tile Id="140" Name="tile_140">
+        <Rect X="144" Y="208" Width="15" Height="15" />
+      </Tile>
+    </Tiles>
+  </TileSet>
+  <Objects>
+    <Item Id="6" Name="rifleman01" X="32" Y="3648" Width="32" Height="64">
+      <ActiveBound X="32" Y="3648" Width="32" Height="64" />
+      <Params>
+        <Elem Key="status" Value="0" />
+      </Params>
+    </Item>
+    <Item Id="21" Name="rockfly01" X="256" Y="3136" Width="64" Height="64">
+      <ActiveBound X="192" Y="3136" Width="224" Height="64" />
+    </Item>
+    <Item Id="11" Name="wallturret01" X="64" Y="3040" Width="64" Height="64">
+      <ActiveBound X="64" Y="3040" Width="64" Height="64" />
+    </Item>
+    <Item Id="3" Name="falcon01" X="0" Y="2976" Width="64" Height="64">
+      <ActiveBound X="0" Y="2976" Width="64" Height="64" />
+      <Params>
+        <Elem Key="type" Value="3" />
+      </Params>
+    </Item>
+    <Item Id="11" Name="wallturret02" X="0" Y="2880" Width="64" Height="64">
+      <ActiveBound X="0" Y="2880" Width="64" Height="64" />
+    </Item>
+    <Item Id="1" Name="redcannon01" X="416" Y="3008" Width="64" Height="64">
+      <ActiveBound X="416" Y="3008" Width="64" Height="64" />
+    </Item>
+    <Item Id="11" Name="wallturret03" X="448" Y="2752" Width="64" Height="64">
+      <ActiveBound X="448" Y="2752" Width="64" Height="64" />
+    </Item>
+    <Item Id="3" Name="falcon02" X="320" Y="2624" Width="64" Height="64">
+      <ActiveBound X="320" Y="2624" Width="64" Height="64" />
+      <Params>
+        <Elem Key="type" Value="5" />
+      </Params>
+    </Item>
+    <Item Id="27" Name="scubasoldier01" X="416" Y="2592" Width="64" Height="64">
+      <ActiveBound X="416" Y="2592" Width="64" Height="64" />
+    </Item>
+    <Item Id="27" Name="scubasoldier02" X="128" Y="2368" Width="64" Height="64">
+      <ActiveBound X="128" Y="2368" Width="64" Height="64" />
+    </Item>
+    <Item Id="11" Name="wallturret04" X="0" Y="2336" Width="64" Height="64">
+      <ActiveBound X="0" Y="2336" Width="64" Height="64" />
+    </Item>
+    <Item Id="21" Name="rockfly02" X="224" Y="2208" Width="64" Height="64">
+      <ActiveBound X="196" Y="2208" Width="224" Height="64" />
+    </Item>
+    <Item Id="21" Name="rockfly03" X="224" Y="1984" Width="64" Height="64">
+      <ActiveBound X="128" Y="1984" Width="256" Height="64" />
+    </Item>
+    <Item Id="11" Name="walllturret05" X="0" Y="1920" Width="64" Height="64">
+      <ActiveBound X="0" Y="1920" Width="64" Height="64" />
+    </Item>
+    <Item Id="25" Name="fire01" X="160" Y="1683" Width="32" Height="36">
+      <ActiveBound X="128" Y="1683" Width="256" Height="36" />
+    </Item>
+    <Item Id="25" Name="fire02" X="320" Y="1683" Width="32" Height="36">
+      <ActiveBound X="128" Y="1683" Width="256" Height="36" />
+    </Item>
+    <Item Id="4" Name="aircraft01" X="128" Y="1440" Width="64" Height="32">
+      <ActiveBound X="0" Y="1952" Width="192" Height="544" />
+      <Params>
+        <Elem Key="type" Value="0" />
+      </Params>
+    </Item>
+    <Item Id="4" Name="aircraft02" X="352" Y="1440" Width="64" Height="32">
+      <ActiveBound X="224" Y="1952" Width="192" Height="544" />
+      <Params>
+        <Elem Key="type" Value="4" />
+      </Params>
+    </Item>
+    <Item Id="27" Name="scubasoldier03" X="288" Y="1184" Width="64" Height="64">
+      <ActiveBound X="288" Y="1184" Width="64" Height="64" />
+    </Item>
+    <Item Id="6" Name="rifleman02" X="416" Y="1120" Width="32" Height="64">
+      <ActiveBound X="416" Y="1120" Width="32" Height="64" />
+      <Params>
+        <Elem Key="status" Value="0" />
+      </Params>
+    </Item>
+    <Item Id="26" Name="rockfall01" X="256" Y="960" Width="64" Height="64">
+      <ActiveBound X="256" Y="960" Width="64" Height="576" />
+    </Item>
+    <Item Id="26" Name="rockfall02" X="128" Y="832" Width="64" Height="64">
+      <ActiveBound X="128" Y="832" Width="64" Height="576" />
+    </Item>
+    <Item Id="26" Name="rockfall03" X="320" Y="768" Width="64" Height="64">
+      <ActiveBound X="320" Y="768" Width="64" Height="576" />
+    </Item>
+    <Item Id="26" Name="rockfall04" X="384" Y="704" Width="64" Height="64">
+      <ActiveBound X="384" Y="704" Width="64" Height="576" />
+    </Item>
+    <Item Id="26" Name="rockfall05" X="64" Y="576" Width="64" Height="64">
+      <ActiveBound X="64" Y="576" Width="64" Height="576" />
+    </Item>
+    <Item Id="3" Name="falcon03" X="256" Y="896" Width="64" Height="64">
+      <ActiveBound X="256" Y="896" Width="64" Height="64" />
+      <Params>
+        <Elem Key="type" Value="2" />
+      </Params>
+    </Item>
+    <Item Id="3" Name="falcon04" X="256" Y="640" Width="64" Height="64">
+      <ActiveBound X="256" Y="640" Width="64" Height="64" />
+      <Params>
+        <Elem Key="type" Value="1" />
+      </Params>
+    </Item>
+    <Item Id="12" Name="land01" X="0" Y="3923" Width="512" Height="5">
+      <ActiveBound X="0" Y="3923" Width="512" Height="5" />
+      <Params>
+        <Elem Key="physicBodyDirection" Value="1" />
+        <Elem Key="type" Value="0" />
+      </Params>
+    </Item>
+    <Item Id="12" Name="land02" X="0" Y="3829" Width="511" Height="5">
+      <ActiveBound X="0" Y="3829" Width="511" Height="5" />
+      <Params>
+        <Elem Key="physicBodyDirection" Value="1" />
+        <Elem Key="type" Value="0" />
+      </Params>
+    </Item>
+    <Item Id="12" Name="land03" X="256" Y="3733" Width="256" Height="5">
+      <ActiveBound X="256" Y="3733" Width="256" Height="5" />
+      <Params>
+        <Elem Key="physicBodyDirection" Value="1" />
+        <Elem Key="type" Value="0" />
+      </Params>
+    </Item>
+    <Item Id="12" Name="land04" X="63" Y="3668" Width="128" Height="5">
+      <ActiveBound X="63" Y="3668" Width="128" Height="5" />
+      <Params>
+        <Elem Key="physicBodyDirection" Value="1" />
+        <Elem Key="type" Value="0" />
+      </Params>
+    </Item>
+    <Item Id="12" Name="land05" X="320" Y="3604" Width="192" Height="5">
+      <ActiveBound X="320" Y="3604" Width="192" Height="5" />
+      <Params>
+        <Elem Key="physicBodyDirection" Value="1" />
+        <Elem Key="type" Value="0" />
+      </Params>
+    </Item>
+    <Item Id="12" Name="land06" X="0" Y="3572" Width="255" Height="5">
+      <ActiveBound X="0" Y="3572" Width="255" Height="5" />
+      <Params>
+        <Elem Key="physicBodyDirection" Value="1" />
+        <Elem Key="type" Value="0" />
+      </Params>
+    </Item>
+    <Item Id="12" Name="land07" X="191" Y="3508" Width="190" Height="5">
+      <ActiveBound X="191" Y="3508" Width="190" Height="5" />
+      <Params>
+        <Elem Key="physicBodyDirection" Value="1" />
+        <Elem Key="type" Value="0" />
+      </Params>
+    </Item>
+    <Item Id="12" Name="land08" X="0" Y="3444" Width="191" Height="5">
+      <ActiveBound X="0" Y="3444" Width="191" Height="5" />
+      <Params>
+        <Elem Key="physicBodyDirection" Value="1" />
+        <Elem Key="type" Value="0" />
+      </Params>
+    </Item>
+    <Item Id="12" Name="land09" X="256" Y="3412" Width="256" Height="5">
+      <ActiveBound X="256" Y="3412" Width="256" Height="5" />
+      <Params>
+        <Elem Key="physicBodyDirection" Value="1" />
+        <Elem Key="type" Value="0" />
+      </Params>
+    </Item>
+    <Item Id="12" Name="land10" X="0" Y="3348" Width="446" Height="5">
+      <ActiveBound X="0" Y="3348" Width="446" Height="5" />
+      <Params>
+        <Elem Key="physicBodyDirection" Value="1" />
+        <Elem Key="type" Value="0" />
+      </Params>
+    </Item>
+    <Item Id="12" Name="land11" X="320" Y="3284" Width="191" Height="5">
+      <ActiveBound X="320" Y="3284" Width="191" Height="5" />
+      <Params>
+        <Elem Key="physicBodyDirection" Value="1" />
+        <Elem Key="type" Value="0" />
+      </Params>
+    </Item>
+    <Item Id="12" Name="land12" X="384" Y="3220" Width="127" Height="5">
+      <ActiveBound X="384" Y="3220" Width="127" Height="5" />
+      <Params>
+        <Elem Key="physicBodyDirection" Value="1" />
+        <Elem Key="type" Value="0" />
+      </Params>
+    </Item>
+    <Item Id="12" Name="land13" X="0" Y="3060" Width="191" Height="5">
+      <ActiveBound X="0" Y="3060" Width="191" Height="5" />
+      <Params>
+        <Elem Key="physicBodyDirection" Value="1" />
+        <Elem Key="type" Value="0" />
+      </Params>
+    </Item>
+    <Item Id="12" Name="land14" X="64" Y="2964" Width="192" Height="5">
+      <ActiveBound X="64" Y="2964" Width="192" Height="5" />
+      <Params>
+        <Elem Key="physicBodyDirection" Value="1" />
+        <Elem Key="type" Value="0" />
+      </Params>
+    </Item>
+    <Item Id="12" Name="land15" X="319" Y="2931" Width="192" Height="5">
+      <ActiveBound X="319" Y="2931" Width="192" Height="5" />
+      <Params>
+        <Elem Key="physicBodyDirection" Value="1" />
+        <Elem Key="type" Value="0" />
+      </Params>
+    </Item>
+    <Item Id="12" Name="land16" X="384" Y="2867" Width="63" Height="5">
+      <ActiveBound X="384" Y="2867" Width="63" Height="5" />
+      <Params>
+        <Elem Key="physicBodyDirection" Value="1" />
+        <Elem Key="type" Value="0" />
+      </Params>
+    </Item>
+    <Item Id="12" Name="land17" X="383" Y="2804" Width="129" Height="6">
+      <ActiveBound X="383" Y="2804" Width="129" Height="5" />
+      <Params>
+        <Elem Key="physicBodyDirection" Value="1" />
+        <Elem Key="type" Value="0" />
+      </Params>
+    </Item>
+    <Item Id="12" Name="land18" X="127" Y="2803" Width="192" Height="5">
+      <ActiveBound X="127" Y="2803" Width="192" Height="5" />
+      <Params>
+        <Elem Key="physicBodyDirection" Value="1" />
+        <Elem Key="type" Value="0" />
+      </Params>
+    </Item>
+    <Item Id="12" Name="land19" X="65" Y="2708" Width="190" Height="5">
+      <ActiveBound X="65" Y="2708" Width="190" Height="5" />
+      <Params>
+        <Elem Key="physicBodyDirection" Value="1" />
+        <Elem Key="type" Value="0" />
+      </Params>
+    </Item>
+    <Item Id="12" Name="land20" X="127" Y="2645" Width="320" Height="5">
+      <ActiveBound X="127" Y="2645" Width="320" Height="5" />
+      <Params>
+        <Elem Key="physicBodyDirection" Value="1" />
+        <Elem Key="type" Value="0" />
+      </Params>
+    </Item>
+    <Item Id="12" Name="land21" X="255" Y="2549" Width="127" Height="5">
+      <ActiveBound X="255" Y="2549" Width="127" Height="5" />
+      <Params>
+        <Elem Key="physicBodyDirection" Value="1" />
+        <Elem Key="type" Value="0" />
+      </Params>
+    </Item>
+    <Item Id="12" Name="land22" X="127" Y="2483" Width="191" Height="5">
+      <ActiveBound X="127" Y="2483" Width="191" Height="5" />
+      <Params>
+        <Elem Key="physicBodyDirection" Value="1" />
+        <Elem Key="type" Value="0" />
+      </Params>
+    </Item>
+    <Item Id="12" Name="land23" X="0" Y="2484" Width="64" Height="5">
+      <ActiveBound X="0" Y="2484" Width="64" Height="5" />
+      <Params>
+        <Elem Key="physicBodyDirection" Value="1" />
+        <Elem Key="type" Value="0" />
+      </Params>
+    </Item>
+    <Item Id="12" Name="land24" X="320" Y="2419" Width="126" Height="5">
+      <ActiveBound X="320" Y="2419" Width="126" Height="5" />
+      <Params>
+        <Elem Key="physicBodyDirection" Value="1" />
+        <Elem Key="type" Value="0" />
+      </Params>
+    </Item>
+    <Item Id="12" Name="land25" X="255" Y="2355" Width="128" Height="5">
+      <ActiveBound X="255" Y="2355" Width="128" Height="5" />
+      <Params>
+        <Elem Key="physicBodyDirection" Value="1" />
+        <Elem Key="type" Value="0" />
+      </Params>
+    </Item>
+    <Item Id="12" Name="land26" X="320" Y="2260" Width="63" Height="5">
+      <ActiveBound X="320" Y="2260" Width="63" Height="5" />
+      <Params>
+        <Elem Key="physicBodyDirection" Value="1" />
+        <Elem Key="type" Value="0" />
+      </Params>
+    </Item>
+    <Item Id="12" Name="land27" X="0" Y="2130" Width="191" Height="5">
+      <ActiveBound X="0" Y="2130" Width="191" Height="5" />
+      <Params>
+        <Elem Key="physicBodyDirection" Value="1" />
+        <Elem Key="type" Value="0" />
+      </Params>
+    </Item>
+    <Item Id="12" Name="land28" X="64" Y="2067" Width="191" Height="5">
+      <ActiveBound X="64" Y="2067" Width="191" Height="5" />
+      <Params>
+        <Elem Key="physicBodyDirection" Value="1" />
+        <Elem Key="type" Value="0" />
+      </Params>
+    </Item>
+    <Item Id="12" Name="land29" X="319" Y="2068" Width="193" Height="6">
+      <ActiveBound X="319" Y="2068" Width="193" Height="6" />
+      <Params>
+        <Elem Key="physicBodyDirection" Value="1" />
+        <Elem Key="type" Value="0" />
+      </Params>
+    </Item>
+    <Item Id="12" Name="land30" X="384" Y="1971" Width="128" Height="5">
+      <ActiveBound X="384" Y="1971" Width="128" Height="5" />
+      <Params>
+        <Elem Key="physicBodyDirection" Value="1" />
+        <Elem Key="type" Value="0" />
+      </Params>
+    </Item>
+    <Item Id="12" Name="land31" X="0" Y="1940" Width="128" Height="5">
+      <ActiveBound X="0" Y="1940" Width="128" Height="5" />
+      <Params>
+        <Elem Key="physicBodyDirection" Value="1" />
+        <Elem Key="type" Value="0" />
+      </Params>
+    </Item>
+    <Item Id="12" Name="land32" X="255" Y="1844" Width="193" Height="5">
+      <ActiveBound X="255" Y="1844" Width="193" Height="5" />
+      <Params>
+        <Elem Key="physicBodyDirection" Value="1" />
+        <Elem Key="type" Value="0" />
+      </Params>
+    </Item>
+    <Item Id="12" Name="land33" X="64" Y="1876" Width="127" Height="5">
+      <ActiveBound X="64" Y="1876" Width="127" Height="5" />
+      <Params>
+        <Elem Key="physicBodyDirection" Value="1" />
+        <Elem Key="type" Value="0" />
+      </Params>
+    </Item>
+    <Item Id="12" Name="land34" X="0" Y="1812" Width="127" Height="6">
+      <ActiveBound X="0" Y="1812" Width="127" Height="6" />
+      <Params>
+        <Elem Key="physicBodyDirection" Value="1" />
+        <Elem Key="type" Value="0" />
+      </Params>
+    </Item>
+    <Item Id="12" Name="land35" X="319" Y="1779" Width="192" Height="5">
+      <ActiveBound X="319" Y="1779" Width="192" Height="5" />
+      <Params>
+        <Elem Key="physicBodyDirection" Value="1" />
+        <Elem Key="type" Value="0" />
+      </Params>
+    </Item>
+    <Item Id="12" Name="land36" X="0" Y="1555" Width="128" Height="5">
+      <ActiveBound X="0" Y="1555" Width="128" Height="5" />
+      <Params>
+        <Elem Key="physicBodyDirection" Value="1" />
+        <Elem Key="type" Value="0" />
+      </Params>
+    </Item>
+    <Item Id="12" Name="land37" X="0" Y="1652" Width="512" Height="6">
+      <ActiveBound X="0" Y="1652" Width="512" Height="6" />
+      <Params>
+        <Elem Key="physicBodyDirection" Value="1" />
+        <Elem Key="type" Value="0" />
+      </Params>
+    </Item>
+    <Item Id="12" Name="land38" X="64" Y="1491" Width="192" Height="5">
+      <ActiveBound X="64" Y="1491" Width="192" Height="5" />
+      <Params>
+        <Elem Key="physicBodyDirection" Value="1" />
+        <Elem Key="type" Value="0" />
+      </Params>
+    </Item>
+    <Item Id="12" Name="land39" X="256" Y="1427" Width="256" Height="5">
+      <ActiveBound X="256" Y="1427" Width="256" Height="5" />
+      <Params>
+        <Elem Key="physicBodyDirection" Value="1" />
+        <Elem Key="type" Value="0" />
+      </Params>
+    </Item>
+    <Item Id="12" Name="land40" X="64" Y="1363" Width="126" Height="5">
+      <ActiveBound X="64" Y="1363" Width="126" Height="5" />
+      <Params>
+        <Elem Key="physicBodyDirection" Value="1" />
+        <Elem Key="type" Value="0" />
+      </Params>
+    </Item>
+    <Item Id="12" Name="land41" X="128" Y="1300" Width="384" Height="5">
+      <ActiveBound X="128" Y="1300" Width="384" Height="5" />
+      <Params>
+        <Elem Key="physicBodyDirection" Value="1" />
+        <Elem Key="type" Value="0" />
+      </Params>
+    </Item>
+    <Item Id="12" Name="land42" X="0" Y="1236" Width="255" Height="5">
+      <ActiveBound X="0" Y="1236" Width="255" Height="5" />
+      <Params>
+        <Elem Key="physicBodyDirection" Value="1" />
+        <Elem Key="type" Value="0" />
+      </Params>
+    </Item>
+    <Item Id="12" Name="land43" X="0" Y="1140" Width="128" Height="6">
+      <ActiveBound X="0" Y="1140" Width="128" Height="6" />
+      <Params>
+        <Elem Key="physicBodyDirection" Value="1" />
+        <Elem Key="type" Value="0" />
+      </Params>
+    </Item>
+    <Item Id="12" Name="land44" X="0" Y="1044" Width="511" Height="5">
+      <ActiveBound X="0" Y="1044" Width="511" Height="5" />
+      <Params>
+        <Elem Key="physicBodyDirection" Value="1" />
+        <Elem Key="type" Value="0" />
+      </Params>
+    </Item>
+    <Item Id="12" Name="land45" X="320" Y="979" Width="191" Height="5">
+      <ActiveBound X="320" Y="979" Width="191" Height="5" />
+      <Params>
+        <Elem Key="physicBodyDirection" Value="1" />
+        <Elem Key="type" Value="0" />
+      </Params>
+    </Item>
+    <Item Id="12" Name="land46" X="0" Y="948" Width="254" Height="6">
+      <ActiveBound X="0" Y="948" Width="254" Height="6" />
+      <Params>
+        <Elem Key="physicBodyDirection" Value="1" />
+        <Elem Key="type" Value="0" />
+      </Params>
+    </Item>
+    <Item Id="12" Name="land47" X="64" Y="883" Width="126" Height="5">
+      <ActiveBound X="64" Y="883" Width="126" Height="5" />
+      <Params>
+        <Elem Key="physicBodyDirection" Value="1" />
+        <Elem Key="type" Value="0" />
+      </Params>
+    </Item>
+    <Item Id="12" Name="land48" X="255" Y="819" Width="255" Height="6">
+      <ActiveBound X="255" Y="819" Width="255" Height="6" />
+      <Params>
+        <Elem Key="physicBodyDirection" Value="1" />
+        <Elem Key="type" Value="0" />
+      </Params>
+    </Item>
+    <Item Id="12" Name="land49" X="0" Y="723" Width="126" Height="5">
+      <ActiveBound X="0" Y="723" Width="126" Height="5" />
+      <Params>
+        <Elem Key="physicBodyDirection" Value="1" />
+        <Elem Key="type" Value="0" />
+      </Params>
+    </Item>
+    <Item Id="12" Name="land50" X="383" Y="722" Width="129" Height="5">
+      <ActiveBound X="383" Y="722" Width="129" Height="5" />
+      <Params>
+        <Elem Key="physicBodyDirection" Value="1" />
+        <Elem Key="type" Value="0" />
+      </Params>
+    </Item>
+    <Item Id="12" Name="land51" X="64" Y="659" Width="319" Height="5">
+      <ActiveBound X="64" Y="659" Width="319" Height="5" />
+      <Params>
+        <Elem Key="physicBodyDirection" Value="1" />
+        <Elem Key="type" Value="0" />
+      </Params>
+    </Item>
+    <Item Id="12" Name="land52" X="0" Y="596" Width="254" Height="5">
+      <ActiveBound X="0" Y="596" Width="254" Height="5" />
+      <Params>
+        <Elem Key="physicBodyDirection" Value="1" />
+        <Elem Key="type" Value="0" />
+      </Params>
+    </Item>
+    <Item Id="12" Name="land53" X="128" Y="530" Width="191" Height="6">
+      <ActiveBound X="128" Y="530" Width="191" Height="6" />
+      <Params>
+        <Elem Key="physicBodyDirection" Value="1" />
+        <Elem Key="type" Value="0" />
+      </Params>
+    </Item>
+    <Item Id="12" Name="land54" X="384" Y="498" Width="128" Height="5">
+      <ActiveBound X="384" Y="498" Width="128" Height="5" />
+      <Params>
+        <Elem Key="physicBodyDirection" Value="1" />
+        <Elem Key="type" Value="0" />
+      </Params>
+    </Item>
+    <Item Id="12" Name="land55" X="0" Y="467" Width="128" Height="5">
+      <ActiveBound X="0" Y="467" Width="128" Height="5" />
+      <Params>
+        <Elem Key="physicBodyDirection" Value="1" />
+        <Elem Key="type" Value="0" />
+      </Params>
+    </Item>
+    <Item Id="12" Name="land56" X="256" Y="435" Width="256" Height="5">
+      <ActiveBound X="256" Y="435" Width="256" Height="5" />
+      <Params>
+        <Elem Key="physicBodyDirection" Value="1" />
+        <Elem Key="type" Value="0" />
+      </Params>
+    </Item>
+    <Item Id="12" Name="land57" X="64" Y="403" Width="126" Height="5">
+      <ActiveBound X="64" Y="403" Width="126" Height="5" />
+      <Params>
+        <Elem Key="physicBodyDirection" Value="1" />
+        <Elem Key="type" Value="0" />
+      </Params>
+    </Item>
+    <Item Id="12" Name="land58" X="320" Y="340" Width="191" Height="6">
+      <ActiveBound X="320" Y="340" Width="191" Height="6" />
+      <Params>
+        <Elem Key="physicBodyDirection" Value="1" />
+        <Elem Key="type" Value="0" />
+      </Params>
+    </Item>
+    <Item Id="12" Name="land59" X="0" Y="340" Width="255" Height="6">
+      <ActiveBound X="0" Y="340" Width="255" Height="6" />
+      <Params>
+        <Elem Key="physicBodyDirection" Value="1" />
+        <Elem Key="type" Value="0" />
+      </Params>
+    </Item>
+    <Item Id="12" Name="land60" X="191" Y="275" Width="256" Height="5">
+      <ActiveBound X="191" Y="275" Width="256" Height="5" />
+      <Params>
+        <Elem Key="physicBodyDirection" Value="1" />
+        <Elem Key="type" Value="0" />
+      </Params>
+    </Item>
+    <Item Id="12" Name="land61" X="255" Y="212" Width="192" Height="5">
+      <ActiveBound X="255" Y="212" Width="192" Height="5" />
+      <Params>
+        <Elem Key="physicBodyDirection" Value="1" />
+        <Elem Key="type" Value="0" />
+      </Params>
+    </Item>
+    <Item Id="12" Name="land62" X="320" Y="147" Width="190" Height="5">
+      <ActiveBound X="320" Y="147" Width="190" Height="5" />
+      <Params>
+        <Elem Key="physicBodyDirection" Value="1" />
+        <Elem Key="type" Value="0" />
+      </Params>
+    </Item>
+    <Item Id="12" Name="land63" X="0" Y="84" Width="511" Height="5">
+      <ActiveBound X="0" Y="84" Width="511" Height="5" />
+      <Params>
+        <Elem Key="physicBodyDirection" Value="1" />
+        <Elem Key="type" Value="0" />
+        <Elem Key="canJumpDown" Value="0" />
+      </Params>
+    </Item>
+  </Objects>
+</Tilesmap>

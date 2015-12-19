@@ -55,7 +55,12 @@ enum eID
 
 	FIRE			=25,
 	ROCKFALL = 26,
-	SCUBASOLDIER = 27
+
+	BEGIN_STAGE3	= 27,
+	GAME_OVER_SCENE		= 28,
+	SCUBASOLDIER = 29,
+	FONTEX			= 30,
+	FONTFULL		= 31,
 };
  
 enum eStatus
@@ -91,13 +96,14 @@ enum eStatus
 	HOLDING			= (1 << 17),
 	SWIMING			= (1 << 18),
 	DIVING			= (1 << 19),
-	HIDDEN			= (1 << 20),	
+	HIDDEN			= (1 << 20),
 	WAITING			= (1<<31),
 };
 enum eLandType
 {
 	GRASS,
-	WATER
+	WATER,
+	BRIDGELAND
 };
 
 enum eDirection
@@ -230,6 +236,8 @@ typedef D3DXVECTOR3 GVector3;
 typedef D3DXVECTOR2 GVector2;
 #define VECTOR2ZERO GVector2(0.0f, 0.0f)
 #define VECTOR2ONE  GVector2(1.0f, 1.0f)
+
+#define ACTOR_SCENARIO [event_receiver(native)]
 
 #define NS_FRAMEWORK		namespace FrameWork
 

@@ -13,7 +13,7 @@
 #include <math.h>
 #include "PlayScene.h"
 using namespace std;
-#define CANNON_HITPOINT 3
+#define CANNON_HITPOINT 8
 #define CANNON_SCORE 500
 #define CANNON_SHOOTING_DELAY 2000.0f
 #define CANNON_ANIMATION_SPEED 0.33f
@@ -56,7 +56,7 @@ private:
 	float _shootingAngle;
 	float _billAngle;
 	StopWatch* _stopwatch;
-	list<Bullet*> _listBullets;
+	//list<Bullet*> _listBullets;
 
 	void initExplosion();
 	void updateExplosion(float);

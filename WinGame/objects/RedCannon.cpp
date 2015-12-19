@@ -15,6 +15,7 @@ RedCannon::RedCannon(eStatus status, GVector2 position) :BaseEnemy(eID::REDCANNO
 }
 RedCannon::RedCannon(eStatus status, float x, float y) :BaseEnemy(eID::REDCANNON)
 {
+	//un-use
 	_sprite = SpriteManager::getInstance()->getSprite(eID::REDCANNON);
 	_sprite->setFrameRect(0, 0, 32, 32);
 	GVector2 pos(x, y);
@@ -94,10 +95,11 @@ void RedCannon::draw(LPD3DXSPRITE spriteHandle, Viewport* viewport)
 		this->_sprite->render(spriteHandle, viewport);
 		_animation[this->getWT_Status()]->draw(spriteHandle, viewport);
 	}
-	for (auto it = _listBullets.begin(); it != _listBullets.end(); it++)
-	{
-		(*it)->draw(spriteHandle, viewport);
-	}
+	//for (auto it = _listBullets.begin(); it != _listBullets.end(); it++)
+	//{
+	//	(*it)->draw(spriteHandle, viewport);
+	//}
+		
 }
 
 void RedCannon::update(float deltatime)
@@ -140,27 +142,27 @@ void RedCannon::update(float deltatime)
 		{
 			this->setScale(SCALE_FACTOR);
 			this->setStatus(WT_NORMAL);
-			_shootingAngle = -90;	
+			_shootingAngle = -90;
 		}
 		else if (_billAngle >= -75 && _billAngle < -45)
 		{
 			this->setScale(SCALE_FACTOR);
 			this->setStatus(WT_LEFT_60);
-			_shootingAngle = -60;		
+			_shootingAngle = -60;
 		}
 		else if (_billAngle >= -45 && _billAngle < 0)
 		{
 			this->setScale(SCALE_FACTOR);
 			this->setStatus(WT_LEFT_30);
-			_shootingAngle = -30;	
+			_shootingAngle = -30;
 		}
 		this->addStatus(WT_SHOOTING);
 	}
 	
-		for (auto it = _listBullets.begin(); it != _listBullets.end(); it++)
-		{
-			(*it)->update(deltatime);
-		}
+		//for (auto it = _listBullets.begin(); it != _listBullets.end(); it++)
+		//{
+		//	(*it)->update(deltatime);
+		//}
 		for (auto it : _listComponent)
 		{
 			it.second->update(deltatime);
@@ -174,7 +176,7 @@ void RedCannon::update(float deltatime)
 				}
 				_stopwatch->restart();
 			}
-		
+
 		_animation[this->getWT_Status()]->update(deltatime);
 }
 
@@ -228,11 +230,11 @@ void RedCannon::release()
 		delete component.second;
 	}
 	_listComponent.clear();
-	for (auto item : _listBullets)
-	{
-		delete item;
-	}
-	_listBullets.clear();
+	//for (auto item : _listBullets)
+	//{
+	//	delete item;
+	//}
+	//_listBullets.clear();
 	if (_explosion != NULL)
 		this->_explosion->release();
 	SAFE_DELETE(_explosion);
@@ -352,7 +354,7 @@ bool RedCannon::isRange()
 	auto bill = ((PlayScene*)SceneManager::getInstance()->getCurrentScene())->getBill();
 	float dx = this->getPosition().x - bill->getPosition().x;
 	float dy = this->getPosition().y - (bill->getPosition().y + bill->getSprite()->getFrameHeight() / 2);
-	
+
 	if (dx>0 && abs(dx) <= (WINDOW_WIDTH / 2 ))
 		return true;
 	else 

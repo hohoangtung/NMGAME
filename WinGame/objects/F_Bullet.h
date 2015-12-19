@@ -7,8 +7,8 @@
 #include "..\FrameWork\Animation.h"
 
 #define F_BULLET_SPEED		200.0f
-#define ROUND_RADIAN		1000.0f
-#define ROUND_FREQUENCE		4.0f
+#define ROUND_RADIUS		600.0f
+#define ROUND_FREQUENCE		3.5f
 
 class FBullet : public Bullet
 {
