@@ -35,14 +35,14 @@ Trong lớp này có:
 #include "PlayScene.h"
 #include "BaseObject.h"
 #include "Explosion.h"
-
+#include "Land.h"
 // nếu sửa max_wave thì phải sửa _matrixIndex
 #define MAX_WAVE 4		// số lần nổ
 #define DELAYTIME 50.0f	// Thời gian khoảng cách giữa hai vụ nổ
 
 #define BRIDGE_POSITION GVector2(200.0f, 300.0f)	// test value
 
-class Bridge : public BaseObject
+class Bridge : public Land
 {
 public:
 	Bridge(GVector2 position);
@@ -62,7 +62,7 @@ public:
 	void burst(float deltatime);
 
 
-	void Bridge::setStatus(eStatus status) override;
+	void setStatus(eStatus status) override;
 	void setPosition(GVector2 position) override;
 	GVector2 getPosition() override;
 	RECT getBounding() override;

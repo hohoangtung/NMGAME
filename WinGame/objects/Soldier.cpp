@@ -271,15 +271,15 @@ void Soldier::onCollisionEnd(CollisionEventArg* collision_event) {
 			if (chance == 1)
 			{
 				jump();
-			auto gravity = (Gravity*)this->_listComponent["Gravity"];
-			gravity->setStatus(eGravityStatus::FALLING__DOWN);
-			this->setStatus(FALLING);
+				auto gravity = (Gravity*)this->_listComponent["Gravity"];
+				gravity->setStatus(eGravityStatus::FALLING__DOWN);
+				this->setStatus(FALLING);
 			}
 			else
 			{
-			Movement* movement = (Movement*)this->getComponent("Movement");
-			movement->setVelocity(GVector2(-movement->getVelocity().x, movement->getVelocity().y));
-			this->setScaleX(-SCALE_FACTOR);
+				Movement* movement = (Movement*)this->getComponent("Movement");
+				movement->setVelocity(GVector2(-movement->getVelocity().x, movement->getVelocity().y));
+				this->setScaleX(-SCALE_FACTOR);
 			}
 		}
 	}
@@ -297,13 +297,14 @@ float Soldier::checkCollision(BaseObject * object, float dt)
 	auto collisionBody = (CollisionBody*)_listComponent["CollisionBody"];
 	eID objectId = object->getId();
 	eDirection direction;
-	eLandType land = ((Land*)object)->getType();
+
 	if (objectId == eID::LAND)
 	{
+		eLandType land = ((Land*)object)->getType();
+
 		if (collisionBody->checkCollision(object, direction, dt))
 		{
-
-			if (land == eLandType::GRASS)
+			if (land == eLandType::GRASS || land == eLandType::BRIDGELAND)
 			{
 				bool flagend = false;
 				if (direction == eDirection::TOP && this->getVelocity().y < 0)
@@ -345,7 +346,7 @@ float Soldier::checkCollision(BaseObject * object, float dt)
 					{
 						Movement* movement = (Movement*)this->getComponent("Movement");
 						movement->setVelocity(GVector2(-movement->getVelocity().x, movement->getVelocity().y));
-						this->setScaleX(-SCALE_FACTOR);
+						this->setScaleX( - this->getScale().x);
 					}
 				}
 			}
@@ -359,45 +360,44 @@ float Soldier::checkCollision(BaseObject * object, float dt)
 			}
 		}
 	}
-
-	else if (objectId == eID::BRIDGE)
-	{
-		if (collisionBody->checkCollision(object, direction, dt))
-		{
-			if (direction == eDirection::TOP && this->getVelocity().y < 0)
-			{
-				auto gravity = (Gravity*)this->_listComponent["Gravity"];
-				auto movement = (Movement*)this->_listComponent["Movement"];
-				movement->setVelocity(GVector2(movement->getVelocity().x, 0));
-				gravity->setStatus(eGravityStatus::SHALLOWED);
-				this->setStatus(eStatus::RUNNING);
-				prevObject = object;
-			}
-		
-			else if (prevObject == object)
-			{
-				prevObject = nullptr;
-				int chance = rand() % 2;
-				if (chance == 1)
-				{
-					jump();
-					auto gravity = (Gravity*)this->_listComponent["Gravity"];
-					gravity->setStatus(eGravityStatus::FALLING__DOWN);
-					this->setStatus(FALLING);
-				}
-				else
-				{
-					Movement* movement = (Movement*)this->getComponent("Movement");
-					movement->setVelocity(GVector2(-movement->getVelocity().x, movement->getVelocity().y));
-					this->setScaleX(-SCALE_FACTOR);
-				}
-			}
-		}
-	}
 	else
 	{
-		collisionBody->checkCollision(object, dt);
+		collisionBody->checkCollision(object, dt,false);
 	}
+	//else if (objectId == eID::BRIDGE)
+	//{
+	//	if (collisionBody->checkCollision(object, direction, dt))
+	//	{
+	//		if (direction == eDirection::TOP && this->getVelocity().y < 0)
+	//		{
+	//			auto gravity = (Gravity*)this->_listComponent["Gravity"];
+	//			auto movement = (Movement*)this->_listComponent["Movement"];
+	//			movement->setVelocity(GVector2(movement->getVelocity().x, 0));
+	//			gravity->setStatus(eGravityStatus::SHALLOWED);
+	//			this->setStatus(eStatus::RUNNING);
+	//			prevObject = object;
+	//		}
+
+	//		else if (prevObject == object)
+	//		{
+	//			prevObject = nullptr;
+	//			int chance = rand() % 2;
+	//			if (chance == 1)
+	//			{
+	//				jump();
+	//				auto gravity = (Gravity*)this->_listComponent["Gravity"];
+	//				gravity->setStatus(eGravityStatus::FALLING__DOWN);
+	//				this->setStatus(FALLING);
+	//			}
+	//			else
+	//			{
+	//				Movement* movement = (Movement*)this->getComponent("Movement");
+	//				movement->setVelocity(GVector2(-movement->getVelocity().x, movement->getVelocity().y));
+	//				this->setScaleX(-SCALE_FACTOR);
+	//			}
+	//		}
+	//	}
+	//}
 	return 0.0f;
 
 }

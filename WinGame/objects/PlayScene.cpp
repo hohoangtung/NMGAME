@@ -40,9 +40,9 @@ bool PlayScene::init()
 	bulletmanager->init();
 	_listobject.push_back(bulletmanager);
 
-	//auto soldier = new Soldier(RUNNING, 500, 400, -1);
-	//soldier->init();
-	//_listobject.push_back(soldier);
+	auto soldier = new Soldier(RUNNING, 500, 400, -1);
+	soldier->init();
+	_listobject.push_back(soldier);
 
 
 	//auto scubasoldier = new ScubaSoldier(GVector2(200, 50));
@@ -55,9 +55,9 @@ bool PlayScene::init()
 	rockfly->init();
 	_listobject.push_back(rockfly);*/
 
-	//auto rockfall = new RockFall(GVector2(350, 400));
-	//rockfall->init();
-	//_listobject.push_back(rockfall);
+	auto rockfall = new RockFall(GVector2(350, 400));
+	rockfall->init();
+	_listobject.push_back(rockfall);
 
 	//auto fire = new Fire(GVector2(200, 280), GVector2(400, 280),GVector2(300,280),1);
 	//fire->init();

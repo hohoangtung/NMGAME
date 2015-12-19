@@ -9,12 +9,12 @@ int Bridge::_matrixIndex[2][MAX_WAVE * 2] =
 
 #pragma region Bridge
 
-Bridge::Bridge(GVector2 postion) : BaseObject(eID::BRIDGE)
+Bridge::Bridge(GVector2 position) : Land((int)position.x, (int)position.y,0, 32,eDirection::TOP,eLandType::BRIDGELAND )
 {
 	_sprite = SpriteManager::getInstance()->getSprite(eID::BRIDGE);
 	_sprite->setScale(SCALE_FACTOR);
 	_transform = new Transformable();
-	_transform->setPosition(postion);
+	_transform->setPosition(position);
 
 }
 
@@ -163,6 +163,7 @@ RECT Bridge::getBounding()
 
 void Bridge::trackBill(Bill* bill)
 {
+	//return;// test
 	RECT billBound = bill->getBounding();
 	RECT bridgeBound = this->getBounding();
 
