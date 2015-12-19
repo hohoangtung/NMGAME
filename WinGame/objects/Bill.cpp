@@ -99,6 +99,7 @@ void Bill::init()
 	// create stopWatch
 	_stopWatch = new StopWatch();
 	_shootStopWatch = new StopWatch();
+	_shootStopWatch->restart();
 
 	_currentGun = eBulletType::NORMAL_BULLET;
 
@@ -177,10 +178,11 @@ void Bill::updateInput(float dt)
 		}
 	}
 
-	if (!_input->isKeyDown(DIK_Z) && _shootStopWatch->isStopWatch(200))
+	//if (!_input->isKeyDown(DIK_Z) && _shootStopWatch->isStopWatch(100))
+	if (!_input->isKeyDown(DIK_Z))
 	{
 		this->removeStatus(eStatus::SHOOTING);
-		_shootStopWatch->restart();
+		//_shootStopWatch->restart();
 	}
 }
 
@@ -296,11 +298,14 @@ void Bill::onKeyPressed(KeyEventArg* key_event)
 	}
 	case DIK_Z:
 	{
-		this->addStatus(eStatus::SHOOTING);
-
 		if((_currentGun & eBulletType::R_BULLET) != eBulletType::R_BULLET)
 		{
-			shoot();
+			if (_shootStopWatch->isStopWatch(85))
+			{
+				this->addStatus(eStatus::SHOOTING);
+				shoot();
+				_shootStopWatch->restart();
+			}
 		}
 
 		break;
@@ -340,7 +345,13 @@ void Bill::onKeyReleased(KeyEventArg * key_event)
 	}
 	case DIK_Z:
 	{
-		_shootStopWatch->restart();
+		// _shootStopWatch->restart();
+
+		//if (_shootStopWatch->isStopWatch(200))
+		//{
+		//	this->removeStatus(eStatus::SHOOTING);
+		//	_shootStopWatch->restart();
+		//}
 
 		break;
 	}
@@ -538,8 +549,13 @@ void Bill::checkPosition()
 	auto viewport = SceneManager::getInstance()->getCurrentScene()->getViewport();
 	if (this->getPositionY() < viewport->getBounding().bottom)
 	{
+		if(_status != eStatus::DYING)
+			_status = eStatus::DYING;
+		
+		if (_protectTime > 0)
+			_protectTime = 0;
+
 		this->die();
-		this->setStatus(eStatus::DYING);
 	}
 }
 
@@ -801,6 +817,9 @@ void Bill::die()
 	if (_protectTime > 0)
 		return;
 
+	if(!this->isInStatus(eStatus::DYING))
+		this->setStatus(eStatus::DYING);
+
 	auto move = (Movement*)this->_componentList["Movement"];
 	move->setVelocity(GVector2(-BILL_MOVE_SPEED * (this->getScale().x / SCALE_FACTOR), BILL_JUMP_VEL));
 
@@ -849,6 +868,47 @@ void Bill::setStatus(eStatus status)
 		return;
 
 	_status = status;
+}
+
+RECT Bill::getBounding()
+{
+	//int frameW = 24;
+	//int frameH;
+
+	//if (this->isInStatus(eStatus::JUMPING) || this->isInStatus(eStatus::SWIMING))
+	//	frameH = 16;
+	//else
+	//	frameH = 32;
+
+	//float scaleW = frameW * abs(this->getScale().x);
+	//float scaleH = frameH * abs(this->getScale().y);
+
+	//RECT bound;
+
+	//bound.left = this->getPositionX() - scaleW * this->getOrigin().x;
+	//bound.bottom = this->getPositionY() - scaleH * this->getOrigin().y;
+	//bound.right = bound.left + scaleW;
+	//bound.top = bound.bottom + scaleH;
+
+	int offset = 10;
+
+	RECT bound = _sprite->getBounding();
+
+	if (!this->isInStatus(eStatus::JUMPING) || !this->isInStatus(eStatus::SWIMING))
+	{
+		bound.top -= offset / 2;
+
+		if (this->getScale().x > 0)
+		{
+			bound.right -= offset;
+		}
+		else
+		{
+			bound.left += offset;
+		}
+	}
+
+	return bound;
 }
 
 GVector2 Bill::getVelocity()

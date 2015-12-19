@@ -72,6 +72,8 @@ public:
 
 	void setStatus(eStatus status) override;
 
+	RECT getBounding() override;
+
 private:
 	map<int, Animation*> _animations;
 	map<string, IComponent*> _componentList;
