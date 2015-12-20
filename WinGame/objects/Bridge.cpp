@@ -9,7 +9,7 @@ int Bridge::_matrixIndex[2][MAX_WAVE * 2] =
 
 #pragma region Bridge
 
-Bridge::Bridge(GVector2 position) : Land((int)position.x, (int)position.y,0, 32,eDirection::TOP,eLandType::BRIDGELAND )
+Bridge::Bridge(GVector2 position) : Land((int)position.x, (int)position.y,0, 32,eDirection::TOP,eLandType::GRASS )
 {
 	_sprite = SpriteManager::getInstance()->getSprite(eID::BRIDGE);
 	_sprite->setScale(SCALE_FACTOR);
@@ -119,6 +119,23 @@ void Bridge::draw(LPD3DXSPRITE spritehandle, Viewport* viewport)
 		_explode->draw(spritehandle, viewport);
 	}
 
+	//RECT r;
+	//auto pos = viewport->getPositionInViewport(new GVector3(getPositionX(), getPositionY(), 0));
+	//r.top = max(pos.y, 1);
+	//r.left = max(pos.x, 1);
+	//r.bottom = min(pos.y + this->getBounding().top - this->getBounding().bottom, WINDOW_HEIGHT - 1);
+	//r.right = min(pos.x + this->getBounding().right - this->getBounding().left, WINDOW_WIDTH - 1);
+
+	//DeviceManager::getInstance()->getDevice()->ColorFill(_surface, NULL, D3DXCOLOR(1.0f, 0.0f, 1.0f, 1.0f));
+
+	//DeviceManager::getInstance()->getDevice()->StretchRect(
+	//	_surface,
+	//	NULL,
+	//	DeviceManager::getInstance()->getSurface(),
+	//	&r,
+	//	D3DTEXF_NONE
+	//	);
+	//
 }
 void Bridge::release()
 {
@@ -147,11 +164,11 @@ RECT Bridge::getBounding()
 		return rect;
 	}
 
-	int framewidth = this->_sprite->getFrameWidth();
-	int frameheight = this->_sprite->getFrameHeight();
-	rect.left = this->getPosition().x - (framewidth >> 1);					// framewidth /2 là origin(Anchor).
+	int framewidth = this->_sprite->getFrameWidth(); // 32
+	int frameheight = this->_sprite->getFrameHeight(); // 32
+	rect.left = this->getPosition().x - (framewidth >> 2);					// framewidth /2 là origin(Anchor).
 	rect.bottom = this->getPosition().y - frameheight - (frameheight >> 1);
-	rect.right = rect.left + (framewidth * MAX_WAVE) << 1;					// Nhân 2 vì cách 2 hình có 1 vụ nổ.
+	rect.right = rect.left + ((framewidth * MAX_WAVE) << 1);					// Nhân 2 vì cách 2 hình có 1 vụ nổ.
 	rect.top = rect.bottom + frameheight + (frameheight >> 1) + 2;				// < 1 là nhân 2; > 1 là chia 2. Trừ đi frameheight / 2 đẻ bằng với land
 
 	if (this->getStatus() == eStatus::BURST)
@@ -163,7 +180,6 @@ RECT Bridge::getBounding()
 
 void Bridge::trackBill(Bill* bill)
 {
-	//return;// test
 	RECT billBound = bill->getBounding();
 	RECT bridgeBound = this->getBounding();
 

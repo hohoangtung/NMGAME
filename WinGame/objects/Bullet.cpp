@@ -30,7 +30,16 @@ void Bullet::init()
 	_damage = 1;
 
 	_sprite = SpriteManager::getInstance()->getSprite(eID::BULLET);
-	_sprite->setFrameRect(SpriteManager::getInstance()->getSourceRect(eID::BULLET, "normal_bullet"));
+	if (_type == (eBulletType::BILL_BULLET|eBulletType::NORMAL_BULLET))
+	{
+		_sprite->setFrameRect(SpriteManager::getInstance()->getSourceRect(eID::BULLET, "bill_bullet"));
+	}
+	if (_type == (eBulletType::BILL_BULLET | eBulletType::NORMAL_BULLET | eBulletType::R_BULLET))
+	{
+		_sprite->setFrameRect(SpriteManager::getInstance()->getSourceRect(eID::BULLET, "billR_bullet"));
+	}
+	else
+		_sprite->setFrameRect(SpriteManager::getInstance()->getSourceRect(eID::BULLET, "normal_bullet"));
 
 	this->setPosition(_startPosition);
 	this->setScale(SCALE_FACTOR);

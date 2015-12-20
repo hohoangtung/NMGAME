@@ -32,14 +32,12 @@ public:
 	void enableJump(bool enable);
 	bool canJump();
 
-private:
+protected:
 
-	map<string, IComponent*> _listComponent;
 
-	// Hình chữ nhật bao lấy land.
-	RECT _bound;
 	eLandType _type;
 	bool _canJump;
+	LPDIRECT3DSURFACE9 _surface;
 
 #pragma region Hide all
 	// Đặt những hàm này ở private để giấu chúng đi. Vì lớp này có sprite bằng NULL nên hạn chế những tác động đến sprite.
@@ -65,6 +63,11 @@ private:
 	void setZIndex(float z) override;
 	float getZIndex() override;
 #pragma endregion
+private :
+	map<string, IComponent*> _listComponent;
+
+	// Hình chữ nhật bao lấy land.
+	RECT _bound;
 };
 
 

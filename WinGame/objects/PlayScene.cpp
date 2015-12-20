@@ -40,10 +40,17 @@ bool PlayScene::init()
 	bulletmanager->init();
 	_listobject.push_back(bulletmanager);
 
-	auto soldier = new Soldier(RUNNING, 500, 400, -1);
-	soldier->init();
-	_listobject.push_back(soldier);
+	//auto soldier = new Soldier(RUNNING, 1000, 400, 1);
+	//soldier->init();
+	//_listobject.push_back(soldier);
 
+	//soldier = new Soldier(RUNNING, 1200, 400, 1);
+	//soldier->init();
+	//_listobject.push_back(soldier);	
+
+	//soldier = new Soldier(RUNNING, 800, 400, 1);
+	//soldier->init();
+	//_listobject.push_back(soldier);
 
 	//auto scubasoldier = new ScubaSoldier(GVector2(200, 50));
 	//scubasoldier->init();

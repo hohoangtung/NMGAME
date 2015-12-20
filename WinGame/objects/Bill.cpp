@@ -6,7 +6,7 @@
 Bill::Bill(int life) : BaseObject(eID::BILL)
 {
 	_canJumpDown = true;
-	_lifeNum = 1;
+	_lifeNum = life;
 }
 
 Bill::~Bill()
@@ -439,6 +439,7 @@ float Bill::checkCollision(BaseObject * object, float dt)
 		// nếu ko phải là nhảy xuống, mới dừng gravity
 		if (!this->isInStatus(eStatus(eStatus::JUMPING | eStatus::FALLING)) && collisionBody->checkCollision(object, direction, dt, false))
 		{
+
 			// kt coi chổ đứng có cho nhảy xuống ko
 			if (objectId == eID::LAND)
 			{

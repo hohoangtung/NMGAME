@@ -6,7 +6,7 @@
 void Boss::init()
 {
 	// Cục súng bên phải
-	_gun1 = new BossGun(GVector2(_startposition.x + 74.0f, _startposition.y + 152.0f), 0);
+	_gun1 = new BossGun(GVector2(_startposition.x + 74.0f, _startposition.y + 154.0f), 0);
 	_gun1->init();
 	_moulder1 = SpriteManager::getInstance()->getSprite(eID::BOSS_STAGE1);
 	_moulder1->setFrameRect(SpriteManager::getInstance()->getSourceRect(eID::BOSS_STAGE1, "moulder_1"));
@@ -15,7 +15,7 @@ void Boss::init()
 	_moulder1->setPosition(_gun1->getPosition());
 
 	// Cục súng bên trái
-	_gun2 = new BossGun(GVector2(_startposition.x + 30.0f, _startposition.y + 152.0f), 1);
+	_gun2 = new BossGun(GVector2(_startposition.x + 30.0f, _startposition.y + 154.0f), 1);
 	_gun2->init();
 	_moulder2 = SpriteManager::getInstance()->getSprite(eID::BOSS_STAGE1);
 	_moulder2->setFrameRect(SpriteManager::getInstance()->getSourceRect(eID::BOSS_STAGE1, "moulder_2"));

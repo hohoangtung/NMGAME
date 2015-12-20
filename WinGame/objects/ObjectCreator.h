@@ -30,7 +30,7 @@ public:
 	virtual void release();
 
 	virtual float checkCollision(BaseObject* object, float dt);
-
+	RECT getBounding() override;
 private:
 
 	BaseObject* getObject(eID id);
