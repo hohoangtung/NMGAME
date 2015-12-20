@@ -265,6 +265,43 @@ void PlayScene::update(float dt)
 		}
 	}
 
+	// [Bước 6.2]
+	// list object hoạt động rộng ko có trong quadtree cho nó kt lẫn nhau (bắt buộc -_-)
+	//for (auto obj : _listobject)
+	//{
+	//	for (auto obj2 : _listobject)
+	//	{
+	//		obj->checkCollision(obj2, dt);
+	//	}
+
+	//	auto checkedNames = _root->GetActiveObject(obj->getBounding(), true);
+
+	//	for (auto checked : checkedNames)
+	//	{
+	//		if (_mapobject.find(checked) == _mapobject.end())
+	//			continue;
+
+	//		obj->checkCollision(_mapobject[checked], dt);
+	//	}
+	//}
+
+	//// active object chỉ cần kt với cái object trong node mà nó đang đè lên
+	//for (auto name : listobjectname)
+	//{
+	//	if (_mapobject.find(name) == _mapobject.end())
+	//		continue;
+
+	//	auto checkedNames = _root->GetActiveObject(_mapobject[name]->getBounding(), true);
+	//	
+	//	for (auto checked : checkedNames)
+	//	{
+	//		if (_mapobject.find(checked) == _mapobject.end())
+	//			continue;
+
+	//		_mapobject[name]->checkCollision(_mapobject[checked], dt);
+	//	}
+	//}
+
 	// [Bước 7]
 	for (BaseObject* obj : _active_object)
 	{

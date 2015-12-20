@@ -27,7 +27,7 @@ update 30/11/2015
 #include "M_Bullet.h"
 #include "LifeUI.h"
 
-#define BILL_MOVE_SPEED 120
+#define BILL_MOVE_SPEED 130
 #define BILL_JUMP_VEL 450
 #define GRAVITY 800
 #define SHOOT_SPEED 200.0f
@@ -90,6 +90,8 @@ public:
 	void revive();
 	void die();
 
+	RECT getBounding() override;
+
 private:
 	map<int, Animation*> _animations;
 	map<string, IComponent*> _componentList;
@@ -97,6 +99,7 @@ private:
 	float _movingSpeed;
 	StopWatch* _stopWatch;
 	StopWatch* _shootStopWatch;
+	StopWatch* _shootAnimateStopWatch;
 	StopWatch* _reviveStopWatch;
 
 	bool _canJumpDown;
