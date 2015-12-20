@@ -1,11 +1,12 @@
 ﻿#include "Bill.h"
 #include "AirCraft.h"
 #include "../debug.h"
+#include "GameOverScene.h"
 
 Bill::Bill(int life) : BaseObject(eID::BILL)
 {
 	_canJumpDown = true;
-	_lifeNum = life;
+	_lifeNum = 1;
 }
 
 Bill::~Bill()
@@ -229,6 +230,7 @@ void Bill::release()
 	SAFE_DELETE(_shootStopWatch);
 	SAFE_DELETE(_reviveStopWatch);
 	SAFE_DELETE(_lifeUI);
+	this->unhookinputevent();
 }
 
 void Bill::onKeyPressed(KeyEventArg* key_event)
@@ -381,6 +383,8 @@ void Bill::onCollisionBegin(CollisionEventArg * collision_arg)
 
 		break;
 	}
+	case eID::REDCANNON:
+	case eID::WALL_TURRET:
 	default:
 		break;
 	}
@@ -921,8 +925,9 @@ void Bill::updateStatus(float dt)
 {
 	if (this->isInStatus(eStatus::DYING))
 	{
-		if (_lifeNum <= 0)
+		if (_lifeNum < 0)
 		{
+			//this->setStatus(eStatus::BURST);
 			// thua cnmr
 			return;
 		}
@@ -1064,3 +1069,39 @@ eDirection Bill::getAimingDirection()
 	return direction;
 }
 
+void Bill::forceMoveRight()
+{
+	onKeyPressed(new KeyEventArg(DIK_RIGHT));
+}
+void Bill::unforceMoveRight()
+{
+	onKeyReleased(new KeyEventArg(DIK_RIGHT));
+}
+void Bill::forceMoveLeft()
+{
+	onKeyPressed(new KeyEventArg(DIK_LEFT));
+}
+void Bill::unforceMoveLeft()
+{
+	onKeyReleased(new KeyEventArg(DIK_LEFT));
+}
+void Bill::forceJump()
+{
+	onKeyPressed(new KeyEventArg(DIK_X));
+}
+void Bill::unforceJump()
+{
+	onKeyReleased(new KeyEventArg(DIK_X));
+}
+void Bill::removeGravity()
+{
+	auto graivity = (Gravity*)(this->_componentList.find("Gravity")->second);
+	graivity->setGravity(VECTOR2ZERO);
+}
+
+void Bill::unhookinputevent()
+{
+	if (_input != nullptr)
+		__unhook(_input);
+
+}

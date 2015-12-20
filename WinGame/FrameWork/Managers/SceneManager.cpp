@@ -49,7 +49,10 @@ void SceneManager::draw(LPD3DXSPRITE spriteHandle)
 void SceneManager::release()
 {
 	if (!_scenes.empty())
+	{
 		_scenes.back()->release();
+		SAFE_DELETE(_scenes.back());
+	}
 }
 
 void SceneManager::addScene(Scene * scene)
@@ -63,6 +66,7 @@ void SceneManager::removeScene()
 	if (!_scenes.empty())
 	{
 		_scenes.back()->release();
+		delete _scenes.back();
 		_scenes.pop_back();
 	}
 }
@@ -78,6 +82,7 @@ void SceneManager::clearScenes()
 	while (!_scenes.empty())
 	{
 		_scenes.back()->release();
+		delete _scenes.back();
 		_scenes.pop_back();
 	}
 }

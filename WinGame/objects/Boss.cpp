@@ -34,8 +34,8 @@ void Boss::init()
 	// Thanh niên núp lùm
 	_rifleman = new Rifleman(eStatus::HIDDEN, _startposition.x + 32.0f, _startposition.y + 282.0f);
 	_rifleman->init();
-	auto gravity = ((Rifleman*)_rifleman)->getComponent("Gravity");
-	((Gravity*)gravity)->setGravity(VECTOR2ZERO);
+	//auto gravity = ((Rifleman*)_rifleman)->getComponent("Gravity");
+	//((Gravity*)gravity)->setGravity(VECTOR2ZERO);
 
 	_octexplose = nullptr;
 
@@ -76,6 +76,7 @@ void Boss::update(float deltatime)
 		{
 			_octexplose = new OctExplose(GVector2(_shield->getPositionX(), _shield->getPositionY()));
 			_octexplose->init();
+			SoundManager::getInstance()->Stop(eSoundId::BACKGROUND_STAGE1);
 			SoundManager::getInstance()->Play(eSoundId::DESTROY_BOSS);
 		}
 	}
@@ -86,6 +87,11 @@ void Boss::update(float deltatime)
 	if (_octexplose != nullptr)
 	{
 		_octexplose->update(deltatime);
+		if (_octexplose->getStatus() == eStatus::DESTROY)
+		{
+			this->setStatus(eStatus::DYING);
+			this->setPhysicsBodySide(eDirection::NONE);
+		}
 	}
 
 	for (auto it = _componentList.begin(); it != _componentList.end(); it++)
@@ -298,6 +304,23 @@ void Boss::BossBullet::draw(LPD3DXSPRITE spriteHandle, Viewport* viewport)
 	}
 }
 
+float Boss::BossBullet::checkCollision(BaseObject* object, float dt)
+{
+	auto body = (CollisionBody*)_componentList.find("CollisionBody")->second;
+	if (object->getId() == eID::LAND)
+	{
+		if (((Land*)object)->canJump() == false)
+		{
+			body->checkCollision(object, dt, false);
+		}
+	}
+	else if (object->getId() == eID::BILL)
+	{
+		body->checkCollision(object, dt, false);
+	}
+
+	return 0.0f;
+}
 
 RECT Boss::BossBullet::getBounding()
 {
@@ -336,6 +359,7 @@ void Boss::BossGun::dropHitpoint(int damage)
 
 void Boss::BossGun::init()
 {
+	this->_hitpoint = BOSS_GUN_HP;
 	_sprite = SpriteManager::getInstance()->getSprite(eID::BOSS_STAGE1);
 	this->setPosition(_startposition);
 	//_animation = new Animation(_sprite, 0.5f);
@@ -351,8 +375,9 @@ void Boss::BossGun::init()
 	this->setScale(SCALE_FACTOR);
 	this->setOrigin(GVector2(1.0f, 0.5f));
 
-	_forceBullet.push_back(pair<GVector2, GVector2>(GVector2(-100.0f, 30.0f), GVector2(0.0f, -200.0f)));
-	_forceBullet.push_back(pair<GVector2, GVector2>(GVector2(-220.0f, 50.0f), GVector2(0.0f, -200.0f)));
+	_forceBullet.push_back(pair<GVector2, GVector2>(GVector2(-50.0f, 100.0f), GVector2(0.0f, -450.0f)));
+	_forceBullet.push_back(pair<GVector2, GVector2>(GVector2(-100.0f, 120.0f), GVector2(0.0f, -420.0f)));
+	_forceBullet.push_back(pair<GVector2, GVector2>(GVector2(-130.0f, 150.0f), GVector2(0.0f, -400.0f)));
 
 }
 
@@ -389,7 +414,7 @@ void Boss::BossGun::update(float deltatime)
 	if (status == eStatus::NORMAL)
 	{
 		//_animation->update(deltatime);
-		if (_stopWatch->isTimeLoop(1000.0f))
+		if (_stopWatch->isTimeLoop(750.0f))
 		{
 			_statusGun++;
 			this->initFrameRect();
@@ -464,6 +489,7 @@ Boss::BossGun::~BossGun()
 
 void Boss::BossShield::init()
 {
+	this->_hitpoint = BOSS_SHIELD_HP;
 	_sprite = SpriteManager::getInstance()->getSprite(eID::BOSS_STAGE1);
 	_animation = new Animation(_sprite, 0.09f);
 	this->setPosition(_startposition);
@@ -539,6 +565,17 @@ void Boss::BossShield::dropHitpoint(int damage)
 		this->setStatus(eStatus::BURST);
 	}
 }
+RECT Boss::BossShield::getBounding()
+{
+	RECT basebound = BaseObject::getBounding();
+	basebound.top -= 18;
+	basebound.bottom += 14;
+	basebound.right += 8;
+	basebound.left -= 18;
+	return basebound;
+}
+
+
 Boss::BossShield::BossShield(GVector2 position) : BaseEnemy(eID::BOSS_SHIELD)
 {
 	_startposition = position;

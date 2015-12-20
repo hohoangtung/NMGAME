@@ -8,7 +8,7 @@ SBullet::SBullet(GVector2 startPosition, float degree)
 
 void SBullet::init()
 {
-	_damage = 2;
+	_damage = 1;
 
 	_childBullet[0] = this->initChildBullet(_startPosition, _degree);
 	_childBullet[1] = this->initChildBullet(_startPosition, _degree + FIRST_WAVE_ANGLE);

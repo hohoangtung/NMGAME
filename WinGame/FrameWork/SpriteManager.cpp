@@ -74,23 +74,17 @@ void SpriteManager::loadResource(LPD3DXSPRITE spriteHandle)
 	this->_listSprite.insert(pair<eID, Sprite*>(eID::FALCON, sp));
 	this->loadSpriteInfo(eID::FALCON, "Resources\\falcon_animation.txt");
 
-	sp = new Sprite(spriteHandle, L"Resources\\Cannon.png", 9, 9);
+	sp = new Sprite(spriteHandle, L"Resources\\Cannon_all.png", 15, 5);
 	//this->_listSprite.insert(pair<eID, Sprite*>(eID::REDCANON, sp));
 	this->_listSprite[eID::REDCANNON] = sp;
 	this->loadSpriteInfo(eID::REDCANNON, "Resources\\cannon_animation.txt");
 
-	sp = new Sprite(spriteHandle, L"Resources\\Cannon_appear.png", 6, 3);
-	//this->_listSprite.insert(pair<eID, Sprite*>(eID::REDCANON, sp));
-	this->_listSprite[eID::RED_CANNON_APPEAR] = sp;
-	this->loadSpriteInfo(eID::RED_CANNON_APPEAR, "Resources\\Redcannon_appear.txt");
 
-	sp = new Sprite(spriteHandle, L"Resources\\Wall_turret.png", 36, 9);
+	sp = new Sprite(spriteHandle, L"Resources\\wall_turret_all.png", 42, 9);
 	this->_listSprite[eID::WALL_TURRET] = sp;
 	this->loadSpriteInfo(eID::WALL_TURRET, "Resources\\Wall_turret_animation.txt");
 
-	sp = new Sprite(spriteHandle, L"Resources\\Wall_turret_inactived.png", 36, 9);
-	this->_listSprite[eID::WALL_TURRET_INACTIVED] = sp;
-	this->loadSpriteInfo(eID::WALL_TURRET_INACTIVED, "Resources\\Wall_turret_inactived_animation.txt");
+	
 
 	sp = new Sprite(spriteHandle, L"Resources\\aircraft.png", 10, 10);
 	this->_listSprite[eID::AIRCRAFT] = sp;
@@ -124,15 +118,6 @@ void SpriteManager::loadResource(LPD3DXSPRITE spriteHandle)
 	this->_listSprite[eID::BULLET] = bl;
 	this->loadSpriteInfo(eID::BULLET, "Resources\\bullets_type.txt");
 
-	sp = new Sprite(spriteHandle, L"Resources\\blank.png");
-	this->_listSprite[eID::BLANK] = sp;
-
-	sp = new Sprite(spriteHandle, L"Resources\\intro.png");
-	this->_listSprite[eID::MENU] = sp;
-
-	sp = new Sprite(spriteHandle, L"Resources\\yellowfalcon.png");
-	this->_listSprite[eID::YELLOWFALCON] = sp;
-
 	sp = new Sprite(spriteHandle, L"Resources\\stage3_elements.png", 5, 5);
 	this->_listSprite[eID::ROCKFLY] = sp;
 	this->loadSpriteInfo(eID::ROCKFLY, "Resources\\rockfly_animation.txt");
@@ -141,13 +126,39 @@ void SpriteManager::loadResource(LPD3DXSPRITE spriteHandle)
 	this->_listSprite[eID::LIFE_ICON] = sp;
 	this->loadSpriteInfo(eID::LIFE_ICON, "Resources\\life_info.txt");
 
-	sp = new Sprite(spriteHandle, L"Resources\\stage3_elements.png", 5, 5);
+
+	sp = new Sprite(spriteHandle, L"Resources\\ScubaSoldier.png");
+	this->_listSprite[eID::SCUBASOLDIER] = sp;
+	this->loadSpriteInfo(eID::SCUBASOLDIER, "Resources\\scubasoldier_animation.txt");
+
+	sp = new Sprite(spriteHandle, L"Resources\\fire.png");
 	this->_listSprite[eID::FIRE] = sp;
 	this->loadSpriteInfo(eID::FIRE, "Resources\\fire_animation.txt");
 
-	sp = new Sprite(spriteHandle, L"Resources\\stage3_elements.png", 5, 5);
+	sp = new Sprite(spriteHandle, L"Resources\\rockfall.png", 4, 4);
 	this->_listSprite[eID::ROCKFALL] = sp;
 	this->loadSpriteInfo(eID::ROCKFALL, "Resources\\rockfall_animation.txt");
+
+	sp = new Sprite(spriteHandle, L"Resources\\Fonts\\fontEx.png", 30, 10);
+	this->_listSprite[eID::FONTEX] = sp;
+
+	sp = new Sprite(spriteHandle, L"Resources\\Fonts\\fontFull.png", 54, 6);
+	this->_listSprite[eID::FONTFULL] = sp;
+
+	sp = new Sprite(spriteHandle, L"Resources\\BeginState3.png");
+	this->_listSprite[eID::BEGIN_STAGE3] = sp;
+
+	sp = new Sprite(spriteHandle, L"Resources\\GameOver.png");
+	this->_listSprite[eID::GAME_OVER_SCENE] = sp;
+
+	sp = new Sprite(spriteHandle, L"Resources\\blank.png");
+	this->_listSprite[eID::BLANK] = sp;
+
+	sp = new Sprite(spriteHandle, L"Resources\\intro.png");
+	this->_listSprite[eID::MENU] = sp;
+
+	sp = new Sprite(spriteHandle, L"Resources\\yellowfalcon.png");
+	this->_listSprite[eID::YELLOWFALCON] = sp;
 
 	// Đọc file xml để tạo đối tượng sprite
 	sp = loadXMLDoc(spriteHandle, L"Resources//Map//stage1.xml");

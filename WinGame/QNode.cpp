@@ -225,4 +225,8 @@ void QNode::setChilds(QNode* nodes[4])
 }
 QNode::~QNode()
 {
+	for (int i = 0; i < 4; i++)
+	{
+		SAFE_DELETE(_childs[i]);
+	}
 }

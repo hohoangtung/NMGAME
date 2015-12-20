@@ -19,9 +19,9 @@
 #define AIRCRAFT_GRAVITY		GVector2(0.0f, -200.0f)
 // demo value 
 #define START_POSITION			GVector2(200.0f, 350.0f)	// vị trí khởi tạo
-#define HORIZONTAL_VELOC		GVector2(200.0f, 0.0f)		// vận tốc ngang
+#define AIRCRAFT_HORIZONTAL_VELOC		GVector2(230.0f, 0.0f)		// vận tốc ngang
 #define AIRCRAFT_FREQUENCY		0.9f						// tần số
-#define AIRCRAFT_AMPLITUDE		GVector2(0, 90.0f)			// biên độ
+#define AIRCRAFT_AMPLITUDE		GVector2(0, 64.0f)			// biên độ
 
 class AirCraft : public BaseObject
 {

@@ -29,6 +29,7 @@ private:
 	static BaseObject* getCreator(xml_node node);
 	static BaseObject* getBridge(xml_node node);
 	static BaseObject* getFalcon(xml_node node);
+	static BaseObject* getGreatWall(xml_node node);
 
 	static map<string, string> getObjectProperties(xml_node node);
 

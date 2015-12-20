@@ -119,6 +119,8 @@ BaseObject* ObjectFactory::getObjectById(xml_node node, eID id)
 		case CREATOR:
 			return getCreator(node);
 			break;
+		case BOSS_STAGE1:
+			return getGreatWall(node);
 		default:
 			return nullptr;
 			break;
@@ -288,18 +290,18 @@ BaseObject * ObjectFactory::getRedCannon(xml_node node)
 		return nullptr;
 
 	int x, y;
-	eWT_Status status;
+	eStatus status;
 
 	x = stoi(properties["X"]) + 32;
 	y = stoi(properties["Y"]) - 32;
 
 	if (properties.find("status") != properties.end())
 	{
-		status = (eWT_Status)(stoi(properties.find("status")->second));
+		status = (eStatus)(stoi(properties.find("status")->second));
 	}
 	else
 	{
-		status = eWT_Status::WT_APPEAR;
+		status = eStatus::WAITING;
 	}
 
 	auto cannon = new RedCannon(status, GVector2(x, y));
@@ -315,18 +317,18 @@ BaseObject * ObjectFactory::getWallTurret(xml_node node)
 		return nullptr;
 
 	int x, y;
-	eWT_Status status;
+	eStatus status;
 
 	x = stoi(properties["X"]) + 32;
 	y = stoi(properties["Y"]) - 32;
 
 	if (properties.find("status") != properties.end())
 	{
-		status = (eWT_Status)(stoi(properties.find("status")->second));
+		status = (eStatus)(stoi(properties.find("status")->second));
 	}
 	else
 	{
-		status = eWT_Status::WT_APPEAR;
+		status = eStatus::WAITING;
 	}
 
 	auto turret = new WallTurret(status, GVector2(x, y));
@@ -384,7 +386,7 @@ BaseObject * ObjectFactory::getAirCraft(xml_node node)
 	}
 	else
 	{
-		hVeloc = HORIZONTAL_VELOC;
+		hVeloc = AIRCRAFT_HORIZONTAL_VELOC;
 	}
 
 	// freq
@@ -398,6 +400,7 @@ BaseObject * ObjectFactory::getAirCraft(xml_node node)
 	}
 
 	auto airCraft = new AirCraft(pos, hVeloc, ampl, freq, type);
+
 	airCraft->init();
 
 	return airCraft;
@@ -503,9 +506,28 @@ BaseObject* ObjectFactory::getFalcon(xml_node node)
 		type = eAirCraftType::R;
 	}
 	auto falcon = new Falcon(GVector2(x + 32, y - 32), (eAirCraftType)type);
+
 	falcon->init();
 	return falcon;
 }
+
+BaseObject* ObjectFactory::getGreatWall(xml_node node)
+{
+	auto properties = getObjectProperties(node);
+	if (properties.size() == 0)
+		return nullptr;
+
+	int x, y, height;
+
+	x = stoi(properties["X"]);
+	y = stoi(properties["Y"]) - stoi(properties["Height"]);
+	height = stoi(properties["Height"]);
+
+	auto greatwall = new Boss(GVector2(x, y), height);
+	greatwall->init();
+	return greatwall;
+}
+
 
 map<string, string> ObjectFactory::getObjectProperties(xml_node node)
 {

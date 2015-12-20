@@ -138,6 +138,14 @@ namespace MapEditor
             {
                 this.splitContainer2.Panel1.Controls.Remove(_tablelayout);
             }
+            if (_mapController == null)
+            {
+                return;
+            }
+            else if (_mapController.TilesMap == null)
+            {
+                return;
+            }
             int columns = this._mapController.TilesMap.Columns;
             int rows = this._mapController.TilesMap.Rows;
                 _tablelayout = new TableLayoutPanel();
@@ -528,6 +536,8 @@ namespace MapEditor
 
         public void ReDrawMap()
         {
+            if (_mapController == null)
+                return;
             this._mapController.Draw(this.getVisibleMap());
         }
         public void DrawQuadTree()

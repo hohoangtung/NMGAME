@@ -123,9 +123,23 @@ public:
 private:
 	Sprite* _refSprite;
 	float _radius;				// Bán Kính.
-
+	GVector2 _roundposition;
 	float _radianVeloc;			// vận tốc góc (= ω)
 	float _radian;				// góc xoay (= φ) biến thiên theo thời gian
 };
+
+class CircleMovement : public IComponent
+{
+public:
+	CircleMovement(float radius, float frequency, Sprite* refSpirte);
+	~CircleMovement();
+	void update(float deltatime);
+
+private:
+	IComponent *sinX;
+	IComponent* sinY;
+};
+
+
 
 #endif // !__ICOMPONENT_H__

@@ -9,12 +9,12 @@ int Bridge::_matrixIndex[2][MAX_WAVE * 2] =
 
 #pragma region Bridge
 
-Bridge::Bridge(GVector2 postion) : BaseObject(eID::BRIDGE)
+Bridge::Bridge(GVector2 position) : Land((int)position.x, (int)position.y,0, 32,eDirection::TOP,eLandType::BRIDGELAND )
 {
 	_sprite = SpriteManager::getInstance()->getSprite(eID::BRIDGE);
 	_sprite->setScale(SCALE_FACTOR);
 	_transform = new Transformable();
-	_transform->setPosition(postion);
+	_transform->setPosition(position);
 
 }
 
@@ -163,6 +163,7 @@ RECT Bridge::getBounding()
 
 void Bridge::trackBill(Bill* bill)
 {
+	//return;// test
 	RECT billBound = bill->getBounding();
 	RECT bridgeBound = this->getBounding();
 
@@ -229,11 +230,11 @@ void Bridge::QuadExplose::update(float deltatime)
 	_timer += deltatime;
 	if (_timer >= 0)
 		_explosion1->update(deltatime);
-	if (_timer >= 30)
-		_explosion2->update(deltatime);
-	if (_timer >= 60)
-		_explosion3->update(deltatime);
 	if (_timer >= 90)
+		_explosion2->update(deltatime);
+	if (_timer >= 180)
+		_explosion3->update(deltatime);
+	if (_timer >= 270)
 	{
 		_explosion4->update(deltatime);
 		if (_explosion4->getStatus() == eStatus::DESTROY)
@@ -246,11 +247,11 @@ void Bridge::QuadExplose::draw(LPD3DXSPRITE spritehandle, Viewport* viewport)
 		return;
 	if (_timer >= 0)
 		_explosion1->draw(spritehandle, viewport);
-	if (_timer >= 30)
-		_explosion2->draw(spritehandle, viewport);
-	if (_timer >= 60)
-		_explosion3->draw(spritehandle, viewport);
 	if (_timer >= 90)
+		_explosion2->draw(spritehandle, viewport);
+	if (_timer >= 180)
+		_explosion3->draw(spritehandle, viewport);
+	if (_timer >= 270)
 		_explosion4->draw(spritehandle, viewport);
 }
 void Bridge::QuadExplose::setPosition(GVector2 position)

@@ -9,24 +9,53 @@ using namespace std;
 
 #define HORIZONTAL_VELOC		GVector2(100.0f, 0.0f)		// vận tốc ngang
 #define HORIZONTAL_VELOC_PRE	GVector2(-100.0f, 0.0f)		// vận tốc ngang
-
+#define RANGEMOVE_FIRE			200
 class Fire:public BaseObject
 {
 public:
-	Fire(GVector2,GVector2,GVector2,int);
+	Fire(GVector2);
 
 	void init();
 	void update(float);
 	void draw(LPD3DXSPRITE, Viewport*);
 	void release();
-	GVector2 getVelocity();
+	float checkCollision(BaseObject*, float);
+	void checkIfOutofScreen();
 	IComponent* getComponent(string);
 	~Fire();
+
+	class SingleFire :public BaseObject
+	{
+	public:
+		SingleFire(GVector2, int);
+
+		void init();
+		void update(float);
+		void draw(LPD3DXSPRITE, Viewport*);
+		void release();
+		GVector2 getVelocity();
+		void onCollisionBegin(CollisionEventArg*);
+		void onCollisionEnd(CollisionEventArg*);
+		float checkCollision(BaseObject*,float);
+		
+		IComponent* getComponent(string);
+
+		~SingleFire();
+		
+	private:
+		map<string, IComponent*> _listComponent;
+		Animation* _animation;
+		GVector2 _startposition;
+		int _veloc;
+	};
 private:
 	map<string, IComponent*> _listComponent;
-	GVector2 _leftPosition;
-	GVector2 _rightPosition;
-	int _veloc;
+	
+	GVector2 _startposition;
+	BaseObject* _singleFire1;
+	BaseObject* _singleFire2;
+	
+
 
 };
 #endif

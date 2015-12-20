@@ -8,8 +8,8 @@
 #include "../FrameWork/Animation.h"
 
 
-#define HORIZONTAL_VELOC		GVector2(30.0f, 0.0f)		// vận tốc ngang
-#define HORIZONTAL_VELOC_PRE	GVector2(-30.0f, 0.0f)		// vận tốc ngang
+#define ROCKFLY_HORIZONTAL_VELOC		GVector2(30.0f, 0.0f)		// vận tốc ngang
+#define ROCKFLY_HORIZONTAL_VELOC_PRE	GVector2(-30.0f, 0.0f)		// vận tốc ngang
 class RockFly : public BaseObject
 {
 public:
