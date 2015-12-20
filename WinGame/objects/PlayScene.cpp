@@ -40,7 +40,7 @@ bool PlayScene::init()
 	bulletmanager->init();
 	_listobject.push_back(bulletmanager);
 
-	auto soldier = new Soldier(RUNNING, 500, 400, -1);
+	auto soldier = new Soldier(RUNNING, 500, 400, 1);
 	soldier->init();
 	_listobject.push_back(soldier);
 
