@@ -21,7 +21,7 @@ void RockFly::init()
 	this->_sprite->setPosition(_rightPosition);
 	this->_sprite->setFrameRect(SpriteManager::getInstance()->getSourceRect(eID::ROCKFLY, "normal"));
 
-	Movement* movement = new Movement(VECTOR2ZERO, HORIZONTAL_VELOC, _sprite);
+	Movement* movement = new Movement(VECTOR2ZERO, ROCKFLY_HORIZONTAL_VELOC, _sprite);
 	CollisionBody* collisionBody = new CollisionBody(this);
 	this->_listComponent["Movement"] = movement;
 	this->_listComponent["CollisionBody"] = collisionBody;
@@ -52,13 +52,13 @@ void RockFly::update(float deltatime)
 	if (position.x < _leftPosition.x)
 	{
 		auto move = (Movement*) this->_listComponent["Movement"];
-		move->setVelocity(HORIZONTAL_VELOC);
+		move->setVelocity(ROCKFLY_HORIZONTAL_VELOC);
 	}
 
 	if (position.x > _rightPosition.x)
 	{
 		auto move = (Movement*) this->_listComponent["Movement"];
-		move->setVelocity(HORIZONTAL_VELOC_PRE);
+		move->setVelocity(ROCKFLY_HORIZONTAL_VELOC_PRE);
 	}
 
 	for (auto component : _listComponent)
