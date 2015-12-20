@@ -6,7 +6,7 @@
 void Boss::init()
 {
 	// Cục súng bên phải
-	_gun1 = new BossGun(GVector2(_startposition.x + 74.0f, _startposition.y + 152.0f), 0);
+	_gun1 = new BossGun(GVector2(_startposition.x + 74.0f, _startposition.y + 154.0f), 0);
 	_gun1->init();
 	_moulder1 = SpriteManager::getInstance()->getSprite(eID::BOSS_STAGE1);
 	_moulder1->setFrameRect(SpriteManager::getInstance()->getSourceRect(eID::BOSS_STAGE1, "moulder_1"));
@@ -15,7 +15,7 @@ void Boss::init()
 	_moulder1->setPosition(_gun1->getPosition());
 
 	// Cục súng bên trái
-	_gun2 = new BossGun(GVector2(_startposition.x + 30.0f, _startposition.y + 152.0f), 1);
+	_gun2 = new BossGun(GVector2(_startposition.x + 30.0f, _startposition.y + 154.0f), 1);
 	_gun2->init();
 	_moulder2 = SpriteManager::getInstance()->getSprite(eID::BOSS_STAGE1);
 	_moulder2->setFrameRect(SpriteManager::getInstance()->getSourceRect(eID::BOSS_STAGE1, "moulder_2"));
@@ -49,10 +49,22 @@ void Boss::update(float deltatime)
 	if (_gun1 != nullptr)
 	{
 		_gun1->update(deltatime);
+		if (_gun1->getStatus() == eStatus::DESTROY)
+		{
+			_gun1->release();
+			delete _gun1;
+			_gun1 = nullptr;
+		}
 	}
 	if (_gun2 != nullptr)
 	{
 		_gun2->update(deltatime);
+		if (_gun2->getStatus() == eStatus::DESTROY)
+		{
+			_gun2->release();
+			delete _gun2;
+			_gun2 = nullptr;
+		}
 	}
 	if (_shield != nullptr)
 	{
@@ -184,8 +196,9 @@ void Boss::release()
 
 float Boss::checkCollision(BaseObject* object, float dt)
 {
-	_gun1->checkCollision(object, dt);
-	_gun2->checkCollision(object, dt);
+
+	//_gun1->checkCollision(object, dt);
+	//_gun2->checkCollision(object, dt);
 
 	return 0.0f;
 }
@@ -345,6 +358,7 @@ void Boss::BossGun::dropHitpoint()
 	if (_hitpoint <= 0)
 	{
 		this->setStatus(eStatus::BURST);
+		gainScore();
 	}
 }
 
@@ -354,12 +368,14 @@ void Boss::BossGun::dropHitpoint(int damage)
 	if (_hitpoint <= 0)
 	{
 		this->setStatus(eStatus::BURST);
+		gainScore();
 	}
 }
 
 void Boss::BossGun::init()
 {
 	this->_hitpoint = BOSS_GUN_HP;
+	this->setScore(GUN_SCORE);
 	_sprite = SpriteManager::getInstance()->getSprite(eID::BOSS_STAGE1);
 	this->setPosition(_startposition);
 	//_animation = new Animation(_sprite, 0.5f);
@@ -405,6 +421,7 @@ void Boss::BossGun::initFrameRect()
 	//	//_animation->addFrameRect(eID::BOSS_STAGE1, "gun_2", "gun_1", NULL);
 	//}
 }
+
 
 void Boss::BossGun::update(float deltatime)
 {
@@ -490,6 +507,7 @@ Boss::BossGun::~BossGun()
 void Boss::BossShield::init()
 {
 	this->_hitpoint = BOSS_SHIELD_HP;
+	this->setScore(SHIELD_SCORE);
 	_sprite = SpriteManager::getInstance()->getSprite(eID::BOSS_STAGE1);
 	_animation = new Animation(_sprite, 0.09f);
 	this->setPosition(_startposition);
@@ -555,6 +573,7 @@ void Boss::BossShield::dropHitpoint()
 	if (_hitpoint <= 0)
 	{
 		this->setStatus(eStatus::BURST);
+		gainScore();
 	}
 }
 void Boss::BossShield::dropHitpoint(int damage)
@@ -563,6 +582,7 @@ void Boss::BossShield::dropHitpoint(int damage)
 	if (_hitpoint <= 0)
 	{
 		this->setStatus(eStatus::BURST);
+		gainScore();
 	}
 }
 RECT Boss::BossShield::getBounding()

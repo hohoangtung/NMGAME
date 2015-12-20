@@ -18,8 +18,8 @@ public:
 	virtual void dropHitpoint();
 	virtual void dropHitpoint(int damage);
 	virtual ~BaseEnemy();
-
 protected:
+	void gainScore();
 	int _hitpoint;
 	int _score;
 };

@@ -16,6 +16,18 @@ Land::Land(int x, int y, int width, int height, eDirection physicBodyDirection, 
 		_canJump = true;
 	else if (type == eLandType::WATER)
 		_canJump = false;
+
+	_surface = nullptr;
+
+	//create surface
+	DeviceManager::getInstance()->getDevice()->CreateOffscreenPlainSurface(
+		WINDOW_WIDTH,
+		WINDOW_HEIGHT,
+		D3DFMT_X8R8G8B8,
+		D3DPOOL_DEFAULT,
+		&_surface,
+		NULL
+		);
 }
 
 void Land::init()
@@ -37,8 +49,25 @@ void Land::update(float deltatime)
 
 void Land::draw(LPD3DXSPRITE spriteHandle, Viewport* viewport)
 {
-	return;
 	// do nothing.
+	return;
+
+	RECT r;
+	auto pos = viewport->getPositionInViewport(new GVector3(getPositionX(), getPositionY(),0));
+	r.top = max(pos.y, 1);
+	r.left = max(pos.x,1);
+	r.bottom = min(pos.y + _bound.top - _bound.bottom, WINDOW_HEIGHT - 1);
+	r.right = min(pos.x	 + _bound.right - _bound.left, WINDOW_WIDTH - 1);
+
+	DeviceManager::getInstance()->getDevice()->ColorFill(_surface, NULL, D3DXCOLOR(1.0f, 0.0f, 1.0f, 1.0f));
+
+	DeviceManager::getInstance()->getDevice()->StretchRect(
+		_surface,
+		NULL,
+		DeviceManager::getInstance()->getSurface(),
+		&r,
+		D3DTEXF_NONE
+		);
 }
 
 void Land::release()

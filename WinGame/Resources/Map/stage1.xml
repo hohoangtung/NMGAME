@@ -619,8 +619,8 @@
         <Elem Key="type" Value="0" />
       </Params>
     </Item>
-    <Item Id="12" Name="land32" X="6272" Y="181" Width="64" Height="5">
-      <ActiveBound X="6272" Y="181" Width="64" Height="5" />
+    <Item Id="12" Name="land32" X="6272" Y="180" Width="64" Height="5">
+      <ActiveBound X="6272" Y="180" Width="64" Height="5" />
       <Params>
         <Elem Key="physicBodyDirection" Value="1" />
         <Elem Key="type" Value="0" />
@@ -821,7 +821,7 @@
     <Item Id="18" Name="greatwall" X="6432" Y="384" Width="128" Height="320">
       <ActiveBound X="6432" Y="384" Width="128" Height="320" />
     </Item>
-    <Item Id="12" Name="land39" X="6496" Y="96" Width="160" Height="5">
+    <Item Id="12" Name="land40" X="6496" Y="96" Width="160" Height="5">
       <ActiveBound X="6496" Y="96" Width="160" Height="5" />
       <Params>
         <Elem Key="physicBodyDirection" Value="1" />

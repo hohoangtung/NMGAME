@@ -131,3 +131,8 @@ void ObjectCreator::deleteObject()
 		}
 	}
 }
+
+RECT ObjectCreator::getBounding()
+{
+	return RECT{0, 0, 0, 0};
+}

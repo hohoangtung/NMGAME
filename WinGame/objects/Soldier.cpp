@@ -267,20 +267,16 @@ void Soldier::onCollisionEnd(CollisionEventArg* collision_event) {
 	{
 		if (prevObject == collision_event->_otherObject)
 		{
-			int chance = rand() % 2;
-			if (chance == 1)
+			if (prevObject == collision_event->_otherObject)
 			{
+				// hết chạm với land là fall chứ ko có jump
 				jump();
 				auto gravity = (Gravity*)this->_listComponent["Gravity"];
 				gravity->setStatus(eGravityStatus::FALLING__DOWN);
 				this->setStatus(FALLING);
+				prevObject = nullptr;
 			}
-			else
-			{
-				Movement* movement = (Movement*)this->getComponent("Movement");
-				movement->setVelocity(GVector2(-movement->getVelocity().x, movement->getVelocity().y));
-				this->setScaleX(-SCALE_FACTOR);
-			}
+			break;
 		}
 	}
 	break;
@@ -298,6 +294,15 @@ float Soldier::checkCollision(BaseObject * object, float dt)
 	eID objectId = object->getId();
 	eDirection direction;
 
+	if (prevObject == object)
+	{
+		// kiểm tra coi nhảy hết qua cái land cũ chưa
+		// để gọi event end.
+		collisionBody->checkCollision(object, dt, false);
+
+		auto gravity = (Gravity*)this->_listComponent["Gravity"];
+		gravity->setStatus(eGravityStatus::FALLING__DOWN);
+	}
 	if (objectId == eID::LAND)
 	{
 		eLandType land = ((Land*)object)->getType();
@@ -334,7 +339,7 @@ float Soldier::checkCollision(BaseObject * object, float dt)
 
 				if (flagend == true)
 				{
-					int chance = rand() % 1;
+					int chance = rand() % 5;
 					if (chance == 0)
 					{
 						jump();

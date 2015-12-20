@@ -472,8 +472,9 @@ bool WallTurret::isRange()
 	auto bill = ((PlayScene*)SceneManager::getInstance()->getCurrentScene())->getBill();
 	float dx = this->getPosition().x - bill->getPosition().x;
 	float dy = this->getPosition().y - (bill->getPosition().y + bill->getSprite()->getFrameHeight() / 2);
-	if (abs(dx) <= (WINDOW_WIDTH / 2 ))
+	if (abs(dx) <= (WINDOW_WIDTH / 2))
 		return true;
+	else return false;
 }
 void WallTurret::checkIfOutofScreen()
 {
