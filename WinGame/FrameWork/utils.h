@@ -7,7 +7,6 @@
 #include <string>
 #include <vector>
 #include <sstream>
-
 using namespace std;
 
 /*
@@ -42,5 +41,6 @@ std::vector<std::string> splitString(const std::string & input, char seperate);
 	@point: điểm được kiểm tra
 */
 bool isContain(RECT rect, D3DXVECTOR2 point);
+
 
 #endif // !__UTILS_H__

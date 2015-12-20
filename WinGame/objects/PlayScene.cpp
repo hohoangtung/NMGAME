@@ -2,6 +2,7 @@
 #include "..\Tiles\ObjectFactory.h"
 #include "BeginState3Scene.h"
 #include "GameOverScene.h"
+#include "Score.h"
 //#include "LifeUI.h"
 
 #if _DEBUG
@@ -28,7 +29,7 @@ void PlayScene::setViewport(Viewport * viewport)
 bool PlayScene::init()
 {
 
-	auto bill = new Bill();
+	auto bill = new Bill(30);
 	bill->init();
 	bill->setPosition(200, 500);
 	
@@ -411,7 +412,7 @@ void PlayScene::ScenarioKillBoss(float deltatime)
 			SAFE_DELETE(_directorKillBoss);
 			//chuyển scene
 			// test
-			auto play = new BeginStage3Scene(4000, 3);
+			auto play = new BeginStage3Scene(Score::getScore(), ((Bill*)_bill)->getLifeNumber());
 			SceneManager::getInstance()->replaceScene(play);
 		}
 	}
@@ -420,7 +421,7 @@ bool PlayScene::checkGameLife()
 {
 	if (((Bill*)_bill)->getLifeNumber() < 0)
 	{
-		auto gameoverScene = new GameOverScene(1000, 1);		// hardcode test: 1000 = số điểm
+		auto gameoverScene = new GameOverScene(Score::getScore(), 1);		// hardcode test: 1000 = số điểm
 		SoundManager::getInstance()->Stop(eSoundId::BACKGROUND_STAGE1);
 		SceneManager::getInstance()->replaceScene(gameoverScene);
 		return true;

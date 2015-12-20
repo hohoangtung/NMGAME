@@ -522,10 +522,14 @@ float Bill::checkCollision(BaseObject * object, float dt)
 		{
 			if (objectId == eID::BOSS_STAGE1)
 			{
-				(*it)->checkCollision(((Boss*)object)->getGun1(), dt);
-				(*it)->checkCollision(((Boss*)object)->getGun2(), dt);
-				(*it)->checkCollision(((Boss*)object)->getShield(), dt);
-				(*it)->checkCollision(((Boss*)object)->getRifleMan(), dt);
+				safeCheckCollision((*it), ((Boss*)object)->getGun1(), dt);
+				safeCheckCollision((*it), ((Boss*)object)->getGun2(), dt);
+				safeCheckCollision((*it), ((Boss*)object)->getShield(), dt);
+				safeCheckCollision((*it), ((Boss*)object)->getRifleMan(), dt);
+				//(*it)->checkCollision(((Boss*)object)->getGun1(), dt);
+				//(*it)->checkCollision(((Boss*)object)->getGun2(), dt);
+				//(*it)->checkCollision(((Boss*)object)->getShield(), dt);
+				//(*it)->checkCollision(((Boss*)object)->getRifleMan(), dt);
 			}
 			else
 				(*it)->checkCollision(object, dt);
@@ -805,7 +809,8 @@ void Bill::die()
 {
 	if (_protectTime > 0)
 		return;
-
+	if (this->isInStatus(eStatus::DIVING))
+		return;
 	auto move = (Movement*)this->_componentList["Movement"];
 	move->setVelocity(GVector2(-BILL_MOVE_SPEED * (this->getScale().x / SCALE_FACTOR), BILL_JUMP_VEL));
 
@@ -1045,4 +1050,12 @@ void Bill::unhookinputevent()
 	if (_input != nullptr)
 		__unhook(_input);
 
+}
+
+void safeCheckCollision(BaseObject* activeobj, BaseObject* passiveobj, float dt)
+{
+	if (activeobj != nullptr && passiveobj != nullptr)
+	{
+		activeobj->checkCollision(passiveobj, dt);
+	}
 }

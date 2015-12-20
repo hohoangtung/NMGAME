@@ -128,4 +128,7 @@ private:
 	void deleteBullet();
 };
 
+void safeCheckCollision(BaseObject* activeobj, BaseObject* passiveobj, float dt);
+
+
 #endif // !__BILL_H__
