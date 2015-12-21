@@ -72,8 +72,6 @@ bool PlayScene::init()
 	fire->init();
 	_listobject.push_back(fire);
 
-	
-
 	_text = new Text(L"Arial", "", 10, 25);
 
 	map<string, BaseObject*>* maptemp = ObjectFactory::getMapObjectFromFile("Resources//Map//stage1.xml");
