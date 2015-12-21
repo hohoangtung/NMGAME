@@ -3,12 +3,12 @@
 
 #include "../FrameWork/define.h"
 #include "../FrameWork/Managers/SceneManager.h"
+#include "../FrameWork/StopWatch.h"
 
 #include "BaseObject.h"
 #include "BaseEnemy.h"
 #include "IComponent.h"
 #include "CollisionBody.h"
-
 #define NORMAL_BULLET_SPEED 400
 
 #define TOP_SHOOT_ANGLE					0.0f
@@ -73,6 +73,7 @@ protected:
 	GVector2 initveloc(float bullet_speed);
 
 	map<string, IComponent*> _componentList;
+	StopWatch* _bursttime;
 
 private:
 	//map<string, IComponent*> _componentList;

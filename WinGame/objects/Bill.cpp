@@ -99,6 +99,8 @@ void Bill::init()
 
 	// create stopWatch
 	_stopWatch = new StopWatch();
+	_shootAnimateStopWatch = new StopWatch();
+
 	_shootStopWatch = new StopWatch();
 
 	_currentGun = eBulletType::NORMAL_BULLET;
@@ -173,15 +175,16 @@ void Bill::updateInput(float dt)
 	{
 		if ((_currentGun & R_BULLET) == R_BULLET && _stopWatch->isStopWatch(_shootSpeed))
 		{
+			this->addStatus(eStatus::SHOOTING);
 			shoot();
 			_stopWatch->restart();
 		}
 	}
 
-	if (!_input->isKeyDown(DIK_Z) && _shootStopWatch->isStopWatch(200))
+	// delay animate shooting
+	if (_shootAnimateStopWatch->isStopWatch(400))
 	{
 		this->removeStatus(eStatus::SHOOTING);
-		_shootStopWatch->restart();
 	}
 }
 
@@ -226,6 +229,7 @@ void Bill::release()
 
 	SAFE_DELETE(_stopWatch);
 	SAFE_DELETE(_shootStopWatch);
+	SAFE_DELETE(_shootAnimateStopWatch);
 	SAFE_DELETE(_reviveStopWatch);
 	SAFE_DELETE(_lifeUI);
 	this->unhookinputevent();
@@ -260,6 +264,9 @@ void Bill::onKeyPressed(KeyEventArg* key_event)
 	}
 	case DIK_LEFT:
 	{
+		if (this->isInStatus(eStatus::DIVING))
+			return;
+
 		this->removeStatus(eStatus::LAYING_DOWN);
 		this->removeStatus(eStatus::MOVING_RIGHT);
 		this->addStatus(eStatus::MOVING_LEFT);
@@ -268,6 +275,9 @@ void Bill::onKeyPressed(KeyEventArg* key_event)
 	}
 	case DIK_RIGHT:
 	{
+		if (this->isInStatus(eStatus::DIVING))
+			return;
+
 		this->removeStatus(eStatus::LAYING_DOWN);
 		this->removeStatus(eStatus::MOVING_LEFT);
 		this->addStatus(eStatus::MOVING_RIGHT);
@@ -284,6 +294,8 @@ void Bill::onKeyPressed(KeyEventArg* key_event)
 		else
 		{
 			this->addStatus(eStatus::DIVING);
+			this->removeStatus(eStatus::MOVING_LEFT);
+			this->removeStatus(eStatus::MOVING_RIGHT);
 		}
 
 		break;
@@ -298,11 +310,17 @@ void Bill::onKeyPressed(KeyEventArg* key_event)
 	}
 	case DIK_Z:
 	{
-		this->addStatus(eStatus::SHOOTING);
+		if (this->isInStatus(eStatus::DIVING))
+			return;
 
 		if((_currentGun & eBulletType::R_BULLET) != eBulletType::R_BULLET)
 		{
+			if (_shootStopWatch->isTimeLoop(85))
+			{
+				this->addStatus(eStatus::SHOOTING);
 			shoot();
+				_shootAnimateStopWatch->restart();
+		}
 		}
 
 		break;
@@ -342,7 +360,9 @@ void Bill::onKeyReleased(KeyEventArg * key_event)
 	}
 	case DIK_Z:
 	{
-		_shootStopWatch->restart();
+
+		if((_currentGun & eBulletType::R_BULLET) == eBulletType::R_BULLET)
+			this->removeStatus(eStatus::SHOOTING);
 
 		break;
 	}
@@ -413,7 +433,8 @@ float Bill::checkCollision(BaseObject * object, float dt)
 	eID objectId = object->getId();
 	eDirection direction;
 
-	if (objectId == eID::BRIDGE || objectId == eID::LAND || objectId == eID::ROCKFLY)
+	// if (objectId == eID::BRIDGE || objectId == eID::LAND || objectId == eID::ROCKFLY)
+	if ( objectId == eID::LAND || objectId == eID::ROCKFLY)
 	{
 		// nếu ko phải là nhảy xuống, mới dừng gravity
 		if (!this->isInStatus(eStatus(eStatus::JUMPING | eStatus::FALLING)) && collisionBody->checkCollision(object, direction, dt, false))
@@ -439,7 +460,8 @@ float Bill::checkCollision(BaseObject * object, float dt)
 				if (land->getType() == eLandType::WATER)
 				{
 					// nếu trước đó không phải là nước thì mới cho bơi
-					if (preType == eLandType::GRASS || preObject == nullptr || preObject->getId() == eID::BRIDGE)
+					// if (preType == eLandType::GRASS || preObject == nullptr || preObject->getId() == eID::BRIDGE)
+					if (preType == eLandType::BRIDGELAND || preType == eLandType::GRASS || preObject == nullptr)
 					{
 						this->addStatus(eStatus::SWIMING);
 
@@ -448,6 +470,15 @@ float Bill::checkCollision(BaseObject * object, float dt)
 							_animations[eStatus::SWIMING]->setIndex(2);
 							_animations[eStatus::SWIMING]->canAnimate(false);
 						}
+
+						if (this->isInStatus(eStatus::LAYING_DOWN))
+						{
+							this->removeStatus(eStatus::LAYING_DOWN);
+							this->addStatus(eStatus::DIVING);
+
+							_animations[eStatus::SWIMING]->setIndex(2);
+							_animations[eStatus::SWIMING]->canAnimate(false);
+					}
 					}
 						
 				}
@@ -457,6 +488,7 @@ float Bill::checkCollision(BaseObject * object, float dt)
 					{
 						// lên bờ thì remove swim / nhảy lên
 						this->removeStatus(eStatus::SWIMING);
+						this->removeStatus(eStatus::DIVING);
 						this->setPositionY(object->getBounding().top);
 
 						// set lại animation swim
@@ -518,14 +550,18 @@ float Bill::checkCollision(BaseObject * object, float dt)
 
 	for (auto it = _listBullets.begin(); it != _listBullets.end(); it++)
 	{
-		if (object->getId() != eID::LAND && object->getId() != eID::BRIDGE)
+		if (object->getId() != eID::LAND)
 		{
 			if (objectId == eID::BOSS_STAGE1)
 			{
-				(*it)->checkCollision(((Boss*)object)->getGun1(), dt);
-				(*it)->checkCollision(((Boss*)object)->getGun2(), dt);
-				(*it)->checkCollision(((Boss*)object)->getShield(), dt);
-				(*it)->checkCollision(((Boss*)object)->getRifleMan(), dt);
+				safeCheckCollision((*it), ((Boss*)object)->getGun1(), dt);
+				safeCheckCollision((*it), ((Boss*)object)->getGun2(), dt);
+				safeCheckCollision((*it), ((Boss*)object)->getShield(), dt);
+				safeCheckCollision((*it), ((Boss*)object)->getRifleMan(), dt);
+				//(*it)->checkCollision(((Boss*)object)->getGun1(), dt);
+				//(*it)->checkCollision(((Boss*)object)->getGun2(), dt);
+				//(*it)->checkCollision(((Boss*)object)->getShield(), dt);
+				//(*it)->checkCollision(((Boss*)object)->getRifleMan(), dt);
 			}
 			else
 				(*it)->checkCollision(object, dt);
@@ -543,8 +579,13 @@ void Bill::checkPosition()
 	auto viewport = SceneManager::getInstance()->getCurrentScene()->getViewport();
 	if (this->getPositionY() < viewport->getBounding().bottom)
 	{
+		if(_status != eStatus::DYING)
+			_status = eStatus::DYING;
+		
+		if (_protectTime > 0)
+			_protectTime = 0;
+
 		this->die();
-		this->setStatus(eStatus::DYING);
 	}
 }
 
@@ -805,6 +846,11 @@ void Bill::die()
 {
 	if (_protectTime > 0)
 		return;
+	if (this->isInStatus(eStatus::DIVING))
+		return;
+
+	if(!this->isInStatus(eStatus::DYING))
+		this->setStatus(eStatus::DYING);
 
 	auto move = (Movement*)this->_componentList["Movement"];
 	move->setVelocity(GVector2(-BILL_MOVE_SPEED * (this->getScale().x / SCALE_FACTOR), BILL_JUMP_VEL));
@@ -854,6 +900,47 @@ void Bill::setStatus(eStatus status)
 		return;
 
 	_status = status;
+}
+
+RECT Bill::getBounding()
+{
+	//int frameW = 24;
+	//int frameH;
+
+	//if (this->isInStatus(eStatus::JUMPING) || this->isInStatus(eStatus::SWIMING))
+	//	frameH = 16;
+	//else
+	//	frameH = 32;
+
+	//float scaleW = frameW * abs(this->getScale().x);
+	//float scaleH = frameH * abs(this->getScale().y);
+
+	//RECT bound;
+
+	//bound.left = this->getPositionX() - scaleW * this->getOrigin().x;
+	//bound.bottom = this->getPositionY() - scaleH * this->getOrigin().y;
+	//bound.right = bound.left + scaleW;
+	//bound.top = bound.bottom + scaleH;
+
+	int offset = 10;
+
+	RECT bound = _sprite->getBounding();
+
+	if (!this->isInStatus(eStatus::JUMPING) || !this->isInStatus(eStatus::SWIMING))
+	{
+		bound.top -= offset / 2;
+
+		if (this->getScale().x > 0)
+		{
+			bound.right -= offset;
+		}
+		else
+		{
+			bound.left += offset;
+		}
+	}
+
+	return bound;
 }
 
 GVector2 Bill::getVelocity()
@@ -919,7 +1006,7 @@ void Bill::updateCurrentAnimateIndex()
 		// animate ko có shooting nên bỏ nó ra
 		_currentAnimateIndex = (eStatus)(this->getStatus() & ~(eStatus::SHOOTING));
 	}
-	else if (this->isInStatus(eStatus::LAYING_DOWN) && this->isInStatus(eStatus::SHOOTING))
+	else if (this->isInStatus(eStatus::LAYING_DOWN) && this->isInStatus(eStatus::SHOOTING) && !this->isInStatus(eStatus::FALLING))
 	{
 		// đang nằm và bắn
 		// và ko có đang nhảy, thì animate NẰM thôi
@@ -1045,4 +1132,12 @@ void Bill::unhookinputevent()
 	if (_input != nullptr)
 		__unhook(_input);
 
+}
+
+void safeCheckCollision(BaseObject* activeobj, BaseObject* passiveobj, float dt)
+{
+	if (activeobj != nullptr && passiveobj != nullptr)
+	{
+		activeobj->checkCollision(passiveobj, dt);
+	}
 }

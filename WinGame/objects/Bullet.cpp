@@ -93,6 +93,8 @@ void Bullet::init()
 	//_componentList["CollisionBody"] = collisionBody;
 
 	__hook(&CollisionBody::onCollisionBegin, collisionBody, &Bullet::onCollisionBegin);
+
+	_bursttime = new StopWatch();
 }
 
 // KHởi tạo vận tốc ban đầu cho đạn. (copy từ đoạn code trên)
@@ -157,6 +159,13 @@ void Bullet::update(float deltatime)
 	for (auto it = _componentList.begin(); it != _componentList.end(); it++)
 	{
 		it->second->update(deltatime);
+	}
+	if (this->getStatus() == eStatus::BURST && isContainType(eBulletType::BILL_BULLET))
+	{
+		if (_bursttime->isStopWatch(50.0f))
+		{
+			this->setStatus(eStatus::DESTROY);
+		}
 	}
 }
 
@@ -249,16 +258,32 @@ void Bullet::onCollisionBegin(CollisionEventArg* collision_arg)
 				if (this->isContainType(eBulletType::L_BULLET) == true && ((BaseEnemy*)collision_arg->_otherObject)->getHitpoint() <= 0)
 					this->setStatus(eStatus::NORMAL);
 				SoundManager::getInstance()->Play(eSoundId::ATTACK_CANNON);
+				if (this->isContainType(eBulletType::NORMAL_BULLET))
+				{
+					this->setStatus(eStatus::BURST);
+					this->_sprite->setFrameRect(SpriteManager::getInstance()->getSourceRect(eID::BULLET, "explose"));
+					this->_sprite->setOpacity(0.5f);
+					auto movement = this->_componentList.find("Movement")->second;
+					((Movement*)movement)->setVelocity(VECTOR2ZERO);
+				}
 			}
 			break;
 		case WALL_TURRET:
 			if (((WallTurret*)collision_arg->_otherObject)->getWT_Status() != eWT_Status::WT_APPEAR && ((WallTurret*)collision_arg->_otherObject)->getWT_Status() != eWT_Status::WT_CLOSE)
 			{
-			((BaseEnemy*)collision_arg->_otherObject)->dropHitpoint(_damage);
-			this->setStatus(eStatus::DESTROY);
-			if (this->isContainType(eBulletType::L_BULLET) == true && ((BaseEnemy*)collision_arg->_otherObject)->getHitpoint() <= 0)
-				this->setStatus(eStatus::NORMAL);
-			SoundManager::getInstance()->Play(eSoundId::ATTACK_CANNON);
+				((BaseEnemy*)collision_arg->_otherObject)->dropHitpoint(_damage);
+				this->setStatus(eStatus::DESTROY);
+				if (this->isContainType(eBulletType::L_BULLET) == true && ((BaseEnemy*)collision_arg->_otherObject)->getHitpoint() <= 0)
+					this->setStatus(eStatus::NORMAL);
+				SoundManager::getInstance()->Play(eSoundId::ATTACK_CANNON);
+				if (this->isContainType(eBulletType::NORMAL_BULLET))
+				{
+					this->setStatus(eStatus::BURST);
+					this->_sprite->setFrameRect(SpriteManager::getInstance()->getSourceRect(eID::BULLET, "explose"));
+					this->_sprite->setOpacity(0.5f);
+					auto movement = this->_componentList.find("Movement")->second;
+					((Movement*)movement)->setVelocity(VECTOR2ZERO);
+				}
 			}
 			break;
 		// RockFall: map 2
@@ -270,7 +295,7 @@ void Bullet::onCollisionBegin(CollisionEventArg* collision_arg)
 			break;
 		}
 	}
-	
+
 	if (this->isEnemyBullet())
 	{
 		switch (objectID)

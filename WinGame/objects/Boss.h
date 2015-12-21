@@ -12,8 +12,10 @@
 #include "Rifleman.h"
 
 #define BOSS_SHIELD_HP		32
-#define BOSS_GUN_HP			16;
+#define BOSS_GUN_HP			16
 
+#define SHIELD_SCORE		10000
+#define GUN_SCORE			1000
 class Boss : public BaseEnemy
 {
 public:
@@ -51,7 +53,6 @@ public:
 
 		void dropHitpoint();
 		void dropHitpoint(int damage);
-
 	private:
 		vector<pair<GVector2, GVector2>> _forceBullet;
 		map<string, IComponent*> _componentList;

@@ -2,6 +2,7 @@
 #include "..\Tiles\ObjectFactory.h"
 #include "BeginState3Scene.h"
 #include "GameOverScene.h"
+#include "Score.h"
 //#include "LifeUI.h"
 
 #if _DEBUG
@@ -28,7 +29,7 @@ void PlayScene::setViewport(Viewport * viewport)
 bool PlayScene::init()
 {
 
-	auto bill = new Bill();
+	auto bill = new Bill(30);
 	bill->init();
 	bill->setPosition(200, 500);
 	
@@ -43,6 +44,7 @@ bool PlayScene::init()
 	//auto soldier = new Soldier(RUNNING, 1000, 400, 1);
 	//soldier->init();
 	//_listobject.push_back(soldier);
+
 
 	//soldier = new Soldier(RUNNING, 1200, 400, 1);
 	//soldier->init();
@@ -262,6 +264,43 @@ void PlayScene::update(float dt)
 		}
 	}
 
+	// [Bước 6.2]
+	// list object hoạt động rộng ko có trong quadtree cho nó kt lẫn nhau (bắt buộc -_-)
+	//for (auto obj : _listobject)
+	//{
+	//	for (auto obj2 : _listobject)
+	//	{
+	//		obj->checkCollision(obj2, dt);
+	//	}
+
+	//	auto checkedNames = _root->GetActiveObject(obj->getBounding(), true);
+
+	//	for (auto checked : checkedNames)
+	//	{
+	//		if (_mapobject.find(checked) == _mapobject.end())
+	//			continue;
+
+	//		obj->checkCollision(_mapobject[checked], dt);
+	//	}
+	//}
+
+	//// active object chỉ cần kt với cái object trong node mà nó đang đè lên
+	//for (auto name : listobjectname)
+	//{
+	//	if (_mapobject.find(name) == _mapobject.end())
+	//		continue;
+
+	//	auto checkedNames = _root->GetActiveObject(_mapobject[name]->getBounding(), true);
+	//	
+	//	for (auto checked : checkedNames)
+	//	{
+	//		if (_mapobject.find(checked) == _mapobject.end())
+	//			continue;
+
+	//		_mapobject[name]->checkCollision(_mapobject[checked], dt);
+	//	}
+	//}
+
 	// [Bước 7]
 	for (BaseObject* obj : _active_object)
 	{
@@ -409,7 +448,7 @@ void PlayScene::ScenarioKillBoss(float deltatime)
 			SAFE_DELETE(_directorKillBoss);
 			//chuyển scene
 			// test
-			auto play = new BeginStage3Scene(4000, 3);
+			auto play = new BeginStage3Scene(Score::getScore(), ((Bill*)_bill)->getLifeNumber());
 			SceneManager::getInstance()->replaceScene(play);
 		}
 	}
@@ -418,7 +457,7 @@ bool PlayScene::checkGameLife()
 {
 	if (((Bill*)_bill)->getLifeNumber() < 0)
 	{
-		auto gameoverScene = new GameOverScene(1000, 1);		// hardcode test: 1000 = số điểm
+		auto gameoverScene = new GameOverScene(Score::getScore(), 1);		// hardcode test: 1000 = số điểm
 		SoundManager::getInstance()->Stop(eSoundId::BACKGROUND_STAGE1);
 		SceneManager::getInstance()->replaceScene(gameoverScene);
 		return true;
