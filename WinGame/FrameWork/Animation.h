@@ -28,7 +28,7 @@ public:
 		@timeAnimate: thời gian chuyển từng frame
 	Sau khi tạo bằng contructor này phải addFrameRect nó mới có frame để chuyển động.
 	*/
-	Animation(Sprite* spriteSheet, float timeAnimate = 0.0f);
+	Animation(Sprite* spriteSheet, float timeAnimate = 0.0f, bool loop = true);
 
 	/*
 	Tạo aniation với spritesheet có frame đều nhau

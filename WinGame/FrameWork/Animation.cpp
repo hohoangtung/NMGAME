@@ -1,7 +1,7 @@
 ﻿#include "Animation.h"
 #include "..\debug.h"
 
-Animation::Animation(Sprite * spriteSheet, float timeAnimate)
+Animation::Animation(Sprite * spriteSheet, float timeAnimate, bool loop)
 {
 	_spriteSheet = spriteSheet;
 	_timeAnimate = timeAnimate;
@@ -13,7 +13,7 @@ Animation::Animation(Sprite * spriteSheet, float timeAnimate)
 	_valueFlashes = 0.5f;
 	 
 	this->setIndex(0);
-	this->setLoop(true);
+	this->setLoop(loop);
 }
 
 Animation::Animation(Sprite * spriteSheet, int totalFrames, int cols, float timeAnimate)
@@ -200,7 +200,8 @@ bool Animation::isLoop()
 
 void Animation::restart()
 {
-	_index = -1;
+	setIndex(0);
+
 	if (_canAnimate == false)
 		_canAnimate = true;
 }

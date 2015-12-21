@@ -65,28 +65,26 @@ void Bill::init()
 	_animations[eStatus::SHOOTING | eStatus::RUNNING] = new Animation(_sprite, 0.12f);
 	_animations[eStatus::SHOOTING | eStatus::RUNNING]->addFrameRect(eID::BILL, "run_shot_01", "run_shot_02", "run_shot_03", "run_shot_01", "run_shot_02", "run_shot_03", NULL);
 
-	_animations[eStatus::SWIMING] = new Animation(_sprite, 0.1f);
+	_animations[eStatus::SWIMING] = new Animation(_sprite, 0.2f, false);
 	_animations[eStatus::SWIMING]->addFrameRect(eID::BILL, "swim_begin", "diving", "swimming", NULL);
-	_animations[eStatus::SWIMING]->setLoop(false);
 
-	_animations[eStatus::DIVING] = new Animation(_sprite, 0.1f);
-	_animations[eStatus::DIVING]->addFrameRect(eID::BILL, "diving", NULL);
+	_animations[eStatus::DIVING] = new Animation(_sprite, 0.2f, false);
+	_animations[eStatus::DIVING]->addFrameRect(eID::BILL, "swim_begin", "diving", NULL);
 
-	_animations[eStatus::SWIMING | RUNNING | SHOOTING] = new Animation(_sprite, 0.1f);
-	_animations[eStatus::SWIMING | RUNNING | SHOOTING]->addFrameRect(eID::BILL, "swimming_shot", NULL);
+	_animations[eStatus::SWIMING | RUNNING | SHOOTING] = new Animation(_sprite, 0.2f, false);
+	_animations[eStatus::SWIMING | RUNNING | SHOOTING]->addFrameRect(eID::BILL,"swim_begin", "swimming_shot", NULL);
 
-	_animations[eStatus::SWIMING | SHOOTING] = new Animation(_sprite, 0.1f);
-	_animations[eStatus::SWIMING | SHOOTING]->addFrameRect(eID::BILL, "swimming_shot", NULL);
+	_animations[eStatus::SWIMING | SHOOTING] = new Animation(_sprite, 0.2f, false);
+	_animations[eStatus::SWIMING | SHOOTING]->addFrameRect(eID::BILL, "swim_begin", "swimming_shot", NULL);
 
-	_animations[eStatus::SWIMING | RUNNING | LOOKING_UP | SHOOTING] = new Animation(_sprite, 0.1f);
-	_animations[eStatus::SWIMING | RUNNING | LOOKING_UP | SHOOTING]->addFrameRect(eID::BILL, "swimming_shotup", NULL);
+	_animations[eStatus::SWIMING | RUNNING | LOOKING_UP | SHOOTING] = new Animation(_sprite, 0.2f, false);
+	_animations[eStatus::SWIMING | RUNNING | LOOKING_UP | SHOOTING]->addFrameRect(eID::BILL, "swim_begin", "swimming_shotup", NULL);
 
-	_animations[eStatus::SWIMING | LOOKING_UP | SHOOTING] = new Animation(_sprite, 0.1f);
-	_animations[eStatus::SWIMING | LOOKING_UP | SHOOTING]->addFrameRect(eID::BILL, "swimming_shotup_stand", NULL);
+	_animations[eStatus::SWIMING | LOOKING_UP | SHOOTING] = new Animation(_sprite, 0.2f, false);
+	_animations[eStatus::SWIMING | LOOKING_UP | SHOOTING]->addFrameRect(eID::BILL,"swim_begin", "swimming_shotup_stand", NULL);
 
-	_animations[eStatus::DYING] = new Animation(_sprite, 0.2f);
+	_animations[eStatus::DYING] = new Animation(_sprite, 0.2f, false);
 	_animations[eStatus::DYING]->addFrameRect(eID::BILL, "dead_01", "dead_02", "dead_03", "dead_04", NULL);
-	_animations[eStatus::DYING]->setLoop(false);
 
 	this->setOrigin(GVector2(0.5f, 0.0f));
 	this->setScale(SCALE_FACTOR);
@@ -433,7 +431,6 @@ float Bill::checkCollision(BaseObject * object, float dt)
 	eID objectId = object->getId();
 	eDirection direction;
 
-	// if (objectId == eID::BRIDGE || objectId == eID::LAND || objectId == eID::ROCKFLY)
 	if ( objectId == eID::LAND || objectId == eID::ROCKFLY)
 	{
 		// nếu ko phải là nhảy xuống, mới dừng gravity
@@ -460,25 +457,10 @@ float Bill::checkCollision(BaseObject * object, float dt)
 				if (land->getType() == eLandType::WATER)
 				{
 					// nếu trước đó không phải là nước thì mới cho bơi
-					// if (preType == eLandType::GRASS || preObject == nullptr || preObject->getId() == eID::BRIDGE)
 					if (preType == eLandType::BRIDGELAND || preType == eLandType::GRASS || preObject == nullptr)
 					{
-						this->addStatus(eStatus::SWIMING);
-
-						if (this->isInStatus(eStatus::SHOOTING))
-						{
-							_animations[eStatus::SWIMING]->setIndex(2);
-							_animations[eStatus::SWIMING]->canAnimate(false);
-						}
-
-						if (this->isInStatus(eStatus::LAYING_DOWN))
-						{
-							this->removeStatus(eStatus::LAYING_DOWN);
-							this->addStatus(eStatus::DIVING);
-
-							_animations[eStatus::SWIMING]->setIndex(2);
-							_animations[eStatus::SWIMING]->canAnimate(false);
-					}
+						// swim
+						this->swimming();
 					}
 						
 				}
@@ -491,8 +473,13 @@ float Bill::checkCollision(BaseObject * object, float dt)
 						this->removeStatus(eStatus::DIVING);
 						this->setPositionY(object->getBounding().top);
 
-						// set lại animation swim
+						// restart lại animation swim
 						_animations[eStatus::SWIMING]->restart();
+						_animations[eStatus::DIVING]->restart();
+						_animations[eStatus::SWIMING | SHOOTING]->restart();
+						_animations[eStatus::SWIMING | RUNNING | SHOOTING]->restart();
+						_animations[eStatus::SWIMING | RUNNING | SHOOTING | LOOKING_UP]->restart();
+						_animations[eStatus::SWIMING | LOOKING_UP | SHOOTING]->restart();
 					}
 				}
 			}
@@ -858,6 +845,60 @@ void Bill::die()
 	auto g = (Gravity*)this->_componentList["Gravity"];
 	g->setStatus(eGravityStatus::FALLING__DOWN);
 	SoundManager::getInstance()->Play(eSoundId::DEAD);
+}
+
+void Bill::swimming()
+{
+	this->addStatus(eStatus::SWIMING);
+
+	_animations[eStatus::SWIMING]->setIndex(2);
+	_animations[eStatus::SWIMING]->canAnimate(false);
+	_animations[eStatus::DIVING]->setIndex(1);
+	_animations[eStatus::DIVING]->canAnimate(false);
+	_animations[eStatus::SWIMING | SHOOTING]->setIndex(1);
+	_animations[eStatus::SWIMING | SHOOTING]->canAnimate(false);
+	_animations[eStatus::SWIMING | RUNNING | SHOOTING]->setIndex(1);
+	_animations[eStatus::SWIMING | RUNNING | SHOOTING]->canAnimate(false);
+	_animations[eStatus::SWIMING | RUNNING | SHOOTING | LOOKING_UP]->setIndex(1);
+	_animations[eStatus::SWIMING | RUNNING | SHOOTING | LOOKING_UP]->canAnimate(false);
+	_animations[eStatus::SWIMING | LOOKING_UP | SHOOTING]->setIndex(1);
+	_animations[eStatus::SWIMING | LOOKING_UP | SHOOTING]->canAnimate(false);
+
+	// cập nhật animate
+	if (this->isInStatus(eStatus(MOVING_LEFT | LOOKING_UP | SHOOTING)) || this->isInStatus(eStatus(MOVING_RIGHT | LOOKING_UP | SHOOTING)))
+	{
+		_animations[eStatus::SWIMING | RUNNING | SHOOTING | LOOKING_UP]->restart();
+	}
+	else if ((this->isInStatus(eStatus(MOVING_LEFT | SHOOTING)) || this->isInStatus(eStatus(MOVING_RIGHT | SHOOTING))) && !this->isInStatus(eStatus::LAYING_DOWN))
+	{
+		_animations[eStatus::SWIMING | RUNNING | SHOOTING]->restart();
+	}
+	else if (this->isInStatus(eStatus(LOOKING_UP | SHOOTING)))
+	{
+		_animations[eStatus::SWIMING | LOOKING_UP | SHOOTING]->restart();
+	}
+	else if (this->isInStatus(eStatus(SHOOTING)) && !this->isInStatus(eStatus::LAYING_DOWN))
+	{
+		_animations[eStatus::SWIMING | SHOOTING]->restart();
+	}
+	else
+	{
+		_animations[eStatus::SWIMING]->restart();
+	}
+
+	if (this->isInStatus(eStatus::LAYING_DOWN))
+	{
+		this->removeStatus(eStatus::LAYING_DOWN);
+		this->removeStatus(eStatus::MOVING_LEFT);
+		this->removeStatus(eStatus::MOVING_RIGHT);
+
+		this->addStatus(eStatus::DIVING);
+
+		_animations[eStatus::DIVING]->restart();
+
+		_animations[eStatus::SWIMING]->setIndex(2);
+		_animations[eStatus::SWIMING]->canAnimate(false);
+	}
 }
 
 void Bill::setLifeNumber(int number)
