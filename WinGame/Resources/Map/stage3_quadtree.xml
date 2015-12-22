@@ -177,7 +177,7 @@
               <Objects>rockfall01 falcon03 land46 </Objects>
             </QNode>
             <QNode Id="62" Level="6" X="204" Y="3468" Width="68" Height="68">
-              <Objects>rockfall01 falcon03 land48 </Objects>
+              <Objects>falcon03 land48 </Objects>
             </QNode>
             <QNode Id="63" Level="6" X="136" Y="3468" Width="68" Height="68">
               <Objects>rockfall02 land47 </Objects>
@@ -203,7 +203,7 @@
         </QNode>
         <QNode Id="131132" Level="4" X="272" Y="3536" Width="272" Height="272">
           <QNode Id="131132" Level="5" X="272" Y="3536" Width="136" Height="136">
-            <Objects>rockfall01 rockfall03 rockfall04 land48 land50 </Objects>
+            <Objects>rockfall03 rockfall04 land48 land50 </Objects>
           </QNode>
           <QNode Id="131133" Level="5" X="408" Y="3536" Width="136" Height="136">
             <Objects>rockfall04 land48 land50 </Objects>
@@ -212,7 +212,7 @@
             <Objects>rockfall04 </Objects>
           </QNode>
           <QNode Id="131135" Level="5" X="272" Y="3672" Width="136" Height="136">
-            <Objects>rockfall01 rockfall03 rockfall04 falcon04 land51 </Objects>
+            <Objects>rockfall04 falcon04 land51 </Objects>
           </QNode>
         </QNode>
         <QNode Id="196668" Level="4" X="0" Y="3536" Width="272" Height="272">
@@ -220,13 +220,13 @@
             <Objects>rockfall02 land49 </Objects>
           </QNode>
           <QNode Id="196669" Level="5" X="136" Y="3536" Width="136" Height="136">
-            <Objects>rockfall01 rockfall02 land48 </Objects>
+            <Objects>rockfall02 land48 </Objects>
           </QNode>
           <QNode Id="196670" Level="5" X="136" Y="3672" Width="136" Height="136">
-            <Objects>rockfall01 rockfall02 falcon04 land51 land52 </Objects>
+            <Objects>falcon04 land51 land52 </Objects>
           </QNode>
           <QNode Id="196671" Level="5" X="0" Y="3672" Width="136" Height="136">
-            <Objects>rockfall02 rockfall05 land51 land52 </Objects>
+            <Objects>rockfall05 land51 land52 </Objects>
           </QNode>
         </QNode>
       </QNode>
@@ -235,59 +235,26 @@
       <QNode Id="828" Level="3" X="0" Y="3808" Width="544" Height="544">
         <QNode Id="828" Level="4" X="0" Y="3808" Width="272" Height="272">
           <QNode Id="828" Level="5" X="0" Y="3808" Width="136" Height="136">
-            <Objects>rockfall02 rockfall05 land53 land55 </Objects>
+            <Objects>rockfall05 land53 land55 </Objects>
           </QNode>
           <QNode Id="829" Level="5" X="136" Y="3808" Width="136" Height="136">
-            <Objects>rockfall01 rockfall02 land53 land56 </Objects>
+            <Objects>land53 land56 </Objects>
           </QNode>
           <QNode Id="830" Level="5" X="136" Y="3944" Width="136" Height="136">
-            <Objects>rockfall01 rockfall02 land57 land59 land60 </Objects>
+            <Objects>land57 land59 land60 </Objects>
           </QNode>
           <QNode Id="831" Level="5" X="0" Y="3944" Width="136" Height="136">
-            <Objects>rockfall02 rockfall05 land57 land59 </Objects>
+            <Objects>land57 land59 </Objects>
           </QNode>
         </QNode>
         <QNode Id="66364" Level="4" X="272" Y="3808" Width="272" Height="272">
-          <QNode Id="66364" Level="5" X="272" Y="3808" Width="136" Height="136">
-            <QNode Id="66364" Level="6" X="272" Y="3808" Width="68" Height="68">
-              <Objects>rockfall01 rockfall03 land53 </Objects>
-            </QNode>
-            <QNode Id="66365" Level="6" X="340" Y="3808" Width="68" Height="68">
-              <Objects>rockfall03 rockfall04 land54 </Objects>
-            </QNode>
-            <QNode Id="66366" Level="6" X="340" Y="3876" Width="68" Height="68">
-              <Objects>rockfall03 rockfall04 land56 </Objects>
-            </QNode>
-            <QNode Id="66367" Level="6" X="272" Y="3876" Width="68" Height="68">
-              <Objects>rockfall01 rockfall03 land56 </Objects>
-            </QNode>
-          </QNode>
-          <QNode Id="66365" Level="5" X="408" Y="3808" Width="136" Height="136">
-            <Objects>rockfall04 land54 land56 </Objects>
-          </QNode>
-          <QNode Id="66366" Level="5" X="408" Y="3944" Width="136" Height="136">
-            <Objects>rockfall04 land58 land60 </Objects>
-          </QNode>
-          <QNode Id="66367" Level="5" X="272" Y="3944" Width="136" Height="136">
-            <Objects>rockfall01 rockfall03 rockfall04 land58 land60 </Objects>
-          </QNode>
+          <Objects>land53 land54 land56 land58 land60 </Objects>
         </QNode>
         <QNode Id="131900" Level="4" X="272" Y="4080" Width="272" Height="272">
-          <QNode Id="131900" Level="5" X="272" Y="4080" Width="136" Height="136">
-            <Objects>rockfall03 rockfall04 land60 land61 land62 </Objects>
-          </QNode>
-          <QNode Id="131901" Level="5" X="408" Y="4080" Width="136" Height="136">
-            <Objects>rockfall04 land60 land61 land62 </Objects>
-          </QNode>
-          <QNode Id="131902" Level="5" X="408" Y="4216" Width="136" Height="136">
-            <Objects>rockfall04 land63 </Objects>
-          </QNode>
-          <QNode Id="131903" Level="5" X="272" Y="4216" Width="136" Height="136">
-            <Objects>rockfall04 land63 </Objects>
-          </QNode>
+          <Objects>land60 land61 land62 land63 </Objects>
         </QNode>
         <QNode Id="197436" Level="4" X="0" Y="4080" Width="272" Height="272">
-          <Objects>rockfall02 rockfall05 land60 land61 land63 </Objects>
+          <Objects>land60 land61 land63 </Objects>
         </QNode>
       </QNode>
     </QNode>

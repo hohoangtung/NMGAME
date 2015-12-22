@@ -164,6 +164,10 @@ void SpriteManager::loadResource(LPD3DXSPRITE spriteHandle)
 	sp = loadXMLDoc(spriteHandle, L"Resources//Map//stage1.xml");
 	sp->setOrigin(VECTOR2ZERO);
 	this->_listSprite[eID::MAPSTAGE1] = sp;
+
+	sp = loadXMLDoc(spriteHandle, L"Resources//Map//stage3.xml");
+	sp->setOrigin(VECTOR2ZERO);
+	this->_listSprite[eID::MAPSTAGE3] = sp;
 }
 
 Sprite* SpriteManager::loadXMLDoc(LPD3DXSPRITE spritehandle, LPWSTR path)

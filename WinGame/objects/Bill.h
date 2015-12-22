@@ -91,6 +91,8 @@ public:
 	void die();
 	void swimming();
 
+	float getMovingSpeed();
+
 	RECT getBounding() override;
 
 private:

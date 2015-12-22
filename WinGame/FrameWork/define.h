@@ -61,6 +61,7 @@ enum eID
 	SCUBASOLDIER = 29,
 	FONTEX			= 30,
 	FONTFULL		= 31,
+	MAPSTAGE3		= 32,
 };
  
 enum eStatus

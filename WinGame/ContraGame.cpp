@@ -1,6 +1,7 @@
 ﻿#include "ContraGame.h"
 #include "objects\GameOverScene.h"
 #include "objects\BeginState3Scene.h"
+#include "objects\Stage3.h"
 ContraGame::ContraGame(HINSTANCE hInstance, LPWSTR title) : Game(hInstance, title, WINDOW_WIDTH, WINDOW_HEIGHT)
 {
 
@@ -15,7 +16,8 @@ void ContraGame::init()
 	Game::init();
 	// init game
 #if _DEBUG
-	SceneManager::getInstance()->addScene(new PlayScene());
+	SceneManager::getInstance()->addScene(new Stage3());
+	//SceneManager::getInstance()->addScene(new PlayScene());
 #else
 	SceneManager::getInstance()->addScene(new IntroScene());
 #endif
