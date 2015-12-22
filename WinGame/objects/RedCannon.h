@@ -72,6 +72,7 @@ private:
 	bool isRange();
 	void checkIfOutofScreen();
 	
+	
 };
 
 #endif // !__REDCANNON_H__

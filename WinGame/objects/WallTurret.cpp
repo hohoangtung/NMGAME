@@ -1,7 +1,7 @@
 #include"WallTurret.h"
 StopWatch* _loopwatch1;
 #define PI 3.14159265
-
+float r;
 
 WallTurret::WallTurret(eStatus status, GVector2 position) :BaseEnemy(eID::WALL_TURRET)
 {
@@ -455,13 +455,13 @@ void WallTurret::rangeAttack()
 
 	float dx = this->getPosition().x - bill->getPosition().x;
 	float dy = this->getPosition().y - (bill->getPosition().y + bill->getSprite()->getFrameHeight() / 2);
-
-	if (dx<0 && abs(dx) >= (WINDOW_WIDTH / 2))
+	r = sqrt(dx*dx + dy*dy);
+	if (r >= (3*WINDOW_WIDTH/4 ))
 	{
 		this->setStatus(eWT_Status::WT_CLOSE);
 		this->setStatus(eStatus::HIDDEN);
 	}
-	else if (dx >= 0 && abs(dx) < (WINDOW_WIDTH / 2 ))
+	else if (r < (2*WINDOW_WIDTH/3 ))
 	{
 		this->setStatus(eWT_Status::WT_APPEAR);
 		this->setStatus(eStatus::HIDDEN);
@@ -472,7 +472,7 @@ bool WallTurret::isRange()
 	auto bill = ((PlayScene*)SceneManager::getInstance()->getCurrentScene())->getBill();
 	float dx = this->getPosition().x - bill->getPosition().x;
 	float dy = this->getPosition().y - (bill->getPosition().y + bill->getSprite()->getFrameHeight() / 2);
-	if (abs(dx) <= (WINDOW_WIDTH / 2))
+	if (r < (2*WINDOW_WIDTH/3))
 		return true;
 	else return false;
 }
