@@ -89,6 +89,7 @@ public:
 	void shoot();
 	void revive();
 	void die();
+	void swimming();
 
 	float getMovingSpeed();
 

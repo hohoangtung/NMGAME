@@ -45,6 +45,7 @@ bool PlayScene::init()
 	//soldier->init();
 	//_listobject.push_back(soldier);
 
+
 	//soldier = new Soldier(RUNNING, 1200, 400, 1);
 	//soldier->init();
 	//_listobject.push_back(soldier);	
@@ -70,8 +71,6 @@ bool PlayScene::init()
 	auto fire = new Fire(GVector2(400, 260));
 	fire->init();
 	_listobject.push_back(fire);
-
-	
 
 	_text = new Text(L"Arial", "", 10, 25);
 

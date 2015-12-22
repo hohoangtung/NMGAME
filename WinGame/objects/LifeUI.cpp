@@ -1,4 +1,4 @@
-#include "LifeUI.h"
+﻿#include "LifeUI.h"
 
 LifeUI::LifeUI(GVector2 position, int number) : EmptyObject(eID::LIFE_ICON, position, 0, 0)
 {
@@ -27,10 +27,24 @@ void LifeUI::update(float deltatime)
 
 void LifeUI::draw(LPD3DXSPRITE spriteHandle, Viewport * viewport)
 {
-	for (auto icon : _listIcons)
+	// vẽ 3 cái ra thôi
+	if (_listIcons.size() > 3)
 	{
-		icon->render(spriteHandle);
+		for (int i = 0; i < 3; i++)
+			_listIcons[i]->render(spriteHandle);
 	}
+	else
+	{
+		for (auto icon : _listIcons)
+		{
+			icon->render(spriteHandle);
+		}
+	}
+
+	//for (auto icon : _listIcons)
+	//{
+	//	icon->render(spriteHandle);
+	//}
 }
 
 void LifeUI::release()

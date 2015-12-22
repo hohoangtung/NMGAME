@@ -456,7 +456,7 @@ void WallTurret::rangeAttack()
 	float dx = this->getPosition().x - bill->getPosition().x;
 	float dy = this->getPosition().y - (bill->getPosition().y + bill->getSprite()->getFrameHeight() / 2);
 
-	if (abs(dx) >= (WINDOW_WIDTH / 2))
+	if (dx<0 && abs(dx) >= (WINDOW_WIDTH / 2))
 	{
 		this->setStatus(eWT_Status::WT_CLOSE);
 		this->setStatus(eStatus::HIDDEN);

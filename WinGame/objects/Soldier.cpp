@@ -367,7 +367,7 @@ float Soldier::checkCollision(BaseObject * object, float dt)
 	}
 	else
 	{
-		collisionBody->checkCollision(object, dt,false);
+		collisionBody->checkCollision(object, dt, false);
 	}
 	return 0.0f;
 

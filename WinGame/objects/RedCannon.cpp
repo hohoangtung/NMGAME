@@ -3,6 +3,8 @@
 
 #define PI 3.14159265
 StopWatch *_loopwatch;
+int bullet = 0;
+float delay1;
 
 
 RedCannon::RedCannon(eStatus status, GVector2 position) :BaseEnemy(eID::REDCANNON)
@@ -78,7 +80,6 @@ void RedCannon::init()
 	
 	_stopwatch = new StopWatch();
 	_loopwatch = new StopWatch();
-
 	_explosion = NULL;
 	this->setHitpoint(CANNON_HITPOINT);
 	this->setScore(CANNON_SCORE);
@@ -157,6 +158,7 @@ void RedCannon::update(float deltatime)
 			_shootingAngle = -30;
 		}
 		this->addStatus(WT_SHOOTING);
+		
 	}
 	
 		//for (auto it = _listBullets.begin(); it != _listBullets.end(); it++)
@@ -168,15 +170,23 @@ void RedCannon::update(float deltatime)
 			it.second->update(deltatime);
 		}
 		
-			if (_stopwatch->isStopWatch(CANNON_SHOOTING_DELAY)) 
+		if (this->getWT_Status() != eWT_Status::WT_APPEAR && this->getWT_Status() != eWT_Status::WT_CLOSE)
+		{
+			if (bullet >= 3)
 			{
-				if (this->isInStatus(WT_SHOOTING))
-				{
-					shoot();
-				}
-				_stopwatch->restart();
+				bullet = 0;
+				delay1 = CANNON_SHOOTING_DELAY;
+				this->removeStatus(SHOOTING);
 			}
-
+			if (_stopwatch->isTimeLoop(delay1))
+			{
+				this->addStatus(SHOOTING);
+				shoot();
+				bullet++;
+				delay1 = 100.0f;
+			}
+		}
+			
 		_animation[this->getWT_Status()]->update(deltatime);
 }
 
