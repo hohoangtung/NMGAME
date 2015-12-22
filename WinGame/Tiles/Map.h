@@ -45,7 +45,7 @@
 	HAVE FUN
 */
 #ifndef __MAP_H__
-#define __MAP_H__6
+#define __MAP_H__
 #include <string>
 #include <vector>
 

@@ -577,7 +577,10 @@ void Bill::checkPosition()
 		return;
 
 	auto viewport = SceneManager::getInstance()->getCurrentScene()->getViewport();
-	if (this->getPositionY() < viewport->getBounding().bottom)
+	GVector2 viewport_position = viewport->getPositionWorld();
+
+	//if (this->getPositionY() < viewport->getBounding().bottom)
+	if (this->getPositionY() < viewport_position.y - WINDOW_HEIGHT)
 	{
 		if(_status != eStatus::DYING)
 			_status = eStatus::DYING;
@@ -606,7 +609,7 @@ void Bill::moveLeft()
 	float billPositionX = this->getPositionX();
 	auto halfwidth = this->getSprite()->getFrameWidth() * this->getSprite()->getOrigin().x;
 	// Không cho đi vượt cạnh trái
-	if (billPositionX +  halfwidth - _movingSpeed * 0.33 <= viewportPosition.x) // hard code
+	if (billPositionX + halfwidth - _movingSpeed * 0.33 <= viewportPosition.x) // hard code
 	{
 		this->setPositionX(viewportPosition.x + halfwidth);
 		return;
@@ -735,8 +738,9 @@ void Bill::shoot()
 void Bill::revive()
 {
 	auto viewportPos = SceneManager::getInstance()->getCurrentScene()->getViewport()->getPositionWorld();
-	this->setPosition(viewportPos.x, WINDOW_HEIGHT);
-	
+	//this->setPosition(viewportPos.x, WINDOW_HEIGHT);
+	this->setPosition(viewportPos.x, viewportPos.y - 200);
+
 	// reset value
 	this->setScaleX(SCALE_FACTOR);
 	this->setStatus(eStatus::JUMPING);
@@ -1132,6 +1136,11 @@ void Bill::unhookinputevent()
 	if (_input != nullptr)
 		__unhook(_input);
 
+}
+
+float Bill::getMovingSpeed()
+{
+	return _movingSpeed;
 }
 
 void safeCheckCollision(BaseObject* activeobj, BaseObject* passiveobj, float dt)

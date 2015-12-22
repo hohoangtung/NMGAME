@@ -90,6 +90,8 @@ public:
 	void revive();
 	void die();
 
+	float getMovingSpeed();
+
 	RECT getBounding() override;
 
 private:
