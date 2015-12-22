@@ -258,12 +258,12 @@ void RedCannon::onCollisionBegin(CollisionEventArg* collision_event)
 	{
 	case eID::BILL:
 	{
-				if (collision_event->_otherObject->isInStatus(eStatus::DYING) == false)
-					{
-						  collision_event->_otherObject->setStatus(eStatus::DYING);
-						  ((Bill*)collision_event->_otherObject)->die();
-					}
-					  break;
+		if (collision_event->_otherObject->isInStatus(eStatus::DYING) == false)
+		{
+			collision_event->_otherObject->setStatus(eStatus::DYING);
+			((Bill*)collision_event->_otherObject)->die();
+		}
+		break;
 	}
 	default:
 		break;
@@ -376,7 +376,12 @@ void RedCannon::checkIfOutofScreen()
 	RECT screenBound = viewport->getBounding();
 	RECT thisBound = this->getBounding();
 	GVector2 position = this->getPosition();
-	if (thisBound.right < screenBound.left)
+	//if (thisBound.right < screenBound.left)
+	//{
+	//	this->setStatus(eStatus::DESTROY);
+	//}
+	GVector2 viewportposition = viewport->getPositionWorld();
+	if (thisBound.right < screenBound.left || thisBound.top < viewportposition.y - WINDOW_HEIGHT)
 	{
 		this->setStatus(eStatus::DESTROY);
 	}

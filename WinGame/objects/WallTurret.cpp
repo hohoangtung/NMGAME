@@ -480,9 +480,14 @@ void WallTurret::checkIfOutofScreen()
 {
 	auto viewport = ((PlayScene*)SceneManager::getInstance()->getCurrentScene())->getViewport();
 	RECT screenBound = viewport->getBounding();
-	RECT thisBound = this->getBounding();
+	RECT thisBound = BaseObject::getBounding();
 	GVector2 position = this->getPosition();
-	if (thisBound.right < screenBound.left)
+	//if (thisBound.right < screenBound.left)
+	//{
+	//	this->setStatus(eStatus::DESTROY);
+	//}
+	GVector2 viewportposition = viewport->getPositionWorld();
+	if (thisBound.right < screenBound.left || thisBound.top < viewportposition.y - WINDOW_HEIGHT)
 	{
 		this->setStatus(eStatus::DESTROY);
 	}
