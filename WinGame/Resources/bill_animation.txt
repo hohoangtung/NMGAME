@@ -25,10 +25,15 @@ run_shot_02	184	189	208	224
 run_shot_03	210	189	236	224
 swim_begin	94	115	111	131
 swimming	130	115	147	131
+swimming_01	130	115	147	132
 diving		112	123	129	131
+diving_01	112	123	129	132
 swimming_shot	191	113	217	131
+swimming_shot_01	191	113	217	132
 swimming_shotup	148	113	168	131
+swimming_shotup_01	148	113	168	132
 swimming_shotup_stand	169	103	187	131
+swimming_shotup_stand_01	169	103	187	132
 dead_01		2	107	18	131
 dead_02		19	112	42	131
 dead_03		43	107	59	131
