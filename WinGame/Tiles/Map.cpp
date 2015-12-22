@@ -38,7 +38,7 @@ void Map::draw(LPD3DXSPRITE spriteHandle, Viewport* viewport)
 
 	int iBegin = max(screenRectEx.left / _framewidth, 0);
 	int iEnd = min(screenRectEx.right / _framewidth + 1, _mapSize.x);
-	int jBegin = _mapSize.y - min(screenRectEx.top / _frameheight, _mapSize.y);
+	int jBegin = _mapSize.y - min(screenRectEx.top / _frameheight + 1, _mapSize.y);
 	int jEnd = _mapSize.y - max(screenRectEx.bottom / _frameheight , 0);
 	////// uncomment this block to view How viewport work with tile map => TO KNOW IT IS NOT ONLY A PICTURE :D
 	/////*

@@ -596,10 +596,10 @@
         <Elem Key="type" Value="5" />
       </Params>
     </Item>
-    <Item Id="27" Name="scubasoldier01" X="416" Y="2592" Width="64" Height="64">
+    <Item Id="29" Name="scubasoldier01" X="416" Y="2592" Width="64" Height="64">
       <ActiveBound X="416" Y="2592" Width="64" Height="64" />
     </Item>
-    <Item Id="27" Name="scubasoldier02" X="128" Y="2368" Width="64" Height="64">
+    <Item Id="29" Name="scubasoldier02" X="128" Y="2368" Width="64" Height="64">
       <ActiveBound X="128" Y="2368" Width="64" Height="64" />
     </Item>
     <Item Id="11" Name="wallturret04" X="0" Y="2336" Width="64" Height="64">
@@ -614,25 +614,26 @@
     <Item Id="11" Name="walllturret05" X="0" Y="1920" Width="64" Height="64">
       <ActiveBound X="0" Y="1920" Width="64" Height="64" />
     </Item>
-    <Item Id="25" Name="fire01" X="160" Y="1683" Width="32" Height="36">
-      <ActiveBound X="128" Y="1683" Width="256" Height="36" />
-    </Item>
-    <Item Id="25" Name="fire02" X="320" Y="1683" Width="32" Height="36">
+    <Item Id="25" Name="fire01" X="256" Y="1683" Width="32" Height="36">
       <ActiveBound X="128" Y="1683" Width="256" Height="36" />
     </Item>
     <Item Id="4" Name="aircraft01" X="128" Y="1440" Width="64" Height="32">
       <ActiveBound X="0" Y="1952" Width="192" Height="544" />
       <Params>
         <Elem Key="type" Value="0" />
+        <Elem Key="HVelocity" Value="0, 230" />
+        <Elem Key="Amplitude" Value="64,0" />
       </Params>
     </Item>
     <Item Id="4" Name="aircraft02" X="352" Y="1440" Width="64" Height="32">
       <ActiveBound X="224" Y="1952" Width="192" Height="544" />
       <Params>
         <Elem Key="type" Value="4" />
+        <Elem Key="HVelocity" Value="0, 230" />
+        <Elem Key="Amplitude" Value="64, 0" />
       </Params>
     </Item>
-    <Item Id="27" Name="scubasoldier03" X="288" Y="1184" Width="64" Height="64">
+    <Item Id="29" Name="scubasoldier03" X="288" Y="1184" Width="64" Height="64">
       <ActiveBound X="288" Y="1184" Width="64" Height="64" />
     </Item>
     <Item Id="6" Name="rifleman02" X="416" Y="1120" Width="32" Height="64">
@@ -1108,6 +1109,14 @@
         <Elem Key="physicBodyDirection" Value="1" />
         <Elem Key="type" Value="0" />
         <Elem Key="canJumpDown" Value="0" />
+      </Params>
+    </Item>
+    <Item Id="12" Name="land64" X="384" Y="1716" Width="128" Height="5">
+      <ActiveBound X="384" Y="1716" Width="128" Height="5" />
+      <Params>
+        <Elem Key="physicBodyDirection" Value="1" />
+        <Elem Key="canJumpDown" Value="0" />
+        <Elem Key="type" Value="0" />
       </Params>
     </Item>
   </Objects>

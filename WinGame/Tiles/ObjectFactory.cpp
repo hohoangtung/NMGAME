@@ -117,6 +117,10 @@ BaseObject* ObjectFactory::getObjectById(xml_node node, eID id)
 			return getRockFly(node);
 		case ROCKFALL:
 			return getRockFall(node);
+		case SCUBASOLDIER:
+			return getScubaSoldier(node);
+		case FIRE:
+			return getFire(node);
 		default:
 			return nullptr;
 			break;
@@ -557,6 +561,40 @@ BaseObject* ObjectFactory::getRockFall(xml_node node)
 	return rockfall;
 }
 
+BaseObject* ObjectFactory::getScubaSoldier(xml_node node)
+{
+	auto properties = getObjectProperties(node);
+	if (properties.size() == 0)
+		return nullptr;
+
+	int x, y, type;
+
+	x = stoi(properties["X"]);
+	y = stoi(properties["Y"]);
+
+	x += 32 ;
+	y -= 8 ;
+	auto scubasoldier = new ScubaSoldier(GVector2(x , y));
+	scubasoldier->init();
+	return scubasoldier;
+}
+
+BaseObject* ObjectFactory::getFire(xml_node node)
+{
+	auto properties = getObjectProperties(node);
+	if (properties.size() == 0)
+		return nullptr;
+
+	int x, y, type;
+
+	x = stoi(properties["X"]);
+	y = stoi(properties["Y"]);
+	
+	y -= 8 * SCALE_FACTOR;
+	auto fire = new Fire(GVector2(x, y));
+	fire->init();
+	return fire;
+}
 
 map<string, string> ObjectFactory::getObjectProperties(xml_node node)
 {

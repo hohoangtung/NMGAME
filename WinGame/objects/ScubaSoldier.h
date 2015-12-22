@@ -9,6 +9,9 @@
 #include "../Framework/StopWatch.h"
 #include "PlayScene.h"
 #include "BulletManager.h"
+#include "Bullet.h"
+#include "Explosion.h"
+
 using namespace std;
 
 #define SCUBASOLDIER_HITPOINT 1
@@ -36,6 +39,26 @@ public:
 	void shoot();
 
 	IComponent* getComponent(string);
+	RECT getBounding() override;
+
+	class ScubaBullet : public Bullet
+	{
+	public:
+		ScubaBullet(GVector2 startposition, GVector2 force, GVector2 gravity);
+		~ScubaBullet();
+		void init();
+		void update(float deltatime);
+		void draw(LPD3DXSPRITE, Viewport*);
+		void release();
+		float checkCollision(BaseObject* object, float dt);
+	private:
+		GVector2 _force;
+		GVector2 _gravity;
+		Explosion* _explosion;
+		bool _tripleFlag;
+		void tripleAttack();
+	};
+
 private:
 	map<string, IComponent*> _listComponent;
 	map<int, Animation*> _animations;

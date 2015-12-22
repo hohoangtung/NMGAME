@@ -1,4 +1,4 @@
-#include "ScubaSoldier.h"
+﻿#include "ScubaSoldier.h"
 
 ScubaSoldier::ScubaSoldier(GVector2 pos) : BaseEnemy(eID::SCUBASOLDIER)
 {
@@ -88,11 +88,16 @@ void ScubaSoldier::update(float deltatime)
 		return;
 	}
 	auto bill = ((PlayScene*)SceneManager::getInstance()->getCurrentScene())->getBill();
-	if (this->getPositionY() < bill->getPositionY())
+	if (this->getPositionY() < bill->getPositionY() - 96.0f)
 		this->setStatus(eStatus::SHOOTING);
 	else
 		this->setStatus(eStatus::HIDDEN);
+	if (this->getStatus() == eStatus::SHOOTING)
+	{
+		BulletManager::insertBullet(new ScubaBullet(this->getPosition(), GVector2(0, 448.0f), GVector2(0, -320.0f)));
+	}
 }
+
 
 void ScubaSoldier::onCollisionBegin(CollisionEventArg* collision_event) {}
 void ScubaSoldier::onCollisionEnd(CollisionEventArg* collision_vent) {}
@@ -104,5 +109,127 @@ float ScubaSoldier::checkCollision(BaseObject *object, float dt)
 	return 0.0f;
 }
 
+RECT ScubaSoldier::getBounding()
+{
+	RECT basebound = BaseObject::getBounding();
+	basebound.top -= 15 * this->getScale().y;
+	return basebound;
+}
 
 
+
+
+ScubaSoldier::ScubaBullet::ScubaBullet(GVector2 startposition, GVector2 force, GVector2 gravity) : Bullet(startposition, eBulletType(SCUBABULLET | ENEMY_BULLET), 0.0f)
+{
+	_startPosition = startposition;
+	_force = force;
+	_gravity = gravity;
+}
+
+void ScubaSoldier::ScubaBullet::init()
+{
+	_sprite = SpriteManager::getInstance()->getSprite(eID::BULLET);
+	_sprite->setFrameRect(SpriteManager::getInstance()->getSourceRect(eID::BULLET, "boss1_bullet"));
+	_sprite->setScale(SCALE_FACTOR);
+	this->setPosition(_startPosition);
+	Movement* movement = new Movement(VECTOR2ZERO, _force, _sprite);
+	Gravity* gravity = new Gravity(_gravity, movement);
+	CollisionBody* collisionBody = new CollisionBody(this);
+	this->_componentList["Movement"] = movement;
+	this->_componentList["Gravity"] = gravity;
+	this->_componentList["CollisionBody"] = collisionBody;
+	
+	__hook(&CollisionBody::onCollisionBegin, collisionBody, &Bullet::onCollisionBegin); //dư?
+
+	if (this->_force.x == 0)
+	{
+		_tripleFlag = false;
+	}
+	else
+	{
+		_tripleFlag = true;
+	}
+}
+
+void ScubaSoldier::ScubaBullet::update(float deltatime)
+{
+	auto status = this->getStatus();
+	if (status == eStatus::BURST)
+	{
+		auto movement = (Movement*)_componentList["Movement"];
+		movement->setVelocity(VECTOR2ZERO);
+		auto gravity = (Gravity*)_componentList["Gravity"];
+		gravity->setGravity(VECTOR2ZERO);
+		if (_explosion == nullptr)
+		{
+			this->_explosion = new Explosion(1);
+			_explosion->init();
+			_explosion->setScale(SCALE_FACTOR);
+			_explosion->setPosition(this->getPosition());
+		}
+		else
+		{
+			this->_explosion->update(deltatime);
+			if (_explosion->getStatus() == eStatus::DESTROY)
+			{
+				this->setStatus(eStatus::DESTROY);
+			}
+		}
+	}
+	else
+	{
+		this->tripleAttack();
+	}
+
+	// viewport
+	auto viewport = SceneManager::getInstance()->getCurrentScene()->getViewport();
+
+	// Nếu ra khỏi màn hình thì có trạng thái là destroy.
+	if (viewport->isContains(this->getBounding()) == false)
+		this->setStatus(eStatus::DESTROY);
+
+	for (auto it = _componentList.begin(); it != _componentList.end(); it++)
+	{
+		it->second->update(deltatime);
+	}
+}
+void ScubaSoldier::ScubaBullet::tripleAttack()
+{
+	auto movement = (Movement*)_componentList["Movement"];
+	if (_tripleFlag == false && movement->getVelocity().y <= 0)
+	{
+		_tripleFlag = true;
+		BulletManager::insertBullet(new ScubaBullet(this->getPosition(), GVector2(112, movement->getVelocity().y), GVector2(0, -320.0f))); // hard code. should define
+		BulletManager::insertBullet(new ScubaBullet(this->getPosition(), GVector2(-112, movement->getVelocity().y), GVector2(0, -320.0f))); // hard code. should define
+	}
+}
+void ScubaSoldier::ScubaBullet::draw(LPD3DXSPRITE spriteHandle, Viewport* viewport)
+{
+	if (this->getStatus() == eStatus::NORMAL)
+	{
+		_sprite->render(spriteHandle, viewport);
+	}
+	else if (_explosion != nullptr && this->getStatus() == eStatus::BURST)
+	{
+		_explosion->draw(spriteHandle, viewport);
+	}
+}
+
+float ScubaSoldier::ScubaBullet::checkCollision(BaseObject* object, float dt)
+{
+	auto body = (CollisionBody*)_componentList.find("CollisionBody")->second;
+	if (object->getId() == eID::LAND)
+	{
+		body->checkCollision(object, dt, false);
+	}
+	return 0.0f;
+}
+
+void ScubaSoldier::ScubaBullet::release()
+{
+
+}
+
+ScubaSoldier::ScubaBullet::~ScubaBullet()
+{
+}

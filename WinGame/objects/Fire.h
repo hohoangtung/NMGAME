@@ -39,7 +39,7 @@ public:
 		float checkCollision(BaseObject*,float);
 		
 		IComponent* getComponent(string);
-
+		RECT getBounding();
 		~SingleFire();
 		
 	private:

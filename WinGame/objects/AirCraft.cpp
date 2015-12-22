@@ -7,6 +7,14 @@ AirCraft::AirCraft(GVector2 pos, GVector2 hVeloc, GVector2 amp, float freq, eAir
 	this->_horizontalVeloc = hVeloc;
 	this->_amplitude = amp;
 	this->_frequence = freq;
+	if (this->_amplitude.x > 0)
+	{
+		this->_verticalflag = true;
+	}
+	else
+	{
+		this->_verticalflag = true;
+	}
 }
 
 AirCraft::~AirCraft()
@@ -56,6 +64,7 @@ void AirCraft::checkifOutofScreen()
 	auto viewport = ((PlayScene*)SceneManager::getInstance()->getCurrentScene())->getViewport();
 	RECT screenBound = viewport->getBounding();
 	GVector2 position = this->getPosition();
+
 	if (position.x > screenBound.right)
 	{
 		this->setStatus(eStatus::DESTROY);
@@ -66,9 +75,19 @@ void AirCraft::updateHiding()
 {
 	auto viewport = ((PlayScene*)SceneManager::getInstance()->getCurrentScene())->getViewport();
 	RECT screenBound = viewport->getBounding();
-	if (this->getBounding().right < screenBound.left)
+	if (this->_verticalflag)
 	{
-		this->setStatus(eStatus::NORMAL);
+		if (this->getPositionY() < viewport->getPositionWorld().y - WINDOW_HEIGHT)
+		{
+			this->setStatus(eStatus::NORMAL);
+		}
+	}
+	else
+	{
+		if (this->getBounding().right < screenBound.left)
+		{
+			this->setStatus(eStatus::NORMAL);
+		}
 	}
 }
 

@@ -207,3 +207,12 @@ IComponent* Fire::SingleFire::getComponent(string componentName)
 		throw new exception("key not match");
 	return it->second;
 }
+
+RECT Fire::SingleFire::getBounding()
+{
+	RECT basebound = BaseObject::getBounding();
+	basebound.top -= 2 * this->getScale().y;
+	basebound.left += 2 * this->getScale().x;
+	basebound.left -= 2 * this->getScale().x;
+	return basebound;
+}

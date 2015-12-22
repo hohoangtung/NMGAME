@@ -72,6 +72,8 @@ private:
 	void updateHiding();
 
 	void updateExploring(float deltatime);
+
+	bool _verticalflag;
 };
 
 

@@ -269,10 +269,10 @@ void Boss::BossBullet::init()
 	this->_componentList["Movement"] = movement;
 	this->_componentList["Gravity"] = gravity;
 	this->_componentList["CollisionBody"] = collisionBody;
-	__hook(&CollisionBody::onCollisionBegin, collisionBody, &Bullet::onCollisionBegin);
+	__hook(&CollisionBody::onCollisionBegin, collisionBody, &Bullet::onCollisionBegin); //dư?
 
 	this->setPhysicsBodySide(eDirection::ALL);
-	_stopWatch = new StopWatch();
+	_stopWatch = new StopWatch(); //dư?
 }
 
 void Boss::BossBullet::update(float deltatime)

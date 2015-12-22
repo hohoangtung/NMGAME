@@ -139,7 +139,8 @@ enum eBulletType
 	S_BULLET		= (1 << 5),
 	R_BULLET		= (1 << 6),
 	M_BULLET		= (1 << 7),
-	BOSSSTAGE1_BULLET = (1<< 8),
+	BOSSSTAGE1_BULLET = (1 << 8),
+	SCUBABULLET		= (1 << 9),
 };
 
 enum eSoundId

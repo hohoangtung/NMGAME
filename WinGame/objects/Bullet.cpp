@@ -311,11 +311,21 @@ void Bullet::onCollisionBegin(CollisionEventArg* collision_arg)
 		}
 		case LAND:
 		{
+			if (this->isContainType( eBulletType::SCUBABULLET))
+			{
+				auto movement = (Movement*)_componentList["Movement"];
+				if (movement->getVelocity().y < -300.0f)
+				{
+					this->setStatus(eStatus::BURST);
+				}
+			}
 			if (this->isContainType(eBulletType::BOSSSTAGE1_BULLET))
 			{
 				this->setStatus(eStatus::BURST);
 			}
 		}
+		break;
+
 		}
 	}
 }

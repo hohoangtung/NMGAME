@@ -109,10 +109,10 @@
             <Objects>aircraft02 land32 land35 </Objects>
           </QNode>
           <QNode Id="131086" Level="5" X="408" Y="2584" Width="136" Height="136">
-            <Objects>aircraft02 land37 </Objects>
+            <Objects>aircraft02 land37 land64 </Objects>
           </QNode>
           <QNode Id="131087" Level="5" X="272" Y="2584" Width="136" Height="136">
-            <Objects>fire01 fire02 aircraft02 land37 </Objects>
+            <Objects>fire01 aircraft02 land37 land64 </Objects>
           </QNode>
         </QNode>
         <QNode Id="196620" Level="4" X="0" Y="2448" Width="272" Height="272">
@@ -123,10 +123,10 @@
             <Objects>aircraft01 aircraft02 land32 land33 </Objects>
           </QNode>
           <QNode Id="196622" Level="5" X="136" Y="2584" Width="136" Height="136">
-            <Objects>fire01 fire02 aircraft01 aircraft02 land37 </Objects>
+            <Objects>fire01 aircraft01 aircraft02 land37 </Objects>
           </QNode>
           <QNode Id="196623" Level="5" X="0" Y="2584" Width="136" Height="136">
-            <Objects>fire01 fire02 aircraft01 land37 </Objects>
+            <Objects>fire01 aircraft01 land37 </Objects>
           </QNode>
         </QNode>
       </QNode>

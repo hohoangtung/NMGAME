@@ -32,6 +32,8 @@ private:
 	static BaseObject* getGreatWall(xml_node node);
 	static BaseObject* getRockFly(xml_node node);
 	static BaseObject* getRockFall(xml_node node);
+	static BaseObject* getScubaSoldier(xml_node node);
+	static BaseObject* getFire(xml_node node);
 	
 	static map<string, string> getObjectProperties(xml_node node);
 

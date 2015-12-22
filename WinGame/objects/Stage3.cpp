@@ -29,7 +29,7 @@ bool Stage3::init()
 {
 	auto bill = new Bill(30);
 	bill->init();
-	bill->setPosition(200, 2000);
+	bill->setPosition(200, 900);
 	
 	this->_bill = bill;
 	_listControlObject.push_back(bill);
@@ -259,7 +259,7 @@ void Stage3::updateViewport(BaseObject* objTracker)
 	GVector2 worldsize = this->background->getWorldSize();
 	// Bám theo object.
 	//GVector2 new_position = GVector2(max(objTracker->getPositionX() - 260, 0), WINDOW_HEIGHT);		// 200 khoảng cách tối đa giữa object và map -> hardcode
-	GVector2 new_position = GVector2(0, max(objTracker->getPositionY() + 260, WINDOW_HEIGHT));		// 200 khoảng cách tối đa giữa object và map -> hardcode
+	GVector2 new_position = GVector2(0, max(objTracker->getPositionY() + 192, WINDOW_HEIGHT));		// 200 khoảng cách tối đa giữa object và map -> hardcode
 
 //#if(!_DEBUG)
 	 //Không cho đi ngược
