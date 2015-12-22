@@ -107,7 +107,12 @@ public:
 
 	void setLoop(bool isLoop);
 	bool isLoop();
-	void restart();
+
+	/*
+	Chạy lại animate
+		@from: index frame muốn bắt đầu
+	*/
+	void restart(int from = 0);
 
 	/*
 	Tạo hiệu ứng chớp cho sprite, sau khi set enable = true, phải đặt giá trị thay đổi ở hàm setValueFlashes
@@ -120,7 +125,19 @@ public:
 	*/
 	void setValueFlashes(float value);
 
+	/*
+	Animate từ frame này đến frame khác cụ thể
+		@from: frame bắt đầu
+		@to: frame kết thúc
+		@loop: có lặp hay ko
+		Giá trị from/to là thứ tự của frame add vô, tính từ 0 (from nên to).
+	*/
+	void animateFromTo(int from, int to, bool loop = true);
+
 private:
+	bool					_isAll;
+	int						_startFrame;
+	int						_endFrame;
 	int						_index;									// số thứ tự frame
 	int						_totalFrames;
 

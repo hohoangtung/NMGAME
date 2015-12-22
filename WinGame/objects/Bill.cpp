@@ -66,22 +66,28 @@ void Bill::init()
 	_animations[eStatus::SHOOTING | eStatus::RUNNING]->addFrameRect(eID::BILL, "run_shot_01", "run_shot_02", "run_shot_03", "run_shot_01", "run_shot_02", "run_shot_03", NULL);
 
 	_animations[eStatus::SWIMING] = new Animation(_sprite, 0.2f, false);
-	_animations[eStatus::SWIMING]->addFrameRect(eID::BILL, "swim_begin", "diving", "swimming", NULL);
+	_animations[eStatus::SWIMING]->addFrameRect(eID::BILL, "swim_begin", "diving", "swimming", "swimming_01", NULL);
+	_animations[eStatus::SWIMING]->animateFromTo(0, 2, false);
 
 	_animations[eStatus::DIVING] = new Animation(_sprite, 0.2f, false);
-	_animations[eStatus::DIVING]->addFrameRect(eID::BILL, "swim_begin", "diving", NULL);
+	_animations[eStatus::DIVING]->addFrameRect(eID::BILL, "swim_begin", "diving", "diving_01", NULL);
+	_animations[eStatus::DIVING]->animateFromTo(0, 1, false);
 
 	_animations[eStatus::SWIMING | RUNNING | SHOOTING] = new Animation(_sprite, 0.2f, false);
-	_animations[eStatus::SWIMING | RUNNING | SHOOTING]->addFrameRect(eID::BILL,"swim_begin", "swimming_shot", NULL);
+	_animations[eStatus::SWIMING | RUNNING | SHOOTING]->addFrameRect(eID::BILL,"swim_begin", "swimming_shot", "swimming_shot_01", NULL);
+	_animations[eStatus::SWIMING | RUNNING | SHOOTING]->animateFromTo(0, 1, false);
 
 	_animations[eStatus::SWIMING | SHOOTING] = new Animation(_sprite, 0.2f, false);
-	_animations[eStatus::SWIMING | SHOOTING]->addFrameRect(eID::BILL, "swim_begin", "swimming_shot", NULL);
+	_animations[eStatus::SWIMING | SHOOTING]->addFrameRect(eID::BILL, "swim_begin", "swimming_shot", "swimming_shot_01", NULL);
+	_animations[eStatus::SWIMING | SHOOTING]->animateFromTo(0, 1, false);
 
 	_animations[eStatus::SWIMING | RUNNING | LOOKING_UP | SHOOTING] = new Animation(_sprite, 0.2f, false);
-	_animations[eStatus::SWIMING | RUNNING | LOOKING_UP | SHOOTING]->addFrameRect(eID::BILL, "swim_begin", "swimming_shotup", NULL);
+	_animations[eStatus::SWIMING | RUNNING | LOOKING_UP | SHOOTING]->addFrameRect(eID::BILL, "swim_begin", "swimming_shotup", "swimming_shotup_01", NULL);
+	_animations[eStatus::SWIMING | RUNNING | LOOKING_UP | SHOOTING]->animateFromTo(0, 1, false);
 
 	_animations[eStatus::SWIMING | LOOKING_UP | SHOOTING] = new Animation(_sprite, 0.2f, false);
-	_animations[eStatus::SWIMING | LOOKING_UP | SHOOTING]->addFrameRect(eID::BILL,"swim_begin", "swimming_shotup_stand", NULL);
+	_animations[eStatus::SWIMING | LOOKING_UP | SHOOTING]->addFrameRect(eID::BILL,"swim_begin", "swimming_shotup_stand", "swimming_shotup_stand_01", NULL);
+	_animations[eStatus::SWIMING | LOOKING_UP | SHOOTING]->animateFromTo(0, 1, false);
 
 	_animations[eStatus::DYING] = new Animation(_sprite, 0.2f, false);
 	_animations[eStatus::DYING]->addFrameRect(eID::BILL, "dead_01", "dead_02", "dead_03", "dead_04", NULL);
@@ -98,7 +104,6 @@ void Bill::init()
 	// create stopWatch
 	_stopWatch = new StopWatch();
 	_shootAnimateStopWatch = new StopWatch();
-
 	_shootStopWatch = new StopWatch();
 
 	_currentGun = eBulletType::NORMAL_BULLET;
@@ -316,9 +321,9 @@ void Bill::onKeyPressed(KeyEventArg* key_event)
 			if (_shootStopWatch->isTimeLoop(85))
 			{
 				this->addStatus(eStatus::SHOOTING);
-			shoot();
+				shoot();
 				_shootAnimateStopWatch->restart();
-		}
+			}
 		}
 
 		break;
@@ -472,14 +477,6 @@ float Bill::checkCollision(BaseObject * object, float dt)
 						this->removeStatus(eStatus::SWIMING);
 						this->removeStatus(eStatus::DIVING);
 						this->setPositionY(object->getBounding().top);
-
-						// restart lại animation swim
-						_animations[eStatus::SWIMING]->restart();
-						_animations[eStatus::DIVING]->restart();
-						_animations[eStatus::SWIMING | SHOOTING]->restart();
-						_animations[eStatus::SWIMING | RUNNING | SHOOTING]->restart();
-						_animations[eStatus::SWIMING | RUNNING | SHOOTING | LOOKING_UP]->restart();
-						_animations[eStatus::SWIMING | LOOKING_UP | SHOOTING]->restart();
 					}
 				}
 			}
@@ -855,18 +852,23 @@ void Bill::swimming()
 {
 	this->addStatus(eStatus::SWIMING);
 
-	_animations[eStatus::SWIMING]->setIndex(2);
-	_animations[eStatus::SWIMING]->canAnimate(false);
-	_animations[eStatus::DIVING]->setIndex(1);
-	_animations[eStatus::DIVING]->canAnimate(false);
-	_animations[eStatus::SWIMING | SHOOTING]->setIndex(1);
-	_animations[eStatus::SWIMING | SHOOTING]->canAnimate(false);
-	_animations[eStatus::SWIMING | RUNNING | SHOOTING]->setIndex(1);
-	_animations[eStatus::SWIMING | RUNNING | SHOOTING]->canAnimate(false);
-	_animations[eStatus::SWIMING | RUNNING | SHOOTING | LOOKING_UP]->setIndex(1);
-	_animations[eStatus::SWIMING | RUNNING | SHOOTING | LOOKING_UP]->canAnimate(false);
-	_animations[eStatus::SWIMING | LOOKING_UP | SHOOTING]->setIndex(1);
-	_animations[eStatus::SWIMING | LOOKING_UP | SHOOTING]->canAnimate(false);
+	_animations[eStatus::SWIMING]->animateFromTo(2, 3, true);
+	_animations[eStatus::SWIMING]->setTimeAnimate(0.3f);
+
+	_animations[eStatus::DIVING]->animateFromTo(1, 2, true);
+	_animations[eStatus::DIVING]->setTimeAnimate(0.3f);
+
+	_animations[eStatus::SWIMING | SHOOTING]->animateFromTo(1, 2, true);
+	_animations[eStatus::SWIMING | SHOOTING]->setTimeAnimate(0.3f);
+
+	_animations[eStatus::SWIMING | RUNNING | SHOOTING]->animateFromTo(1, 2, true);
+	_animations[eStatus::SWIMING | RUNNING | SHOOTING]->setTimeAnimate(0.3f);
+
+	_animations[eStatus::SWIMING | RUNNING | SHOOTING | LOOKING_UP]->animateFromTo(1, 2, true);
+	_animations[eStatus::SWIMING | RUNNING | SHOOTING | LOOKING_UP]->setTimeAnimate(0.3f);
+
+	_animations[eStatus::SWIMING | LOOKING_UP | SHOOTING]->animateFromTo(1, 2, true);
+	_animations[eStatus::SWIMING | LOOKING_UP | SHOOTING]->setTimeAnimate(0.3f);
 
 	// cập nhật animate
 	if (this->isInStatus(eStatus(MOVING_LEFT | LOOKING_UP | SHOOTING)) || this->isInStatus(eStatus(MOVING_RIGHT | LOOKING_UP | SHOOTING)))
@@ -900,8 +902,9 @@ void Bill::swimming()
 
 		_animations[eStatus::DIVING]->restart();
 
-		_animations[eStatus::SWIMING]->setIndex(2);
-		_animations[eStatus::SWIMING]->canAnimate(false);
+		// có thể nó restart cái swimming bên trên nên set lại cho chắc
+		_animations[eStatus::SWIMING]->animateFromTo(2, 3, true);
+		_animations[eStatus::SWIMING]->setTimeAnimate(0.3f);
 	}
 }
 
@@ -949,39 +952,30 @@ void Bill::setStatus(eStatus status)
 
 RECT Bill::getBounding()
 {
-	//int frameW = 24;
-	//int frameH;
-
-	//if (this->isInStatus(eStatus::JUMPING) || this->isInStatus(eStatus::SWIMING))
-	//	frameH = 16;
-	//else
-	//	frameH = 32;
-
-	//float scaleW = frameW * abs(this->getScale().x);
-	//float scaleH = frameH * abs(this->getScale().y);
-
-	//RECT bound;
-
-	//bound.left = this->getPositionX() - scaleW * this->getOrigin().x;
-	//bound.bottom = this->getPositionY() - scaleH * this->getOrigin().y;
-	//bound.right = bound.left + scaleW;
-	//bound.top = bound.bottom + scaleH;
-
 	int offset = 10;
 
 	RECT bound = _sprite->getBounding();
 
 	if (!this->isInStatus(eStatus::JUMPING) || !this->isInStatus(eStatus::SWIMING))
 	{
-		bound.top -= offset / 2;
+		if ((_currentAnimateIndex & LOOKING_UP) == LOOKING_UP)
+		{
+			bound.top -= offset * 1.5f;
+		}
+		else
+		{
+			bound.top -= offset * 0.5f;
+		}
 
 		if (this->getScale().x > 0)
 		{
 			bound.right -= offset;
+			bound.left += offset * 0.2f;
 		}
 		else
 		{
 			bound.left += offset;
+			bound.right -= offset * 0.2f;
 		}
 	}
 

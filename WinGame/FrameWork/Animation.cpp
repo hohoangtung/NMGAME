@@ -11,6 +11,9 @@ Animation::Animation(Sprite * spriteSheet, float timeAnimate, bool loop)
 	_index = 0;
 	_timer = 0;
 	_valueFlashes = 0.5f;
+
+	_startFrame = 0;
+	_endFrame = _totalFrames - 1;
 	 
 	this->setIndex(0);
 	this->setLoop(loop);
@@ -25,6 +28,9 @@ Animation::Animation(Sprite * spriteSheet, int totalFrames, int cols, float time
 	_index = 0;
 	_timer = 0;
 	_valueFlashes = 0.5f;
+
+	_startFrame = 0;
+	_endFrame = _totalFrames - 1;
 
 	int frameW = spriteSheet->getTextureWidth() / cols;
 	int frameH = spriteSheet->getTextureHeight() * cols / totalFrames;
@@ -61,12 +67,26 @@ void Animation::setIndex(int index)
 
 	_index = index;
 
-	if (_index >= _totalFrames)
-		_index = _index % _totalFrames;
-	
+	//if (_isAll == false)
+	//{
+	//	if (_index > _endFrame)
+	//		_index = _startFrame;
+	//}
+
+	//if (_index >= _totalFrames)
+	//	_index = _index % _totalFrames;
+
+	if (_index > _endFrame)
+		_index = _startFrame;
+
 	_currentRect = _frameRectList[_index];
 
-	if (!_isLoop && _index == _totalFrames - 1)
+	//if (!_isLoop && _index == _totalFrames - 1)
+	//{
+	//	this->stop();
+	//}
+
+	if (!_isLoop && _index == _endFrame)
 	{
 		this->stop();
 	}
@@ -145,6 +165,8 @@ void Animation::addFrameRect(RECT rect)
 
 	_frameRectList.push_back(rect);
 	_totalFrames = _frameRectList.size();
+
+	_endFrame = _totalFrames - 1;
 }
 
 void Animation::addFrameRect(float left, float top, int width, int height)
@@ -198,9 +220,9 @@ bool Animation::isLoop()
 	return _isLoop;
 }
 
-void Animation::restart()
+void Animation::restart(int from)
 {
-	setIndex(0);
+	setIndex(from);
 
 	if (_canAnimate == false)
 		_canAnimate = true;
@@ -219,6 +241,27 @@ void Animation::setValueFlashes(float value)
 {
 	if (_valueFlashes != value)
 		_valueFlashes = value;
+}
+
+void Animation::animateFromTo(int from, int to, bool loop)
+{
+	if (from <= to)
+	{
+		_startFrame = from;
+		_endFrame = to;
+	}
+	else
+	{
+		_startFrame = to;
+		_endFrame = from;
+	}
+
+	this->setIndex(from);
+	_isLoop = loop;
+	_timer = 0.0f;
+
+	if (_canAnimate == false)
+		_canAnimate = true;
 }
 
 void Animation::draw(LPD3DXSPRITE spriteHandle, Viewport * viewport)
