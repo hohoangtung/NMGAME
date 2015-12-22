@@ -27,10 +27,9 @@ void Stage3::setViewport(Viewport * viewport)
 
 bool Stage3::init()
 {
-
 	auto bill = new Bill(30);
 	bill->init();
-	bill->setPosition(200, 250);
+	bill->setPosition(200, 2000);
 	
 	this->_bill = bill;
 	_listControlObject.push_back(bill);
@@ -39,6 +38,7 @@ bool Stage3::init()
 	auto bulletmanager = new BulletManager();
 	bulletmanager->init();
 	_listobject.push_back(bulletmanager);
+
 
 	_text = new Text(L"Arial", "", 10, 25);
 

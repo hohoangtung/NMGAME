@@ -8,8 +8,9 @@
 #include "../FrameWork/Animation.h"
 
 
-#define ROCKFLY_HORIZONTAL_VELOC		GVector2(30.0f, 0.0f)		// vận tốc ngang
-#define ROCKFLY_HORIZONTAL_VELOC_PRE	GVector2(-30.0f, 0.0f)		// vận tốc ngang
+#define ROCKFLY_HORIZONTAL_VELOC		GVector2(96.0f, 0.0f)		// vận tốc ngang
+#define ROCKFLY_HORIZONTAL_VELOC_PRE	GVector2(-96.0f, 0.0f)		// vận tốc ngang
+
 class RockFly : public BaseObject
 {
 public:
@@ -26,7 +27,7 @@ public:
 	GVector2 getVelocity() override;
 
 	IComponent* getComponent(string componentName);
-
+	RECT getBounding() override;
 
 private:
 	map<string, IComponent*> _listComponent;

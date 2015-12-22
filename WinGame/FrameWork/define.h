@@ -62,6 +62,7 @@ enum eID
 	FONTEX			= 30,
 	FONTFULL		= 31,
 	MAPSTAGE3		= 32,
+	ROCKCREATOR		= 33
 };
  
 enum eStatus

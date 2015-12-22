@@ -1,4 +1,4 @@
-#include "RockFly.h"
+﻿#include "RockFly.h"
 
 
 
@@ -16,6 +16,8 @@ RockFly::~RockFly()
 // init
 void RockFly::init()
 {
+
+
 	this->_sprite = SpriteManager::getInstance()->getSprite(eID::ROCKFLY);
 	this->_sprite->setScale(SCALE_FACTOR);
 	this->_sprite->setPosition(_rightPosition);
@@ -27,6 +29,8 @@ void RockFly::init()
 	this->_listComponent["CollisionBody"] = collisionBody;
 	this->setStatus(NORMAL);
 	this->setPhysicsBodySide(eDirection::TOP);
+
+
 }
 
 // update
@@ -40,11 +44,15 @@ void RockFly::update(float deltatime)
 	
 	if (this->getStatus() == eStatus::WAITING)
 	{
-		auto bill = ((PlayScene*)SceneManager::getInstance()->getCurrentScene())->getBill();
+		if (true) // 7ung - tesst
+		{
+			auto bill = ((PlayScene*)SceneManager::getInstance()->getCurrentScene())->getBill();
 
-		bill->setPositionX(this->getPositionX());
-		if (bill->isInStatus(MOVING_LEFT) || bill->isInStatus(MOVING_RIGHT))
-			this->setStatus(RUNNING);
+			bill->setPositionX(this->getPositionX());
+			if (bill->isInStatus(MOVING_LEFT) || bill->isInStatus(MOVING_RIGHT))
+				this->setStatus(RUNNING);
+		}
+
 	
 	}
 
@@ -74,8 +82,8 @@ void RockFly::draw(LPD3DXSPRITE spriteHandle, Viewport* viewport)
 {
 	if (this->getStatus() == eStatus::DESTROY)
 		return;
-	if (this->getStatus() == eStatus::NORMAL || this->getStatus() == eStatus::WAITING)
-		_sprite->render(spriteHandle, viewport);
+	//if (this->getStatus() == eStatus::NORMAL || this->getStatus() == eStatus::WAITING)
+	_sprite->render(spriteHandle, viewport);
 }
 
 // release
@@ -114,16 +122,28 @@ void RockFly::checkPosition()
 	auto bill = ((PlayScene*)SceneManager::getInstance()->getCurrentScene())->getBill();
 	RECT screenBound = viewport->getBounding();
 	GVector2 position = this->getPosition();
-	if (position.x > screenBound.right)
+	GVector2 viewportposition = viewport->getPositionWorld();
+	if (position.x > screenBound.right || BaseObject::getBounding().top < viewportposition.y - WINDOW_HEIGHT)
 	{
 		this->setStatus(eStatus::DESTROY);
 	}
 	if (isRectangleIntersected(bill->getBounding(), this->getBounding()))
 	{
+		// Nếu giao nhau
+		//return;  // do nothing
 		if (position.y < bill->getPositionY())
+		{
+			// Nếu y của cục đá nhỏ hơn y của thằng bill thì set wait ???
 			this->setStatus(eStatus::WAITING);
-
-		if (bill->isInStatus(MOVING_LEFT) || bill->isInStatus(MOVING_RIGHT))
+		}
+		if (bill->isInStatus(MOVING_LEFT) || bill->isInStatus(MOVING_RIGHT) || bill->isInStatus(eStatus::JUMPING) || bill->isInStatus(eStatus::FALLING))
+		{
+			this->setStatus(NORMAL);
+		}
+	}
+	else
+	{
+		if (this->getStatus() != eStatus::DESTROY)
 		{
 			this->setStatus(NORMAL);
 		}
@@ -132,3 +152,10 @@ void RockFly::checkPosition()
 	
 }
 
+RECT RockFly::getBounding()
+{
+	RECT basebound = BaseObject::getBounding();
+	basebound.top -= 5 * this->getScale().y;
+	basebound.bottom += 7 * this->getScale().y;
+	return  basebound;
+}

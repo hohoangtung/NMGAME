@@ -75,6 +75,11 @@ void Falcon::update(float deltatime)
 	{
 		Viewport* viewport = ((PlayScene*)SceneManager::getInstance()->getCurrentScene())->getViewport();
 		RECT screenBound = viewport->getBounding();
+		GVector2 viewportposition = viewport->getPositionWorld();
+		if (BaseObject::getBounding().right > screenBound.right || BaseObject::getBounding().top < viewportposition.y - WINDOW_HEIGHT)
+		{
+			break;
+		}
 		if (this->getBounding().right > screenBound.right)
 		{
 			break;

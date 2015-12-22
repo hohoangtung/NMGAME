@@ -726,7 +726,7 @@ void Bill::revive()
 {
 	auto viewportPos = SceneManager::getInstance()->getCurrentScene()->getViewport()->getPositionWorld();
 	//this->setPosition(viewportPos.x, WINDOW_HEIGHT);
-	this->setPosition(viewportPos.x, viewportPos.y - 200);
+	this->setPosition(viewportPos.x + 192, viewportPos.y - 240);
 
 	// reset value
 	this->setScaleX(SCALE_FACTOR);

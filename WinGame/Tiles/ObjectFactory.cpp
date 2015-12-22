@@ -1,6 +1,7 @@
 ﻿
 #include "ObjectFactory.h"
 #include "..\objects\Land.h"
+#include "..\objects\RockCreator.h"
 
 ObjectFactory::ObjectFactory()
 {
@@ -94,33 +95,28 @@ BaseObject* ObjectFactory::getObjectById(xml_node node, eID id)
 		{
 		case REDCANNON:
 			return getRedCannon(node);
-			break;
 		case SOLDIER:
 			return getSoldier(node);
-			break;
 		case FALCON:
 			return getFalcon(node);
-			break;
 		case AIRCRAFT:
 			return getAirCraft(node);
-			break;
 		case RIFLEMAN:
 			return getRifleMan(node);
-			break;
 		case BRIDGE:
 			return getBridge(node);
-			break;
 		case LAND:
 			return getLand(node);
-			break;
 		case WALL_TURRET:
 			return getWallTurret(node);
-			break;
 		case CREATOR:
 			return getCreator(node);
-			break;
 		case BOSS_STAGE1:
 			return getGreatWall(node);
+		case ROCKFLY:
+			return getRockFly(node);
+		case ROCKFALL:
+			return getRockFall(node);
 		default:
 			return nullptr;
 			break;
@@ -526,6 +522,39 @@ BaseObject* ObjectFactory::getGreatWall(xml_node node)
 	auto greatwall = new Boss(GVector2(x, y), height);
 	greatwall->init();
 	return greatwall;
+}
+
+BaseObject* ObjectFactory::getRockFly(xml_node node)
+{
+	xml_node activebound = node.child("ActiveBound");
+
+	// general
+	int x = activebound.attribute("X").as_int();
+	int y = activebound.attribute("Y").as_int();
+	int width = activebound.attribute("Width").as_int();
+
+	x += 32;
+	width -= 64;
+	y -= 32;
+
+	auto rockfly = new RockFly(GVector2(x, y), GVector2(x + width, y));
+	rockfly->init();
+	return rockfly;
+}
+BaseObject* ObjectFactory::getRockFall(xml_node node)
+{
+	auto properties = getObjectProperties(node);
+	if (properties.size() == 0)
+		return nullptr;
+
+	int x, y, type;
+
+	x = stoi(properties["X"]);
+	y = stoi(properties["Y"]);
+
+	auto rockfall = new RockCreator(GVector2(x + 32, y - 32));
+	rockfall->init();
+	return rockfall;
 }
 
 

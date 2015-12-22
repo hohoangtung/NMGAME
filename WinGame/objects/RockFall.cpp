@@ -40,7 +40,6 @@ void RockFall::init()
 	this->setStatus(eStatus::HOLDING);
 
 	_stopWatch = new StopWatch();
-
 }
 
 // update
@@ -49,15 +48,15 @@ void RockFall::update(float deltatime)
 
 	if (this->getStatus() == eStatus::DESTROY)
 		return;
-	else
-	{
-		this->checkPosition();
+	// if - return thì không cần else
 
-		for (auto component : _listComponent)
-		{
-			component.second->update(deltatime);
-		}
+	this->checkPosition();
+
+	for (auto component : _listComponent)
+	{
+		component.second->update(deltatime);
 	}
+
 	if (this->getStatus() == eStatus::BURST)
 	{
 		auto movement = (Movement*)_listComponent["Movement"];
@@ -89,6 +88,10 @@ void RockFall::update(float deltatime)
 		{
 			this->setPosition(_beginPosition);
 			this->setStatus(eStatus::FALLING);
+			auto move = (Movement*) this->_listComponent["Movement"];
+			move->setVelocity(VECTOR2ZERO);
+			auto gravity = (Gravity*)this->_listComponent["Gravity"];
+			gravity->setGravity(ROCKFALL_GRAVITY);
 		}
 		
 	}
@@ -97,8 +100,7 @@ void RockFall::update(float deltatime)
 	if (this->getStatus() == eStatus::FALLING)
 	{
 		_animation->start();
-		auto gravity = (Gravity*)this->_listComponent["Gravity"];
-		gravity->setGravity(ROCKFALL_GRAVITY);
+
 
 	}
 
@@ -199,6 +201,9 @@ float RockFall::checkCollision(BaseObject * object, float dt)
 
 	if (objectId == eID::LAND)
 	{
+		if (((Land*)object)->getType() == eLandType::WATER)
+			return 0.0f;
+
 		auto result = find(_passedLand.begin(), _passedLand.end(), object);
 		if ((result == _passedLand.end()) || (result._Ptr = nullptr))
 		{
@@ -227,6 +232,9 @@ float RockFall::checkCollision(BaseObject * object, float dt)
 
 	if (objectId == eID::BILL)
 	{
+		if (this->getStatus() == eStatus::HOLDING)
+			return 0.0f;
+
 		if (collisionBody->checkCollision(object, direction, dt))
 		{
 			if (((Bill*)object)->isInStatus(eStatus::DYING) == false)
@@ -246,17 +254,21 @@ float RockFall::checkCollision(BaseObject * object, float dt)
 // checkPosition
 void RockFall::checkPosition()
 {
-	if (this->getStatus() != eStatus::NORMAL)
-		return;
+	//if (this->getStatus() != eStatus::NORMAL)
+		//return;
 	auto viewport = ((PlayScene*)SceneManager::getInstance()->getCurrentScene())->getViewport();
 	auto bill = ((PlayScene*)SceneManager::getInstance()->getCurrentScene())->getBill();
 	RECT screenBound = viewport->getBounding();
 	GVector2 position = this->getPosition();
-	if (position.x > screenBound.right)			// thay đổi khi sang map 2
+	//if (position.x > screenBound.right)			// thay đổi khi sang map 2
+	//{
+	//	this->setStatus(eStatus::DESTROY);
+	//}
+	GVector2 viewportposition = viewport->getPositionWorld();
+	if (position.x > screenBound.right || BaseObject::getBounding().top < viewportposition.y - WINDOW_HEIGHT)
 	{
 		this->setStatus(eStatus::DESTROY);
 	}
-
 }
 
 // dropHitpoint
