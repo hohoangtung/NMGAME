@@ -34,6 +34,7 @@ void GameOverScene::updateInput(float deltatime)
 			case 1:
 				scene = new PlayScene();
 				SceneManager::getInstance()->replaceScene(scene);
+				SoundManager::getInstance()->Stop(eSoundId::GAME_OVER);
 				return;
 			default:
 				break;
@@ -44,6 +45,7 @@ void GameOverScene::updateInput(float deltatime)
 			// Vô scene menu
 			auto menu = new IntroScene();
 			SceneManager::getInstance()->replaceScene(menu);
+			SoundManager::getInstance()->Stop(eSoundId::GAME_OVER);
 			return;
 		}
 	}
@@ -84,7 +86,7 @@ bool GameOverScene::init()
 	_texthighscore->init();
 	_texthighscore->setScale(SCALE_FACTOR);
 	_texthighscore->getSprite()->setOpacity(0.7f);
-
+	SoundManager::getInstance()->Play(eSoundId::GAME_OVER);
 	return true;
 }
 
