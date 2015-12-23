@@ -32,9 +32,10 @@
 #include "RockFall.h"
 #include "../FrameWork/Scenario.h"
 
+//#define BOSS_STAGE3_VIEWPORT_ANCHOR 
+
 using namespace std;
 US_FRAMEWORK
-
 ACTOR_SCENARIO	
 class Stage3 : public Scene
 {
