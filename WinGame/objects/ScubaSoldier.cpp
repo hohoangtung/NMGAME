@@ -160,14 +160,17 @@ void ScubaSoldier::ScubaBullet::init()
 	this->_componentList["CollisionBody"] = collisionBody;
 	
 	__hook(&CollisionBody::onCollisionBegin, collisionBody, &Bullet::onCollisionBegin); //dư?
-
+	_explosionburst = nullptr;
+	_explosion = nullptr;
 	if (this->_force.x == 0)
 	{
 		_tripleFlag = false;
+		_canFireFlag = true;
 	}
 	else
 	{
 		_tripleFlag = true;
+		_canFireFlag = false;
 	}
 }
 
@@ -199,6 +202,7 @@ void ScubaSoldier::ScubaBullet::update(float deltatime)
 	else
 	{
 		this->tripleAttack();
+		this->fireBurst(deltatime);
 	}
 
 	// viewport
@@ -223,6 +227,36 @@ void ScubaSoldier::ScubaBullet::tripleAttack()
 		BulletManager::insertBullet(new ScubaBullet(this->getPosition(), GVector2(-112, movement->getVelocity().y), GVector2(0, -320.0f))); // hard code. should define
 	}
 }
+void ScubaSoldier::ScubaBullet::fireBurst(float deltatime)
+{
+	auto movement = (Movement*)_componentList["Movement"];
+	if (_canFireFlag == true && movement->getVelocity().y <= 170)
+	{
+		_canFireFlag = false;
+		_explosionburst = new Explosion(2);
+		_explosionburst->init();
+		_explosionburst->setScale(SCALE_FACTOR);
+		_explosionburst->setPosition(this->getPosition());
+	}
+	else
+	{
+		if (_explosionburst != nullptr )
+		{
+			if (_explosionburst->getStatus() == eStatus::DESTROY)
+			{
+				_explosionburst->release();
+				delete _explosion;
+				_explosion = nullptr;
+			}
+			if (_explosionburst->getStatus() == eStatus::NORMAL)
+			{
+				_explosionburst->update(deltatime);
+			}
+			SoundManager::getInstance()->Play(eSoundId::MBULLET_FIRE);
+		}
+	}
+}
+
 void ScubaSoldier::ScubaBullet::draw(LPD3DXSPRITE spriteHandle, Viewport* viewport)
 {
 	if (this->getStatus() == eStatus::NORMAL)
@@ -232,6 +266,10 @@ void ScubaSoldier::ScubaBullet::draw(LPD3DXSPRITE spriteHandle, Viewport* viewpo
 	else if (_explosion != nullptr && this->getStatus() == eStatus::BURST)
 	{
 		_explosion->draw(spriteHandle, viewport);
+	}
+	if (_explosionburst != nullptr)
+	{
+		_explosionburst->draw(spriteHandle, viewport);
 	}
 }
 

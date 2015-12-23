@@ -55,8 +55,11 @@ public:
 		GVector2 _force;
 		GVector2 _gravity;
 		Explosion* _explosion;
+		Explosion* _explosionburst;
 		bool _tripleFlag;
+		bool _canFireFlag;
 		void tripleAttack();
+		void fireBurst(float dt);
 	};
 
 private:
