@@ -1,4 +1,4 @@
-#ifndef __OBJECTCREATOR_H__
+﻿#ifndef __OBJECTCREATOR_H__
 #define __OBJECTCREATOR_H__
 
 #include "../FrameWork/define.h"
@@ -13,12 +13,12 @@ class ObjectCreator : public EmptyObject
 public:
 
 	/*
-	T?o s? l??ng object ? v? tr� trong kho?ng th?i gian
-		@position: v? tr�
-		@type: lo?i object
-		@direction: -1 l� tr�i, 1 l� ph?i
-		@timeCreate: kho?ng th?i gian gi?a m?i l?n t?o
-		@number: s? l??ng object (-1 l� v� h?n)
+	Tạo số lượng object ở vị trí trong khỏang thời gian
+		@position: vị trí
+		@type: lọai object
+		@direction: -1 là trái, 1 là phải
+		@timeCreate: khoảnng thời gian giữa mỗi lần tạo
+		@number: số lượng object (-1 là vô hạn)
 	*/
 	ObjectCreator(GVector2 position, int width, int height, eID type, int direction = -1, float timeCreate = 1000, int number = -1);
 
@@ -31,6 +31,9 @@ public:
 
 	virtual float checkCollision(BaseObject* object, float dt);
 	RECT getBounding() override;
+
+	vector<BaseObject*> getObjects();
+
 private:
 
 	BaseObject* getObject(eID id);

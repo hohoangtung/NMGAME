@@ -24,41 +24,44 @@ void ObjectCreator::init()
 
 void ObjectCreator::update(float deltatime)
 {
-	// để cho nó ko tạo giữa màn hình
-	auto right = SceneManager::getInstance()->getCurrentScene()->getViewport()->getBounding().right;
-	auto left = SceneManager::getInstance()->getCurrentScene()->getViewport()->getBounding().left;
-	if (this->getPositionX() <= right || this->getPositionX() >= left)
+	auto vpBounding = SceneManager::getInstance()->getCurrentScene()->getViewport()->getBounding();
+
+	// kt coi đi tới chưa, chưa tới mới tạo
+	if (this->getPositionX() > vpBounding.right && this->getPositionY() < vpBounding.top)
 	{
-		if(_direction == -1)
-			this->setPositionX(right);
-		else
-			this->setPositionX(left);
+		if (_stopWatch->isStopWatch(_timeCreate))
+		{
+			if (_number != -1 && _counter < _number)
+			{
+				_counter++;
+				_listObjects.push_back(getObject(_createType));
+
+				if (_counter < _number)
+					_stopWatch->restart();
+			}
+			else if (_number == -1)
+			{
+				_listObjects.push_back(getObject(_createType));
+				_stopWatch->restart();
+			}
+		}
 	}
-
-	if (_stopWatch->isStopWatch(_timeCreate))
+	else if (this->getPositionX() <= vpBounding.left || this->getPositionY() <= vpBounding.bottom)
 	{
-		if (_number != -1 && _counter < _number)
-		{
-			_counter++;
-			_listObjects.push_back(getObject(_createType));
-		}
-		else if (_number == -1)
-		{
-			_listObjects.push_back(getObject(_createType));
-		}
-
-		_stopWatch->restart();
+		// qua luôn rồi thì hủy
+		this->setStatus(eStatus::DESTROY);
+		return;
 	}
 
 	for (auto object : _listObjects)
 	{
 		object->update(deltatime);
 
-		if (_direction == -1 && object->getPositionX() < left)
+		if (_direction == -1 && object->getPositionX() < vpBounding.left)
 		{
 			object->setStatus(eStatus::DESTROY);
 		}
-		else if (_direction == 1 && object->getPositionX() > right)
+		else if (_direction == 1 && object->getPositionX() > vpBounding.right)
 		{
 			object->setStatus(eStatus::DESTROY);
 		}
@@ -135,4 +138,9 @@ void ObjectCreator::deleteObject()
 RECT ObjectCreator::getBounding()
 {
 	return RECT{0, 0, 0, 0};
+}
+
+vector<BaseObject*> ObjectCreator::getObjects()
+{
+	return _listObjects;
 }
