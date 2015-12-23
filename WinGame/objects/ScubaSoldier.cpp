@@ -40,6 +40,7 @@ void ScubaSoldier::init()
 	_shot = false;
 	_bounce = 1.0f;
 	_animationTime = 0.0f;
+	_awake = false;
 	this->setStatus(eStatus::HIDDEN);
 }
 
@@ -93,10 +94,10 @@ void ScubaSoldier::update(float deltatime)
 		return;
 	}
 	auto bill = ((PlayScene*)SceneManager::getInstance()->getCurrentScene())->getBill();
-	if (this->getPositionY() < bill->getPositionY() - 96.0f && !_shot)
+	if (this->getPositionY() < bill->getPositionY() - 96.0f)
+		_awake = true;
+	if (!_shot && _awake)
 		this->setStatus(eStatus::SHOOTING);
-	else if (this->getPositionY() > bill->getPositionY() - 96.f)
-		this->setStatus(eStatus::HIDDEN);
 	else
 	{
 		float time = GameTime::getInstance()->getTotalGameTime() - _animationTime;
