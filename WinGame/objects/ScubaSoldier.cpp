@@ -35,7 +35,12 @@ void ScubaSoldier::init()
 	this->setHitpoint(SCUBASOLDIER_HITPOINT);
 	this->setScore(SCUBASOLDIER_SCORE);
 
- 	this->setStatus(eStatus::SHOOTING);
+	_stopwatch = new StopWatch();
+	_movingWatch = new StopWatch();
+	_shot = false;
+	_bounce = 1.0f;
+	_animationTime = 0.0f;
+	this->setStatus(eStatus::HIDDEN);
 }
 
 void ScubaSoldier::draw(LPD3DXSPRITE spritehandle, Viewport* viewport)
@@ -88,13 +93,28 @@ void ScubaSoldier::update(float deltatime)
 		return;
 	}
 	auto bill = ((PlayScene*)SceneManager::getInstance()->getCurrentScene())->getBill();
-	if (this->getPositionY() < bill->getPositionY() - 96.0f)
+	if (this->getPositionY() < bill->getPositionY() - 96.0f && !_shot)
 		this->setStatus(eStatus::SHOOTING);
-	else
+	else if (this->getPositionY() > bill->getPositionY() - 96.f)
 		this->setStatus(eStatus::HIDDEN);
-	if (this->getStatus() == eStatus::SHOOTING)
+	else
+	{
+		float time = GameTime::getInstance()->getTotalGameTime() - _animationTime;
+		if (time > 800.0f)
+			this->setStatus(eStatus::HIDDEN);
+	}
+	if (_stopwatch->isTimeLoop(SCUBASOLDIER_SHOOTING_DELAY) && _shot)
+		_shot = false;
+	if (this->getStatus() == eStatus::SHOOTING && !_shot)
 	{
 		BulletManager::insertBullet(new ScubaBullet(this->getPosition(), GVector2(0, 448.0f), GVector2(0, -320.0f)));
+		_animationTime = GameTime::getInstance()->getTotalGameTime();
+		_shot = true;		
+	}
+	if (_movingWatch->isTimeLoop(300.0f))
+	{
+		this->setPositionY(this->getPositionY() - _bounce);
+		_bounce = -_bounce;
 	}
 }
 
