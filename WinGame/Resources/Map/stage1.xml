@@ -749,8 +749,8 @@
         <Elem Key="type" Value="4" />
       </Params>
     </Item>
-    <Item Id="0" Name="sodierCreator1" X="896" Y="320" Width="64" Height="64">
-      <ActiveBound X="896" Y="320" Width="64" Height="64" />
+    <Item Id="13" Name="sodierCreator1" X="1280" Y="128" Width="64" Height="64">
+      <ActiveBound X="1216" Y="128" Width="128" Height="64" />
       <Params>
         <Elem Key="type" Value="2" />
         <Elem Key="direction" Value="-1" />
@@ -797,15 +797,6 @@
     <Item Id="2" Name="sodlier1" X="480" Y="320" Width="64" Height="64">
       <ActiveBound X="480" Y="320" Width="64" Height="64" />
     </Item>
-    <Item Id="0" Name="sodierCreator2" X="2048" Y="320" Width="64" Height="64">
-      <ActiveBound X="2048" Y="320" Width="64" Height="64" />
-      <Params>
-        <Elem Key="type" Value="2" />
-        <Elem Key="direction" Value="-1" />
-        <Elem Key="time" Value="3000" />
-        <Elem Key="number" Value="-1" />
-      </Params>
-    </Item>
     <Item Id="6" Name="rifleMan5" X="2688" Y="310" Width="32" Height="54">
       <ActiveBound X="2688" Y="320" Width="32" Height="64" />
       <Params>
@@ -826,6 +817,102 @@
       <Params>
         <Elem Key="physicBodyDirection" Value="1" />
         <Elem Key="type" Value="0" />
+      </Params>
+    </Item>
+    <Item Id="2" Name="soldier2" X="576" Y="320" Width="64" Height="64">
+      <ActiveBound X="576" Y="320" Width="64" Height="64" />
+    </Item>
+    <Item Id="2" Name="soldier3" X="704" Y="320" Width="64" Height="64">
+      <ActiveBound X="704" Y="320" Width="64" Height="64" />
+    </Item>
+    <Item Id="13" Name="soldierCreator2" X="1152" Y="320" Width="64" Height="64">
+      <ActiveBound X="960" Y="320" Width="256" Height="64" />
+      <Params>
+        <Elem Key="type" Value="2" />
+        <Elem Key="direction" Value="-1" />
+        <Elem Key="number" Value="-1" />
+        <Elem Key="time" Value="3000" />
+      </Params>
+    </Item>
+    <Item Id="13" Name="soldierCreator3" X="1536" Y="320" Width="64" Height="64">
+      <ActiveBound X="1344" Y="320" Width="256" Height="64" />
+      <Params>
+        <Elem Key="time" Value="3000" />
+        <Elem Key="number" Value="-1" />
+        <Elem Key="direction" Value="-1" />
+        <Elem Key="type" Value="2" />
+      </Params>
+    </Item>
+    <Item Id="13" Name="soldierCreator4" X="2048" Y="320" Width="64" Height="64">
+      <ActiveBound X="1792" Y="320" Width="320" Height="64" />
+	  <Params>
+        <Elem Key="time" Value="3000" />
+        <Elem Key="number" Value="-1" />
+        <Elem Key="direction" Value="-1" />
+        <Elem Key="type" Value="2" />
+      </Params>
+    </Item>
+    <Item Id="13" Name="soldierCreator5" X="2944" Y="128" Width="64" Height="64">
+      <ActiveBound X="2816" Y="128" Width="192" Height="64" />
+	   <Params>
+        <Elem Key="time" Value="3000" />
+        <Elem Key="number" Value="-1" />
+        <Elem Key="direction" Value="-1" />
+        <Elem Key="type" Value="2" />
+      </Params>
+    </Item>
+    <Item Id="13" Name="soldierCreator6" X="2944" Y="384" Width="64" Height="64">
+      <ActiveBound X="2688" Y="384" Width="320" Height="64" />
+	  <Params>
+        <Elem Key="time" Value="3000" />
+        <Elem Key="number" Value="-1" />
+        <Elem Key="direction" Value="-1" />
+        <Elem Key="type" Value="2" />
+      </Params>
+    </Item>
+    <Item Id="13" Name="soldierCreator7" X="3580" Y="256" Width="64" Height="64">
+      <ActiveBound X="3200" Y="256" Width="444" Height="64" />
+	  <Params>
+        <Elem Key="time" Value="3000" />
+        <Elem Key="number" Value="-1" />
+        <Elem Key="direction" Value="-1" />
+        <Elem Key="type" Value="2" />
+      </Params>
+    </Item>
+    <Item Id="13" Name="soldierCreator8" X="3712" Y="384" Width="64" Height="64">
+      <ActiveBound X="3392" Y="384" Width="384" Height="64" />
+	  <Params>
+        <Elem Key="time" Value="3000" />
+        <Elem Key="number" Value="-1" />
+        <Elem Key="direction" Value="-1" />
+        <Elem Key="type" Value="2" />
+      </Params>
+    </Item>
+    <Item Id="13" Name="soldierCreator9" X="4284" Y="384" Width="64" Height="64">
+      <ActiveBound X="3840" Y="384" Width="508" Height="64" />
+	  <Params>
+        <Elem Key="time" Value="3000" />
+        <Elem Key="number" Value="-1" />
+        <Elem Key="direction" Value="-1" />
+        <Elem Key="type" Value="2" />
+      </Params>
+    </Item>
+    <Item Id="13" Name="soldierCreator10" X="5056" Y="384" Width="64" Height="64">
+      <ActiveBound X="4800" Y="384" Width="320" Height="64" />
+	  <Params>
+        <Elem Key="time" Value="3000" />
+        <Elem Key="number" Value="-1" />
+        <Elem Key="direction" Value="-1" />
+        <Elem Key="type" Value="2" />
+      </Params>
+    </Item>
+    <Item Id="13" Name="soldierCreator11" X="6144" Y="320" Width="64" Height="64">
+      <ActiveBound X="5888" Y="320" Width="320" Height="64" />
+	  <Params>
+        <Elem Key="time" Value="3000" />
+        <Elem Key="number" Value="-1" />
+        <Elem Key="direction" Value="-1" />
+        <Elem Key="type" Value="2" />
       </Params>
     </Item>
   </Objects>

@@ -64,6 +64,9 @@ public:
 	virtual void setOpacity(float opacity);
 	virtual float getOpacity();
 
+	virtual void setColor(D3DXCOLOR color);
+	virtual D3DXCOLOR getColor();
+
 	virtual GVector2 getAnchorPoint();
 
 	Sprite* getSprite();

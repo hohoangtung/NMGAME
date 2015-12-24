@@ -66,6 +66,8 @@ public:
 	void render(LPD3DXSPRITE spriteHandle, RECT* srcRect, Viewport viewport, GVector2 position, GVector2 scale, float rotate, GVector2 origin, float zIndex = 0);
 
 	void setColor(D3DXCOLOR);
+	D3DXCOLOR getColor();
+
 	// get width of image
 	int getWidth();
 	//get height of image

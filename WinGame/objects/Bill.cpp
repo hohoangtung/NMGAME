@@ -3,6 +3,7 @@
 #include "../debug.h"
 #include "GameOverScene.h"
 #include "ShadowBeast.h"
+#include "ObjectCreator.h"
 
 Bill::Bill(int life) : BaseObject(eID::BILL)
 {
@@ -94,20 +95,16 @@ void Bill::init()
 	_animations[eStatus::DYING]->addFrameRect(eID::BILL, "dead_01", "dead_02", "dead_03", "dead_04", NULL);
 
 	this->setOrigin(GVector2(0.5f, 0.0f));
-	this->setScale(SCALE_FACTOR);
 	this->setStatus(eStatus::FALLING);
-	this->setShootSpeed(SHOOT_SPEED);
-	this->setMaxBullet(MAX_BULLET);
-
-	_movingSpeed = BILL_MOVE_SPEED;
-	_protectTime = PROTECT_TIME;
 
 	// create stopWatch
 	_stopWatch = new StopWatch();
 	_shootAnimateStopWatch = new StopWatch();
 	_shootStopWatch = new StopWatch();
 
-	_currentGun = eBulletType::NORMAL_BULLET;
+	_isHolding = false;
+
+	this->resetValues();
 
 	// UI
 	// tạo ở đây cho dễ cập nhật khi chết, khỏi trỏ lung tung
@@ -121,6 +118,10 @@ void Bill::update(float deltatime)
 	if (_protectTime > 0)
 	{
 		_protectTime -= deltatime;
+	}
+	else if (_touchKill == true)
+	{
+		_touchKill = false;
 	}
 
 	this->checkPosition();
@@ -170,6 +171,22 @@ void Bill::deleteBullet()
 		}
 	}
 }
+
+void Bill::resetValues()
+{
+	this->setScale(SCALE_FACTOR);
+	this->setShootSpeed(SHOOT_SPEED);
+	this->setMaxBullet(MAX_BULLET);
+
+	_preObject = nullptr;
+
+	_currentGun = eBulletType::NORMAL_BULLET;
+	_protectTime = PROTECT_TIME;
+	_touchKill = false;
+	_movingSpeed = BILL_MOVE_SPEED;
+
+}
+
 void Bill::updateInput(float dt)
 {
 	if (this->isInStatus(eStatus::DYING))
@@ -177,12 +194,16 @@ void Bill::updateInput(float dt)
 	
 	if (_input->isKeyDown(DIK_Z))
 	{
-		if ((_currentGun & R_BULLET) == R_BULLET && _stopWatch->isStopWatch(_shootSpeed))
+		if (_isHolding)
 		{
+			if (((_currentGun & R_BULLET) == R_BULLET || (_currentGun & M_BULLET) == M_BULLET) && _stopWatch->isStopWatch(_shootSpeed))
+			{
 			this->addStatus(eStatus::SHOOTING);
 			shoot();
 			_stopWatch->restart();
+				_shootAnimateStopWatch->restart();
 		}
+	}
 	}
 
 	// delay animate shooting
@@ -190,6 +211,7 @@ void Bill::updateInput(float dt)
 	{
 		this->removeStatus(eStatus::SHOOTING);
 	}
+
 }
 
 void Bill::draw(LPD3DXSPRITE spriteHandle, Viewport* viewport)
@@ -197,6 +219,10 @@ void Bill::draw(LPD3DXSPRITE spriteHandle, Viewport* viewport)
 	if (_protectTime > 0)
 	{
 		_animations[_currentAnimateIndex]->enableFlashes(true);
+		
+		// nếu ăn đạn B vô
+		if(_touchKill)
+			_animations[_currentAnimateIndex]->setColorFlash(D3DXCOLOR(1.0f, 0.5f, 0.5f, 1));
 	}
 	else
 	{
@@ -317,9 +343,29 @@ void Bill::onKeyPressed(KeyEventArg* key_event)
 		if (this->isInStatus(eStatus::DIVING))
 			return;
 
-		if((_currentGun & eBulletType::R_BULLET) != eBulletType::R_BULLET)
+		//if((_currentGun & eBulletType::R_BULLET) != eBulletType::R_BULLET && (_currentGun & eBulletType::M_BULLET) != eBulletType::M_BULLET)
 		{
-			if (_shootStopWatch->isTimeLoop(85))
+			auto time = 85;
+
+			switch (_currentGun)
+			{
+				case NORMAL_BULLET:
+					time = 85;
+					break;
+				case L_BULLET:
+					time = 200;
+					break;
+				case F_BULLET:
+					time = 250;
+					break;
+				case S_BULLET:
+					time = 200;
+					break;
+				default:
+					break;
+			}
+
+			if (_shootStopWatch->isTimeLoop(time))
 			{
 				this->addStatus(eStatus::SHOOTING);
 				shoot();
@@ -327,8 +373,24 @@ void Bill::onKeyPressed(KeyEventArg* key_event)
 			}
 		}
 
+		_isHolding = true;
+		_stopWatch->restart();
+
 		break;
 	}
+#if _DEBUG
+	case DIK_1:
+	case DIK_2:
+	case DIK_3:
+	case DIK_4:
+	case DIK_5:
+	case DIK_6:
+	case DIK_7:
+	{
+		changeBulletType(eAirCraftType(key_event->_key - 2));
+		break;
+	}
+#endif
 	default:
 		break;
 	}
@@ -364,9 +426,10 @@ void Bill::onKeyReleased(KeyEventArg * key_event)
 	}
 	case DIK_Z:
 	{
+		//if ((_currentGun & eBulletType::R_BULLET) == eBulletType::R_BULLET)
+			_isHolding = false;
 
-		if((_currentGun & eBulletType::R_BULLET) == eBulletType::R_BULLET)
-			this->removeStatus(eStatus::SHOOTING);
+		//	this->removeStatus(eStatus::SHOOTING);
 
 		break;
 	}
@@ -374,8 +437,6 @@ void Bill::onKeyReleased(KeyEventArg * key_event)
 		break;
 	}
 }
-
-BaseObject* preObject;
 
 void Bill::onCollisionBegin(CollisionEventArg * collision_arg)
 {
@@ -393,6 +454,11 @@ void Bill::onCollisionBegin(CollisionEventArg * collision_arg)
 	case eID::RIFLEMAN:
 	case eID::SOLDIER:
 	{
+		if (_touchKill)
+		{
+			auto enemy = (BaseEnemy*)collision_arg->_otherObject;
+			enemy->dropHitpoint();
+		}
 
 		break;
 	}
@@ -413,11 +479,11 @@ void Bill::onCollisionEnd(CollisionEventArg * collision_event)
 		break;
 	case eID::LAND:
 	{
-		if (preObject == collision_event->_otherObject)
+		if (_preObject == collision_event->_otherObject)
 		{
 			// hết chạm với land là fall chứ ko có jump
 			this->removeStatus(eStatus::JUMPING);
-			preObject = nullptr;
+			_preObject = nullptr;
 		}
 		break;
 	}
@@ -442,7 +508,6 @@ float Bill::checkCollision(BaseObject * object, float dt)
 		// nếu ko phải là nhảy xuống, mới dừng gravity
 		if (!this->isInStatus(eStatus(eStatus::JUMPING | eStatus::FALLING)) && collisionBody->checkCollision(object, direction, dt, false))
 		{
-
 			// kt coi chổ đứng có cho nhảy xuống ko
 			if (objectId == eID::LAND)
 			{
@@ -452,9 +517,9 @@ float Bill::checkCollision(BaseObject * object, float dt)
 				eLandType preType = land->getType();
 
 				// lấy type của preObject
-				if (preObject != nullptr && preObject->getId() == eID::LAND)
+				if (_preObject != nullptr && _preObject->getId() == eID::LAND)
 				{
-					preType = ((Land*)preObject)->getType();
+					preType = ((Land*)_preObject)->getType();
 				}
 				
 				// để trường hợp đang bơi mà lên bờ
@@ -463,7 +528,7 @@ float Bill::checkCollision(BaseObject * object, float dt)
 				if (land->getType() == eLandType::WATER)
 				{
 					// nếu trước đó không phải là nước thì mới cho bơi
-					if (preType == eLandType::BRIDGELAND || preType == eLandType::GRASS || preObject == nullptr)
+					if (preType == eLandType::BRIDGELAND || preType == eLandType::GRASS || _preObject == nullptr)
 					{
 						// swim
 						this->swimming();
@@ -504,10 +569,10 @@ float Bill::checkCollision(BaseObject * object, float dt)
 
 				this->standing();
 				
-				preObject = object;
+				_preObject = object;
 			}
 		}
-		else if(preObject == object)
+		else if(_preObject == object)
 		{
 			// kiểm tra coi nhảy hết qua cái land cũ chưa
 			// để gọi event end.
@@ -530,7 +595,18 @@ float Bill::checkCollision(BaseObject * object, float dt)
 	}
 	else
 	{
+		if (objectId == eID::CREATOR)
+		{
+			auto children = ((ObjectCreator*)object)->getObjects();
+			for (auto child : children)
+			{
+				collisionBody->checkCollision(child, dt);
+			}
+		}
+		else
+		{
 		collisionBody->checkCollision(object, dt);
+	}
 	}
 
 	for (auto it = _listBullets.begin(); it != _listBullets.end(); it++)
@@ -549,9 +625,19 @@ float Bill::checkCollision(BaseObject * object, float dt)
 				safeCheckCollision((*it), ((Boss*)object)->getShield(), dt);
 				safeCheckCollision((*it), ((Boss*)object)->getRifleMan(), dt);
 			}
+			else if (objectId == eID::CREATOR)
+			{
+				auto children = ((ObjectCreator*)object)->getObjects();
+				for (auto child : children)
+				{
+					safeCheckCollision((*it), child, dt);
+				}
+			}
 			else
+			{
 				(*it)->checkCollision(object, dt);
 		}
+	}
 	}
 
 	return 0.0f;
@@ -728,22 +814,17 @@ void Bill::revive()
 	this->setPosition(viewportPos.x + 192, viewportPos.y - 240);
 
 	// reset value
-	this->setScaleX(SCALE_FACTOR);
 	this->setStatus(eStatus::JUMPING);
-	this->setLifeNumber(_lifeNum - 1);
-
-	preObject = nullptr;
-
-	_currentGun = eBulletType::NORMAL_BULLET;
-	_protectTime = PROTECT_TIME;
-
-	_animations[eStatus::SWIMING]->restart();
+	this->resetValues();
 
 	auto move = (Movement*)this->_componentList["Movement"];
 	move->setVelocity(GVector2(100, 0));
 
 	auto gravity = (Gravity*)this->_componentList["Gravity"];
 	gravity->setStatus(eGravityStatus::FALLING__DOWN);
+
+	// trừ mạng
+	this->setLifeNumber(_lifeNum - 1);
 
 	// cập nhật UI
 	_lifeUI->setLifeNumber(_lifeNum);
@@ -757,28 +838,34 @@ void Bill::changeBulletType(eAirCraftType type)
 	case L:
 		this->_currentGun = eBulletType::L_BULLET;
 		this->setMaxBullet(-1);
+
 		break;
 	case B:
-		this->_currentGun = eBulletType::NORMAL_BULLET;
-		this->setMaxBullet(4);
+		_protectTime = 12000;
+		_touchKill = true;
+
 		break;
 	case F:
 		this->_currentGun = eBulletType::F_BULLET;
 		this->setMaxBullet(2);
+
 		break;
 	case S:
 		this->_currentGun = eBulletType::S_BULLET; 
 		this->setMaxBullet(2);
+
 		break;
 	case M:
 		this->_currentGun = eBulletType::M_BULLET;
 		this->setMaxBullet(6);
+
 		break;
 	case R:
 		if (this->_currentGun != eBulletType::L_BULLET)
 		{
 			this->_currentGun = eBulletType(this->_currentGun | eBulletType::R_BULLET);
-			this->setMaxBullet(-1);
+			// this->setMaxBullet(-1);
+			this->setShootSpeed(SHOOT_SPEED);
 		}
 			
 		break;
@@ -793,7 +880,10 @@ Bullet* Bill::getBulletFromGun(GVector2 position, float angle)
 	Bullet* bullet = nullptr;
 	if ((_currentGun & NORMAL_BULLET) == NORMAL_BULLET)
 	{
-		if (_listBullets.size() >= _maxBullet && (_currentGun & R_BULLET ) != R_BULLET)
+		//if (_listBullets.size() >= _maxBullet && (_currentGun & R_BULLET ) != R_BULLET)
+			//return nullptr;
+
+		if (_listBullets.size() >= _maxBullet)
 			return nullptr;
 
 		bullet = new Bullet(position, (eBulletType)(BILL_BULLET | NORMAL_BULLET), angle);
@@ -810,22 +900,34 @@ Bullet* Bill::getBulletFromGun(GVector2 position, float angle)
 	}
 	else if ((_currentGun & F_BULLET) == F_BULLET)
 	{
-		if (_listBullets.size() >= _maxBullet && (_currentGun & R_BULLET) != R_BULLET)
+		//if (_listBullets.size() >= _maxBullet && (_currentGun & R_BULLET) != R_BULLET)
+		//	return nullptr; 
+
+		if (_listBullets.size() >= _maxBullet)
 			return nullptr; 
+
 		bullet = new FBullet(position, angle);
 		SoundManager::getInstance()->Play(eSoundId::FBULLET_FIRE);
 	}
 	else if ((_currentGun & S_BULLET) == S_BULLET)
 	{
-		if (_listBullets.size() >= _maxBullet && (_currentGun & R_BULLET) != R_BULLET)
+		//if (_listBullets.size() >= _maxBullet && (_currentGun & R_BULLET) != R_BULLET)
+		//	return nullptr;
+
+		if (_listBullets.size() >= _maxBullet)
 			return nullptr;
+
 		bullet = new SBullet(position, angle);
 		SoundManager::getInstance()->Play(eSoundId::SBULLET_FIRE);
 	}
 	else if ((_currentGun & M_BULLET) == M_BULLET)
 	{
-		if (_listBullets.size() >= _maxBullet && (_currentGun & R_BULLET) != R_BULLET)
+		//if (_listBullets.size() >= _maxBullet && (_currentGun & R_BULLET) != R_BULLET)
+		//	return nullptr;
+
+		if (_listBullets.size() >= _maxBullet)
 			return nullptr;
+
 		bullet = new MBullet(position, angle);
 		SoundManager::getInstance()->Play(eSoundId::MBULLET_FIRE);
 	}
@@ -852,32 +954,45 @@ void Bill::die()
 
 void Bill::swimming()
 {
+	this->removeStatus(eStatus::FALLING);
 	this->addStatus(eStatus::SWIMING);
 
 	_animations[eStatus::SWIMING]->animateFromTo(2, 3, true);
-	_animations[eStatus::SWIMING]->setTimeAnimate(0.3f);
+	_animations[eStatus::SWIMING]->setTimeAnimate(0.2f);
 
 	_animations[eStatus::DIVING]->animateFromTo(1, 2, true);
-	_animations[eStatus::DIVING]->setTimeAnimate(0.3f);
+	_animations[eStatus::DIVING]->setTimeAnimate(0.2f);
 
 	_animations[eStatus::SWIMING | SHOOTING]->animateFromTo(1, 2, true);
-	_animations[eStatus::SWIMING | SHOOTING]->setTimeAnimate(0.3f);
+	_animations[eStatus::SWIMING | SHOOTING]->setTimeAnimate(0.2f);
 
 	_animations[eStatus::SWIMING | RUNNING | SHOOTING]->animateFromTo(1, 2, true);
-	_animations[eStatus::SWIMING | RUNNING | SHOOTING]->setTimeAnimate(0.3f);
+	_animations[eStatus::SWIMING | RUNNING | SHOOTING]->setTimeAnimate(0.2f);
 
 	_animations[eStatus::SWIMING | RUNNING | SHOOTING | LOOKING_UP]->animateFromTo(1, 2, true);
-	_animations[eStatus::SWIMING | RUNNING | SHOOTING | LOOKING_UP]->setTimeAnimate(0.3f);
+	_animations[eStatus::SWIMING | RUNNING | SHOOTING | LOOKING_UP]->setTimeAnimate(0.2f);
 
 	_animations[eStatus::SWIMING | LOOKING_UP | SHOOTING]->animateFromTo(1, 2, true);
-	_animations[eStatus::SWIMING | LOOKING_UP | SHOOTING]->setTimeAnimate(0.3f);
+	_animations[eStatus::SWIMING | LOOKING_UP | SHOOTING]->setTimeAnimate(0.2f);
 
+	{
 	// cập nhật animate
-	if (this->isInStatus(eStatus(MOVING_LEFT | LOOKING_UP | SHOOTING)) || this->isInStatus(eStatus(MOVING_RIGHT | LOOKING_UP | SHOOTING)))
+		if (this->isInStatus(eStatus::LAYING_DOWN))
+		{
+			this->removeStatus(eStatus::LAYING_DOWN);
+			this->removeStatus(eStatus::MOVING_LEFT);
+			this->removeStatus(eStatus::MOVING_RIGHT);
+
+			this->setStatus(eStatus::DIVING);
+			this->addStatus(eStatus::SWIMING);
+
+			_animations[eStatus::DIVING]->restart();
+		}
+		else if (this->isInStatus(eStatus(MOVING_LEFT | LOOKING_UP | SHOOTING)) || this->isInStatus(eStatus(MOVING_RIGHT | LOOKING_UP | SHOOTING)))
 	{
 		_animations[eStatus::SWIMING | RUNNING | SHOOTING | LOOKING_UP]->restart();
 	}
-	else if ((this->isInStatus(eStatus(MOVING_LEFT | SHOOTING)) || this->isInStatus(eStatus(MOVING_RIGHT | SHOOTING))) && !this->isInStatus(eStatus::LAYING_DOWN))
+		else if ((this->isInStatus(eStatus(MOVING_LEFT | SHOOTING)) || this->isInStatus(eStatus(MOVING_RIGHT | SHOOTING))))
 	{
 		_animations[eStatus::SWIMING | RUNNING | SHOOTING]->restart();
 	}
@@ -885,7 +1000,7 @@ void Bill::swimming()
 	{
 		_animations[eStatus::SWIMING | LOOKING_UP | SHOOTING]->restart();
 	}
-	else if (this->isInStatus(eStatus(SHOOTING)) && !this->isInStatus(eStatus::LAYING_DOWN))
+		else if (this->isInStatus(eStatus(SHOOTING)))
 	{
 		_animations[eStatus::SWIMING | SHOOTING]->restart();
 	}
@@ -893,20 +1008,6 @@ void Bill::swimming()
 	{
 		_animations[eStatus::SWIMING]->restart();
 	}
-
-	if (this->isInStatus(eStatus::LAYING_DOWN))
-	{
-		this->removeStatus(eStatus::LAYING_DOWN);
-		this->removeStatus(eStatus::MOVING_LEFT);
-		this->removeStatus(eStatus::MOVING_RIGHT);
-
-		this->addStatus(eStatus::DIVING);
-
-		_animations[eStatus::DIVING]->restart();
-
-		// có thể nó restart cái swimming bên trên nên set lại cho chắc
-		_animations[eStatus::SWIMING]->animateFromTo(2, 3, true);
-		_animations[eStatus::SWIMING]->setTimeAnimate(0.3f);
 	}
 }
 
@@ -962,11 +1063,11 @@ RECT Bill::getBounding()
 	{
 		if ((_currentAnimateIndex & LOOKING_UP) == LOOKING_UP)
 		{
-			bound.top -= offset * 1.5f;
+			bound.top -= offset * 2.0f;
 		}
 		else
 		{
-			bound.top -= offset * 0.5f;
+			bound.top -= offset;
 		}
 
 		if (this->getScale().x > 0)
@@ -1117,8 +1218,8 @@ eDirection Bill::getAimingDirection()
 	else
 		direction = eDirection::RIGHT;
 
-	//if (this->isInStatus(eStatus::JUMPING))
-	//	return direction;
+	if (this->isInStatus(eStatus::FALLING))
+		return direction;
 
 	if (this->isInStatus(eStatus::LOOKING_UP))
 	{

@@ -116,6 +116,11 @@ void Texture::setColor(D3DXCOLOR color)
 	this->_color = color;
 }
 
+D3DXCOLOR Texture::getColor()
+{
+	return _color;
+}
+
 int Texture::getWidth()
 {
 	return _imageInfo.Width;

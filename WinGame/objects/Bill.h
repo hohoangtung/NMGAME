@@ -118,6 +118,9 @@ private:
 	int _maxBullet;
 	float _protectTime;
 
+	// ăn đạn B bảo vệ chạm mấy thằng lính sẽ giết đc nó
+	bool _touchKill; 
+
 	LifeUI* _lifeUI;
 
 	GVector2 getVelocity();
@@ -132,6 +135,12 @@ private:
 
 	// Tung Ho: kiểm tra và xoá đạn hết hiệu lực.
 	void deleteBullet();
+
+	// reset các thuộc tính lại giá trị ban đầu.
+	void resetValues();
+
+	BaseObject* _preObject;
+	bool _isHolding;
 };
 
 void safeCheckCollision(BaseObject* activeobj, BaseObject* passiveobj, float dt);

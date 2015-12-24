@@ -416,6 +416,7 @@ BaseObject * ObjectFactory::getCreator(xml_node node)
 	int dir, num, width, height;
 	eID type;
 	float time;
+	bool oneperone;
 
 	pos.x = stoi(properties["X"]) + 32;
 	pos.y = stoi(properties["Y"]) - 32;
@@ -462,7 +463,26 @@ BaseObject * ObjectFactory::getCreator(xml_node node)
 		num = -1;
 	}
 
+	// one per one
+	if (properties.find("oneperone") != properties.end())
+	{
+		auto v = properties.find("oneperone")->second;
+		if (v == "true")
+		{
+			oneperone = true;
+		}
+		else
+		{
+			oneperone = false;
+		}
+	}
+	else
+	{
+		oneperone = false;
+	}
+
 	auto creator = new ObjectCreator(pos, width, height, type, dir, time, num);
+	creator->setOnePerOne(oneperone);
 	creator->init();
 
 	return creator;

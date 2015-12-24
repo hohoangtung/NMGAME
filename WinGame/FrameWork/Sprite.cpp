@@ -313,6 +313,17 @@ float Sprite::getOpacity()
 	return _opacity;
 }
 
+void Sprite::setColor(D3DXCOLOR color)
+{
+	_color = color;
+	_texture.setColor(_color);
+}
+
+D3DXCOLOR Sprite::getColor()
+{
+	return _color;
+}
+
 void Sprite::setFrameRect()
 {
 	this->_frameRect.left = (long)_currentFrame.x * _frameWidth;

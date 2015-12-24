@@ -68,6 +68,7 @@ private:
 	Explosion *_explosion;
 	list<Bullet*> _listBullets;
 	bool _shot;
+	bool _awake;
 	float _bounce;
 	float _animationTime;
 
