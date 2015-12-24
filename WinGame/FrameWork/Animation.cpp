@@ -17,6 +17,8 @@ Animation::Animation(Sprite * spriteSheet, float timeAnimate, bool loop)
 	 
 	this->setIndex(0);
 	this->setLoop(loop);
+
+	_flashColor = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
 }
 
 Animation::Animation(Sprite * spriteSheet, int totalFrames, int cols, float timeAnimate)
@@ -44,6 +46,8 @@ Animation::Animation(Sprite * spriteSheet, int totalFrames, int cols, float time
 	}
 
 	_currentRect = _frameRectList[_index];
+
+	_flashColor = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
 }
 
 Animation::~Animation()
@@ -67,24 +71,10 @@ void Animation::setIndex(int index)
 
 	_index = index;
 
-	//if (_isAll == false)
-	//{
-	//	if (_index > _endFrame)
-	//		_index = _startFrame;
-	//}
-
-	//if (_index >= _totalFrames)
-	//	_index = _index % _totalFrames;
-
 	if (_index > _endFrame)
 		_index = _startFrame;
 
 	_currentRect = _frameRectList[_index];
-
-	//if (!_isLoop && _index == _totalFrames - 1)
-	//{
-	//	this->stop();
-	//}
 
 	if (!_isLoop && _index == _endFrame)
 	{
@@ -108,9 +98,15 @@ void Animation::update(float dt)
 		if (_canFlashes)
 		{
 			if (_spriteSheet->getOpacity() != _valueFlashes)
+			{
 				_spriteSheet->setOpacity(_valueFlashes);
+				_spriteSheet->setColor(D3DXCOLOR(_flashColor.r, _flashColor.g, _flashColor.b, _valueFlashes));
+			}
 			else
+			{
 				_spriteSheet->setOpacity(1.0f);
+				_spriteSheet->setColor(D3DXCOLOR(_flashColor.r, _flashColor.g, _flashColor.b, 1.0f));
+			}
 		}
 	}
 }
@@ -234,7 +230,8 @@ void Animation::enableFlashes(bool enable)
 		return;
 
 	_canFlashes = enable;
-	_spriteSheet->setOpacity(1.0f);
+	//_spriteSheet->setOpacity(1.0f);
+	_spriteSheet->setColor(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
 }
 
 void Animation::setValueFlashes(float value)
@@ -262,6 +259,16 @@ void Animation::animateFromTo(int from, int to, bool loop)
 
 	if (_canAnimate == false)
 		_canAnimate = true;
+}
+
+void Animation::setColorFlash(D3DXCOLOR color)
+{
+	_flashColor = color;
+}
+
+D3DXCOLOR Animation::getColorFlash()
+{
+	return _flashColor;
 }
 
 void Animation::draw(LPD3DXSPRITE spriteHandle, Viewport * viewport)

@@ -843,5 +843,77 @@
         <Elem Key="type" Value="2" />
       </Params>
     </Item>
+    <Item Id="13" Name="soldierCreator4" X="2048" Y="320" Width="64" Height="64">
+      <ActiveBound X="1792" Y="320" Width="320" Height="64" />
+	  <Params>
+        <Elem Key="time" Value="3000" />
+        <Elem Key="number" Value="-1" />
+        <Elem Key="direction" Value="-1" />
+        <Elem Key="type" Value="2" />
+      </Params>
+    </Item>
+    <Item Id="13" Name="soldierCreator5" X="2944" Y="128" Width="64" Height="64">
+      <ActiveBound X="2816" Y="128" Width="192" Height="64" />
+	   <Params>
+        <Elem Key="time" Value="3000" />
+        <Elem Key="number" Value="-1" />
+        <Elem Key="direction" Value="-1" />
+        <Elem Key="type" Value="2" />
+      </Params>
+    </Item>
+    <Item Id="13" Name="soldierCreator6" X="2944" Y="384" Width="64" Height="64">
+      <ActiveBound X="2688" Y="384" Width="320" Height="64" />
+	  <Params>
+        <Elem Key="time" Value="3000" />
+        <Elem Key="number" Value="-1" />
+        <Elem Key="direction" Value="-1" />
+        <Elem Key="type" Value="2" />
+      </Params>
+    </Item>
+    <Item Id="13" Name="soldierCreator7" X="3580" Y="256" Width="64" Height="64">
+      <ActiveBound X="3200" Y="256" Width="444" Height="64" />
+	  <Params>
+        <Elem Key="time" Value="3000" />
+        <Elem Key="number" Value="-1" />
+        <Elem Key="direction" Value="-1" />
+        <Elem Key="type" Value="2" />
+      </Params>
+    </Item>
+    <Item Id="13" Name="soldierCreator8" X="3712" Y="384" Width="64" Height="64">
+      <ActiveBound X="3392" Y="384" Width="384" Height="64" />
+	  <Params>
+        <Elem Key="time" Value="3000" />
+        <Elem Key="number" Value="-1" />
+        <Elem Key="direction" Value="-1" />
+        <Elem Key="type" Value="2" />
+      </Params>
+    </Item>
+    <Item Id="13" Name="soldierCreator9" X="4284" Y="384" Width="64" Height="64">
+      <ActiveBound X="3840" Y="384" Width="508" Height="64" />
+	  <Params>
+        <Elem Key="time" Value="3000" />
+        <Elem Key="number" Value="-1" />
+        <Elem Key="direction" Value="-1" />
+        <Elem Key="type" Value="2" />
+      </Params>
+    </Item>
+    <Item Id="13" Name="soldierCreator10" X="5056" Y="384" Width="64" Height="64">
+      <ActiveBound X="4800" Y="384" Width="320" Height="64" />
+	  <Params>
+        <Elem Key="time" Value="3000" />
+        <Elem Key="number" Value="-1" />
+        <Elem Key="direction" Value="-1" />
+        <Elem Key="type" Value="2" />
+      </Params>
+    </Item>
+    <Item Id="13" Name="soldierCreator11" X="6144" Y="320" Width="64" Height="64">
+      <ActiveBound X="5888" Y="320" Width="320" Height="64" />
+	  <Params>
+        <Elem Key="time" Value="3000" />
+        <Elem Key="number" Value="-1" />
+        <Elem Key="direction" Value="-1" />
+        <Elem Key="type" Value="2" />
+      </Params>
+    </Item>
   </Objects>
 </Tilesmap>

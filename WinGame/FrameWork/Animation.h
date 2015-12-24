@@ -134,6 +134,9 @@ public:
 	*/
 	void animateFromTo(int from, int to, bool loop = true);
 
+	void setColorFlash(D3DXCOLOR color);
+	D3DXCOLOR getColorFlash();
+
 private:
 	bool					_isAll;
 	int						_startFrame;
@@ -154,6 +157,7 @@ private:
 
 	bool					_canFlashes;
 	float					_valueFlashes;
+	D3DXCOLOR				_flashColor;
 };
 
 #endif // !__ANIMATION_H__

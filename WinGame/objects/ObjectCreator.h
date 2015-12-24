@@ -34,6 +34,9 @@ public:
 
 	vector<BaseObject*> getObjects();
 
+	void setOnePerOne(bool enable);
+	bool isOnePerOne();
+
 private:
 
 	BaseObject* getObject(eID id);
@@ -48,6 +51,7 @@ private:
 	int _counter;
 
 	int _direction;
+	bool _isOnePerOne;
 };
 
 #endif // !__OBJECTCREATOR_H__

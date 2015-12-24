@@ -100,9 +100,16 @@ public:
 	void setOpacity(float opacity);
 	float getOpacity();
 
+	/*
+	Màu vẽ sprite
+	*/
+	void setColor(D3DXCOLOR color);
+	D3DXCOLOR getColor();
+
 private:
 	Texture				_texture;
 	float				_opacity;						// từ 0.0f đến 1.0f thôi
+	D3DXCOLOR			_color;
 
 	RECT				_bound;
 

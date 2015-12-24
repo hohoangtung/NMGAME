@@ -157,6 +157,16 @@ float BaseObject::getOpacity()
 	return _sprite->getOpacity();
 }
 
+void BaseObject::setColor(D3DXCOLOR color)
+{
+	_sprite->setColor(color);
+}
+
+D3DXCOLOR BaseObject::getColor()
+{
+	return _sprite->getColor();
+}
+
 GVector2 BaseObject::getAnchorPoint()
 {
 	return _sprite->getAnchorPoint();
