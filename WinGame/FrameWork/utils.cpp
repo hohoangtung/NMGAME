@@ -84,3 +84,18 @@ float getdistance(D3DXVECTOR2 p1, D3DXVECTOR2 p2)
 	return sqrt(pow(p1.x - p2.x, 2) + pow(p1.y - p2.y, 2));
 }
 
+
+
+double CalculateCoefficient(int n, int k)
+{
+	// ref: http://stackoverflow.com/questions/11032781/fastest-way-to-generate-binomial-coefficients/25246111#25246111
+	// Chúng ta cần tính: (n!) / (k! * (n-k)!) = (n*(n-1)*(n-2)*...*(n-k+1)) / (k!) (rút gọn phần  (n-k) giai thừa đi)
+	int i = 0;
+	double coefficient = 1;
+	while (i < k)
+	{
+		coefficient *= ((double)(n - i))/ (k - i);
+		i++;
+	}
+	return coefficient;
+}

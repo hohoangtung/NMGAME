@@ -2,6 +2,7 @@
 #include "AirCraft.h"
 #include "../debug.h"
 #include "GameOverScene.h"
+#include "ShadowBeast.h"
 
 Bill::Bill(int life) : BaseObject(eID::BILL)
 {
@@ -536,16 +537,17 @@ float Bill::checkCollision(BaseObject * object, float dt)
 	{
 		if (object->getId() != eID::LAND)
 		{
-			if (objectId == eID::BOSS_STAGE1)
+			if (objectId == eID::SHADOW_BEAST)
+			{
+				safeCheckCollision((*it), ((ShadowBeast*)object)->getLeftArm(), dt);
+				safeCheckCollision((*it), ((ShadowBeast*)object)->getRigtArm(), dt);
+			}
+			else if (objectId == eID::BOSS_STAGE1)
 			{
 				safeCheckCollision((*it), ((Boss*)object)->getGun1(), dt);
 				safeCheckCollision((*it), ((Boss*)object)->getGun2(), dt);
 				safeCheckCollision((*it), ((Boss*)object)->getShield(), dt);
 				safeCheckCollision((*it), ((Boss*)object)->getRifleMan(), dt);
-				//(*it)->checkCollision(((Boss*)object)->getGun1(), dt);
-				//(*it)->checkCollision(((Boss*)object)->getGun2(), dt);
-				//(*it)->checkCollision(((Boss*)object)->getShield(), dt);
-				//(*it)->checkCollision(((Boss*)object)->getRifleMan(), dt);
 			}
 			else
 				(*it)->checkCollision(object, dt);

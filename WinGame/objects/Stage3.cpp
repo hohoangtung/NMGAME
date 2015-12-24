@@ -3,6 +3,7 @@
 #include "BeginState3Scene.h"
 #include "GameOverScene.h"
 #include "Score.h"
+#include "ShadowBeast.h"
 
 #if _DEBUG
 #include <time.h>
@@ -39,7 +40,9 @@ bool Stage3::init()
 	bulletmanager->init();
 	_listobject.push_back(bulletmanager);
 
-
+	auto shadow = new ShadowBeast(GVector2(256, 4124));
+	shadow->init();
+	_listobject.push_back(shadow);
 	_text = new Text(L"Arial", "", 10, 25);
 
 	map<string, BaseObject*>* maptemp = ObjectFactory::getMapObjectFromFile("Resources//Map//stage3.xml");
