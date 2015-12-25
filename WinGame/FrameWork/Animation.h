@@ -136,7 +136,7 @@ public:
 
 	void setColorFlash(D3DXCOLOR color);
 	D3DXCOLOR getColorFlash();
-
+	bool isLastAnimation();
 private:
 	bool					_isAll;
 	int						_startFrame;

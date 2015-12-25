@@ -21,7 +21,7 @@ void ShadowBeast::init()
 	_rightArm->init();
 	_rightArm->setWise(true);
 
-	_mouth = new ShadowMouth(_position + GVector2(0, 80));
+	_mouth = new ShadowMouth(_position+ GVector2(0, 120));
 	_mouth->init();
 }
 void ShadowBeast::update(float deltatime)
@@ -448,32 +448,54 @@ void ShadowBeast::ShadowArm::updateElemPosition(HandElement& elem)
 void ShadowBeast::ShadowMouth::init()
 {
 	_sprite = SpriteManager::getInstance()->getSprite(eID::SHADOW_MOUTH);
-	_sprite->setFrameRect(SpriteManager::getInstance()->getSourceRect(eID::SHADOW_MOUTH, "mouth1"));
+	_sprite->setFrameRect(SpriteManager::getInstance()->getSourceRect(eID::SHADOW_MOUTH, "mouth_opening1"));
 	_sprite->setScale(SCALE_FACTOR);
 	_sprite->setPosition(_startposition);
 
-	_animation = new Animation(_sprite, 1.5);
-	_animation->addFrameRect(eID::SHADOW_MOUTH, "mouth1", "mouth2", "mouth3", NULL);
+	_animations[eMouthStatus::OPENING] = new Animation(_sprite, 1);
+	_animations[eMouthStatus::OPENING]->addFrameRect(eID::SHADOW_MOUTH, "mouth_opening1", "mouth_opening2", "mouth_opening3", "mouth_opening4", "mouth_opening5", "mouth_opening5", "mouth_opening4", "mouth_opening3", "mouth_opening2", "mouth_opening1", NULL);
+	_animations[eMouthStatus::CLOSED] = new Animation(_sprite, 1);
+	_animations[eMouthStatus::CLOSED]->addFrameRect(eID::SHADOW_MOUTH, "mouth_closed1", "mouth_closed2", "mouth_closed3", NULL);
+	//_animations[eMouthStatus::CLOSING] = new Animation(_sprite, 1);
+	//_animations[eMouthStatus::CLOSING]->addFrameRect(eID::SHADOW_MOUTH, "mouth_opening5", "mouth_opening4", "mouth_opening3", "mouth_opening2", "mouth_opening1", NULL);
+
+	this->setMouthStatus(eMouthStatus::OPENING);
 }
 void ShadowBeast::ShadowMouth::update(float deltatime)
 {
-	_animation->update(deltatime);
-	if (_animation->getIndex() == 2)
-	{
-		shoot();
-	}
+	Animation* current = _animations[this->getMouthStatus()];
+	//_animations[this->getMouthStatus()]->update(deltatime);
+	//if (current->getIndex() == 2)
+	//{
+	//	shoot();
+	//}
+	//if (this->getMouthStatus() == eMouthStatus::OPENING && current->getIndex() == 0)
+	//	this->setMouthStatus(eMouthStatus::CLOSED);
+	////else if (this->getMouthStatus() == eMouthStatus::CLOSING && current->getIndex() == 4)
+	////	this->setMouthStatus(eMouthStatus::CLOSED);
+	//else if (this->getMouthStatus() == eMouthStatus::CLOSED && current->getIndex() == 0)
+	//	this->setMouthStatus(eMouthStatus::OPENING);
+	_animations[this->getMouthStatus()]->update(deltatime);
+	if (this->getMouthStatus() == eMouthStatus::CLOSED && current->getIndex() == 0)
+		this->setMouthStatus(eMouthStatus::OPENING);
+	//else if (this->getMouthStatus() == eMouthStatus::CLOSING && current->getIndex() == 4)
+	//	this->setMouthStatus(eMouthStatus::CLOSED);
+	else if (this->getMouthStatus() == eMouthStatus::OPENING && current->getIndex() == 0)
+		this->setMouthStatus(eMouthStatus::CLOSED);
 }
 void ShadowBeast::ShadowMouth::draw(LPD3DXSPRITE spriteHandle, Viewport* viewport)
 {
-	if (_animation != nullptr)
+	if (_animations[this->getMouthStatus()] != nullptr)
 	{
-		_animation->draw(spriteHandle, viewport);
+		_animations[this->getMouthStatus()]->draw(spriteHandle, viewport);
 	}
 }
 void ShadowBeast::ShadowMouth::release()
 {
 	SAFE_DELETE(_sprite);
-	SAFE_DELETE(_animation);
+	SAFE_DELETE(_animations[eMouthStatus::CLOSED]);
+	SAFE_DELETE(_animations[eMouthStatus::OPENING]);
+	SAFE_DELETE(_animations[eMouthStatus::CLOSING]);
 }
 RECT ShadowBeast::ShadowMouth::getBounding()
 {
@@ -492,4 +514,14 @@ ShadowBeast::ShadowMouth::ShadowMouth(GVector2 startposition) : BaseEnemy(eID::S
 
 ShadowBeast::ShadowMouth::~ShadowMouth()
 {
+}
+
+eMouthStatus ShadowBeast::ShadowMouth::getMouthStatus()
+{
+	return _mouthStatus;
+}
+
+void ShadowBeast::ShadowMouth::setMouthStatus(eMouthStatus status)
+{
+	_mouthStatus = status;
 }

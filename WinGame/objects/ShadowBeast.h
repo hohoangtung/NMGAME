@@ -98,11 +98,14 @@ public:
 		void update(float deltatime);
 		void draw(LPD3DXSPRITE spriteHandle, Viewport* viewport);
 		void release();
+		eMouthStatus getMouthStatus();
+		void setMouthStatus(eMouthStatus);
 		RECT getBounding();
 	private:
 		void shoot();
-		Animation* _animation;
+		map<int, Animation*> _animations;
 		GVector2 _startposition;
+		eMouthStatus _mouthStatus;
 	};
 
 private:
