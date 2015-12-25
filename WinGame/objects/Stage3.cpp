@@ -31,7 +31,7 @@ bool Stage3::init()
 {
 	auto bill = new Bill(_restBill);
 	bill->init();
-	bill->setPosition(200, 400);
+	bill->setPosition(200, 4000);
 	
 	this->_bill = bill;
 	_listControlObject.push_back(bill);
