@@ -32,14 +32,15 @@
 #include "RockFall.h"
 #include "../FrameWork/Scenario.h"
 
+//#define BOSS_STAGE3_VIEWPORT_ANCHOR 
+
 using namespace std;
 US_FRAMEWORK
-
 ACTOR_SCENARIO	
 class Stage3 : public Scene
 {
 public:
-	Stage3();
+	Stage3(int billlife);
 	~Stage3();
 
 	bool init() override;
@@ -62,7 +63,7 @@ public:
 private:
 	void destroyobject();				// kiển tra nếu object hết hạn sử dụng thì phá huỷ đối tượng
 	Text* _text;
-
+	int _restBill;
 	// Danh sách đối tượng dùng để tạo quadtree.
 	map <string, BaseObject*> _mapobject;
 

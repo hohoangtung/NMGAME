@@ -1,6 +1,6 @@
 ﻿
 #include "BeginPlayScene.h"
-
+#include "Stage3.h"
 
 bool BeginPlayScene::init()
 {

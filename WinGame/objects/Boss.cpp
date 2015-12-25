@@ -263,6 +263,7 @@ void Boss::BossBullet::init()
 	_sprite->setFrameRect(SpriteManager::getInstance()->getSourceRect(eID::BULLET, "boss1_bullet"));
 	_sprite->setScale(SCALE_FACTOR);
 	this->setPosition(_startPosition);
+
 	Movement* movement = new Movement(VECTOR2ZERO, _force, _sprite);
 	Gravity* gravity = new Gravity(_gravity, movement);
 	CollisionBody* collisionBody = new CollisionBody(this);

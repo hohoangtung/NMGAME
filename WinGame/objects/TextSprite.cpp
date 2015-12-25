@@ -1,4 +1,4 @@
-﻿#include "TextSprite.h"
+#include "TextSprite.h"
 
 
 void TextSprite::init()
@@ -63,6 +63,12 @@ void TextSprite::release()
 {
 
 }
+
+void TextSprite::setString(string text)
+{
+	this->_text = text;
+}
+
 void TextSprite::setPosition(GVector2 position)
 {
 	_position = position;

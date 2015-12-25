@@ -63,7 +63,10 @@ enum eID
 	FONTFULL		= 31,
 	MAPSTAGE3		= 32,
 	ROCKCREATOR		= 33,
-	TUT_LAYER		= 34
+	SHADOW_BEAST	= 34,
+	SHADOW_ARM		= 35,
+	SHADOW_MOUTH	= 36,
+	TUT_LAYER		= 37
 };
  
 enum eStatus
@@ -142,6 +145,7 @@ enum eBulletType
 	M_BULLET		= (1 << 7),
 	BOSSSTAGE1_BULLET = (1 << 8),
 	SCUBABULLET		= (1 << 9),
+	BEASTBULLET		= (1 << 10),
 };
 
 enum eSoundId

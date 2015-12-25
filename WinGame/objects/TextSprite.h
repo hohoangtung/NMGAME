@@ -14,6 +14,8 @@ public:
 	void draw(LPD3DXSPRITE spriteHandle);
 	void release();
 
+	void setString(string text);
+
 	void setPosition(GVector2 position);
 	GVector2 getPosition();
 
@@ -24,6 +26,7 @@ private:
 	eID _type;
 	string _text;
 	GVector2 _position;
+
 	int _columns;
 	int rows;
 	int _framewidth;

@@ -3,14 +3,16 @@
 #include "BeginPlayScene.h"
 #include "GameOverScene.h"
 #include "Score.h"
+#include "ShadowBeast.h"
 
 #if _DEBUG
 #include <time.h>
 #endif
 
  
-Stage3::Stage3()
+Stage3::Stage3(int billlife)
 {
+	_restBill = billlife;
 	_viewport = new Viewport(0, WINDOW_HEIGHT, WINDOW_WIDTH, WINDOW_HEIGHT);
 } 
 
@@ -27,9 +29,9 @@ void Stage3::setViewport(Viewport * viewport)
 
 bool Stage3::init()
 {
-	auto bill = new Bill(30);
+	auto bill = new Bill(_restBill);
 	bill->init();
-	bill->setPosition(200, 900);
+	bill->setPosition(200, 400);
 	
 	this->_bill = bill;
 	_listControlObject.push_back(bill);
@@ -39,7 +41,9 @@ bool Stage3::init()
 	bulletmanager->init();
 	_listobject.push_back(bulletmanager);
 
-
+	auto shadow = new ShadowBeast(GVector2(256, 4124));
+	shadow->init();
+	_listobject.push_back(shadow);
 	_text = new Text(L"Arial", "", 10, 25);
 
 	map<string, BaseObject*>* maptemp = ObjectFactory::getMapObjectFromFile("Resources//Map//stage3.xml");
@@ -54,6 +58,23 @@ bool Stage3::init()
 
 	SoundManager::getInstance()->PlayLoop(eSoundId::BACKGROUND_STAGE2);
 
+	auto scenarioBoss_Viewport = new Scenario("BossViewport");
+	__hook(&Scenario::update, scenarioBoss_Viewport, &Stage3::bossScene_Viewport);
+	auto scenarioBossSound = new Scenario("BossSound");
+	__hook(&Scenario::update, scenarioBossSound, &Stage3::playBossStage1Sound);
+	_director = new ScenarioManager();
+	_director->insertScenario(scenarioBossSound);
+	_director->insertScenario(scenarioBoss_Viewport);
+
+	auto scenarioKillBoss = new Scenario("KillBoss");
+	__hook(&Scenario::update, scenarioKillBoss, &Stage3::killbossScene_Bill);
+	auto playsound = new Scenario("PassBossSound");
+	__hook(&Scenario::update, playsound, &Stage3::playPassBossSound);
+
+	flagbossScenario = false;
+	_directorKillBoss = new ScenarioManager();
+	_directorKillBoss->insertScenario(playsound);
+	_directorKillBoss->insertScenario(scenarioKillBoss);
 	return true;
 }
 void Stage3::bossScene_Viewport(float dt, bool& finish)
@@ -61,21 +82,21 @@ void Stage3::bossScene_Viewport(float dt, bool& finish)
 	GVector2 current_position = _viewport->getPositionWorld();
 	GVector2 worldsize = this->background->getWorldSize();
 
-	current_position.x += BILL_MOVE_SPEED * dt / 1000;
-	if (current_position.x + WINDOW_WIDTH > worldsize.x)
+	current_position.y += BILL_MOVE_SPEED * dt / 1000;
+	if (current_position.y > worldsize.y)
 	{ 
-		current_position.x = worldsize.x - WINDOW_WIDTH;
+		current_position.y = worldsize.y;
 		finish = true;
 		_viewport->setPositionWorld(current_position);
 		return;
 	}
 	_viewport->setPositionWorld(current_position);
-	if (_bill->getBounding().left < current_position.x)
-	{
-		GVector2 curPos = _bill->getPosition();
-		curPos.x = current_position.x + (_bill->getSprite()->getFrameWidth() >> 1);
-		_bill->setPosition(curPos);
-	}
+	//if (_bill->getBounding().left < current_position.x)
+	//{
+	//	GVector2 curPos = _bill->getPosition();
+	//	curPos.x = current_position.x + (_bill->getSprite()->getFrameWidth() >> 1);
+	//	_bill->setPosition(curPos);
+	//}
 	finish = false;
 }
 void Stage3::playBossStage1Sound(float dt, bool& finish)
@@ -257,16 +278,8 @@ void Stage3::updateViewport(BaseObject* objTracker)
 	// Vị trí hiện tại của viewport. 
 	GVector2 current_position = _viewport->getPositionWorld();
 	GVector2 worldsize = this->background->getWorldSize();
-	// Bám theo object.
-	//GVector2 new_position = GVector2(max(objTracker->getPositionX() - 260, 0), WINDOW_HEIGHT);		// 200 khoảng cách tối đa giữa object và map -> hardcode
-	GVector2 new_position = GVector2(0, max(objTracker->getPositionY() + 192, WINDOW_HEIGHT));		// 200 khoảng cách tối đa giữa object và map -> hardcode
+	GVector2 new_position = GVector2(0, max(objTracker->getPositionY() + 192, WINDOW_HEIGHT));		// 192 khoảng cách tối đa giữa object và map -> hardcode
 
-//#if(!_DEBUG)
-	 //Không cho đi ngược
-	//if (new_position.x < current_position.x)
-	//{
-	//	new_position.x = current_position.x;
-	//}
 	if (new_position.y < current_position.y)
 	{
 		new_position.y = current_position.y;
@@ -275,7 +288,7 @@ void Stage3::updateViewport(BaseObject* objTracker)
 	{
 		new_position.y = worldsize.y ;
 	}
-//#endif
+
 
 	_viewport->setPositionWorld(new_position);
 
@@ -322,8 +335,8 @@ void Stage3::ScenarioMoveViewport(float deltatime)
 {
 	if (_director == nullptr)
 		return;
-
-	if (((Bill*)_bill)->getPositionX() > BOSS_VIEWPORT_ANCHOR)
+	
+	if (_viewport->getPositionWorld().y > 4192.0f)
 	{
 		flagbossScenario = true;
 	}

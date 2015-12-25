@@ -617,7 +617,7 @@
     <Item Id="25" Name="fire01" X="256" Y="1683" Width="32" Height="36">
       <ActiveBound X="128" Y="1683" Width="256" Height="36" />
     </Item>
-    <Item Id="4" Name="aircraft01" X="128" Y="1440" Width="64" Height="32">
+    <Item Id="4" Name="aircraft01" X="160" Y="1440" Width="64" Height="32">
       <ActiveBound X="0" Y="1952" Width="192" Height="544" />
       <Params>
         <Elem Key="type" Value="0" />
@@ -625,7 +625,7 @@
         <Elem Key="Amplitude" Value="64,0" />
       </Params>
     </Item>
-    <Item Id="4" Name="aircraft02" X="352" Y="1440" Width="64" Height="32">
+    <Item Id="4" Name="aircraft02" X="384" Y="1440" Width="64" Height="32">
       <ActiveBound X="224" Y="1952" Width="192" Height="544" />
       <Params>
         <Elem Key="type" Value="4" />

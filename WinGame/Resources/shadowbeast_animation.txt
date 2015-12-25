@@ -1,0 +1,4 @@
+frame_name	left	top	right	bottom
+mouth1		270	200	316	249
+mouth2		320	200	366	249
+mouth3		370	200	419	249

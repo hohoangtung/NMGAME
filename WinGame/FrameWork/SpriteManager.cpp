@@ -122,10 +122,17 @@ void SpriteManager::loadResource(LPD3DXSPRITE spriteHandle)
 	this->_listSprite[eID::ROCKFLY] = sp;
 	this->loadSpriteInfo(eID::ROCKFLY, "Resources\\rockfly_animation.txt");
 
+	this->_listSprite[eID::SHADOW_ARM] = sp;
+	this->loadSpriteInfo(eID::SHADOW_ARM, "Resources\\shadowarm_animation.txt");
+
+
 	sp = new Sprite(spriteHandle, L"Resources\\Life.png");
 	this->_listSprite[eID::LIFE_ICON] = sp;
 	this->loadSpriteInfo(eID::LIFE_ICON, "Resources\\life_info.txt");
-
+	
+	sp = new Sprite(spriteHandle, L"Resources\\ShadowBeast.png");
+	this->_listSprite[eID::SHADOW_MOUTH] = sp;
+	this->loadSpriteInfo(eID::SHADOW_MOUTH, "Resources\\shadowbeast_animation.txt");
 
 	sp = new Sprite(spriteHandle, L"Resources\\ScubaSoldier.png");
 	this->_listSprite[eID::SCUBASOLDIER] = sp;

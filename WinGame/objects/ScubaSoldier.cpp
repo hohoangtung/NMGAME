@@ -160,7 +160,7 @@ void ScubaSoldier::ScubaBullet::init()
 	this->_componentList["Gravity"] = gravity;
 	this->_componentList["CollisionBody"] = collisionBody;
 	
-	__hook(&CollisionBody::onCollisionBegin, collisionBody, &Bullet::onCollisionBegin); //dư?
+	__hook(&CollisionBody::onCollisionBegin, collisionBody, &Bullet::onCollisionBegin);
 	_explosionburst = nullptr;
 	_explosion = nullptr;
 	if (this->_force.x == 0)
@@ -238,6 +238,8 @@ void ScubaSoldier::ScubaBullet::fireBurst(float deltatime)
 		_explosionburst->init();
 		_explosionburst->setScale(SCALE_FACTOR);
 		_explosionburst->setPosition(this->getPosition());
+		SoundManager::getInstance()->Play(eSoundId::MBULLET_FIRE);
+
 	}
 	else
 	{
@@ -253,7 +255,6 @@ void ScubaSoldier::ScubaBullet::fireBurst(float deltatime)
 			{
 				_explosionburst->update(deltatime);
 			}
-			SoundManager::getInstance()->Play(eSoundId::MBULLET_FIRE);
 		}
 	}
 }
@@ -277,7 +278,7 @@ void ScubaSoldier::ScubaBullet::draw(LPD3DXSPRITE spriteHandle, Viewport* viewpo
 float ScubaSoldier::ScubaBullet::checkCollision(BaseObject* object, float dt)
 {
 	auto body = (CollisionBody*)_componentList.find("CollisionBody")->second;
-	if (object->getId() == eID::LAND)
+	if (object->getId() == eID::LAND || object->getId() == eID::BILL)
 	{
 		body->checkCollision(object, dt, false);
 	}

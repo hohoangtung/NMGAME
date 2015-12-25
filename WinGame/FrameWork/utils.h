@@ -42,5 +42,7 @@ std::vector<std::string> splitString(const std::string & input, char seperate);
 */
 bool isContain(RECT rect, D3DXVECTOR2 point);
 
+double CalculateCoefficient(int n, int k);
+
 
 #endif // !__UTILS_H__

@@ -2,6 +2,7 @@
 #include "AirCraft.h"
 #include "../debug.h"
 #include "GameOverScene.h"
+#include "ShadowBeast.h"
 #include "ObjectCreator.h"
 
 Bill::Bill(int life) : BaseObject(eID::BILL)
@@ -197,12 +198,12 @@ void Bill::updateInput(float dt)
 		{
 			if (((_currentGun & R_BULLET) == R_BULLET || (_currentGun & M_BULLET) == M_BULLET) && _stopWatch->isStopWatch(_shootSpeed))
 			{
-				this->addStatus(eStatus::SHOOTING);
-				shoot();
-				_stopWatch->restart();
+			this->addStatus(eStatus::SHOOTING);
+			shoot();
+			_stopWatch->restart();
 				_shootAnimateStopWatch->restart();
-			}
 		}
+	}
 	}
 
 	// delay animate shooting
@@ -604,15 +605,20 @@ float Bill::checkCollision(BaseObject * object, float dt)
 		}
 		else
 		{
-			collisionBody->checkCollision(object, dt);
-		}
+		collisionBody->checkCollision(object, dt);
+	}
 	}
 
 	for (auto it = _listBullets.begin(); it != _listBullets.end(); it++)
 	{
 		if (object->getId() != eID::LAND)
 		{
-			if (objectId == eID::BOSS_STAGE1)
+			if (objectId == eID::SHADOW_BEAST)
+			{
+				safeCheckCollision((*it), ((ShadowBeast*)object)->getLeftArm(), dt);
+				safeCheckCollision((*it), ((ShadowBeast*)object)->getRigtArm(), dt);
+			}
+			else if (objectId == eID::BOSS_STAGE1)
 			{
 				safeCheckCollision((*it), ((Boss*)object)->getGun1(), dt);
 				safeCheckCollision((*it), ((Boss*)object)->getGun2(), dt);
@@ -630,8 +636,8 @@ float Bill::checkCollision(BaseObject * object, float dt)
 			else
 			{
 				(*it)->checkCollision(object, dt);
-			}
 		}
+	}
 	}
 
 	return 0.0f;
@@ -740,65 +746,65 @@ void Bill::shoot()
 	{
 		pos.y -= 5 * this->getScale().y;
 	}
+	
+	if (direction == eDirection::TOP)
+	{
+		angle = TOP_SHOOT_ANGLE;
+		pos.x += 5 * this->getScale().x;
+		pos.y += this->getSprite()->getFrameHeight() / 3;
+	}
+	else if (direction == (eDirection::TOP | eDirection::RIGHT))
+	{
+		angle = TOPRIGHT_SHOOT_ANGLE;
+		pos.x += this->getSprite()->getFrameWidth() / 3;
+		pos.y += 14 * this->getScale().y;
+	}
+	else if (direction == (eDirection::TOP | eDirection::LEFT))
+	{
+		angle = TOPLEFT_SHOOT_ANGLE;
+		pos.x -= this->getSprite()->getFrameWidth() / 3;
+		pos.y += 14 * this->getScale().y;
+	}
+	else if (direction == eDirection::LEFT)
+	{
+		angle = LEFT_SHOOT_ANGLE;
+		pos.x -= this->getSprite()->getFrameWidth() / 3;
+		pos.y += 5 * this->getScale().y;
+	}
+	else if (direction == eDirection::RIGHT)
+	{
+		angle = RIGHT_SHOOT_ANGLE;
+		pos.x += this->getSprite()->getFrameWidth() / 3;
+		pos.y += 5 * this->getScale().y;
+	}
+	else if (direction == (eDirection::BOTTOM | eDirection::RIGHT))
+	{
+		angle = BOTRIGHT_SHOOT_ANGLE;
+		pos.x += this->getSprite()->getFrameWidth() / 3;
+		pos.y += 5 * this->getScale().y;
+	}
+	else if (direction == (eDirection::BOTTOM | eDirection::LEFT))
+	{
+		angle = BOTLEFT_SHOOT_ANGLE;
+		pos.x -= this->getSprite()->getFrameWidth() / 3;
+		pos.y += 5 * this->getScale().y;
+	}
+	else if (direction == eDirection::BOTTOM)
+	{
+		angle = 180.0f;
+	}
 
-if (direction == eDirection::TOP)
-{
-	angle = TOP_SHOOT_ANGLE;
-	pos.x += 5 * this->getScale().x;
-	pos.y += this->getSprite()->getFrameHeight() / 3;
-}
-else if (direction == (eDirection::TOP | eDirection::RIGHT))
-{
-	angle = TOPRIGHT_SHOOT_ANGLE;
-	pos.x += this->getSprite()->getFrameWidth() / 3;
-	pos.y += 14 * this->getScale().y;
-}
-else if (direction == (eDirection::TOP | eDirection::LEFT))
-{
-	angle = TOPLEFT_SHOOT_ANGLE;
-	pos.x -= this->getSprite()->getFrameWidth() / 3;
-	pos.y += 14 * this->getScale().y;
-}
-else if (direction == eDirection::LEFT)
-{
-	angle = LEFT_SHOOT_ANGLE;
-	pos.x -= this->getSprite()->getFrameWidth() / 3;
-	pos.y += 5 * this->getScale().y;
-}
-else if (direction == eDirection::RIGHT)
-{
-	angle = RIGHT_SHOOT_ANGLE;
-	pos.x += this->getSprite()->getFrameWidth() / 3;
-	pos.y += 5 * this->getScale().y;
-}
-else if (direction == (eDirection::BOTTOM | eDirection::RIGHT))
-{
-	angle = BOTRIGHT_SHOOT_ANGLE;
-	pos.x += this->getSprite()->getFrameWidth() / 3;
-	pos.y += 5 * this->getScale().y;
-}
-else if (direction == (eDirection::BOTTOM | eDirection::LEFT))
-{
-	angle = BOTLEFT_SHOOT_ANGLE;
-	pos.x -= this->getSprite()->getFrameWidth() / 3;
-	pos.y += 5 * this->getScale().y;
-}
-else if (direction == eDirection::BOTTOM)
-{
-	angle = 180.0f;
-}
-
-if (this->isInStatus(eStatus::SWIMING))
-pos.y -= 8 * this->getScale().y;
+	if (this->isInStatus(eStatus::SWIMING))
+		pos.y -= 8 * this->getScale().y;
 
 
-Bullet* bullet = this->getBulletFromGun(pos, angle);
-if (bullet == nullptr)
-return;
+	Bullet* bullet = this->getBulletFromGun(pos, angle);
+	if (bullet == nullptr)
+		return;
 
-//_listBullets.push_back(new Bullet(pos,(eBulletType)(BILL_BULLET | NORMAL_BULLET),angle));		// normalbullet -> hardcode
-_listBullets.push_back(bullet);		// normalbullet -> hardcode
-_listBullets.back()->init();
+	//_listBullets.push_back(new Bullet(pos,(eBulletType)(BILL_BULLET | NORMAL_BULLET),angle));		// normalbullet -> hardcode
+	_listBullets.push_back(bullet);		// normalbullet -> hardcode
+	_listBullets.back()->init();
 }
 
 void Bill::revive()
@@ -898,7 +904,7 @@ Bullet* Bill::getBulletFromGun(GVector2 position, float angle)
 		//	return nullptr; 
 
 		if (_listBullets.size() >= _maxBullet)
-			return nullptr;
+			return nullptr; 
 
 		bullet = new FBullet(position, angle);
 		SoundManager::getInstance()->Play(eSoundId::FBULLET_FIRE);
@@ -970,7 +976,7 @@ void Bill::swimming()
 	_animations[eStatus::SWIMING | LOOKING_UP | SHOOTING]->setTimeAnimate(0.2f);
 
 	{
-		// cập nhật animate
+	// cập nhật animate
 		if (this->isInStatus(eStatus::LAYING_DOWN))
 		{
 			this->removeStatus(eStatus::LAYING_DOWN);
@@ -983,25 +989,25 @@ void Bill::swimming()
 			_animations[eStatus::DIVING]->restart();
 		}
 		else if (this->isInStatus(eStatus(MOVING_LEFT | LOOKING_UP | SHOOTING)) || this->isInStatus(eStatus(MOVING_RIGHT | LOOKING_UP | SHOOTING)))
-		{
-			_animations[eStatus::SWIMING | RUNNING | SHOOTING | LOOKING_UP]->restart();
-		}
+	{
+		_animations[eStatus::SWIMING | RUNNING | SHOOTING | LOOKING_UP]->restart();
+	}
 		else if ((this->isInStatus(eStatus(MOVING_LEFT | SHOOTING)) || this->isInStatus(eStatus(MOVING_RIGHT | SHOOTING))))
-		{
-			_animations[eStatus::SWIMING | RUNNING | SHOOTING]->restart();
-		}
-		else if (this->isInStatus(eStatus(LOOKING_UP | SHOOTING)))
-		{
-			_animations[eStatus::SWIMING | LOOKING_UP | SHOOTING]->restart();
-		}
+	{
+		_animations[eStatus::SWIMING | RUNNING | SHOOTING]->restart();
+	}
+	else if (this->isInStatus(eStatus(LOOKING_UP | SHOOTING)))
+	{
+		_animations[eStatus::SWIMING | LOOKING_UP | SHOOTING]->restart();
+	}
 		else if (this->isInStatus(eStatus(SHOOTING)))
-		{
-			_animations[eStatus::SWIMING | SHOOTING]->restart();
-		}
-		else
-		{
-			_animations[eStatus::SWIMING]->restart();
-		}
+	{
+		_animations[eStatus::SWIMING | SHOOTING]->restart();
+	}
+	else
+	{
+		_animations[eStatus::SWIMING]->restart();
+	}
 	}
 }
 
@@ -1153,9 +1159,9 @@ void Bill::updateCurrentAnimateIndex()
 	}
 	else
 	{
-		// trường hợp còn lại gán luôn
-		_currentAnimateIndex = this->getStatus();
-	}
+			// trường hợp còn lại gán luôn
+			_currentAnimateIndex = this->getStatus();
+		}
 
 	if ((_currentAnimateIndex & eStatus::FALLING) == eStatus::FALLING)
 	{
