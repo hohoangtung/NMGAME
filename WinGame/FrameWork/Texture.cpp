@@ -88,7 +88,7 @@ void Texture::render(LPD3DXSPRITE spriteHandle, RECT * srcRect, GVector2 positio
 	spriteHandle->SetTransform(&matFinal);
 
 	// BEGIN
-	spriteHandle->Begin(D3DXSPRITE_SORT_DEPTH_BACKTOFRONT | D3DXSPRITE_ALPHABLEND | D3DXSPRITE_SORT_TEXTURE);
+	spriteHandle->Begin(D3DXSPRITE_SORT_DEPTH_BACKTOFRONT | D3DXSPRITE_ALPHABLEND | D3DXSPRITE_SORT_TEXTURE );
 	
 	spriteHandle->Draw(
 		this->_texture,

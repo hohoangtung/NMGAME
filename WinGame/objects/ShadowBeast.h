@@ -26,7 +26,7 @@ public:
 
 	BaseObject* getLeftArm();
 	BaseObject* getRigtArm();
-
+	BaseObject* getMouth();
 	struct HandElement
 	{
 		Sprite* _sprite;
@@ -57,7 +57,6 @@ public:
 		GVector2 _rootOfArm;
 		float roundCircletime;
 		GVector2** _anchorGroups;
-
 		map<string, IComponent*> _componentList;
 
 		StopWatch* _stopWatch;
@@ -70,6 +69,7 @@ public:
 		HandElement _handelem4;
 		HandElement _arm;
 
+		Explosion* _explosion;
 		static void calculateLenght(HandElement& currentElem, HandElement& prevElem);
 		bool _flagAimFinish[4];
 		bool _isAiming;
@@ -81,6 +81,8 @@ public:
 		void changeWise();
 
 		void shoot();
+		void updateStatusBurst(float dt);
+		void updateStatusNormal(float dt);
 		enum Status
 		{
 			normal,
@@ -104,8 +106,21 @@ public:
 	private:
 		void shoot();
 		map<int, Animation*> _animations;
+		Animation* _animation;
+		Explosion* _explosion;
 		GVector2 _startposition;
 		eMouthStatus _mouthStatus;
+		bool _flagCanShoot;
+
+		void updateStatusNormal(float deltatime);
+		void updateStatusBurst(float deltatime);
+		bool _flagBigExplosion;
+
+		void drawBillExplosion(LPD3DXSPRITE spriteHandle, Viewport* viewport);
+		static GVector2 explose_position[12];
+		bool _flagMoudle;
+		Sprite* _moulder;
+
 	};
 
 private:
@@ -113,6 +128,7 @@ private:
 	ShadowArm* _rightArm;
 	ShadowMouth* _mouth;
 	GVector2 _position;
+	bool _flagPlayedDestroyBoss;
 };
 
 

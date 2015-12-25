@@ -31,6 +31,7 @@
 #include "Fire.h"
 #include "RockFall.h"
 #include "../FrameWork/Scenario.h"
+#include "Help.h"
 
 //#define BOSS_STAGE3_VIEWPORT_ANCHOR 
 
@@ -89,7 +90,7 @@ private:
 	bool flagbossScenario;
 	ScenarioManager* _director;
 	ScenarioManager* _directorKillBoss;
-
+	bool _flagCredit;
 	void killbossScene_Bill(float deltatime, bool& isFinish);
 	void bossScene_Viewport(float dt, bool& finish);
 	void playPassBossSound(float dt, bool& finish);
@@ -101,7 +102,7 @@ private:
 	void ScenarioKillBoss(float deltatime);
 
 	bool checkGameLife();
-
+	Credit* _credit;
 };
 
 #endif // !__STAGE3_H__

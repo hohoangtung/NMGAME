@@ -1119,5 +1119,16 @@
         <Elem Key="type" Value="0" />
       </Params>
     </Item>
+    <Item Id="12" Name="land65" X="66" Y="820" Width="60" Height="5">
+      <ActiveBound X="66" Y="820" Width="60" Height="5" />
+      <Params>
+        <Elem Key="physicBodyDirection" Value="1" />
+        <Elem Key="canJumpDown" Value="0" />
+        <Elem Key="type" Value="0" />
+      </Params>
+    </Item>
+    <Item Id="34" Name="shadowbeast" X="256" Y="4124" Width="33" Height="34">
+      <ActiveBound X="256" Y="4124" Width="33" Height="34" />
+    </Item>
   </Objects>
 </Tilesmap>

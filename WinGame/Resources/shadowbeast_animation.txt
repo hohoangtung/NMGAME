@@ -7,3 +7,4 @@ mouth_opening5		430	5	525	84
 mouth_closed1		6	96	101	175
 mouth_closed2		112	96	207	175
 mouth_closed3		219	96	314	175
+moudler		444		96	511	180

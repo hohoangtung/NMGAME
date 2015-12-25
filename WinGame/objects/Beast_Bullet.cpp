@@ -20,6 +20,7 @@ void BeastBullet::init()
 	_sprite = SpriteManager::getInstance()->getSprite(eID::BULLET);
 
 	_sprite->setFrameRect(SpriteManager::getInstance()->getSourceRect(eID::BULLET, "beastbullet1"));
+	_sprite->setZIndex(1.0f);
 	_animation = new Animation(_sprite, 0.07);
 	_animation->addFrameRect(eID::BULLET, "beastbullet1", "beastbullet2", "beastbullet3", "beastbullet4", NULL);
 

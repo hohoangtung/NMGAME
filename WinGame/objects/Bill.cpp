@@ -23,7 +23,7 @@ void Bill::init()
 
 	_sprite = SpriteManager::getInstance()->getSprite(eID::BILL);
 	_sprite->setFrameRect(SpriteManager::getInstance()->getSourceRect(eID::BILL, "normal_01"));
-
+	_sprite->setZIndex(1.0f);
 	auto movement = new Movement(GVector2(0, 0), GVector2(0, 0), _sprite);
 	_componentList["Movement"] = movement;
 	_componentList["Gravity"] = new Gravity(GVector2(0, -GRAVITY), movement);
@@ -617,6 +617,7 @@ float Bill::checkCollision(BaseObject * object, float dt)
 			{
 				safeCheckCollision((*it), ((ShadowBeast*)object)->getLeftArm(), dt);
 				safeCheckCollision((*it), ((ShadowBeast*)object)->getRigtArm(), dt);
+				safeCheckCollision((*it), ((ShadowBeast*)object)->getMouth(), dt);
 			}
 			else if (objectId == eID::BOSS_STAGE1)
 			{

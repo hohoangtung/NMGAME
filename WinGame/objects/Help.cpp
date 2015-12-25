@@ -21,7 +21,7 @@ void Help::update(float deltatime)
 
 	if (_stack_Key.empty() == true)
 	{
-		_message->setString("Contra game for Se102G13 project");
+		_message->setString("Contra game for Se102 G13 project");
 		return;
 	}
 
@@ -89,4 +89,59 @@ Help::Help()
 
 Help::~Help()
 {
+}
+
+
+/// credit
+
+void Credit::init()
+{
+	_message = new TextSprite(eID::FONTFULL, "", GVector2(150, 30));
+	_message->init();
+	_message->setScale(1.5f);
+	_stopwatch = new StopWatch();
+	current = 0;
+	_radian = 0.0f;
+	_opacity = 0.0f;
+}
+void Credit::update(float deltatime)
+{
+	_radian += deltatime / 1000;
+	_opacity = abs(sin(_radian));		// -1 <= sin <= 1
+	_message->setOpacity(_opacity);
+
+	if (_stopwatch->isTimeLoop(3141.5))
+	{
+		current++;
+	}
+	this->_message->setString(_listInfo[current % 10]);
+}
+
+void Credit::draw(LPD3DXSPRITE spriteHandle)
+{
+	_message->draw(spriteHandle);
+
+}
+
+string Credit::_listInfo[10] =
+{
+	"Do An Nhap Mon Game 2015",
+	"Giang Vien Nguyen Phuong Anh",
+	"Nhom Sinh Vien Thuc Hien",
+	"Ho Hoang Tung 13521005",
+	"Luu The Vinh 13521043",
+	"Lam Tuan Anh 13520020",
+	"Nguyen Tan Luan 13520476",
+	"Huynh Ngoc Thanh Phu 13520630",
+	"Thank For Playing",
+	"Press Q for Return"
+};
+
+Credit::Credit()
+{
+
+}
+Credit::~Credit()
+{
+
 }

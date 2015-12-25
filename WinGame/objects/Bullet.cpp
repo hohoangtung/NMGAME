@@ -249,8 +249,7 @@ void Bullet::onCollisionBegin(CollisionEventArg* collision_arg)
 				this->setStatus(eStatus::DESTROY);
 			break;
 		case SHADOW_MOUTH:
-			if (collision_arg->_otherObject->getStatus() != eMouthStatus::CLOSED)
-				((BaseEnemy*)collision_arg->_otherObject)->dropHitpoint(_damage);
+		case SHADOW_ARM:
 		case BOSS_SHIELD:
 		case BOSS_GUN:
 		case REDCANNON:

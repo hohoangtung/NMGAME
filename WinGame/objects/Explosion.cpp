@@ -80,4 +80,5 @@ void Explosion::draw(LPD3DXSPRITE spriteHandle, Viewport* viewport)
 void Explosion::release()
 {
 	SAFE_DELETE(this->_sprite);
+	SAFE_DELETE(_animation);
 }

@@ -3,7 +3,7 @@
   <QNode Id="0" Level="1" X="0" Y="0" Width="2176" Height="2176">
     <QNode Id="0" Level="2" X="0" Y="0" Width="1088" Height="1088">
       <QNode Id="0" Level="3" X="0" Y="0" Width="544" Height="544">
-        <Objects>land01 land02 </Objects>
+        <Objects>land01 land02 shadowbeast </Objects>
       </QNode>
       <QNode Id="256" Level="3" X="544" Y="0" Width="544" Height="544" />
       <QNode Id="512" Level="3" X="544" Y="544" Width="544" Height="544" />
@@ -184,7 +184,7 @@
             </QNode>
           </QNode>
           <QNode Id="63" Level="5" X="0" Y="3400" Width="136" Height="136">
-            <Objects>rockfall02 land46 land47 </Objects>
+            <Objects>rockfall02 land46 land47 land65 </Objects>
           </QNode>
         </QNode>
         <QNode Id="65596" Level="4" X="272" Y="3264" Width="272" Height="272">
@@ -217,7 +217,7 @@
         </QNode>
         <QNode Id="196668" Level="4" X="0" Y="3536" Width="272" Height="272">
           <QNode Id="196668" Level="5" X="0" Y="3536" Width="136" Height="136">
-            <Objects>rockfall02 land49 </Objects>
+            <Objects>rockfall02 land49 land65 </Objects>
           </QNode>
           <QNode Id="196669" Level="5" X="136" Y="3536" Width="136" Height="136">
             <Objects>rockfall02 land48 </Objects>

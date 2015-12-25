@@ -13,16 +13,17 @@ ShadowBeast::~ShadowBeast()
 
 void ShadowBeast::init()
 {
-	_leftArm = new ShadowArm(_position + GVector2(-107, 52));
+	_leftArm = new ShadowArm(_position + GVector2(-115, 60));
 	_leftArm->init();
 	_leftArm->setWise(false);
 
-	_rightArm = new ShadowArm(_position + GVector2(107, 52));
+	_rightArm = new ShadowArm(_position + GVector2(115, 60));
 	_rightArm->init();
 	_rightArm->setWise(true);
 
 	_mouth = new ShadowMouth(_position+ GVector2(0, 120));
 	_mouth->init();
+	_flagPlayedDestroyBoss = false;
 }
 void ShadowBeast::update(float deltatime)
 {
@@ -37,6 +38,33 @@ void ShadowBeast::update(float deltatime)
 	if (_mouth != nullptr)
 	{
 		_mouth->update(deltatime);
+		if (_mouth->getStatus() == eStatus::BURST)
+		{
+			if (_leftArm->getStatus() == eStatus::NORMAL)
+			{
+				_leftArm->setStatus(eStatus::BURST);
+			}			
+			if (_rightArm->getStatus() == eStatus::NORMAL)
+			{
+				_rightArm->setStatus(eStatus::BURST);
+			}
+		}
+	}
+	if (_flagPlayedDestroyBoss == false)
+	{
+		if (SoundManager::getInstance()->IsPlaying(eSoundId::DESTROY_BOSS) == true)
+		{
+			_flagPlayedDestroyBoss = true;
+		}
+	}
+	else
+	{
+		if (SoundManager::getInstance()->IsPlaying(eSoundId::DESTROY_BOSS) == false)
+		{
+			this->setStatus(eStatus::DYING);
+			//SoundManager::getInstance()->Play(eSoundId::WINGAME);
+			//_flagPlayedDestroyBoss = false;
+		}
 	}
 }
 void ShadowBeast::draw(LPD3DXSPRITE spriteHandle, Viewport* viewport)
@@ -49,11 +77,12 @@ void ShadowBeast::draw(LPD3DXSPRITE spriteHandle, Viewport* viewport)
 	{
 		_rightArm->draw(spriteHandle, viewport);
 	}
+
 	if (_mouth != nullptr)
 	{
 		_mouth->draw(spriteHandle, viewport);
 	}
-	
+
 }
 void ShadowBeast::release()
 {
@@ -90,7 +119,10 @@ BaseObject* ShadowBeast::getRigtArm()
 {
 	return this->_rightArm;
 }
-
+BaseObject* ShadowBeast::getMouth()
+{
+	return _mouth;
+}
 float ShadowBeast::checkCollision(BaseObject* object, float dt)
 {
 	return 0.0f;
@@ -101,6 +133,8 @@ float ShadowBeast::checkCollision(BaseObject* object, float dt)
 void ShadowBeast::ShadowArm::init()
 {
 	srand(599999);
+	_hitpoint = 16;
+	_score = 2000;
 	Sprite* hand1 = SpriteManager::getInstance()->getSprite(eID::SHADOW_ARM);
 	hand1->setFrameRect(SpriteManager::getInstance()->getSourceRect(eID::SHADOW_ARM, "arm"));
 	hand1->setScale(SCALE_FACTOR);
@@ -134,7 +168,8 @@ void ShadowBeast::ShadowArm::init()
 	_stopWatch = new StopWatch();
 	_aimtime = new StopWatch();
 	_trackBillTime = new StopWatch();
-	
+	_explosion = nullptr;
+
 	_isClockWise = false;
 	_isAiming = false;
 	flagforTrackBill = false;
@@ -144,7 +179,7 @@ void ShadowBeast::ShadowArm::init()
 	_handelem2 = HandElement{ hand2, 0.0f, 32 };
 	_handelem3 = HandElement{ hand3, 0.0f, 0 };
 	_handelem4 = HandElement{ hand4, 0.0f, 0 };
-	_arm	= HandElement{ _sprite, 0.0f, 0 };
+	_arm = HandElement{ _sprite, 0.0f, 0 };
 
 	_flagAimFinish[0] = false;
 	_flagAimFinish[1] = false;
@@ -175,39 +210,18 @@ ShadowBeast::ShadowArm::~ShadowArm()
 
 void ShadowBeast::ShadowArm::update(float deltatime)
 {
-	if (_memStatus == normal)
+	if (this->getStatus() == eStatus::NORMAL)
 	{
-		if (_stopWatch->isTimeLoop(1000))
+		updateStatusNormal(deltatime);
+		if (this->getHitpoint() <= 0)
 		{
-			int rd = rand() % 2;
-			if (rd == 0)
-			{
-				changeWise();
-			}
-			_stopWatch->restart();
-		}
-		this->roundCircle(deltatime);
-		if (_aimtime->isTimeLoop(5000))
-		{
-			_memStatus = aiming;
-			_aimtime->restart();
-			flagforTrackBill = false;
+			this->setStatus(eStatus::BURST);
+			SoundManager::getInstance()->Play(eSoundId::DESTROY_ENEMY);
 		}
 	}
-	if (_memStatus == aiming)
-	{
-		this->aimAttack(deltatime);
-	}
+	else if (this->getStatus() == eStatus::BURST)
+		updateStatusBurst(deltatime);
 
-	calculateLenght(_handelem3, _handelem2);
-	calculateLenght(_handelem4, _handelem3);
-	calculateLenght(_arm, _handelem4);
-
-	this->updateElemPosition(_handelem1);
-	this->updateElemPosition(_handelem2);
-	this->updateElemPosition(_handelem3);
-	this->updateElemPosition(_handelem4);
-	this->updateElemPosition(_arm);
 
 }
 
@@ -399,11 +413,35 @@ void ShadowBeast::ShadowArm::shoot()
 void ShadowBeast::ShadowArm::draw(LPD3DXSPRITE spriteHandle, Viewport* viewport)
 {
 	//_sprite->render(spriteHandle, viewport);
-	_handelem1._sprite->render(spriteHandle, viewport);
-	_handelem2._sprite->render(spriteHandle, viewport);
-	_handelem3._sprite->render(spriteHandle, viewport);
-	_handelem4._sprite->render(spriteHandle, viewport);
-	_arm._sprite->render(spriteHandle, viewport);
+	if (this->getStatus() == eStatus::NORMAL)
+	{
+		_handelem1._sprite->render(spriteHandle, viewport);
+		_handelem2._sprite->render(spriteHandle, viewport);
+		_handelem3._sprite->render(spriteHandle, viewport);
+		_handelem4._sprite->render(spriteHandle, viewport);
+		_arm._sprite->render(spriteHandle, viewport);
+	}
+	else if (this->getStatus() == eStatus::BURST)
+	{
+		
+		if (_explosion != nullptr)
+		{
+			_explosion->setPosition(_handelem1._sprite->getPosition());
+			_explosion->draw(spriteHandle, viewport);
+
+			_explosion->setPosition(_handelem2._sprite->getPosition());
+			_explosion->draw(spriteHandle, viewport);
+
+			_explosion->setPosition(_handelem3._sprite->getPosition());
+			_explosion->draw(spriteHandle, viewport);
+
+			_explosion->setPosition(_handelem4._sprite->getPosition());
+			_explosion->draw(spriteHandle, viewport);
+
+			_explosion->setPosition(_arm._sprite->getPosition());
+			_explosion->draw(spriteHandle, viewport);
+		}
+	}
 }
 void ShadowBeast::ShadowArm::release()
 {
@@ -412,6 +450,8 @@ void ShadowBeast::ShadowArm::release()
 }
 RECT ShadowBeast::ShadowArm::getBounding()
 {
+	if (this->getStatus() != eStatus::NORMAL)
+		return RECT{ 0, 0, 0, 0 };
 	return BaseObject::getBounding();
 }
 
@@ -434,6 +474,60 @@ void ShadowBeast::ShadowArm::calculateLenght(HandElement& currentElem, HandEleme
 	}
 }
 
+
+void ShadowBeast::ShadowArm::updateStatusBurst(float deltatime)
+{
+	if (_explosion == nullptr )
+	{
+		_explosion = new  Explosion(2);
+		_explosion->init();
+		_explosion->setScale(SCALE_FACTOR);
+	}
+	else
+	{
+		_explosion->update(deltatime);
+		if (_explosion->getStatus() == eStatus::DESTROY)
+		{
+			this->setStatus(eStatus::DESTROY);
+		}
+	}
+}
+void ShadowBeast::ShadowArm::updateStatusNormal(float deltatime)
+{
+	if (_memStatus == normal)
+	{
+		if (_stopWatch->isTimeLoop(1000))
+		{
+			int rd = rand() % 2;
+			if (rd == 0)
+			{
+				changeWise();
+			}
+			_stopWatch->restart();
+		}
+		this->roundCircle(deltatime);
+		if (_aimtime->isTimeLoop(5000))
+		{
+			_memStatus = aiming;
+			_aimtime->restart();
+			flagforTrackBill = false;
+		}
+	}
+	if (_memStatus == aiming)
+	{
+		this->aimAttack(deltatime);
+	}
+
+	calculateLenght(_handelem3, _handelem2);
+	calculateLenght(_handelem4, _handelem3);
+	calculateLenght(_arm, _handelem4);
+
+	this->updateElemPosition(_handelem1);
+	this->updateElemPosition(_handelem2);
+	this->updateElemPosition(_handelem3);
+	this->updateElemPosition(_handelem4);
+	this->updateElemPosition(_arm);
+}
 void ShadowBeast::ShadowArm::updateElemPosition(HandElement& elem)
 {
 	elem._sprite->setPosition(
@@ -444,52 +538,157 @@ void ShadowBeast::ShadowArm::updateElemPosition(HandElement& elem)
 
 /* Shadow Mouth */
 
-
+GVector2 ShadowBeast::ShadowMouth::explose_position[12] = 
+{
+	GVector2(96, 64),
+	GVector2(-96, 64),
+	GVector2(32, 64),
+	GVector2(-32, 64),
+	GVector2(32, 0),
+	GVector2(-32, 0),
+	GVector2(32, -64),
+	GVector2(-32, -64),
+	GVector2(32, -128),
+	GVector2(-32, -128),
+	GVector2(32, -192),
+	GVector2(-32, -192)
+};
 void ShadowBeast::ShadowMouth::init()
 {
+	_hitpoint = 32;
+	_score = 10000;
 	_sprite = SpriteManager::getInstance()->getSprite(eID::SHADOW_MOUTH);
 	_sprite->setFrameRect(SpriteManager::getInstance()->getSourceRect(eID::SHADOW_MOUTH, "mouth_opening1"));
 	_sprite->setScale(SCALE_FACTOR);
 	_sprite->setPosition(_startposition);
 
-	_animations[eMouthStatus::OPENING] = new Animation(_sprite, 1);
-	_animations[eMouthStatus::OPENING]->addFrameRect(eID::SHADOW_MOUTH, "mouth_opening1", "mouth_opening2", "mouth_opening3", "mouth_opening4", "mouth_opening5", "mouth_opening5", "mouth_opening4", "mouth_opening3", "mouth_opening2", "mouth_opening1", NULL);
-	_animations[eMouthStatus::CLOSED] = new Animation(_sprite, 1);
-	_animations[eMouthStatus::CLOSED]->addFrameRect(eID::SHADOW_MOUTH, "mouth_closed1", "mouth_closed2", "mouth_closed3", NULL);
-	//_animations[eMouthStatus::CLOSING] = new Animation(_sprite, 1);
-	//_animations[eMouthStatus::CLOSING]->addFrameRect(eID::SHADOW_MOUTH, "mouth_opening5", "mouth_opening4", "mouth_opening3", "mouth_opening2", "mouth_opening1", NULL);
+	_animation = new Animation(_sprite, 0.33f);
+	_animation->addFrameRect(eID::SHADOW_MOUTH, "mouth_opening1", "mouth_opening2", "mouth_opening3", "mouth_opening4", "mouth_opening5", "mouth_opening4", "mouth_opening3", "mouth_opening2", "mouth_opening1",  "mouth_closed3", "mouth_closed2", "mouth_closed1", "mouth_closed2", "mouth_closed3", NULL);
 
-	this->setMouthStatus(eMouthStatus::OPENING);
+	_flagCanShoot = true;
+	_explosion = nullptr;
+	_flagBigExplosion = true;
+
+
+	_moulder = SpriteManager::getInstance()->getSprite(eID::SHADOW_MOUTH);
+	_moulder->setFrameRect(SpriteManager::getInstance()->getSourceRect(eID::SHADOW_MOUTH, "moudler"));
+	_moulder->setScale(SCALE_FACTOR);
+	_moulder->setOrigin(GVector2(0.5f, 1.0f));
+	_moulder->setPosition(_startposition + GVector2(0, -120) + GVector2(-1, 3));
+	_moulder->setZIndex(0.0f);
+	_flagMoudle = false;
+}
+void ShadowBeast::ShadowMouth::updateStatusNormal(float deltatime)
+{
+	if (_animation != nullptr)
+	{
+		_animation->update(deltatime);
+	}
+	if (_animation->getIndex() == 4)
+	{
+		if (_flagCanShoot == true)
+		{
+			shoot();
+		}
+	}
+	else if (_animation->getIndex() == 9)
+	{
+		_flagCanShoot = true;
+	}
+
+}
+void ShadowBeast::ShadowMouth::updateStatusBurst(float deltatime)
+{
+	if (this->_explosion == nullptr)
+	{
+		this->_explosion = new Explosion(2);
+		this->_explosion->init();
+		this->_explosion->setScale(SCALE_FACTOR);
+		if (_flagBigExplosion == true)
+		{
+			_explosion->setPosition(this->getPosition());
+		}
+	}
+	else
+	{
+		this->_explosion->update(deltatime);
+		if (this->_explosion->getStatus() == eStatus::DESTROY)
+		{
+			_explosion->release();
+			if (_flagBigExplosion == true)
+			{
+				_explosion->init();
+				_explosion->setStatus(eStatus::NORMAL);
+				this->_explosion->setScale(SCALE_FACTOR);
+				SoundManager::getInstance()->Stop(eSoundId::BACKGROUND_STAGE2);
+				SoundManager::getInstance()->Play(eSoundId::DESTROY_BOSS);
+				_flagBigExplosion = false;
+			}
+			else
+			{
+				delete _explosion;
+				_explosion = nullptr;
+				this->setStatus(eStatus::DESTROY);
+			}
+		}
+	}
 }
 void ShadowBeast::ShadowMouth::update(float deltatime)
 {
-	Animation* current = _animations[this->getMouthStatus()];
-	//_animations[this->getMouthStatus()]->update(deltatime);
-	//if (current->getIndex() == 2)
-	//{
-	//	shoot();
-	//}
-	//if (this->getMouthStatus() == eMouthStatus::OPENING && current->getIndex() == 0)
-	//	this->setMouthStatus(eMouthStatus::CLOSED);
-	////else if (this->getMouthStatus() == eMouthStatus::CLOSING && current->getIndex() == 4)
-	////	this->setMouthStatus(eMouthStatus::CLOSED);
-	//else if (this->getMouthStatus() == eMouthStatus::CLOSED && current->getIndex() == 0)
-	//	this->setMouthStatus(eMouthStatus::OPENING);
-	_animations[this->getMouthStatus()]->update(deltatime);
-	if (this->getMouthStatus() == eMouthStatus::CLOSED && current->getIndex() == 0)
-		this->setMouthStatus(eMouthStatus::OPENING);
-	//else if (this->getMouthStatus() == eMouthStatus::CLOSING && current->getIndex() == 4)
-	//	this->setMouthStatus(eMouthStatus::CLOSED);
-	else if (this->getMouthStatus() == eMouthStatus::OPENING && current->getIndex() == 0)
-		this->setMouthStatus(eMouthStatus::CLOSED);
+	if (this->getStatus() == eStatus::NORMAL)
+	{
+		this->updateStatusNormal(deltatime);
+		if (this->getHitpoint() <= 0)
+		{
+			this->setStatus(eStatus::BURST);
+		}
+	}
+	else if (this->getStatus() == eStatus::BURST)
+	{
+		this->updateStatusBurst(deltatime);
+	}
+}
+
+void ShadowBeast::ShadowMouth::drawBillExplosion(LPD3DXSPRITE spriteHandle, Viewport* viewport)
+{
+	for (int i = 0; i < 12; i++)
+	{
+		_explosion->setPosition(this->getPosition() + explose_position[i]);
+		_explosion->draw(spriteHandle, viewport);
+	}
 }
 void ShadowBeast::ShadowMouth::draw(LPD3DXSPRITE spriteHandle, Viewport* viewport)
 {
-	if (_animations[this->getMouthStatus()] != nullptr)
+	if (_flagMoudle == true)
 	{
-		_animations[this->getMouthStatus()]->draw(spriteHandle, viewport);
+		_moulder->render(spriteHandle, viewport);
 	}
+	if (this->getStatus() == eStatus::NORMAL)
+	{
+		if (_animation != nullptr)
+		{
+			_animation->draw(spriteHandle, viewport);
+		}
+	}
+	else if (this->getStatus() == eStatus::BURST)
+	{
+		if (this->_explosion != nullptr)
+		{
+			if (this->_flagBigExplosion == true)
+			{
+				this->_explosion->draw(spriteHandle, viewport);
+			}
+			else
+			{
+				this->drawBillExplosion(spriteHandle, viewport);
+				_flagMoudle = true;
+			}
+		}
+	}
+
 }
+
+
 void ShadowBeast::ShadowMouth::release()
 {
 	SAFE_DELETE(_sprite);
@@ -499,13 +698,23 @@ void ShadowBeast::ShadowMouth::release()
 }
 RECT ShadowBeast::ShadowMouth::getBounding()
 {
-	return BaseObject::getBounding();
+	int index = _animation->getIndex();
+	if ( index >= 2 && index <= 6)
+	{
+		auto basebound = BaseObject::getBounding();
+		basebound.left += 38 * this->getScale().x;
+		basebound.right -= 38 * this->getScale().x;
+		basebound.top += 14 * this->getScale().y;
+		return basebound;
+	}
+	return RECT{ 0, 0, 0, 0 };
 }
 void ShadowBeast::ShadowMouth::shoot()
 {
-	//BulletManager::insertBullet(new BeastBullet(this->getPosition(), D3DXToDegree( M_PI + M_PI_2 / 3)));
-	//BulletManager::insertBullet(new BeastBullet(this->getPosition(), D3DXToDegree( M_PI + 0)));
-	//BulletManager::insertBullet(new BeastBullet(this->getPosition(), D3DXToDegree( M_PI - M_PI_2 / 3)));
+	BulletManager::insertBullet(new BeastBullet(this->getPosition() + GVector2(- 32, -32), D3DXToDegree( M_PI + M_PI_2 / 3)));
+	BulletManager::insertBullet(new BeastBullet(this->getPosition() + GVector2(0, -32), D3DXToDegree(M_PI + 0)));
+	BulletManager::insertBullet(new BeastBullet(this->getPosition() + GVector2(+ 32, -32), D3DXToDegree(M_PI - M_PI_2 / 3)));
+	_flagCanShoot = false;
 }
 ShadowBeast::ShadowMouth::ShadowMouth(GVector2 startposition) : BaseEnemy(eID::SHADOW_MOUTH)
 {

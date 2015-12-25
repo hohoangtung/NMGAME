@@ -2,6 +2,7 @@
 #include "ObjectFactory.h"
 #include "..\objects\Land.h"
 #include "..\objects\RockCreator.h"
+#include "..\objects\ShadowBeast.h"
 
 ObjectFactory::ObjectFactory()
 {
@@ -121,6 +122,8 @@ BaseObject* ObjectFactory::getObjectById(xml_node node, eID id)
 			return getScubaSoldier(node);
 		case FIRE:
 			return getFire(node);
+		case SHADOW_BEAST:
+			return getShadowBeast(node);
 		default:
 			return nullptr;
 			break;
@@ -597,6 +600,22 @@ BaseObject* ObjectFactory::getScubaSoldier(xml_node node)
 	auto scubasoldier = new ScubaSoldier(GVector2(x , y));
 	scubasoldier->init();
 	return scubasoldier;
+}
+
+BaseObject* ObjectFactory::getShadowBeast(xml_node node)
+{
+	auto properties = getObjectProperties(node);
+	if (properties.size() == 0)
+		return nullptr;
+
+	int x, y, type;
+
+	x = stoi(properties["X"]);
+	y = stoi(properties["Y"]);
+
+	auto shadowbeast = new ShadowBeast(GVector2(x, y));
+	shadowbeast->init();
+	return shadowbeast;
 }
 
 BaseObject* ObjectFactory::getFire(xml_node node)

@@ -4,7 +4,7 @@
 #ifndef __HELP_H__
 #define __HELP_H__
 
-
+#include "../FrameWork/StopWatch.h"
 #include "TextSprite.h"
 #include <vector>
 
@@ -28,6 +28,25 @@ private:
 	TextSprite* _message;
 	void initStackKey();
 	void initOpacity();
+};
+
+
+class Credit
+{
+public:
+	Credit();
+	~Credit();
+	void init();
+	void update(float deltatime);
+	void draw(LPD3DXSPRITE spriteHandle);
+
+private:
+	static string _listInfo[];
+	TextSprite* _message;
+	StopWatch* _stopwatch;
+	int current;
+	float _radian;
+	float _opacity;
 };
 
 #endif // !__HELP_H__
