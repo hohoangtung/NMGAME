@@ -3,7 +3,6 @@
 #include "BeginPlayScene.h"
 #include "GameOverScene.h"
 #include "Score.h"
-//#include "LifeUI.h"
 
 #if _DEBUG
 #include <time.h>

@@ -1,5 +1,4 @@
-﻿
-#include "BeginPlayScene.h"
+﻿#include "BeginPlayScene.h"
 #include "Stage3.h"
 
 bool BeginPlayScene::init()
@@ -80,7 +79,7 @@ void BeginPlayScene::update(float dt)
 		}
 		case 3:
 		{
-			auto play = new Stage3();
+			auto play = new Stage3(3);
 			SceneManager::getInstance()->replaceScene(play);
 			break;
 		}
