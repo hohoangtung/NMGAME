@@ -362,6 +362,7 @@ float Soldier::checkCollision(BaseObject * object, float dt)
 				gravity->setStatus(eGravityStatus::SHALLOWED);
 				movement->setVelocity(VECTOR2ZERO);
 				this->setStatus(DIVING);
+				this->setPositionY(object->getPositionY());
 			}
 		}
 	}

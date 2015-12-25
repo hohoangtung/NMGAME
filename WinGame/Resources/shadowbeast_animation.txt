@@ -1,4 +1,9 @@
 frame_name	left	top	right	bottom
-mouth1		270	200	316	249
-mouth2		320	200	366	249
-mouth3		370	200	419	249
+mouth_opening1		6	5	101	84
+mouth_opening2		112	5	207	84
+mouth_opening3		218	5	313	84
+mouth_opening4		324	5	419	84
+mouth_opening5		430	5	525	84
+mouth_closed1		6	96	101	175
+mouth_closed2		112	96	207	175
+mouth_closed3		219	96	314	175

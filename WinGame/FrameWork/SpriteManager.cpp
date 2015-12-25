@@ -130,7 +130,7 @@ void SpriteManager::loadResource(LPD3DXSPRITE spriteHandle)
 	this->_listSprite[eID::LIFE_ICON] = sp;
 	this->loadSpriteInfo(eID::LIFE_ICON, "Resources\\life_info.txt");
 	
-	sp = new Sprite(spriteHandle, L"Resources\\ShadowBeast.png");
+	sp = new Sprite(spriteHandle, L"Resources\\boss_stage3.png");
 	this->_listSprite[eID::SHADOW_MOUTH] = sp;
 	this->loadSpriteInfo(eID::SHADOW_MOUTH, "Resources\\shadowbeast_animation.txt");
 
@@ -166,6 +166,9 @@ void SpriteManager::loadResource(LPD3DXSPRITE spriteHandle)
 
 	sp = new Sprite(spriteHandle, L"Resources\\yellowfalcon.png");
 	this->_listSprite[eID::YELLOWFALCON] = sp;
+
+	sp = new Sprite(spriteHandle, L"Resources\\tuts_layer.png");
+	this->_listSprite[eID::TUT_LAYER] = sp;
 
 	// Đọc file xml để tạo đối tượng sprite
 	sp = loadXMLDoc(spriteHandle, L"Resources//Map//stage1.xml");

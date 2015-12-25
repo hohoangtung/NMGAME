@@ -66,6 +66,7 @@ enum eID
 	SHADOW_BEAST	= 34,
 	SHADOW_ARM		= 35,
 	SHADOW_MOUTH	= 36,
+	TUT_LAYER		= 37
 };
  
 enum eStatus
@@ -103,6 +104,13 @@ enum eStatus
 	DIVING			= (1 << 19),
 	HIDDEN			= (1 << 20),
 	WAITING			= (1<<31),
+};
+
+enum eMouthStatus
+{
+	OPENING = 0,
+	CLOSING = (1 << 0),
+	CLOSED	= (1 << 1)
 };
 enum eLandType
 {
