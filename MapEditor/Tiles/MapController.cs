@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Documents;
 using System.Windows.Forms;
@@ -114,6 +115,9 @@ namespace MapEditor.Tiles
             if (this.TilesMap.TileSet == null)
                 return;
             var tilesize = MainForm.Settings.TileSize;
+
+           
+
             int iBegin = Math.Max(visilbleRect.X / tilesize.Width - 1, 0);
             int iEnd = Math.Min(iBegin + visilbleRect.Width / tilesize.Width + 2, TilesMap.Columns);
             int jBegin = Math.Max(visilbleRect.Y / tilesize.Height - 1, 0);
@@ -126,12 +130,14 @@ namespace MapEditor.Tiles
                     Tile tile = TilesMap.TileSet.ListTiles.ToList().Find(t => t.Id == TilesMap[i, j]);
                     if (tile == null)
                         continue;
+                    
                     tile.draw(
                         Graphics,
                         new Point(tilesize.Width * i, tilesize.Height * j),
                         tilesize); // notice here -> 
                 }
             }
+
             if (MainForm.Settings.UseTransform == true)
             {
                 int worldheight = this.TilesMap.GetMapHeight();
@@ -149,6 +155,7 @@ namespace MapEditor.Tiles
             }
             
             _lastVisibleRect = visilbleRect;
+
             OnDraw(null);
         }
 

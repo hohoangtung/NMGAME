@@ -11,6 +11,8 @@ ObjectCreator::ObjectCreator(GVector2 position, int width, int height, eID type,
 
 	_direction = direction;
 	_isOnePerOne = false;
+
+	_maxObject = 2;
 }
 
 ObjectCreator::~ObjectCreator()
@@ -44,7 +46,9 @@ void ObjectCreator::update(float deltatime)
 				}
 				else if (_number == -1)
 				{
-					_listObjects.push_back(getObject(_createType));
+					if(_listObjects.size() < _maxObject)
+						_listObjects.push_back(getObject(_createType));
+
 					_stopWatch->restart();
 				}
 			}
@@ -68,6 +72,7 @@ void ObjectCreator::update(float deltatime)
 	{
 		object->update(deltatime);
 
+		// soldier nó bị ngc nên đảo lại -_-
 		if (object->getScale().x > 0 && object->getPositionX() < vpBounding.left)
 		{
 			object->setStatus(eStatus::DESTROY);
@@ -103,6 +108,9 @@ void ObjectCreator::release()
 
 float ObjectCreator::checkCollision(BaseObject * object, float dt)
 {
+	if (dynamic_cast<BaseEnemy*>(object))
+		return 0.0f;
+
 	for (auto item : _listObjects)
 	{
 		item->checkCollision(object, dt);

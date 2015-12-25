@@ -8,6 +8,7 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
@@ -430,9 +431,15 @@ namespace MapEditor.Tiles
             int edge = Math.Max(bound.Width, bound.Height);
             bound.Size = new Size(edge, edge);
 
-            this.QuadTree = new QuadTree.QNode(0, bound, null);
-            this.QuadTree.ListObject = this.ListItem.ToList();
-            this.QuadTree.initChild();
+            Thread thread = new Thread(new ThreadStart(() =>
+            {
+
+                this.QuadTree = new QuadTree.QNode(0, bound, null);
+                this.QuadTree.ListObject = this.ListItem.ToList();
+                this.QuadTree.initChild();
+            }));
+
+            thread.Start();
         }
 
     }

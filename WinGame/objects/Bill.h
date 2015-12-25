@@ -27,7 +27,7 @@ update 30/11/2015
 #include "M_Bullet.h"
 #include "LifeUI.h"
 
-#define BILL_MOVE_SPEED 130
+#define BILL_MOVE_SPEED 125
 #define BILL_JUMP_VEL 450
 #define GRAVITY 800
 #define SHOOT_SPEED 200.0f

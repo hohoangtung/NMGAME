@@ -32,7 +32,7 @@ bool Stage3::init()
 {
 	auto bill = new Bill(_restBill);
 	bill->init();
-	bill->setPosition(200, 4000);
+	bill->setPosition(200, 100);
 	
 	this->_bill = bill;
 	_listControlObject.push_back(bill);
@@ -370,8 +370,8 @@ bool Stage3::checkGameLife()
 {
 	if (((Bill*)_bill)->getLifeNumber() < 0)
 	{
-		auto gameoverScene = new GameOverScene(Score::getScore(), 1);		// hardcode test: 1000 = số điểm
-		SoundManager::getInstance()->Stop(eSoundId::BACKGROUND_STAGE1);
+		auto gameoverScene = new GameOverScene(Score::getScore(), 3);		// hardcode test: 1000 = số điểm
+		SoundManager::getInstance()->Stop(eSoundId::BACKGROUND_STAGE2);
 		SceneManager::getInstance()->replaceScene(gameoverScene);
 		return true;
 	}

@@ -185,6 +185,11 @@ void Bill::resetValues()
 	_touchKill = false;
 	_movingSpeed = BILL_MOVE_SPEED;
 
+
+	for (auto animate : _animations)
+	{
+		animate.second->setColorFlash(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
+	}
 }
 
 void Bill::updateInput(float dt)
@@ -198,12 +203,12 @@ void Bill::updateInput(float dt)
 		{
 			if (((_currentGun & R_BULLET) == R_BULLET || (_currentGun & M_BULLET) == M_BULLET) && _stopWatch->isStopWatch(_shootSpeed))
 			{
-			this->addStatus(eStatus::SHOOTING);
-			shoot();
-			_stopWatch->restart();
+				this->addStatus(eStatus::SHOOTING);
+				shoot();
+				_stopWatch->restart();
 				_shootAnimateStopWatch->restart();
+			}
 		}
-	}
 	}
 
 	// delay animate shooting
@@ -388,6 +393,12 @@ void Bill::onKeyPressed(KeyEventArg* key_event)
 	case DIK_7:
 	{
 		changeBulletType(eAirCraftType(key_event->_key - 2));
+		break;
+	}
+	case DIK_L:
+	{
+		_lifeNum++;
+		_lifeUI->setLifeNumber(_lifeNum);
 		break;
 	}
 #endif
@@ -586,10 +597,10 @@ float Bill::checkCollision(BaseObject * object, float dt)
 				this->addStatus(eStatus::FALLING);
 
 				// 2 frame size khác nhau, đổi nó check va chạm dễ lộn, thêm offset để tránh TH đó
-				if (this->getScale().x > 0)
-					this->setPositionX(this->getPositionX() + 2);
-				else
-					this->setPositionX(this->getPositionX() - 2);
+				//if (this->getScale().x > 0)
+				//	this->setPositionX(this->getPositionX() + 2);
+				//else
+				//	this->setPositionX(this->getPositionX() - 2);
 			}
 		}
 	}
@@ -605,8 +616,8 @@ float Bill::checkCollision(BaseObject * object, float dt)
 		}
 		else
 		{
-		collisionBody->checkCollision(object, dt);
-	}
+			collisionBody->checkCollision(object, dt);
+		}
 	}
 
 	for (auto it = _listBullets.begin(); it != _listBullets.end(); it++)
@@ -637,8 +648,8 @@ float Bill::checkCollision(BaseObject * object, float dt)
 			else
 			{
 				(*it)->checkCollision(object, dt);
+			}
 		}
-	}
 	}
 
 	return 0.0f;
@@ -652,7 +663,6 @@ void Bill::checkPosition()
 	auto viewport = SceneManager::getInstance()->getCurrentScene()->getViewport();
 	GVector2 viewport_position = viewport->getPositionWorld();
 
-	//if (this->getPositionY() < viewport->getBounding().bottom)
 	if (this->getPositionY() < viewport_position.y - WINDOW_HEIGHT)
 	{
 		if(_status != eStatus::DYING)
