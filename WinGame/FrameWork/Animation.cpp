@@ -143,6 +143,12 @@ bool Animation::isAnimate()
 	// 7ung => use in AirCraft::draw
 	return _canAnimate;
 }
+bool Animation::isLastAnimation()
+{
+	//
+	return false;
+}
+
 void Animation::addFrameRect(RECT rect)
 {
 	//nếu là rect đầu tiên thì set current luôn
