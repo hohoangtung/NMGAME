@@ -8,6 +8,7 @@
 #include "..\FrameWork\Managers\SoundManager.h"
 #include "..\FrameWork\InputController.h"
 #include "..\FrameWork\StopWatch.h"
+#include "..\objects\Stage3.h"
 #include "TextSprite.h"
 
 class HighScore
@@ -18,7 +19,7 @@ public:
 	static bool saveHighScore(const char* fileInfoPath, int score);
 };
 
-class BeginStage3Scene : public Scene
+class BeginPlayScene : public Scene
 {
 public:
 	/*
@@ -26,8 +27,8 @@ public:
 	* @score: điểm hiện tại.
 	* @rest: số mạng còn lại.
 	*/
-	BeginStage3Scene(int score, int rest);
-	~BeginStage3Scene();
+	BeginPlayScene(int score, int rest, int stage = 1);
+	~BeginPlayScene();
 
 	bool init() override;
 	void update(float dt) override;
@@ -40,12 +41,16 @@ private:
 	int _score;
 	int _highscore;
 	int _rest;
+	int _stage;
+
 	Sprite* _waitscreen;
 	StopWatch* _access;
 
 	TextSprite* _textscore;
 	TextSprite* _textrest;
 	TextSprite* _texthighscore;
+	TextSprite* _textStage;
+	TextSprite* _textStageName;
 };
 
 

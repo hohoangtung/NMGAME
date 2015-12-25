@@ -8,10 +8,12 @@
 #include "..\FrameWork\Managers\SoundManager.h"
 #include "..\FrameWork\InputController.h"
 #include "..\FrameWork\StopWatch.h"
+#include "..\objects\Scenes\SelectionScene.h"
 
 #include "IComponent.h"
 #include "BaseObject.h"
 #include "Scene.h"
+#include "TextSprite.h"
 
 [event_receiver(native)]
 class IntroScene : public Scene, public IControlable
@@ -28,7 +30,6 @@ public:
 	void updateInput(float deltatime) override;
 
 private:
-	Sprite* _blank;
 	Sprite* _yellowfancon;
 	Sprite* _introtable;
 	Movement* _movement;
@@ -37,7 +38,9 @@ private:
 	StopWatch* _flash;
 	StopWatch* _access;
 	int _ok;
-	int _draw;
+	bool _draw;
 	bool _drawyellowFalcon;
+	TextSprite* _playOption;
+	TextSprite* _chosenOption;
 };
 #endif // !__INTRO_SCENE__

@@ -1,6 +1,6 @@
 ﻿#include "PlayScene.h"
 #include "..\Tiles\ObjectFactory.h"
-#include "BeginState3Scene.h"
+#include "BeginPlayScene.h"
 #include "GameOverScene.h"
 #include "Score.h"
 //#include "LifeUI.h"
@@ -29,7 +29,7 @@ void PlayScene::setViewport(Viewport * viewport)
 bool PlayScene::init()
 {
 
-	auto bill = new Bill(30);
+	auto bill = new Bill(3);
 	bill->init();
 	bill->setPosition(200, 500);
 	
@@ -64,13 +64,13 @@ bool PlayScene::init()
 	rockfly->init();
 	_listobject.push_back(rockfly);*/
 
-	auto rockfall = new RockFall(GVector2(350, 400));
-	rockfall->init();
-	_listobject.push_back(rockfall);
+	//auto rockfall = new RockFall(GVector2(350, 400));
+	//rockfall->init();
+	//_listobject.push_back(rockfall);
 
-	auto fire = new Fire(GVector2(400, 260));
-	fire->init();
-	_listobject.push_back(fire);
+	//auto fire = new Fire(GVector2(400, 260));
+	//fire->init();
+	//_listobject.push_back(fire);
 
 	_text = new Text(L"Arial", "", 10, 25);
 
@@ -265,43 +265,6 @@ void PlayScene::update(float dt)
 		}
 	}
 
-	// [Bước 6.2]
-	// list object hoạt động rộng ko có trong quadtree cho nó kt lẫn nhau (bắt buộc -_-)
-	//for (auto obj : _listobject)
-	//{
-	//	for (auto obj2 : _listobject)
-	//	{
-	//		obj->checkCollision(obj2, dt);
-	//	}
-
-	//	auto checkedNames = _root->GetActiveObject(obj->getBounding(), true);
-
-	//	for (auto checked : checkedNames)
-	//	{
-	//		if (_mapobject.find(checked) == _mapobject.end())
-	//			continue;
-
-	//		obj->checkCollision(_mapobject[checked], dt);
-	//	}
-	//}
-
-	//// active object chỉ cần kt với cái object trong node mà nó đang đè lên
-	//for (auto name : listobjectname)
-	//{
-	//	if (_mapobject.find(name) == _mapobject.end())
-	//		continue;
-
-	//	auto checkedNames = _root->GetActiveObject(_mapobject[name]->getBounding(), true);
-	//	
-	//	for (auto checked : checkedNames)
-	//	{
-	//		if (_mapobject.find(checked) == _mapobject.end())
-	//			continue;
-
-	//		_mapobject[name]->checkCollision(_mapobject[checked], dt);
-	//	}
-	//}
-
 	// [Bước 7]
 	for (BaseObject* obj : _active_object)
 	{
@@ -449,7 +412,7 @@ void PlayScene::ScenarioKillBoss(float deltatime)
 			SAFE_DELETE(_directorKillBoss);
 			//chuyển scene
 			// test
-			auto play = new BeginStage3Scene(Score::getScore(), ((Bill*)_bill)->getLifeNumber());
+			auto play = new BeginPlayScene(Score::getScore(), ((Bill*)_bill)->getLifeNumber(), 3);
 			SceneManager::getInstance()->replaceScene(play);
 		}
 	}

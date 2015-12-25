@@ -1,6 +1,6 @@
 ﻿#include "Stage3.h"
 #include "..\Tiles\ObjectFactory.h"
-#include "BeginState3Scene.h"
+#include "BeginPlayScene.h"
 #include "GameOverScene.h"
 #include "Score.h"
 
@@ -349,7 +349,7 @@ void Stage3::ScenarioKillBoss(float deltatime)
 			SAFE_DELETE(_directorKillBoss);
 			//chuyển scene
 			// test
-			auto play = new BeginStage3Scene(Score::getScore(), ((Bill*)_bill)->getLifeNumber());
+			auto play = new BeginPlayScene(Score::getScore(), ((Bill*)_bill)->getLifeNumber(), 3);
 			SceneManager::getInstance()->replaceScene(play);
 		}
 	}

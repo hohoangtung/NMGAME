@@ -1,7 +1,5 @@
-
 #include "GameOverScene.h"
 #include "IntroScene.h"
-#include "BeginState3Scene.h"
 
 GameOverScene::GameOverScene(int score, int prePlayScene)
 {

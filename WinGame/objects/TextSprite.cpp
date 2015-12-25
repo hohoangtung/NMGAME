@@ -1,4 +1,4 @@
-#include "TextSprite.h"
+﻿#include "TextSprite.h"
 
 
 void TextSprite::init()
@@ -24,26 +24,30 @@ void TextSprite::draw(LPD3DXSPRITE spriteHandle, Viewport* viewport)
 	int i = 0;
 	for each (char c in _text)
 	{
-		//x = ((int)c) % _columns;
-		//y = ((int)c) / _columns;
 		if (c >= 'A' && c <= 'Z')
 		{
 			index = ((int)c) - 'A';
 		}
-		if (c >= 'a' && c <= 'z')
+		else if (c >= 'a' && c <= 'z')
 		{
 			index = ((int)c) - 'a';
 		}
-		if (c >= '0' && c <= '9')
+		else if (c >= '0' && c <= '9')
 		{
 			index = (((int)c) - '0') + 26;
 		}
-		if (c == ' ')
+		else if (c == ' ')
 		{
 			index = 53;
 		}
-		_sprite->setIndex(index);
+		else if (c == ':')
+		{
+			index = 45;
+		}
+
+		 _sprite->setIndex(index);
 		_sprite->setPosition(GVector2(_position.x + _sprite->getFrameWidth() * i, _position.y));
+
 		if (viewport == nullptr)
 		{
 			_sprite->render(spriteHandle);
@@ -59,11 +63,21 @@ void TextSprite::release()
 {
 
 }
+void TextSprite::setPosition(GVector2 position)
+{
+	_position = position;
+}
+
+GVector2 TextSprite::getPosition()
+{
+	return _position;
+}
+
 TextSprite::TextSprite(eID type, string text, GVector2 position) : BaseObject(type)
 {
 	this->_type = type;
 	this->_text = text;
-	this->_position = position;
+	_position = position;
 }
 
 TextSprite::~TextSprite()

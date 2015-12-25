@@ -14,6 +14,9 @@ public:
 	void draw(LPD3DXSPRITE spriteHandle);
 	void release();
 
+	void setPosition(GVector2 position);
+	GVector2 getPosition();
+
 	TextSprite(eID type, string text, GVector2 position);
 	~TextSprite();
 

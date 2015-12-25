@@ -1,8 +1,8 @@
 ﻿
-#include "BeginState3Scene.h"
+#include "BeginPlayScene.h"
 
 
-bool BeginStage3Scene::init()
+bool BeginPlayScene::init()
 {
 	_waitscreen = SpriteManager::getInstance()->getSprite(eID::BEGIN_STAGE3);
 	_waitscreen->setPosition(VECTOR2ZERO);
@@ -32,20 +32,65 @@ bool BeginStage3Scene::init()
 	_textrest->init();
 	_textrest->setScale(SCALE_FACTOR);
 	_textrest->getSprite()->setOpacity(0.7f);
+
+	_textStage = new TextSprite(eID::FONTFULL, "STAGE " + std::to_string(_stage), GVector2(95 * SCALE_FACTOR, 120 * SCALE_FACTOR));
+	_textStage->init();
+	_textStage->setScale(SCALE_FACTOR);
+	_textStage->getSprite()->setOpacity(0.7f);
+	_textStage->setOrigin(VECTOR2ZERO);
+
+	auto name = "JUNGLE";
+
+	switch (_stage)
+	{
+	case 1:
+	{
+		name = "JUNGLE";
+		break;
+	}
+	case 3:
+	{
+		name = "WATERFALL";
+		break;
+	}
+	default:
+		break;
+	}
+
+	_textStageName = new TextSprite(eID::FONTFULL, name, GVector2(95 * SCALE_FACTOR, _textStage->getPosition().y + 32));
+	_textStageName->init();
+	_textStageName->setScale(SCALE_FACTOR);
+	_textStageName->getSprite()->setOpacity(0.7f);
+	_textStageName->setOrigin(VECTOR2ZERO);
+
 	return true;
 }
 
-void BeginStage3Scene::update(float dt)
+void BeginPlayScene::update(float dt)
 {
 	if(_access->isStopWatch(delaytime))
 	{
-		// jst 4 test
-		auto play = new PlayScene();
-		SceneManager::getInstance()->replaceScene(play);
+		switch (_stage)
+		{
+		case 1:
+		{
+			auto play = new PlayScene();
+			SceneManager::getInstance()->replaceScene(play);
+			break;
+		}
+		case 3:
+		{
+			auto play = new Stage3();
+			SceneManager::getInstance()->replaceScene(play);
+			break;
+		}
+		default:
+			break;
+		}
 	}
 }
 
-void BeginStage3Scene::draw(LPD3DXSPRITE spriteHandle)
+void BeginPlayScene::draw(LPD3DXSPRITE spriteHandle)
 {
 	_waitscreen->render(spriteHandle);
 
@@ -55,23 +100,32 @@ void BeginStage3Scene::draw(LPD3DXSPRITE spriteHandle)
 	_textscore->draw(spriteHandle);
 	_textrest->draw(spriteHandle);
 	_texthighscore->draw(spriteHandle);
+	_textStage->draw(spriteHandle);
+	_textStageName->draw(spriteHandle);
 }
 
-void BeginStage3Scene::release()
+void BeginPlayScene::release()
 {
 	SAFE_DELETE(_waitscreen);
+	SAFE_DELETE(_texthighscore);
+	SAFE_DELETE(_textrest);
+	SAFE_DELETE(_textscore);
+	SAFE_DELETE(_textStage);
+	SAFE_DELETE(_textStageName);
 }
 
-void BeginStage3Scene::updateInput(float deltatime)
+void BeginPlayScene::updateInput(float deltatime)
 {
 }
-BeginStage3Scene::BeginStage3Scene(int score, int rest)
+
+BeginPlayScene::BeginPlayScene(int score, int rest, int stage)
 {
 	this->_score = score;
 	this->_rest = rest;
+	this->_stage = stage;
 }
 
-BeginStage3Scene::~BeginStage3Scene()
+BeginPlayScene::~BeginPlayScene()
 {
 }
 
@@ -91,6 +145,7 @@ int HighScore::loadHighScore(const char* fileInfoPath)
 	fclose(file);
 	return high;
 }
+
 bool HighScore::saveHighScore(const char* fileInfoPath, int score)
 {
 	FILE* file;
