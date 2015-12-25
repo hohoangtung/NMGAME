@@ -104,6 +104,13 @@ enum eStatus
 	HIDDEN			= (1 << 20),
 	WAITING			= (1<<31),
 };
+
+enum eMouthStatus
+{
+	OPENING = 0,
+	CLOSING = (1 << 0),
+	CLOSED	= (1 << 1)
+};
 enum eLandType
 {
 	GRASS,
