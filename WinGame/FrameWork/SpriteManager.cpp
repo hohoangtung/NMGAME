@@ -130,7 +130,7 @@ void SpriteManager::loadResource(LPD3DXSPRITE spriteHandle)
 	this->_listSprite[eID::LIFE_ICON] = sp;
 	this->loadSpriteInfo(eID::LIFE_ICON, "Resources\\life_info.txt");
 	
-	sp = new Sprite(spriteHandle, L"Resources\\ShadowBeast.png");
+	sp = new Sprite(spriteHandle, L"Resources\\boss_stage3.png");
 	this->_listSprite[eID::SHADOW_MOUTH] = sp;
 	this->loadSpriteInfo(eID::SHADOW_MOUTH, "Resources\\shadowbeast_animation.txt");
 
