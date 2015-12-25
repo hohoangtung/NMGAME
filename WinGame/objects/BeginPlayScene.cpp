@@ -79,7 +79,7 @@ void BeginPlayScene::update(float dt)
 		}
 		case 3:
 		{
-			auto play = new Stage3(3);
+			auto play = new Stage3(_rest);
 			SceneManager::getInstance()->replaceScene(play);
 			break;
 		}

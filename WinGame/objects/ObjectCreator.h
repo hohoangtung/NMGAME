@@ -49,6 +49,7 @@ private:
 	float _timeCreate;
 	int _number;
 	int _counter;
+	int _maxObject;
 
 	int _direction;
 	bool _isOnePerOne;

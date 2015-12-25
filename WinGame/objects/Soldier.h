@@ -11,7 +11,7 @@
 
 using namespace std;
 
-#define SOLDIER_SPEED 90
+#define SOLDIER_SPEED 120
 #define SOLDIER_HITPOINT 1
 #define SOLDIER_SCORE 100
 #define SOLDIER_JUMP_VELOCITY 200

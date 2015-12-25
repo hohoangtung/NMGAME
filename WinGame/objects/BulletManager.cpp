@@ -19,6 +19,11 @@ float BulletManager::checkCollision(BaseObject * object, float dt)
 		}
 		else
 		{
+			if (dynamic_cast<BaseEnemy*>(object) && bullet->isEnemyBullet())
+			{
+				continue;
+			}
+
 			bullet->checkCollision(object, dt);
 		}
 	}

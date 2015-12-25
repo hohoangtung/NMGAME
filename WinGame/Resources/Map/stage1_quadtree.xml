@@ -317,10 +317,21 @@
               <Objects>airCraft2 </Objects>
             </QNode>
             <QNode Id="273" Level="6" X="2600" Y="0" Width="104" Height="104">
-              <Objects>airCraft2 </Objects>
+              <Objects>airCraft2 soldierCreator6 </Objects>
             </QNode>
             <QNode Id="274" Level="6" X="2600" Y="104" Width="104" Height="104">
-              <Objects>land38 airCraft2 rifleMan5 </Objects>
+              <QNode Id="274" Level="7" X="2600" Y="104" Width="52" Height="52">
+                <Objects>airCraft2 </Objects>
+              </QNode>
+              <QNode Id="275" Level="7" X="2652" Y="104" Width="52" Height="52">
+                <Objects>airCraft2 rifleMan5 soldierCreator6 </Objects>
+              </QNode>
+              <QNode Id="274" Level="7" X="2652" Y="156" Width="52" Height="52">
+                <Objects>land38 airCraft2 rifleMan5 </Objects>
+              </QNode>
+              <QNode Id="275" Level="7" X="2600" Y="156" Width="52" Height="52">
+                <Objects>land38 airCraft2 </Objects>
+              </QNode>
             </QNode>
             <QNode Id="275" Level="6" X="2496" Y="104" Width="104" Height="104">
               <Objects>land38 airCraft2 rifleMan4 </Objects>
@@ -350,7 +361,7 @@
             <QNode Id="275" Level="6" X="2704" Y="104" Width="104" Height="104">
               <QNode Id="275" Level="7" X="2704" Y="104" Width="52" Height="52">
                 <QNode Id="275" Level="8" X="2704" Y="104" Width="26" Height="26">
-                  <Objects>airCraft2 rifleMan5 </Objects>
+                  <Objects>airCraft2 rifleMan5 soldierCreator6 </Objects>
                 </QNode>
                 <QNode Id="275" Level="8" X="2730" Y="104" Width="26" Height="26">
                   <Objects>airCraft2 soldierCreator6 </Objects>
@@ -397,32 +408,10 @@
               <Objects>airCraft2 soldierCreator6 </Objects>
             </QNode>
             <QNode Id="65809" Level="6" X="3016" Y="0" Width="104" Height="104">
-              <Objects>airCraft2 rifleMan6 soldierCreator6 </Objects>
+              <Objects>airCraft2 rifleMan6 </Objects>
             </QNode>
             <QNode Id="65810" Level="6" X="3016" Y="104" Width="104" Height="104">
-              <QNode Id="65810" Level="7" X="3016" Y="104" Width="52" Height="52">
-                <Objects>land8 airCraft2 soldierCreator6 </Objects>
-              </QNode>
-              <QNode Id="65811" Level="7" X="3068" Y="104" Width="52" Height="52">
-                <QNode Id="65811" Level="8" X="3068" Y="104" Width="26" Height="26">
-                  <Objects>airCraft2 rifleMan6 soldierCreator6 </Objects>
-                </QNode>
-                <QNode Id="65811" Level="8" X="3094" Y="104" Width="26" Height="26">
-                  <Objects>airCraft2 rifleMan6 soldierCreator6 </Objects>
-                </QNode>
-                <QNode Id="65811" Level="8" X="3094" Y="130" Width="26" Height="26">
-                  <Objects>land8 airCraft2 </Objects>
-                </QNode>
-                <QNode Id="65811" Level="8" X="3068" Y="130" Width="26" Height="26">
-                  <Objects>land8 airCraft2 </Objects>
-                </QNode>
-              </QNode>
-              <QNode Id="65810" Level="7" X="3068" Y="156" Width="52" Height="52">
-                <Objects>airCraft2 </Objects>
-              </QNode>
-              <QNode Id="65811" Level="7" X="3016" Y="156" Width="52" Height="52">
-                <Objects>airCraft2 </Objects>
-              </QNode>
+              <Objects>land8 airCraft2 rifleMan6 </Objects>
             </QNode>
             <QNode Id="65811" Level="6" X="2912" Y="104" Width="104" Height="104">
               <Objects>land8 airCraft2 soldierCreator6 </Objects>
@@ -430,38 +419,14 @@
           </QNode>
           <QNode Id="65809" Level="5" X="3120" Y="0" Width="208" Height="208">
             <QNode Id="65809" Level="6" X="3120" Y="0" Width="104" Height="104">
-              <Objects>airCraft2 soldierCreator6 </Objects>
+              <Objects>airCraft2 </Objects>
             </QNode>
-            <QNode Id="65809" Level="6" X="3224" Y="0" Width="104" Height="104">
-              <Objects>soldierCreator8 </Objects>
-            </QNode>
+            <QNode Id="65809" Level="6" X="3224" Y="0" Width="104" Height="104" />
             <QNode Id="65811" Level="6" X="3224" Y="104" Width="104" Height="104">
-              <QNode Id="65811" Level="7" X="3224" Y="104" Width="52" Height="52">
-                <Objects>land8 soldierCreator8 </Objects>
-              </QNode>
-              <QNode Id="65811" Level="7" X="3276" Y="104" Width="52" Height="52">
-                <Objects>land8 soldierCreator8 </Objects>
-              </QNode>
-              <QNode Id="65811" Level="7" X="3276" Y="156" Width="52" Height="52">
-                <Objects>wallTurret2 soldierCreator7 </Objects>
-              </QNode>
-              <QNode Id="65811" Level="7" X="3224" Y="156" Width="52" Height="52">
-                <Objects>wallTurret2 soldierCreator7 </Objects>
-              </QNode>
+              <Objects>land8 wallTurret2 soldierCreator7 </Objects>
             </QNode>
             <QNode Id="65811" Level="6" X="3120" Y="104" Width="104" Height="104">
-              <QNode Id="65811" Level="7" X="3120" Y="104" Width="52" Height="52">
-                <Objects>land8 airCraft2 soldierCreator6 </Objects>
-              </QNode>
-              <QNode Id="65811" Level="7" X="3172" Y="104" Width="52" Height="52">
-                <Objects>land8 airCraft2 soldierCreator6 </Objects>
-              </QNode>
-              <QNode Id="65811" Level="7" X="3172" Y="156" Width="52" Height="52">
-                <Objects>airCraft2 soldierCreator7 </Objects>
-              </QNode>
-              <QNode Id="65811" Level="7" X="3120" Y="156" Width="52" Height="52">
-                <Objects>airCraft2 </Objects>
-              </QNode>
+              <Objects>land8 airCraft2 soldierCreator7 </Objects>
             </QNode>
           </QNode>
           <QNode Id="65810" Level="5" X="3120" Y="208" Width="208" Height="208">
@@ -657,7 +622,7 @@
           </QNode>
           <QNode Id="65799" Level="5" X="4576" Y="208" Width="208" Height="208">
             <QNode Id="65799" Level="6" X="4576" Y="208" Width="104" Height="104">
-              <Objects>land19 aircraft3 aircraft4 </Objects>
+              <Objects>aircraft3 aircraft4 </Objects>
             </QNode>
             <QNode Id="65799" Level="6" X="4680" Y="208" Width="104" Height="104">
               <QNode Id="65799" Level="7" X="4680" Y="208" Width="52" Height="52">

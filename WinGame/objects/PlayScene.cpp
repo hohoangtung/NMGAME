@@ -261,8 +261,16 @@ void PlayScene::update(float dt)
 	// [Bước 6]
 	for (BaseObject* obj : _active_object)
 	{
+		// một vài trạng thái không cần thiết phải check hàm va chạm
+		if (obj == nullptr || obj->isInStatus(eStatus::DESTROY) || obj->getId() == eID::LAND || 
+			obj->getId() == eID::WALL_TURRET || obj->getId() == eID::REDCANNON || obj->getId() == eID::ROCKFLY)
+			continue;
+
 		for (BaseObject* passiveobj : _active_object)
 		{
+			if (passiveobj == nullptr || passiveobj == obj || passiveobj->isInStatus(eStatus::DESTROY))
+				continue;
+
 			obj->checkCollision(passiveobj, dt);
 		}
 	}

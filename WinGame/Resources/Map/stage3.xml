@@ -1119,5 +1119,75 @@
         <Elem Key="type" Value="0" />
       </Params>
     </Item>
+    <Item Id="2" Name="soldier01" X="0" Y="544" Width="32" Height="64">
+      <ActiveBound X="0" Y="544" Width="32" Height="64" />
+      <Params>
+        <Elem Key="canShoot" Value="true" />
+        <Elem Key="direction" Value="1" />
+      </Params>
+    </Item>
+    <Item Id="2" Name="soldier02" X="96" Y="736" Width="32" Height="64">
+      <ActiveBound X="96" Y="736" Width="32" Height="64" />
+      <Params>
+        <Elem Key="canShoot" Value="true" />
+        <Elem Key="direction" Value="1" />
+      </Params>
+    </Item>
+    <Item Id="2" Name="soldier03" X="288" Y="736" Width="32" Height="64">
+      <ActiveBound X="288" Y="736" Width="32" Height="64" />
+      <Params>
+        <Elem Key="canShoot" Value="true" />
+        <Elem Key="direction" Value="-1" />
+      </Params>
+    </Item>
+    <Item Id="2" Name="soldier04" X="192" Y="2560" Width="32" Height="64">
+      <ActiveBound X="192" Y="2560" Width="32" Height="64" />
+      <Params>
+        <Elem Key="canShoot" Value="true" />
+        <Elem Key="direction" Value="-1" />
+      </Params>
+    </Item>
+    <Item Id="2" Name="soldier05" X="384" Y="2720" Width="32" Height="64">
+      <ActiveBound X="384" Y="2720" Width="32" Height="64" />
+      <Params>
+        <Elem Key="canShoot" Value="true" />
+        <Elem Key="direction" Value="-1" />
+      </Params>
+    </Item>
+    <Item Id="2" Name="soldier06" X="64" Y="2784" Width="32" Height="64">
+      <ActiveBound X="64" Y="2784" Width="32" Height="64" />
+      <Params>
+        <Elem Key="canShoot" Value="true" />
+        <Elem Key="direction" Value="1" />
+      </Params>
+    </Item>
+    <Item Id="2" Name="soldier07" X="0" Y="3136" Width="32" Height="64">
+      <ActiveBound X="0" Y="3136" Width="32" Height="64" />
+      <Params>
+        <Elem Key="canShoot" Value="true" />
+        <Elem Key="direction" Value="1" />
+      </Params>
+    </Item>
+    <Item Id="2" Name="soldier08" X="0" Y="3520" Width="32" Height="64">
+      <ActiveBound X="0" Y="3520" Width="32" Height="64" />
+      <Params>
+        <Elem Key="canShoot" Value="true" />
+        <Elem Key="direction" Value="1" />
+      </Params>
+    </Item>
+    <Item Id="2" Name="soldier09" X="96" Y="3520" Width="32" Height="64">
+      <ActiveBound X="96" Y="3520" Width="32" Height="64" />
+      <Params>
+        <Elem Key="canShoot" Value="true" />
+        <Elem Key="direction" Value="1" />
+      </Params>
+    </Item>
+    <Item Id="12" Name="land65" X="64" Y="820" Width="64" Height="5">
+      <ActiveBound X="64" Y="820" Width="64" Height="5" />
+      <Params>
+        <Elem Key="physicBodyDirection" Value="1" />
+        <Elem Key="type" Value="0" />
+      </Params>
+    </Item>
   </Objects>
 </Tilesmap>

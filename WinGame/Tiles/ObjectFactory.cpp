@@ -277,7 +277,18 @@ BaseObject * ObjectFactory::getSoldier(xml_node node)
 		dir = -1;
 	}
 
-	auto soldier = new Soldier(status, GVector2(x, y), dir);
+	bool canShoot = false;
+
+	if (properties.find("canShoot") != properties.end())
+	{
+		auto v = properties.find("canShoot")->second;
+		if (v == "true")
+		{
+			canShoot = true;
+		}
+	}
+
+	auto soldier = new Soldier(status, GVector2(x, y), dir, canShoot);
 	soldier->init();
 
 	return soldier;

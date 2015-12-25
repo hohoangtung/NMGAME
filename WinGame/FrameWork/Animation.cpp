@@ -236,7 +236,6 @@ void Animation::enableFlashes(bool enable)
 		return;
 
 	_canFlashes = enable;
-	//_spriteSheet->setOpacity(1.0f);
 	_spriteSheet->setColor(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
 }
 
