@@ -59,6 +59,11 @@ void TextSprite::release()
 {
 
 }
+
+void TextSprite::setString(string text)
+{
+	this->_text = text;
+}
 TextSprite::TextSprite(eID type, string text, GVector2 position) : BaseObject(type)
 {
 	this->_type = type;

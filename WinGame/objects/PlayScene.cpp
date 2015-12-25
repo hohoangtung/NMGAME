@@ -64,13 +64,13 @@ bool PlayScene::init()
 	rockfly->init();
 	_listobject.push_back(rockfly);*/
 
-	auto rockfall = new RockFall(GVector2(350, 400));
-	rockfall->init();
-	_listobject.push_back(rockfall);
+	//auto rockfall = new RockFall(GVector2(350, 400));
+	//rockfall->init();
+	//_listobject.push_back(rockfall);
 
-	auto fire = new Fire(GVector2(400, 260));
-	fire->init();
-	_listobject.push_back(fire);
+	//auto fire = new Fire(GVector2(400, 260));
+	//fire->init();
+	//_listobject.push_back(fire);
 
 	_text = new Text(L"Arial", "", 10, 25);
 
@@ -103,6 +103,9 @@ bool PlayScene::init()
 	_directorKillBoss = new ScenarioManager();
 	_directorKillBoss->insertScenario(playsound);
 	_directorKillBoss->insertScenario(scenarioKillBoss);
+
+	_help = new Help();
+	_help->init();
 	return true;
 }
 void PlayScene::bossScene_Viewport(float dt, bool& finish)
@@ -179,7 +182,7 @@ void PlayScene::updateInput(float dt)
 
 void PlayScene::update(float dt)
 {
-	
+	_help->update(dt);
 	char str[100];
 	sprintf(str, "delta time: %f", dt);
 	_text->setText(str);
@@ -397,7 +400,10 @@ void PlayScene::draw(LPD3DXSPRITE spriteHandle)
 		object->draw(spriteHandle, _viewport);
 	}
 
-
+	if (_help != nullptr)
+	{
+		_help->draw(spriteHandle);
+	}
 #if _DEBUG
 	_text->draw();
 #endif

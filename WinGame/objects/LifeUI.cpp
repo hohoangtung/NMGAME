@@ -27,10 +27,10 @@ void LifeUI::update(float deltatime)
 
 void LifeUI::draw(LPD3DXSPRITE spriteHandle, Viewport * viewport)
 {
-	// vẽ 3 cái ra thôi
-	if (_listIcons.size() > 3)
+	// vẽ 3 cái ra thôi // 7ung: sửa thành 5 nhé :v
+	if (_listIcons.size() > 5)
 	{
-		for (int i = 0; i < 3; i++)
+		for (int i = 0; i < 5; i++)
 			_listIcons[i]->render(spriteHandle);
 	}
 	else

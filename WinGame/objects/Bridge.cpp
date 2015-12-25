@@ -73,7 +73,7 @@ void Bridge::burst(float deltatime)
 	if (_explode->getStatus() == DESTROY)
 	{
 		_explode->release();
-		if (_stopwatch->isStopWatch(DELAYTIME))
+		if (_stopwatch->isStopWatch(30))
 		{
 			_wave++;
 			GVector2 pos = this->getPosition();
@@ -246,11 +246,11 @@ void Bridge::QuadExplose::update(float deltatime)
 	_timer += deltatime;
 	if (_timer >= 0)
 		_explosion1->update(deltatime);
-	if (_timer >= 90)
+	if (_timer >= 70)
 		_explosion2->update(deltatime);
-	if (_timer >= 180)
+	if (_timer >= 140)
 		_explosion3->update(deltatime);
-	if (_timer >= 270)
+	if (_timer >= 210)
 	{
 		_explosion4->update(deltatime);
 		if (_explosion4->getStatus() == eStatus::DESTROY)
@@ -263,11 +263,11 @@ void Bridge::QuadExplose::draw(LPD3DXSPRITE spritehandle, Viewport* viewport)
 		return;
 	if (_timer >= 0)
 		_explosion1->draw(spritehandle, viewport);
-	if (_timer >= 90)
+	if (_timer >= 70)
 		_explosion2->draw(spritehandle, viewport);
-	if (_timer >= 180)
+	if (_timer >= 140)
 		_explosion3->draw(spritehandle, viewport);
-	if (_timer >= 270)
+	if (_timer >= 210)
 		_explosion4->draw(spritehandle, viewport);
 }
 void Bridge::QuadExplose::setPosition(GVector2 position)
