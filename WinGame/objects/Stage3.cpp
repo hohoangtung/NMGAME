@@ -10,8 +10,9 @@
 #endif
 
  
-Stage3::Stage3()
+Stage3::Stage3(int billlife)
 {
+	_restBill = billlife;
 	_viewport = new Viewport(0, WINDOW_HEIGHT, WINDOW_WIDTH, WINDOW_HEIGHT);
 } 
 
@@ -28,9 +29,9 @@ void Stage3::setViewport(Viewport * viewport)
 
 bool Stage3::init()
 {
-	auto bill = new Bill(30);
+	auto bill = new Bill(_restBill);
 	bill->init();
-	bill->setPosition(200, 4000);
+	bill->setPosition(200, 400);
 	
 	this->_bill = bill;
 	_listControlObject.push_back(bill);

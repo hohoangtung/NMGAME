@@ -3,7 +3,6 @@
 #define __PLAY_SCENE_H__
 
 #include <vector>
-#include "Scene.h"
 #include "../FrameWork/Sprite.h"
 #include "../FrameWork/SpriteManager.h"
 #include "../FrameWork/Managers/SceneManager.h"
@@ -13,7 +12,9 @@
 #include "../debug.h"
 #include "../Tiles/Map.h"
 #include "../QNode.h"
+#include "../FrameWork/Scenario.h"
 
+#include "Scene.h"
 #include "BaseObject.h"
 #include "Bill.h"
 #include "RedCannon.h"
@@ -30,7 +31,7 @@
 #include "ScubaSoldier.h"
 #include "Fire.h"
 #include "RockFall.h"
-#include "../FrameWork/Scenario.h"
+#include "Help.h"
 
 #define BOSS_VIEWPORT_ANCHOR		6112
 
@@ -64,6 +65,8 @@ public:
 private:
 	void destroyobject();				// kiển tra nếu object hết hạn sử dụng thì phá huỷ đối tượng
 	Text* _text;
+
+	Help* _help;
 
 	// Danh sách đối tượng dùng để tạo quadtree.
 	map <string, BaseObject*> _mapobject;

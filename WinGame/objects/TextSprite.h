@@ -14,6 +14,8 @@ public:
 	void draw(LPD3DXSPRITE spriteHandle);
 	void release();
 
+	void setString(string text);
+
 	TextSprite(eID type, string text, GVector2 position);
 	~TextSprite();
 
@@ -21,6 +23,7 @@ private:
 	eID _type;
 	string _text;
 	GVector2 _position;
+
 	int _columns;
 	int rows;
 	int _framewidth;

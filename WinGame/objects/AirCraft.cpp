@@ -13,7 +13,7 @@ AirCraft::AirCraft(GVector2 pos, GVector2 hVeloc, GVector2 amp, float freq, eAir
 	}
 	else
 	{
-		this->_verticalflag = true;
+		this->_verticalflag = false;
 	}
 }
 

@@ -1,6 +1,6 @@
 ﻿
 #include "BeginState3Scene.h"
-
+#include "Stage3.h"
 
 bool BeginStage3Scene::init()
 {
@@ -40,7 +40,7 @@ void BeginStage3Scene::update(float dt)
 	if(_access->isStopWatch(delaytime))
 	{
 		// jst 4 test
-		auto play = new PlayScene();
+		auto play = new Stage3(this->_rest);
 		SceneManager::getInstance()->replaceScene(play);
 	}
 }
