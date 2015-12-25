@@ -16,6 +16,9 @@ public:
 
 	void setString(string text);
 
+	void setPosition(GVector2 position);
+	GVector2 getPosition();
+
 	TextSprite(eID type, string text, GVector2 position);
 	~TextSprite();
 

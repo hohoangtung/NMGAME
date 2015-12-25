@@ -66,6 +66,7 @@ enum eID
 	SHADOW_BEAST	= 34,
 	SHADOW_ARM		= 35,
 	SHADOW_MOUTH	= 36,
+	TUT_LAYER		= 37
 };
  
 enum eStatus
