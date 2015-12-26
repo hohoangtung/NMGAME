@@ -14,7 +14,7 @@
 
 #define ROCKFALL_HORIZONTAL_VELOC		GVector2(30.0f, 0.0f)		// vận tốc ngang
 #define ROCKFALL_HORIZONTAL_VELOC_PRE	GVector2(-30.0f, 0.0f)		// vận tốc ngang
-#define ROCKFALL_HITPOINT				5
+#define ROCKFALL_HITPOINT				4
 #define ROCKFALL_GRAVITY				GVector2(0.0f, -200.0f)		// gia tốc
 
 class RockFall : public BaseEnemy

@@ -12,7 +12,7 @@ Bullet::Bullet(GVector2 startPosition, eBulletType type,float degree) : BaseObje
 {
 	_startPosition = startPosition;
 	_direction = eDirection::NONE;
-	_degree = degree;
+	_degree = degree; 
 	_type = type;
 }
 
@@ -242,7 +242,7 @@ void Bullet::onCollisionBegin(CollisionEventArg* collision_arg)
 			this->setStatus(eStatus::DESTROY);
 			break;
 		case SOLDIER: case RIFLEMAN: case SCUBASOLDIER:
-			if (collision_arg->_otherObject->getStatus() != HIDDEN && collision_arg->_otherObject->getStatus() != EXPOSING)
+			if (collision_arg->_otherObject->getStatus() != HIDDEN && collision_arg->_otherObject->getStatus() != EXPOSING && collision_arg->_otherObject->getStatus() != DIVING)
 				((BaseEnemy*)collision_arg->_otherObject)->dropHitpoint(_damage);
 			// Đạn laser đi xuyên qua soldier và rifleman
 			if (this->_type != eBulletType::L_BULLET)
@@ -291,7 +291,8 @@ void Bullet::onCollisionBegin(CollisionEventArg* collision_arg)
 		// RockFall: map 2
 		case ROCKFALL:
 			((BaseEnemy*)collision_arg->_otherObject)->dropHitpoint(_damage);
-			this->setStatus(eStatus::DESTROY);
+			this->setStatus(eStatus::DESTROY);				
+			SoundManager::getInstance()->Play(eSoundId::ATTACK_CANNON);
 			if (((BaseEnemy*)collision_arg->_otherObject)->getHitpoint() <= 0)
 				this->setStatus(eStatus::NORMAL);
 			break;
@@ -304,6 +305,13 @@ void Bullet::onCollisionBegin(CollisionEventArg* collision_arg)
 		{
 		case BILL:
 		{
+			if (this->isContainType(eBulletType::SCUBABULLET))
+			{
+				if (this->getVelocity().y > 0)
+				{
+					return;
+				}
+			}
 			if (collision_arg->_otherObject->isInStatus(eStatus::DYING) == false)
 			{
 				collision_arg->_otherObject->setStatus(eStatus::DYING);

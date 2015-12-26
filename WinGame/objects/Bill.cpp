@@ -4,6 +4,7 @@
 #include "GameOverScene.h"
 #include "ShadowBeast.h"
 #include "ObjectCreator.h"
+#include "RockCreator.h"
 
 Bill::Bill(int life) : BaseObject(eID::BILL)
 {
@@ -509,11 +510,16 @@ float Bill::checkCollision(BaseObject * object, float dt)
 {
 	if (object->getStatus() == eStatus::DESTROY || this->isInStatus(eStatus::DYING))
 		return 0.0f;
+	if (this == object)
+		return 0.0f;
 
 	auto collisionBody = (CollisionBody*)_componentList["CollisionBody"];
 	eID objectId = object->getId();
 	eDirection direction;
-
+	if (objectId == eID::FIRE)
+	{
+		return 0.0f;
+	}
 	if ( objectId == eID::LAND || objectId == eID::ROCKFLY)
 	{
 		// nếu ko phải là nhảy xuống, mới dừng gravity
@@ -622,8 +628,13 @@ float Bill::checkCollision(BaseObject * object, float dt)
 
 	for (auto it = _listBullets.begin(); it != _listBullets.end(); it++)
 	{
-		if (object->getId() != eID::LAND)
+		if (object->getId() != eID::LAND )
 		{
+			if (objectId == eID::ROCKCREATOR)
+			{
+				safeCheckCollision((*it), ((RockCreator*)object)->getRock(), dt);
+
+			}
 			if (objectId == eID::SHADOW_BEAST)
 			{
 				safeCheckCollision((*it), ((ShadowBeast*)object)->getLeftArm(), dt);
@@ -821,14 +832,14 @@ void Bill::shoot()
 void Bill::revive()
 {
 	auto viewportPos = SceneManager::getInstance()->getCurrentScene()->getViewport()->getPositionWorld();
-	
+
 	if (auto scene = dynamic_cast<PlayScene*>(SceneManager::getInstance()->getCurrentScene()))
 	{
 		this->setPosition(viewportPos.x, WINDOW_HEIGHT);
 	}
 	else
 	{
-		this->setPosition(viewportPos.x + 192, viewportPos.y - 240);
+		this->setPosition(viewportPos.x + WINDOW_WIDTH / 2, viewportPos.y - WINDOW_HEIGHT / 2);
 	}
 	
 	// reset value

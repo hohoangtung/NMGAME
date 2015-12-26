@@ -27,11 +27,24 @@ public:
 	BaseObject* getLeftArm();
 	BaseObject* getRigtArm();
 	BaseObject* getMouth();
+
 	struct HandElement
 	{
 		Sprite* _sprite;
 		float _angle;
 		float _lenght;
+		HandElement(Sprite* sprite, float angle, float lenght)
+		{
+			_sprite = sprite;
+			_angle = angle;
+			_lenght = lenght;
+		}
+		HandElement()
+		{
+			_sprite = nullptr;
+			_angle = 0.0f;
+			_lenght = 0.0f;
+		}
 	};
 
 	class ShadowArm : public BaseEnemy

@@ -16,6 +16,7 @@ RockFall::~RockFall()
 // init
 void RockFall::init()
 {
+	_hitpoint = ROCKFALL_HITPOINT;
 	this->_sprite = SpriteManager::getInstance()->getSprite(eID::ROCKFALL);
 	this->_sprite->setScale(SCALE_FACTOR);
 	this->_sprite->setPosition(_beginPosition);
@@ -66,7 +67,7 @@ void RockFall::update(float deltatime)
 		this->setPhysicsBodySide(eDirection::NONE);
 		if (_explosion == nullptr)
 		{
-			this->_explosion = new Explosion(1);
+			this->_explosion = new Explosion(2);
 			_explosion->init();
 			_explosion->setScale(SCALE_FACTOR);
 			_explosion->setPosition(this->getPosition());
@@ -235,7 +236,7 @@ float RockFall::checkCollision(BaseObject * object, float dt)
 		if (this->getStatus() == eStatus::HOLDING)
 			return 0.0f;
 
-		if (collisionBody->checkCollision(object, direction, dt))
+		if (collisionBody->checkCollision(object, direction, dt,false))
 		{
 			if (((Bill*)object)->isInStatus(eStatus::DYING) == false)
 			{
@@ -274,6 +275,10 @@ void RockFall::checkPosition()
 // dropHitpoint
 void RockFall::dropHitpoint()
 {
+	if (this->getStatus() == eStatus::HOLDING)
+	{
+		return;
+	}
 	_hitpoint--;
 	if (_hitpoint <= 0)
 	{
@@ -283,6 +288,10 @@ void RockFall::dropHitpoint()
 
 void RockFall::dropHitpoint(int damage)
 {
+	if (this->getStatus() == eStatus::HOLDING)
+	{
+		return;
+	}
 	_hitpoint -= damage;
 	if (_hitpoint <= 0)
 	{

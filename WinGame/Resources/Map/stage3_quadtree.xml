@@ -3,7 +3,7 @@
   <QNode Id="0" Level="1" X="0" Y="0" Width="2176" Height="2176">
     <QNode Id="0" Level="2" X="0" Y="0" Width="1088" Height="1088">
       <QNode Id="0" Level="3" X="0" Y="0" Width="544" Height="544">
-        <Objects>land01 land02 shadowbeast </Objects>
+        <Objects>land01 land02 shadowbeast soldier14 </Objects>
       </QNode>
       <QNode Id="256" Level="3" X="544" Y="0" Width="544" Height="544" />
       <QNode Id="512" Level="3" X="544" Y="544" Width="544" Height="544" />
@@ -12,7 +12,7 @@
           <Objects>rifleman01 land03 land04 land06 </Objects>
         </QNode>
         <QNode Id="66304" Level="4" X="272" Y="544" Width="272" Height="272">
-          <Objects>land03 land05 </Objects>
+          <Objects>land03 land05 soldierCreator08 </Objects>
         </QNode>
         <QNode Id="131840" Level="4" X="272" Y="816" Width="272" Height="272">
           <Objects>land07 land09 land10 land11 </Objects>
@@ -20,13 +20,13 @@
         <QNode Id="197376" Level="4" X="0" Y="816" Width="272" Height="272">
           <QNode Id="197376" Level="5" X="0" Y="816" Width="136" Height="136">
             <Objects>land08 soldier08 soldier09 </Objects>
-        </QNode>
+          </QNode>
           <QNode Id="197377" Level="5" X="136" Y="816" Width="136" Height="136">
             <Objects>land07 land08 land09 </Objects>
-      </QNode>
+          </QNode>
           <QNode Id="197378" Level="5" X="136" Y="952" Width="136" Height="136">
             <Objects>land10 </Objects>
-    </QNode>
+          </QNode>
           <QNode Id="197379" Level="5" X="0" Y="952" Width="136" Height="136">
             <Objects>land10 </Objects>
           </QNode>
@@ -38,10 +38,10 @@
     <QNode Id="48" Level="2" X="0" Y="1088" Width="1088" Height="1088">
       <QNode Id="48" Level="3" X="0" Y="1088" Width="544" Height="544">
         <QNode Id="48" Level="4" X="0" Y="1088" Width="272" Height="272">
-          <Objects>rockfly01 wallturret01 land13 soldier07 </Objects>
+          <Objects>rockfly01 wallturret01 land13 soldierCreator07 </Objects>
         </QNode>
         <QNode Id="65584" Level="4" X="272" Y="1088" Width="272" Height="272">
-          <Objects>rockfly01 redcannon01 land12 </Objects>
+          <Objects>rockfly01 redcannon01 land12 soldier13 </Objects>
         </QNode>
         <QNode Id="131120" Level="4" X="272" Y="1360" Width="272" Height="272">
           <QNode Id="131120" Level="5" X="272" Y="1360" Width="136" Height="136">
@@ -51,7 +51,7 @@
             <Objects>redcannon01 land15 land16 </Objects>
           </QNode>
           <QNode Id="131122" Level="5" X="408" Y="1496" Width="136" Height="136">
-            <Objects>wallturret03 land17 </Objects>
+            <Objects>wallturret03 land17 soldierCreator06 </Objects>
           </QNode>
           <QNode Id="131123" Level="5" X="272" Y="1496" Width="136" Height="136">
             <Objects>land17 land18 </Objects>
@@ -60,10 +60,10 @@
         <QNode Id="196656" Level="4" X="0" Y="1360" Width="272" Height="272">
           <QNode Id="196656" Level="5" X="0" Y="1360" Width="136" Height="136">
             <Objects>wallturret01 falcon01 wallturret02 land14 </Objects>
-        </QNode>
+          </QNode>
           <QNode Id="196657" Level="5" X="136" Y="1360" Width="136" Height="136">
             <Objects>land14 </Objects>
-      </QNode>
+          </QNode>
           <QNode Id="196658" Level="5" X="136" Y="1496" Width="136" Height="136">
             <Objects>land18 </Objects>
           </QNode>
@@ -119,7 +119,7 @@
       <QNode Id="12" Level="3" X="0" Y="2176" Width="544" Height="544">
         <QNode Id="12" Level="4" X="0" Y="2176" Width="272" Height="272">
           <QNode Id="12" Level="5" X="0" Y="2176" Width="136" Height="136">
-            <Objects>land27 land28 </Objects>
+            <Objects>land27 land28 soldierCreator03 </Objects>
           </QNode>
           <QNode Id="13" Level="5" X="136" Y="2176" Width="136" Height="136">
             <Objects>rockfly02 land27 land28 </Objects>
@@ -132,17 +132,28 @@
           </QNode>
         </QNode>
         <QNode Id="65548" Level="4" X="272" Y="2176" Width="272" Height="272">
-          <Objects>rockfly02 rockfly03 aircraft02 land29 land30 </Objects>
+          <QNode Id="65548" Level="5" X="272" Y="2176" Width="136" Height="136">
+            <Objects>rockfly02 land29 </Objects>
+          </QNode>
+          <QNode Id="65549" Level="5" X="408" Y="2176" Width="136" Height="136">
+            <Objects>rockfly02 land29 soldierCreator05 </Objects>
+          </QNode>
+          <QNode Id="65550" Level="5" X="408" Y="2312" Width="136" Height="136">
+            <Objects>aircraft02 land30 soldierCreator04 </Objects>
+          </QNode>
+          <QNode Id="65551" Level="5" X="272" Y="2312" Width="136" Height="136">
+            <Objects>rockfly03 aircraft02 land30 </Objects>
+          </QNode>
         </QNode>
         <QNode Id="131084" Level="4" X="272" Y="2448" Width="272" Height="272">
           <QNode Id="131084" Level="5" X="272" Y="2448" Width="136" Height="136">
             <Objects>aircraft02 land32 land35 </Objects>
           </QNode>
           <QNode Id="131085" Level="5" X="408" Y="2448" Width="136" Height="136">
-            <Objects>aircraft02 land32 land35 </Objects>
+            <Objects>aircraft02 land32 land35 soldier12 </Objects>
           </QNode>
           <QNode Id="131086" Level="5" X="408" Y="2584" Width="136" Height="136">
-            <Objects>aircraft02 land37 land64 </Objects>
+            <Objects>aircraft02 land37 land64 soldierCreator02 </Objects>
           </QNode>
           <QNode Id="131087" Level="5" X="272" Y="2584" Width="136" Height="136">
             <Objects>fire01 aircraft02 land37 land64 </Objects>
@@ -187,7 +198,7 @@
           <Objects>scubasoldier03 rifleman02 land41 </Objects>
         </QNode>
         <QNode Id="197388" Level="4" X="0" Y="2992" Width="272" Height="272">
-          <Objects>land40 land41 land42 land43 </Objects>
+          <Objects>land40 land41 land42 land43 soldier11 </Objects>
         </QNode>
       </QNode>
     </QNode>
@@ -225,7 +236,7 @@
             <Objects>rockfall01 land44 land45 </Objects>
           </QNode>
           <QNode Id="65597" Level="5" X="408" Y="3264" Width="136" Height="136">
-            <Objects>rifleman02 land44 land45 </Objects>
+            <Objects>rifleman02 land44 land45 soldierCreator01 </Objects>
           </QNode>
           <QNode Id="65598" Level="5" X="408" Y="3400" Width="136" Height="136">
             <Objects>land48 </Objects>
@@ -259,7 +270,7 @@
             <Objects>falcon04 land51 land52 </Objects>
           </QNode>
           <QNode Id="196671" Level="5" X="0" Y="3672" Width="136" Height="136">
-            <Objects>rockfall05 land51 land52 soldier02 </Objects>
+            <Objects>rockfall05 land51 land52 soldier02 soldier10 </Objects>
           </QNode>
         </QNode>
       </QNode>
@@ -281,10 +292,21 @@
           </QNode>
         </QNode>
         <QNode Id="66364" Level="4" X="272" Y="3808" Width="272" Height="272">
-          <Objects>land53 land54 land56 land58 land60 </Objects>
+          <QNode Id="66364" Level="5" X="272" Y="3808" Width="136" Height="136">
+            <Objects>land53 land54 land56 </Objects>
+          </QNode>
+          <QNode Id="66365" Level="5" X="408" Y="3808" Width="136" Height="136">
+            <Objects>land54 land56 soldierCreator09 </Objects>
+          </QNode>
+          <QNode Id="66366" Level="5" X="408" Y="3944" Width="136" Height="136">
+            <Objects>land58 land60 soldierCreator09 </Objects>
+          </QNode>
+          <QNode Id="66367" Level="5" X="272" Y="3944" Width="136" Height="136">
+            <Objects>land58 land60 </Objects>
+          </QNode>
         </QNode>
         <QNode Id="131900" Level="4" X="272" Y="4080" Width="272" Height="272">
-          <Objects>land60 land61 land62 land63 </Objects>
+          <Objects>land60 land61 land62 land63 soldier15 </Objects>
         </QNode>
         <QNode Id="197436" Level="4" X="0" Y="4080" Width="272" Height="272">
           <Objects>land60 land61 land63 </Objects>

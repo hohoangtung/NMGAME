@@ -37,6 +37,12 @@ public:
 	void setOnePerOne(bool enable);
 	bool isOnePerOne();
 
+	void setMaxNumber(int number);
+	int getMaxNumber();
+
+	void setMapType(eMapType type);
+	eMapType getMapType();
+
 private:
 
 	BaseObject* getObject(eID id);
@@ -53,6 +59,8 @@ private:
 
 	int _direction;
 	bool _isOnePerOne;
+
+	eMapType _mapType;
 };
 
 #endif // !__OBJECTCREATOR_H__

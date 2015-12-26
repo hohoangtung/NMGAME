@@ -140,6 +140,12 @@ enum eAirCraftType
 	I,
 };
 
+enum eMapType 
+{
+	VERTICAL = 0,
+	HORIZONTAL = 1
+};
+
 enum eBulletType
 {
 	BILL_BULLET		= (1 << 0),
@@ -245,7 +251,7 @@ enum eWT_Status
 	WT_RIGHT_150 = (1 << 10),
 	WT_APPEAR = (1 << 11),
 	WT_CLOSE = (1 << 12),
-	WT_SHOOTING = (1 << 13),
+	WT_SHOOTING = (1 << 13)
 };
 typedef D3DXVECTOR3 GVector3;
 typedef D3DXVECTOR2 GVector2;

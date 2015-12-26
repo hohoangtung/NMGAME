@@ -15,7 +15,7 @@ Viewport::Viewport(float x, float y, float width, float height)
 	_positionWorld.x = x;
 	_positionWorld.y = y;
 	_width = width;
-	_height = height;
+	_height = height; 
 }
 
 Viewport::~Viewport()
@@ -74,9 +74,14 @@ bool Viewport::isContains(const RECT &rect)
 RECT Viewport::getBounding()
 {
 	RECT rect;
+	//rect.left = _positionWorld.x;
+	//rect.bottom = WINDOW_HEIGHT - _positionWorld.y;
+	//rect.top = rect.bottom + _height;
+	//rect.right = rect.left + _width;
+
 	rect.left = _positionWorld.x;
-	rect.bottom = WINDOW_HEIGHT - _positionWorld.y;
-	rect.top = rect.bottom + _height;
+	rect.top = _positionWorld.y;
+	rect.bottom = rect.top - _height;
 	rect.right = rect.left + _width;
 
 	return rect;

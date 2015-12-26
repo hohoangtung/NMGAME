@@ -116,7 +116,7 @@ void BeginPlayScene::release()
 void BeginPlayScene::updateInput(float deltatime)
 {
 }
-
+const float BeginPlayScene::delaytime = 3000;
 BeginPlayScene::BeginPlayScene(int score, int rest, int stage)
 {
 	this->_score = score;

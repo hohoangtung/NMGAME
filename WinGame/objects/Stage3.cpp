@@ -32,7 +32,7 @@ bool Stage3::init()
 {
 	auto bill = new Bill(_restBill);
 	bill->init();
-	bill->setPosition(200, 100);
+	bill->setPosition(200, 200);
 	
 	this->_bill = bill;
 	_listControlObject.push_back(bill);
@@ -193,8 +193,16 @@ void Stage3::update(float dt)
 	// [Bước 6]
 	for (BaseObject* obj : _active_object)
 	{
+		// một vài trạng thái không cần thiết phải check hàm va chạm
+		if (obj == nullptr || obj->isInStatus(eStatus::DESTROY) || obj->getId() == eID::LAND ||
+			obj->getId() == eID::WALL_TURRET || obj->getId() == eID::REDCANNON || obj->getId() == eID::ROCKFLY)
+			continue;
+
 		for (BaseObject* passiveobj : _active_object)
 		{
+			if (passiveobj == nullptr || passiveobj == obj || passiveobj->isInStatus(eStatus::DESTROY))
+				continue;
+
 			obj->checkCollision(passiveobj, dt);
 		}
 	}
