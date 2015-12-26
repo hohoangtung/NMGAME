@@ -3,7 +3,7 @@
 US_FRAMEWORK
 
 Sprite::~Sprite()
-{
+{ 
 //	this->_surface->Release();
 }
 
