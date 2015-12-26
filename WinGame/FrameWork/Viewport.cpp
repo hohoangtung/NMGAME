@@ -15,7 +15,7 @@ Viewport::Viewport(float x, float y, float width, float height)
 	_positionWorld.x = x;
 	_positionWorld.y = y;
 	_width = width;
-	_height = height;
+	_height = height; 
 }
 
 Viewport::~Viewport()

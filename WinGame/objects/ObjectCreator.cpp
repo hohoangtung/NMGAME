@@ -12,7 +12,7 @@ ObjectCreator::ObjectCreator(GVector2 position, int width, int height, eID type,
 	_direction = direction;
 	_isOnePerOne = false;
 
-	_maxObject = 2;
+	_maxObject = 2; 
 }
 
 ObjectCreator::~ObjectCreator()

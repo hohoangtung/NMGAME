@@ -11,7 +11,7 @@
 class ObjectCreator : public EmptyObject
 {
 public:
-
+	 
 	/*
 	Tạo số lượng object ở vị trí trong khỏang thời gian
 		@position: vị trí
