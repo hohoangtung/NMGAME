@@ -11,7 +11,7 @@
  
 PlayScene::PlayScene()
 {
-	_viewport = new Viewport(0, WINDOW_HEIGHT, WINDOW_WIDTH, WINDOW_HEIGHT);
+	_viewport = new Viewport(0, WINDOW_HEIGHT, WINDOW_WIDTH, WINDOW_HEIGHT); 
 } 
 
 PlayScene::~PlayScene()

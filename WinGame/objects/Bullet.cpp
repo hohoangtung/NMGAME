@@ -12,7 +12,7 @@ Bullet::Bullet(GVector2 startPosition, eBulletType type,float degree) : BaseObje
 {
 	_startPosition = startPosition;
 	_direction = eDirection::NONE;
-	_degree = degree;
+	_degree = degree; 
 	_type = type;
 }
 

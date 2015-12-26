@@ -21,7 +21,7 @@ vector<BaseObject*>* ObjectFactory::getListObjectFromFile(const string path)
 	xml_parse_result result = doc.load_file(path.data(), pugi::parse_default  | pugi::parse_pi);
 		if (result == false)
 	{
-		return listobject;
+		return listobject; 
 	}
 
 	xml_node tilemap = doc.child("Tilesmap");
