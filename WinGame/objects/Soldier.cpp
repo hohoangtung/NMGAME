@@ -13,7 +13,7 @@ Soldier::Soldier(eStatus status, GVector2 pos, int direction) : BaseEnemy(eID::S
 	this->setScale(SCALE_FACTOR);
 	this->setScaleX(-direction * SCALE_FACTOR);
 	this->_canShoot = false;
-}
+} 
 
 Soldier::Soldier(eStatus status, float x, float y, int direction) : BaseEnemy(eID::SOLDIER) {
 	_sprite = SpriteManager::getInstance()->getSprite(eID::SOLDIER);

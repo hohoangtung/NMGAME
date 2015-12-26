@@ -16,7 +16,7 @@ using namespace std;
 #define SOLDIER_SCORE 100
 #define SOLDIER_JUMP_VELOCITY 200
 #define SOLDIER_SHOOTING_DELAY 500.0f
-
+ 
 class Soldier : public BaseEnemy
 {
 public:
