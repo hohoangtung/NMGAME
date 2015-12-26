@@ -15,7 +15,7 @@ using namespace std;
 #define SOLDIER_HITPOINT 1
 #define SOLDIER_SCORE 100
 #define SOLDIER_JUMP_VELOCITY 250
-#define SOLDIER_SHOOTING_DELAY 500.0f
+#define SOLDIER_SHOOTING_DELAY 400.0f
 
 class Soldier : public BaseEnemy
 {
@@ -45,6 +45,7 @@ public:
 	void setPosition(GVector2);
 	GVector2 getVelocity();
 	IComponent* getComponent(string);
+	RECT getBounding();
 
 private:
 	map<string, IComponent*> _listComponent;

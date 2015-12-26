@@ -208,8 +208,7 @@ void Soldier::update(float deltatime)
 			this->setStatus(eStatus::DESTROY);
 		}
 	}
-
-	if (this->_shoot->isTimeLoop(1000.0f))
+	if (this->_shoot->isTimeLoop(3000.0f))
 	{
 		if (this->_canShoot && this->getStatus() == RUNNING)
 		{
@@ -229,8 +228,7 @@ void Soldier::update(float deltatime)
 			Movement *move = (Movement*)this->getComponent("Movement");
 			move->setVelocity(GVector2(-SOLDIER_SPEED * this->getScale().x / 2, 0));
 			this->setStatus(RUNNING);
-			delete _checkShoot;
-			_checkShoot = new StopWatch();
+			_checkShoot->restart();
 		}
 	}
 	if (_loopwatch->isTimeLoop(SOLDIER_SHOOTING_DELAY))
@@ -340,7 +338,8 @@ float Soldier::checkCollision(BaseObject * object, float dt)
 					movement->setVelocity(GVector2(movement->getVelocity().x, 0));
 					gravity->setStatus(eGravityStatus::SHALLOWED);
 
-					this->setStatus(eStatus::RUNNING);
+					if (this->getStatus() != eStatus::SHOOTING)
+						this->setStatus(eStatus::RUNNING);
 					prevObject = object;
 				}
 				//else if (this->getVelocity().y == 0 && this->getVelocity().x < 0)
@@ -454,4 +453,11 @@ void Soldier::shoot()
 		pos.y -= this->getSprite()->getFrameHeight() / 4.5;
 	}
 	BulletManager::insertBullet(new Bullet(pos, (eBulletType)(ENEMY_BULLET | NORMAL_BULLET), angle));
+}
+
+RECT Soldier::getBounding()
+{
+	RECT bound = this->getSprite()->getBounding();
+	bound.top -= 25 ;
+	return bound;
 }
