@@ -55,7 +55,7 @@ void Sprite::render(LPD3DXSPRITE spriteHandle)
 	_texture.render(
 		spriteHandle,
 		&_frameRect,
-		_position,
+		GVector2((int)_position.x, (int)_position.y),
 		_scale,
 		_rotate,
 		_origin,

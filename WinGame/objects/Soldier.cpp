@@ -5,6 +5,8 @@ Soldier::Soldier(eStatus status, GVector2 pos, int direction) : BaseEnemy(eID::S
 	_sprite->setFrameRect(0, 0, 32.0f, 16.0f);
 	_divingSprite = SpriteManager::getInstance()->getSprite(eID::BILL);
 	_divingSprite->setFrameRect(0, 0, 17.0f, 15.0f);
+	_divingSprite->setScale(SCALE_FACTOR);
+	_divingSprite->setOrigin(GVector2(0.5f, 0.0f));
 	GVector2 v(direction * SOLDIER_SPEED, 0);
 	GVector2 a(0, 0);
 	this->_listComponent.insert(pair<string, IComponent*>("Movement", new Movement(a, v, this->_sprite)));
@@ -20,6 +22,8 @@ Soldier::Soldier(eStatus status, float x, float y, int direction) : BaseEnemy(eI
 	_sprite->setFrameRect(0, 0, 32.0f, 16.0f);
 	_divingSprite = SpriteManager::getInstance()->getSprite(eID::BILL);
 	_divingSprite->setFrameRect(0, 0, 17.0f, 15.0f);
+	_divingSprite->setScale(SCALE_FACTOR);
+	_divingSprite->setOrigin(GVector2(0.5f, 0.0f));
 	GVector2 pos(x, y);
 	GVector2 v(direction * SOLDIER_SPEED, 0);
 	GVector2 a(0, 0);
@@ -36,6 +40,8 @@ Soldier::Soldier(eStatus status, GVector2 pos, int direction, bool shoot) : Base
 	_sprite->setFrameRect(0, 0, 32.0f, 16.0f);
 	_divingSprite = SpriteManager::getInstance()->getSprite(eID::BILL);
 	_divingSprite->setFrameRect(0, 0, 17.0f, 15.0f);
+	_divingSprite->setScale(SCALE_FACTOR);
+	_divingSprite->setOrigin(GVector2(0.5f, 0.0f));
 	GVector2 v(direction * SOLDIER_SPEED, 0);
 	GVector2 a(0, 0);
 	this->_listComponent.insert(pair<string, IComponent*>("Movement", new Movement(a, v, this->_sprite)));
@@ -51,6 +57,8 @@ Soldier::Soldier(eStatus status, float x, float y, int direction, bool shoot) : 
 	_sprite->setFrameRect(0, 0, 32.0f, 16.0f);
 	_divingSprite = SpriteManager::getInstance()->getSprite(eID::BILL);
 	_divingSprite->setFrameRect(0, 0, 17.0f, 15.0f);
+	_divingSprite->setScale(SCALE_FACTOR);
+	_divingSprite->setOrigin(GVector2(0.5f, 0.0f));
 	GVector2 pos(x, y);
 	GVector2 v(direction * SOLDIER_SPEED, 0);
 	GVector2 a(0, 0);
@@ -95,9 +103,9 @@ void Soldier::init()
 	_animations[DYING] = new Animation(_sprite, 0.15f);
 	_animations[DYING]->addFrameRect(eID::SOLDIER, "die_01", NULL);
 
-	_animations[DIVING] = new Animation(_divingSprite, 0.15f);
+	_animations[DIVING] = new Animation(_divingSprite, 0.15f, false);
 	_animations[DIVING]->addFrameRect(eID::BILL, "swim_begin", "diving", "swim_begin", NULL);
-
+	
 	_stopwatch = new StopWatch();
 	_loopwatch = new StopWatch();
 	_shoot = new StopWatch();
@@ -137,6 +145,7 @@ void Soldier::update(float deltatime)
 {
 	if (_explosion != NULL)
 		_explosion->update(deltatime);
+
 	if (this->getStatus() == eStatus::BURST)
 	{
 		if (_explosion == nullptr)
@@ -153,6 +162,7 @@ void Soldier::update(float deltatime)
 		}
 		return;
 	}
+
 	if (this->getStatus() == eStatus::DIVING)
 	{
 		if (_animations[DIVING]->getIndex() == 2)
@@ -160,14 +170,21 @@ void Soldier::update(float deltatime)
 			this->setStatus(eStatus::DESTROY);
 		}
 	}
+
 	if (this->getStatus() == DESTROY || this->getStatus() == WAITING)
 		return;
+
 	Gravity *gravity = (Gravity*)this->getComponent("Gravity");
 	Movement *movement = (Movement*)this->getComponent("Movement");
-	if (this->getHitpoint() <= 0)
+
+	if (this->getHitpoint() <= 0 && this->getStatus() != DYING)
+	{
 		this->setStatus(eStatus::DYING);
-	if (this->getStatus() == eStatus::DYING) {
 		this->die();
+	}
+	
+	if (this->getStatus() == eStatus::DYING) {
+		
 		if (_stopwatch->isStopWatch(200))
 		{
 			movement->setVelocity(GVector2(0, 0));
@@ -175,6 +192,7 @@ void Soldier::update(float deltatime)
 			return;
 		}
 	}
+
 	if (this->getStatus() == eStatus::BURST)
 	{
 		if (_explosion == nullptr)
@@ -190,6 +208,7 @@ void Soldier::update(float deltatime)
 			this->setStatus(eStatus::DESTROY);
 		}
 	}
+
 	if (this->_shoot->isTimeLoop(1000.0f))
 	{
 		if (this->_canShoot && this->getStatus() == RUNNING)
@@ -265,19 +284,19 @@ void Soldier::onCollisionEnd(CollisionEventArg* collision_event) {
 	case eID::LAND:
 	case eID::BRIDGE:
 	{
-		if (prevObject == collision_event->_otherObject)
-		{
-			if (prevObject == collision_event->_otherObject)
-			{
-				// hết chạm với land là fall chứ ko có jump
-				jump();
-				auto gravity = (Gravity*)this->_listComponent["Gravity"];
-				gravity->setStatus(eGravityStatus::FALLING__DOWN);
-				this->setStatus(FALLING);
-				prevObject = nullptr;
-			}
-			break;
-		}
+		//if (prevObject == collision_event->_otherObject)
+		//{
+		//	if (prevObject == collision_event->_otherObject)
+		//	{
+		//		// hết chạm với land là fall chứ ko có jump
+		//		jump();
+		//		auto gravity = (Gravity*)this->_listComponent["Gravity"];
+		//		gravity->setStatus(eGravityStatus::FALLING__DOWN);
+		//		this->setStatus(FALLING);
+		//		prevObject = nullptr;
+		//	}
+		//	break;
+		//}
 	}
 	break;
 	default:
@@ -288,21 +307,23 @@ void Soldier::onCollisionEnd(CollisionEventArg* collision_event) {
 
 float Soldier::checkCollision(BaseObject * object, float dt)
 {
-	if (this->getStatus() == eStatus::DESTROY)
+	if (this->getStatus() == eStatus::DESTROY || this->getStatus() == eStatus::DIVING || this->isInStatus(eStatus::DYING) || this->isInStatus(eStatus::BURST))
 		return 0.0f;
+
 	auto collisionBody = (CollisionBody*)_listComponent["CollisionBody"];
 	eID objectId = object->getId();
 	eDirection direction;
 
-	if (prevObject == object)
-	{
-		// kiểm tra coi nhảy hết qua cái land cũ chưa
-		// để gọi event end.
-		collisionBody->checkCollision(object, dt, false);
+	//if (prevObject == object)
+	//{
+	//	// kiểm tra coi nhảy hết qua cái land cũ chưa
+	//	// để gọi event end.
+	//	collisionBody->checkCollision(object, dt, false);
 
-		auto gravity = (Gravity*)this->_listComponent["Gravity"];
-		gravity->setStatus(eGravityStatus::FALLING__DOWN);
-	}
+	//	auto gravity = (Gravity*)this->_listComponent["Gravity"];
+	//	gravity->setStatus(eGravityStatus::FALLING__DOWN);
+	//}
+
 	if (objectId == eID::LAND)
 	{
 		eLandType land = ((Land*)object)->getType();
@@ -322,48 +343,73 @@ float Soldier::checkCollision(BaseObject * object, float dt)
 					this->setStatus(eStatus::RUNNING);
 					prevObject = object;
 				}
-				else if (this->getVelocity().y == 0 && this->getVelocity().x < 0)
-				{
-					if (this->getBounding().left - object->getBounding().left < 8)
-					{
-						flagend = true;
-					}
-				}
-				else if (this->getVelocity().y == 0 && this->getVelocity().x > 0)
-				{
-					if (this->getBounding().right - object->getBounding().right > 8)
-					{
-						flagend = true;
-					}
-				}
+				//else if (this->getVelocity().y == 0 && this->getVelocity().x < 0)
+				//{
+				//	if (this->getBounding().left - object->getBounding().left < 8)
+				//	{
+				//		flagend = true;
+				//	}
+				//}
+				//else if (this->getVelocity().y == 0 && this->getVelocity().x > 0)
+				//{
+				//	if (this->getBounding().right - object->getBounding().right > 8)
+				//	{
+				//		flagend = true;
+				//	}
+				//}
 
-				if (flagend == true)
-				{
-					int chance = rand() % 5;
-					if (chance == 0)
-					{
-						jump();
-						auto gravity = (Gravity*)this->_listComponent["Gravity"];
-						gravity->setStatus(eGravityStatus::FALLING__DOWN);
-						this->setStatus(FALLING);
-					}
-					else
-					{
-						Movement* movement = (Movement*)this->getComponent("Movement");
-						movement->setVelocity(GVector2(-movement->getVelocity().x, movement->getVelocity().y));
-						this->setScaleX( - this->getScale().x);
-					}
-				}
+				//if (flagend == true)
+				//{
+				//	int chance = rand() % 5;
+				//	if (chance == 0)
+				//	{
+				//		jump();
+				//		auto gravity = (Gravity*)this->_listComponent["Gravity"];
+				//		gravity->setStatus(eGravityStatus::FALLING__DOWN);
+				//		this->setStatus(FALLING);
+				//	}
+				//	else
+				//	{
+				//		Movement* movement = (Movement*)this->getComponent("Movement");
+				//		movement->setVelocity(GVector2(-movement->getVelocity().x, movement->getVelocity().y));
+				//		this->setScaleX( - this->getScale().x);
+				//	}
+				//}
 			}
 			else if (land == eLandType::WATER)
 			{
 				auto gravity = (Gravity*)this->_listComponent["Gravity"];
 				auto movement = (Movement*)this->_listComponent["Movement"];
+				
 				gravity->setStatus(eGravityStatus::SHALLOWED);
 				movement->setVelocity(VECTOR2ZERO);
+				
 				this->setStatus(DIVING);
 				this->setPositionY(object->getPositionY());
+				_divingSprite->setPosition(this->getPosition());
 			}
+		}
+		else if (prevObject == object)
+		{
+			auto gravity = (Gravity*)this->_listComponent["Gravity"];
+			gravity->setStatus(eGravityStatus::FALLING__DOWN);
+
+			int chance = rand() % 5;
+			if (chance == 0)
+			{
+				jump();
+				auto gravity = (Gravity*)this->_listComponent["Gravity"];
+				gravity->setStatus(eGravityStatus::FALLING__DOWN);
+				//this->setStatus(FALLING);
+			}
+			else
+			{
+				Movement* movement = (Movement*)this->getComponent("Movement");
+				movement->setVelocity(GVector2(-movement->getVelocity().x, movement->getVelocity().y));
+				this->setScaleX(-this->getScale().x);
+			}
+
+			prevObject = nullptr;
 		}
 	}
 	else

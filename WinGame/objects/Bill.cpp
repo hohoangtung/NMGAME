@@ -821,14 +821,14 @@ void Bill::shoot()
 void Bill::revive()
 {
 	auto viewportPos = SceneManager::getInstance()->getCurrentScene()->getViewport()->getPositionWorld();
-	
+
 	if (auto scene = dynamic_cast<PlayScene*>(SceneManager::getInstance()->getCurrentScene()))
 	{
 		this->setPosition(viewportPos.x, WINDOW_HEIGHT);
 	}
 	else
 	{
-		this->setPosition(viewportPos.x + 192, viewportPos.y - 240);
+		this->setPosition(viewportPos.x + WINDOW_WIDTH / 2, viewportPos.y - WINDOW_HEIGHT / 2);
 	}
 	
 	// reset value
