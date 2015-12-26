@@ -17,7 +17,7 @@ Animation::Animation(Sprite * spriteSheet, float timeAnimate, bool loop)
 	 
 	this->setIndex(0);
 	this->setLoop(loop);
-
+	_canFlashes = false;
 	_flashColor = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
 }
 

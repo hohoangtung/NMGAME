@@ -99,7 +99,7 @@ void BulletManager::insertBullet(Bullet* bullet)
 
 RECT BulletManager::getBounding()
 {
-	return RECT{ 0 };
+	return RECT();
 }
 
 //treat as bullet

@@ -107,7 +107,7 @@ void ShadowBeast::release()
 }
 RECT ShadowBeast::getBounding()
 {
-	return RECT{ 0, 0, 0, 0 };
+	return RECT();
 }
 
 BaseObject* ShadowBeast::getLeftArm()
@@ -175,11 +175,11 @@ void ShadowBeast::ShadowArm::init()
 	flagforTrackBill = false;
 	counterforFire = 0;
 
-	_handelem1 = HandElement{ hand1, 0.0f, 0 };
-	_handelem2 = HandElement{ hand2, 0.0f, 32 };
-	_handelem3 = HandElement{ hand3, 0.0f, 0 };
-	_handelem4 = HandElement{ hand4, 0.0f, 0 };
-	_arm = HandElement{ _sprite, 0.0f, 0 };
+	_handelem1 = HandElement( hand1, 0.0f, 0 );
+	_handelem2 = HandElement( hand2, 0.0f, 32 );
+	_handelem3 = HandElement( hand3, 0.0f, 0 );
+	_handelem4 = HandElement( hand4, 0.0f, 0 );
+	_arm = HandElement( _sprite, 0.0f, 0 );
 
 	_flagAimFinish[0] = false;
 	_flagAimFinish[1] = false;
@@ -451,7 +451,7 @@ void ShadowBeast::ShadowArm::release()
 RECT ShadowBeast::ShadowArm::getBounding()
 {
 	if (this->getStatus() != eStatus::NORMAL)
-		return RECT{ 0, 0, 0, 0 };
+		return RECT();
 	return BaseObject::getBounding();
 }
 
@@ -707,7 +707,7 @@ RECT ShadowBeast::ShadowMouth::getBounding()
 		basebound.top += 14 * this->getScale().y;
 		return basebound;
 	}
-	return RECT{ 0, 0, 0, 0 };
+	return RECT();
 }
 void ShadowBeast::ShadowMouth::shoot()
 {

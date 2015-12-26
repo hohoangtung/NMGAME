@@ -74,12 +74,21 @@ float RockCreator::checkCollision(BaseObject * object, float dt)
 {
 	if (_rockInstance == nullptr)
 		return 0.0f;
+	auto otherid = object->getId();
+	if (otherid != eID::LAND && otherid != eID::BILL)
+		return 0.0f;
 	_rockInstance->checkCollision(object, dt);
+
 	return 0.0f;
+}
+
+BaseObject* RockCreator::getRock()
+{
+	return _rockInstance;
 }
 
 RECT RockCreator::getBounding()
 {
-	return RECT{ 0, 0, 0, 0 };
+	return RECT();
 }
 

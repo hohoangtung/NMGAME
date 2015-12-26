@@ -179,12 +179,12 @@ void Fire::SingleFire::onCollisionBegin(CollisionEventArg* collision_event)
 	{
 	case eID::BILL:
 	{
-					  if (collision_event->_otherObject->isInStatus(eStatus::DYING) == false)
-					  {
-						  collision_event->_otherObject->setStatus(eStatus::DYING);
-						  ((Bill*)collision_event->_otherObject)->die();
-					  }
-					  break;
+		if (collision_event->_otherObject->isInStatus(eStatus::DYING) == false)
+		{
+			collision_event->_otherObject->setStatus(eStatus::DYING);
+			((Bill*)collision_event->_otherObject)->die();
+		}
+		break;
 	}
 	default:
 		break;
@@ -197,7 +197,7 @@ float Fire::SingleFire::checkCollision(BaseObject* object, float dt)
 	auto collisionBody = (CollisionBody*)_listComponent["CollisionBody"];
 	eID objectId = object->getId();
 	if (objectId == eID::BILL)
-		collisionBody->checkCollision(object, dt);
+		collisionBody->checkCollision(object, dt,false);
 	return 0.0f;
 }
 IComponent* Fire::SingleFire::getComponent(string componentName)

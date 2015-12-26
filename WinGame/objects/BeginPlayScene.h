@@ -37,7 +37,8 @@ public:
 	void updateInput(float deltatime);
 
 private:
-	const float delaytime = 3000;
+	
+	static const float delaytime;
 	int _score;
 	int _highscore;
 	int _rest;

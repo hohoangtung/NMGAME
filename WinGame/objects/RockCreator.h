@@ -21,6 +21,7 @@ public:
 	void release();
 	RECT getBounding() override;
 	float checkCollision(BaseObject * object, float dt);
+	BaseObject* getRock();
 private:
 	GVector2 _position;
 	RockFall* _rockInstance;
