@@ -495,8 +495,23 @@ BaseObject * ObjectFactory::getCreator(xml_node node)
 		oneperone = false;
 	}
 
+	// max num
+	int maxNum = 2;
+	if (properties.find("maxNumber") != properties.end())
+	{
+		maxNum = stoi(properties.find("maxNumber")->second);
+	}
+
+	eMapType mapType = eMapType::HORIZONTAL;
+	if (properties.find("mapType") != properties.end())
+	{
+		mapType = (eMapType)stoi(properties.find("mapType")->second);
+	}
+
 	auto creator = new ObjectCreator(pos, width, height, type, dir, time, num);
 	creator->setOnePerOne(oneperone);
+	creator->setMaxNumber(maxNum);
+	creator->setMapType(mapType);
 	creator->init();
 
 	return creator;

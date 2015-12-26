@@ -26,7 +26,7 @@ bool SelectionScene::init()
 	_stage3->setOpacity(0.8f);
 
 	_yellowFancon = SpriteManager::getInstance()->getSprite(eID::YELLOWFALCON);
-	_yellowFancon->setPosition(GVector2(32.0f, _gap));
+	_yellowFancon->setPosition(GVector2(32.0f, _stage1->getPosition().y));
 	_yellowFancon->setScale(SCALE_FACTOR);
 	_yellowFancon->setOrigin(VECTOR2ZERO);
 

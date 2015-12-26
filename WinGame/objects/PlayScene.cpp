@@ -11,7 +11,7 @@
  
 PlayScene::PlayScene()
 {
-	_viewport = new Viewport(0, WINDOW_HEIGHT, WINDOW_WIDTH, WINDOW_HEIGHT); 
+	_viewport = new Viewport(0, WINDOW_HEIGHT, WINDOW_WIDTH, WINDOW_HEIGHT);
 } 
 
 PlayScene::~PlayScene()
@@ -40,42 +40,9 @@ bool PlayScene::init()
 	bulletmanager->init();
 	_listobject.push_back(bulletmanager);
 
-	//auto soldier = new Soldier(RUNNING, 1000, 400, 1);
-	//soldier->init();
-	//_listobject.push_back(soldier);
-
-
-	//soldier = new Soldier(RUNNING, 1200, 400, 1);
-	//soldier->init();
-	//_listobject.push_back(soldier);	
-
-	//soldier = new Soldier(RUNNING, 800, 400, 1);
-	//soldier->init();
-	//_listobject.push_back(soldier);
-
-	//auto scubasoldier = new ScubaSoldier(GVector2(200, 50));
-	//scubasoldier->init();
-	//_listobject.push_back(scubasoldier);
-
-	//auto rockfly = new RockFly(GVector2(100, 350), GVector2(300, 350));
-
-	/*auto rockfly = new RockFly(GVector2(100, 350), GVector2(300, 350));
-	rockfly->init();
-	_listobject.push_back(rockfly);*/
-
-	//auto rockfall = new RockFall(GVector2(350, 400));
-	//rockfall->init();
-	//_listobject.push_back(rockfall);
-
-	//auto fire = new Fire(GVector2(400, 260));
-	//fire->init();
-	//_listobject.push_back(fire);
-
 	_text = new Text(L"Arial", "", 10, 25);
 
 	map<string, BaseObject*>* maptemp = ObjectFactory::getMapObjectFromFile("Resources//Map//stage1.xml");
-
-	//this->_listobject.insert(_listobject.end(), temp->begin(), temp->end());
 	this->_mapobject.insert(maptemp->begin(), maptemp->end());
 
 	_root = QNode::loadQuadTree("Resources//Map//stage1_quadtree.xml");
@@ -83,7 +50,6 @@ bool PlayScene::init()
 	background = Map::LoadFromFile("Resources//Map//stage1.xml",eID::MAPSTAGE1);
 
 	SoundManager::getInstance()->PlayLoop(eSoundId::BACKGROUND_STAGE1);
-
 
 	auto scenarioBoss_Viewport = new Scenario("BossViewport");
 	__hook(&Scenario::update, scenarioBoss_Viewport, &PlayScene::bossScene_Viewport);
@@ -105,6 +71,7 @@ bool PlayScene::init()
 
 	_help = new Help();
 	_help->init();
+
 	return true;
 }
 void PlayScene::bossScene_Viewport(float dt, bool& finish)
@@ -224,8 +191,6 @@ void PlayScene::update(float dt)
 	// left right không đổi dù hệ top-left hay hệ bot-left
 	screen.left = viewport_in_transform.left;
 	screen.right = viewport_in_transform.right;
-	//screen.bottom = viewport_position.y;
-	//screen.top = _viewport->getHeight() - viewport_position.y;
 	screen.top = this->background->getWorldSize().y - viewport_position.y;
 	screen.bottom = screen.top + _viewport->getHeight();
 	// getlistobject
@@ -234,8 +199,6 @@ void PlayScene::update(float dt)
 	clock_t t;
 	t = clock();
 #endif
-	//_active_object = _root->getlistObject(screen);
-	//auto listobjectname = _root->getlistObject(screen);
 
 	// [Bước 1]
 	this->destroyobject();
@@ -362,7 +325,6 @@ void PlayScene::updateViewport(BaseObject* objTracker)
 
 void PlayScene::draw(LPD3DXSPRITE spriteHandle)
 {
-	//sprite->render(spriteHandle, _viewport);
 	background->draw(spriteHandle, _viewport);
 
 	for (BaseObject* object : _active_object)
@@ -424,7 +386,6 @@ void PlayScene::ScenarioKillBoss(float deltatime)
 		{
 			SAFE_DELETE(_directorKillBoss);
 			//chuyển scene
-			// test
 			auto play = new BeginPlayScene(Score::getScore(), ((Bill*)_bill)->getLifeNumber(), 3);
 			SceneManager::getInstance()->replaceScene(play);
 		}
@@ -434,7 +395,7 @@ bool PlayScene::checkGameLife()
 {
 	if (((Bill*)_bill)->getLifeNumber() < 0)
 	{
-		auto gameoverScene = new GameOverScene(Score::getScore(), 1);		// hardcode test: 1000 = số điểm
+		auto gameoverScene = new GameOverScene(Score::getScore(), 1);
 		SoundManager::getInstance()->Stop(eSoundId::BACKGROUND_STAGE1);
 		SceneManager::getInstance()->replaceScene(gameoverScene);
 		return true;

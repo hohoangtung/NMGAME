@@ -140,6 +140,12 @@ enum eAirCraftType
 	I,
 };
 
+enum eMapType 
+{
+	VERTICAL = 0,
+	HORIZONTAL = 1
+};
+
 enum eBulletType
 {
 	BILL_BULLET		= (1 << 0),

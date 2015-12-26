@@ -12,7 +12,9 @@ ObjectCreator::ObjectCreator(GVector2 position, int width, int height, eID type,
 	_direction = direction;
 	_isOnePerOne = false;
 
-	_maxObject = 2; 
+	_maxObject = 2;
+
+	_mapType = eMapType::HORIZONTAL;
 }
 
 ObjectCreator::~ObjectCreator()
@@ -30,9 +32,10 @@ void ObjectCreator::update(float deltatime)
 	auto vpBounding = SceneManager::getInstance()->getCurrentScene()->getViewport()->getBounding();
 
 	// kt coi đi tới chưa, chưa tới mới tạo
-	if (this->getPositionX() > vpBounding.right && this->getPositionY() < vpBounding.top)
+	if ((_mapType == eMapType::HORIZONTAL && this->getPositionX() > vpBounding.right) ||
+		(_mapType == eMapType::VERTICAL && this->getPositionY() < vpBounding.top))
 	{
-		if (_isOnePerOne == false)
+		//if (_isOnePerOne == false)
 		{
 			if (_stopWatch->isStopWatch(_timeCreate))
 			{
@@ -53,13 +56,13 @@ void ObjectCreator::update(float deltatime)
 				}
 			}
 		}
-		else
-		{
-			if (_listObjects.size() == 0)
-			{
-				_listObjects.push_back(getObject(_createType));
-			}
-		}
+		//else
+		//{
+		//	if (_listObjects.size() == 0)
+		//	{
+		//		_listObjects.push_back(getObject(_createType));
+		//	}
+		//}
 	}
 	else if (this->getPositionX() <= vpBounding.left || this->getPositionY() <= vpBounding.bottom)
 	{
@@ -72,12 +75,15 @@ void ObjectCreator::update(float deltatime)
 	{
 		object->update(deltatime);
 
-		// soldier nó bị ngc nên đảo lại -_-
 		if (object->getScale().x > 0 && object->getPositionX() < vpBounding.left)
 		{
 			object->setStatus(eStatus::DESTROY);
 		}
 		else if (object->getScale().x < 0 && object->getPositionX() > vpBounding.right)
+		{
+			object->setStatus(eStatus::DESTROY);
+		}
+		else if (object->getPositionY() > vpBounding.top || object->getPositionY() < vpBounding.bottom)
 		{
 			object->setStatus(eStatus::DESTROY);
 		}
@@ -156,7 +162,7 @@ void ObjectCreator::deleteObject()
 
 RECT ObjectCreator::getBounding()
 {
-	return RECT();
+	return RECT{0, 0, 0, 0};
 }
 
 vector<BaseObject*> ObjectCreator::getObjects()
@@ -173,3 +179,24 @@ bool ObjectCreator::isOnePerOne()
 {
 	return _isOnePerOne;
 }
+
+void ObjectCreator::setMaxNumber(int number)
+{
+	_maxObject = number;
+}
+
+int ObjectCreator::getMaxNumber()
+{
+	return _maxObject;
+}
+
+void ObjectCreator::setMapType(eMapType type)
+{
+	_mapType = type;
+}
+
+eMapType ObjectCreator::getMapType()
+{
+	return _mapType;
+}
+
