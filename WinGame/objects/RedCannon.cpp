@@ -31,7 +31,7 @@ RedCannon::RedCannon(eWT_Status wtstatus, GVector2 position) :BaseEnemy(eID::RED
 	_sprite = SpriteManager::getInstance()->getSprite(eID::REDCANNON);
 	_sprite->setFrameRect(0, 0, 32, 32);
 	this->setPosition(position);
-	this->setStatus(wtstatus);
+	this->setWTStatus(wtstatus);
 }
 RedCannon::RedCannon(eWT_Status wtstatus, float x, float y) :BaseEnemy(eID::REDCANNON)
 {
@@ -39,7 +39,7 @@ RedCannon::RedCannon(eWT_Status wtstatus, float x, float y) :BaseEnemy(eID::REDC
 	_sprite->setFrameRect(0, 0, 32, 32);
 	GVector2 pos(x, y);
 	this->setPosition(pos);
-	this->setStatus(wtstatus);
+	this->setWTStatus(wtstatus);
 }
 RedCannon::~RedCannon()
 {
@@ -145,19 +145,19 @@ void RedCannon::update(float deltatime)
 		if ((_billAngle >= -90 && _billAngle < -75))
 		{
 			this->setScale(SCALE_FACTOR);
-			this->setStatus(WT_NORMAL);
+			this->setWTStatus(WT_NORMAL);
 			_shootingAngle = -90;
 		}
 		else if (_billAngle >= -75 && _billAngle < -45)
 		{
 			this->setScale(SCALE_FACTOR);
-			this->setStatus(WT_LEFT_60);
+			this->setWTStatus(WT_LEFT_60);
 			_shootingAngle = -60;
 		}
 		else if (_billAngle >= -45 && _billAngle < 0)
 		{
 			this->setScale(SCALE_FACTOR);
-			this->setStatus(WT_LEFT_30);
+			this->setWTStatus(WT_LEFT_30);
 			_shootingAngle = -30;
 		}
 		this->addStatus(WT_SHOOTING);
@@ -291,7 +291,7 @@ void RedCannon::setStatus(eStatus status)
 	if (_status != status)
 		_status = status;
 }
-void RedCannon::setStatus(eWT_Status wtstatus)
+void RedCannon::setWTStatus(eWT_Status wtstatus)
 {
 	if (_wtstatus != wtstatus)
 		_wtstatus = wtstatus;
@@ -302,7 +302,7 @@ void RedCannon::addStatus(eStatus status)
 }
 void RedCannon::addStatus(eWT_Status wtstatus)
 {
-	this->setStatus(eWT_Status(this->getWT_Status()| wtstatus));
+	this->setWTStatus(eWT_Status(this->getWT_Status()| wtstatus));
 }
 
 void RedCannon::removeStatus(eStatus status)
@@ -311,7 +311,7 @@ void RedCannon::removeStatus(eStatus status)
 }
 void RedCannon::removeStatus(eWT_Status wtstatus)
 {
-	this->setStatus(eWT_Status(this->getWT_Status() & ~wtstatus));
+	this->setWTStatus(eWT_Status(this->getWT_Status() & ~wtstatus));
 }
 bool RedCannon::isInStatus(eStatus status)
 {
@@ -355,24 +355,16 @@ void RedCannon::rangeattack()
 	float dx = this->getPosition().x - bill->getPosition().x;
 	float dy = this->getPosition().y - (bill->getPosition().y + bill->getSprite()->getFrameHeight() / 2);
 	r_cannon = sqrt(dx*dx + dy*dy);
-	/*if ( dx<=0 && r_cannon >=(3*WINDOW_WIDTH/4) && checkappear==true )
-	{
-		this->setStatus(eWT_Status::WT_CLOSE);
-	}*/
+	
 	if (thisBound.left <= screenBound.left && checkappear==true)
 	{
-		this->setStatus(eWT_Status::WT_CLOSE);
+		this->setWTStatus(eWT_Status::WT_CLOSE);
 	}
-	if (thisBound.left <= screenBound.right+100 || thisBound.bottom < screenBound.bottom-50)
+	if (thisBound.right <= screenBound.right+100 || thisBound.bottom < screenBound.bottom-50)
 	{
-		this->setStatus(eWT_Status::WT_APPEAR);
+		this->setWTStatus(eWT_Status::WT_APPEAR);
 		this->setStatus(eStatus::HIDDEN);
 	}
-	/*if ( r_cannon <= (WINDOW_WIDTH/2 ))
-	{
-		this->setStatus(eWT_Status::WT_APPEAR);
-		this->setStatus(eStatus::HIDDEN);
-	}*/
 	
 }
 bool RedCannon::isRange()
