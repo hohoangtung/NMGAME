@@ -454,10 +454,3 @@ void Soldier::shoot()
 	}
 	BulletManager::insertBullet(new Bullet(pos, (eBulletType)(ENEMY_BULLET | NORMAL_BULLET), angle));
 }
-
-RECT Soldier::getBounding()
-{
-	RECT bound = this->getSprite()->getBounding();
-	bound.top -= 25 ;
-	return bound;
-}
