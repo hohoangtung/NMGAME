@@ -472,11 +472,13 @@ bool WallTurret::isRange()
 	RECT screenBound = viewport->getBounding();
 	RECT thisBound = BaseObject::getBounding();
 	auto bill = ((PlayScene*)SceneManager::getInstance()->getCurrentScene())->getBill();
-	float dx = bill->getPosition().x - this->getPosition().x;
+	float dx = this->getPosition().x - bill->getPosition().x;
+	float dy = this->getPosition().y - (bill->getPosition().y + bill->getSprite()->getFrameHeight() / 2);
+	float r = sqrt(dx*dx + dy*dy);
 	if (screenBound.left > thisBound.left || screenBound.bottom > thisBound.bottom)
 	{
 		
-		if (dx < (WINDOW_WIDTH / 2-10))
+		if (r < (WINDOW_WIDTH / 2-10))
 			return true;
 
 		return false;
