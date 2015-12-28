@@ -39,7 +39,7 @@ bool PlayScene::init()
 	auto bulletmanager = new BulletManager();
 	bulletmanager->init();
 	_listobject.push_back(bulletmanager);
-
+	
 	_text = new Text(L"Arial", "", 10, 25);
 
 	map<string, BaseObject*>* maptemp = ObjectFactory::getMapObjectFromFile("Resources//Map//stage1.xml");

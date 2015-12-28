@@ -1,7 +1,7 @@
 #include"WallTurret.h"
 StopWatch* _loopwatch1;
 #define PI 3.14159265
-float r;
+
 
 WallTurret::WallTurret(eStatus status, GVector2 position) :BaseEnemy(eID::WALL_TURRET)
 {
@@ -25,7 +25,7 @@ WallTurret::WallTurret(eWT_Status wtstatus, GVector2 position) :BaseEnemy(eID::W
 	_sprite = SpriteManager::getInstance()->getSprite(eID::WALL_TURRET);
 	_sprite->setFrameRect(0, 0, 32, 32);
 	this->setPosition(position);
-	this->setStatus(wtstatus);
+	this->setWTStatus(wtstatus);
 }
 WallTurret::WallTurret(eWT_Status wtstatus, float x, float y) :BaseEnemy(eID::WALL_TURRET)
 {
@@ -33,7 +33,7 @@ WallTurret::WallTurret(eWT_Status wtstatus, float x, float y) :BaseEnemy(eID::WA
 	_sprite->setFrameRect(0, 0, 32, 32);
 	GVector2 pos(x, y);
 	this->setPosition(pos);
-	this->setStatus(wtstatus);
+	this->setWTStatus(wtstatus);
 }
 WallTurret::~WallTurret()
 {
@@ -152,91 +152,92 @@ void WallTurret::update(float deltatime)
 	{
 		this->setStatus(eStatus::HIDDEN);
 	}
+	
+		if (!_animation[WT_APPEAR]->isAnimate() && this->isRange())
+		{
 
-	if (_animation[WT_APPEAR]->isAnimate() == false && this->isRange())
-	{
-		
-		if (_loopwatch1->isTimeLoop(800.0f))
-		{
-			calculateBillangle();
-		}
+			if (_loopwatch1->isTimeLoop(800.0f))
+			{
+				calculateBillangle();
+			}
 
-		if (_billAngle >= -105 && _billAngle < -75)
-		{
-			this->setScale(SCALE_FACTOR);
-			this->setStatus(WT_NORMAL);
-			_shootingAngle = -90;	
-		}
-		else if (_billAngle >= -75 && _billAngle < -45)
-		{
-			this->setScale(SCALE_FACTOR);
-			this->setStatus(WT_LEFT_60);
-			_shootingAngle = -60;
-		}
-		else if (_billAngle >= -45 && _billAngle < -15)
-		{
-			this->setScale(SCALE_FACTOR);
-			this->setStatus(WT_LEFT_30);
-			_shootingAngle = -30;	
-		}
-		else if (_billAngle >= -15 && _billAngle < 15)
-		{
-			this->setScale(SCALE_FACTOR);
-			this->setStatus(WT_UP);
-			_shootingAngle = 0;
-		}
-		else if (_billAngle >= 15 && _billAngle < 45)
-		{
-			this->setScale(SCALE_FACTOR);
-			this->setStatus(WT_RIGHT_30);
-			_shootingAngle = 30;
-		}
-		else if (_billAngle >= 45 && _billAngle < 75)
-		{
-			this->setScale(SCALE_FACTOR);
-			this->setStatus(WT_RIGHT_60);
-			_shootingAngle = 60;
-		}
-		else if (_billAngle >= 75 && _billAngle < 105)
-		{
-			this->setScale(SCALE_FACTOR);
-			this->setStatus(WT_RIGHT);
-			_shootingAngle = 90;
-		}
-		else if (_billAngle >= 105 && _billAngle < 135)
-		{
-			this->setScale(SCALE_FACTOR);
-			this->setStatus(WT_RIGHT_120);
-			_shootingAngle = 120;	
-		}
-		else if (_billAngle >= 135 && _billAngle < 165)
-		{
-			this->setScale(SCALE_FACTOR);
-			this->setStatus(WT_RIGHT_150);
-			_shootingAngle = 150;	
-		}
+			if (_billAngle >= -105 && _billAngle < -75)
+			{
+				this->setScale(SCALE_FACTOR);
+				this->setWTStatus(WT_NORMAL);
+				_shootingAngle = -90;
+			}
+			else if (_billAngle >= -75 && _billAngle < -45)
+			{
+				this->setScale(SCALE_FACTOR);
+				this->setWTStatus(WT_LEFT_60);
+				_shootingAngle = -60;
+			}
+			else if (_billAngle >= -45 && _billAngle < -15)
+			{
+				this->setScale(SCALE_FACTOR);
+				this->setWTStatus(WT_LEFT_30);
+				_shootingAngle = -30;
+			}
+			else if (_billAngle >= -15 && _billAngle < 15)
+			{
+				this->setScale(SCALE_FACTOR);
+				this->setWTStatus(WT_UP);
+				_shootingAngle = 0;
+			}
+			else if (_billAngle >= 15 && _billAngle < 45)
+			{
+				this->setScale(SCALE_FACTOR);
+				this->setWTStatus(WT_RIGHT_30);
+				_shootingAngle = 30;
+			}
+			else if (_billAngle >= 45 && _billAngle < 75)
+			{
+				this->setScale(SCALE_FACTOR);
+				this->setWTStatus(WT_RIGHT_60);
+				_shootingAngle = 60;
+			}
+			else if (_billAngle >= 75 && _billAngle < 105)
+			{
+				this->setScale(SCALE_FACTOR);
+				this->setWTStatus(WT_RIGHT);
+				_shootingAngle = 90;
+			}
+			else if (_billAngle >= 105 && _billAngle < 135)
+			{
+				this->setScale(SCALE_FACTOR);
+				this->setWTStatus(WT_RIGHT_120);
+				_shootingAngle = 120;
+			}
+			else if (_billAngle >= 135 && _billAngle < 165)
+			{
+				this->setScale(SCALE_FACTOR);
+				this->setWTStatus(WT_RIGHT_150);
+				_shootingAngle = 150;
+			}
 
-		else if (_billAngle >= 165 || _billAngle < -165)
-		{
-			this->setScale(SCALE_FACTOR);
-			this->setStatus(WT_DOWN);
-			_shootingAngle = 180;			
-		}
-		else if (_billAngle >= -165 && _billAngle < -135)
-		{
-			this->setScale(SCALE_FACTOR);
-			this->setStatus(WT_LEFT_150);
-			_shootingAngle = -150;		
-		}
+			else if (_billAngle >= 165 || _billAngle < -165)
+			{
+				this->setScale(SCALE_FACTOR);
+				this->setWTStatus(WT_DOWN);
+				_shootingAngle = 180;
+			}
+			else if (_billAngle >= -165 && _billAngle < -135)
+			{
+				this->setScale(SCALE_FACTOR);
+				this->setWTStatus(WT_LEFT_150);
+				_shootingAngle = -150;
+			}
 
-		else if (_billAngle >= -135 && _billAngle < -105)
-		{
-			this->setScale(SCALE_FACTOR);
-			this->setStatus(WT_LEFT_120);
-			_shootingAngle = -120;	
+			else if (_billAngle >= -135 && _billAngle < -105)
+			{
+				this->setScale(SCALE_FACTOR);
+				this->setWTStatus(WT_LEFT_120);
+				_shootingAngle = -120;
+			}
+			this->addStatus(eWT_Status::WT_SHOOTING);
 		}
-		this->addStatus(eWT_Status::WT_SHOOTING);
-	}
+	
 		this->checkBill();
 		//for (auto it = _listBullet.begin(); it != _listBullet.end(); it++)
 		//{
@@ -311,7 +312,7 @@ void WallTurret::setStatus(eStatus status)
 	if (_status != status)
 		_status = status;
 }
-void WallTurret::setStatus(eWT_Status wtstatus)
+void WallTurret::setWTStatus(eWT_Status wtstatus)
 {
 	if (_wtstatus != wtstatus)
 		_wtstatus = wtstatus;
@@ -339,7 +340,7 @@ void WallTurret::addStatus(eStatus status)
 }
 void WallTurret::addStatus(eWT_Status wtstatus)
 {
-	this->setStatus(eWT_Status(this->getWT_Status() | wtstatus));
+	this->setWTStatus(eWT_Status(this->getWT_Status() | wtstatus));
 }
 
 void WallTurret::removeStatus(eStatus status)
@@ -348,7 +349,7 @@ void WallTurret::removeStatus(eStatus status)
 }
 void WallTurret::removeStatus(eWT_Status wtstatus)
 {
-	this->setStatus(eWT_Status(this->getWT_Status() & ~wtstatus));
+	this->setWTStatus(eWT_Status(this->getWT_Status() & ~wtstatus));
 }
 
 bool WallTurret::isInStatus(eStatus status)
@@ -451,30 +452,37 @@ void WallTurret::calculateBillangle()
 }
 void WallTurret::rangeAttack()
 {
-	auto bill = ((PlayScene*)SceneManager::getInstance()->getCurrentScene())->getBill();
-
-	float dx = this->getPosition().x - bill->getPosition().x;
-	float dy = this->getPosition().y - (bill->getPosition().y + bill->getSprite()->getFrameHeight() / 2);
-	r = sqrt(dx*dx + dy*dy);
-	if (r >= (3*WINDOW_WIDTH/4 ))
+	auto viewport = ((PlayScene*)SceneManager::getInstance()->getCurrentScene())->getViewport();
+	RECT screenBound = viewport->getBounding();
+	RECT thisBound = BaseObject::getBounding();
+	if (screenBound.left>thisBound.left  || screenBound.bottom>thisBound.bottom)
 	{
-		this->setStatus(eWT_Status::WT_CLOSE);
+		this->setWTStatus(eWT_Status::WT_CLOSE);
 		this->setStatus(eStatus::HIDDEN);
 	}
-	else if (r < (2*WINDOW_WIDTH/3 ))
+	else if (viewport->isContains(thisBound))
 	{
-		this->setStatus(eWT_Status::WT_APPEAR);
+		this->setWTStatus(eWT_Status::WT_APPEAR);
 		this->setStatus(eStatus::HIDDEN);
 	}
-	}
+}
 bool WallTurret::isRange()
 {
+	auto viewport = ((PlayScene*)SceneManager::getInstance()->getCurrentScene())->getViewport();
+	RECT screenBound = viewport->getBounding();
+	RECT thisBound = BaseObject::getBounding();
 	auto bill = ((PlayScene*)SceneManager::getInstance()->getCurrentScene())->getBill();
-	float dx = this->getPosition().x - bill->getPosition().x;
-	float dy = this->getPosition().y - (bill->getPosition().y + bill->getSprite()->getFrameHeight() / 2);
-	if (r < (2*WINDOW_WIDTH/3))
-		return true;
-	else return false;
+	float dx = bill->getPosition().x - this->getPosition().x;
+	if (screenBound.left > thisBound.left || screenBound.bottom > thisBound.bottom)
+	{
+		
+		if (dx < (WINDOW_WIDTH / 2-10))
+			return true;
+
+		return false;
+	}
+	else return true;
+
 }
 void WallTurret::checkIfOutofScreen()
 {
@@ -497,6 +505,6 @@ void WallTurret::checkBill()
 	auto bill = ((PlayScene*)SceneManager::getInstance()->getCurrentScene())->getBill();
 	if (bill->getStatus() == eStatus::DYING)
 		{
-			this->setStatus(eWT_Status::WT_CLOSE);
+			this->setWTStatus(eWT_Status::WT_CLOSE);
 	}
 }

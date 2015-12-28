@@ -41,7 +41,7 @@ public:
 	float getShootingAngle();
 
 	void setStatus(eStatus);
-	void setStatus(eWT_Status);
+	void setWTStatus(eWT_Status);
 	eWT_Status getWT_Status();
 	void shoot();
 	RECT getBounding();

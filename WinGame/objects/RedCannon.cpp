@@ -5,9 +5,6 @@
 StopWatch *_loopwatch;
 int bullet = 0;
 float delay1;
-float r_cannon;
-bool checkappear = false;
-
 
 RedCannon::RedCannon(eStatus status, GVector2 position) :BaseEnemy(eID::REDCANNON)
 {
@@ -132,10 +129,10 @@ void RedCannon::update(float deltatime)
 	if (_animation[WT_APPEAR]->isAnimate() == true)
 	{
 		_billAngle = -90;
-		checkappear = true;
+		
 	}
 
-	if (_animation[WT_APPEAR]->isAnimate() == false && this->isRange() && checkappear==true)
+	if (!_animation[WT_APPEAR]->isAnimate() && this->isRange() )
 	{
 		
 		if (_loopwatch->isTimeLoop(2000.0f))
@@ -351,28 +348,38 @@ void RedCannon::rangeattack()
 	auto viewport = ((PlayScene*)SceneManager::getInstance()->getCurrentScene())->getViewport();
 	RECT screenBound = viewport->getBounding();
 	RECT thisBound = this->getBounding();
-	auto bill = ((PlayScene*)SceneManager::getInstance()->getCurrentScene())->getBill();
-	float dx = this->getPosition().x - bill->getPosition().x;
-	float dy = this->getPosition().y - (bill->getPosition().y + bill->getSprite()->getFrameHeight() / 2);
-	r_cannon = sqrt(dx*dx + dy*dy);
 	
-	if (thisBound.left <= screenBound.left && checkappear==true)
-	{
-		this->setWTStatus(eWT_Status::WT_CLOSE);
-	}
-	if (thisBound.right <= screenBound.right+100 || thisBound.bottom < screenBound.bottom-50)
+	
+	if (viewport->isContains(thisBound))
 	{
 		this->setWTStatus(eWT_Status::WT_APPEAR);
 		this->setStatus(eStatus::HIDDEN);
+	}
+	if (screenBound.left>thisBound.left || screenBound.bottom>thisBound.bottom)
+	{
+		this->setWTStatus(eWT_Status::WT_CLOSE);
 	}
 	
 }
 bool RedCannon::isRange()
 {
-	if (r_cannon < (WINDOW_WIDTH))
-		return true;
-	else 
+	
+	auto viewport = ((PlayScene*)SceneManager::getInstance()->getCurrentScene())->getViewport();
+	RECT screenBound = viewport->getBounding();
+	RECT thisBound = BaseObject::getBounding();
+	
+	auto bill = ((PlayScene*)SceneManager::getInstance()->getCurrentScene())->getBill();
+	float dx = this->getPosition().x - bill->getPosition().x;
+	float dy = this->getPosition().y - (bill->getPosition().y + bill->getSprite()->getFrameHeight() / 2);
+	float r_cannon = sqrt(dx*dx + dy*dy);
+	if (screenBound.left > thisBound.left || screenBound.bottom > thisBound.bottom)
+	{
+		if (r_cannon < (WINDOW_WIDTH / 2 - 10))
+			return true;
+
 		return false;
+	}
+	else return true;
 }
 void RedCannon::checkIfOutofScreen()
 {
@@ -381,10 +388,6 @@ void RedCannon::checkIfOutofScreen()
 	RECT thisBound = this->getBounding();
 	GVector2 position = this->getPosition();
 	
-	//if (thisBound.right < screenBound.left)
-	//{
-	//	this->setStatus(eStatus::DESTROY);
-	//}
 	GVector2 viewportposition = viewport->getPositionWorld();
 	if (thisBound.right < screenBound.left || thisBound.top < viewportposition.y - WINDOW_HEIGHT)
 	{
