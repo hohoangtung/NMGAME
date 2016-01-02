@@ -42,7 +42,7 @@ public:
 	void setBillAngle(float);
 	float getBillAngle();
 	void setStatus(eStatus);
-	void setStatus(eWT_Status);
+	void setWTStatus(eWT_Status);
 	float checkCollision(BaseObject*,float);
 	eWT_Status getWT_Status();
 

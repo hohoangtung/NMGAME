@@ -45,7 +45,6 @@ public:
 	void setPosition(GVector2);
 	GVector2 getVelocity();
 	IComponent* getComponent(string);
-	RECT getBounding();
 
 private:
 	map<string, IComponent*> _listComponent;
