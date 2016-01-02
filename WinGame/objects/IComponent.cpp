@@ -141,7 +141,6 @@ void RoundMovement::update(float deltatime)
 	*/
 
 	_radian += _radianVeloc * deltatime / 1000;
-
 	/*
 	vận tốc tuyến tính được tính theo công thức
 			x = R * cos(φ)
@@ -181,17 +180,3 @@ RoundMovement::~RoundMovement()
 }
 
 #pragma endregion
-
-CircleMovement::CircleMovement(float radius, float frequency, Sprite* refSpirte)
-{
-	sinX = new SinMovement(GVector2(0, radius), frequency, refSpirte);
-	sinY = new SinMovement(GVector2(radius, 0), frequency, refSpirte);
-}
-void CircleMovement::update(float deltatime)
-{
-	sinX->update(deltatime);
-	sinY->update(deltatime);
-}
-CircleMovement::~CircleMovement()
-{
-}

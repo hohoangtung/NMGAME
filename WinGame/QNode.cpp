@@ -150,6 +150,7 @@ vector<string> QNode::GetActiveObject(RECT bound, bool botleft)
 
 QNode* QNode::loadQuadTree(const string path)
 {
+#pragma region
 	QNode* node = nullptr;
 	pugi::xml_document doc;
 
@@ -159,11 +160,13 @@ QNode* QNode::loadQuadTree(const string path)
 	{
 		return nullptr;
 	}
+#pragma endregion
 	pugi::xml_node rootxml = doc.first_child();
 	node = initNode(rootxml);
 	loadChild(rootxml, node);
 	return node;
 }
+
 QNode* QNode::initNode(xml_node& node )
 {
 	RECT bound;

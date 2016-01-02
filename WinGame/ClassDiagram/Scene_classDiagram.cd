@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Scene" Collapsed="true">
+    <Position X="4.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAAAAAQAAAgAIAAAAAQAAAAAIAAAAQAAQEAAA=</HashCode>
+      <FileName>objects\Scene.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HighScore" Collapsed="true">
+    <Position X="8" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAACAAAAAAAA=</HashCode>
+      <FileName>objects\BeginPlayScene.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BeginPlayScene" Collapsed="true">
+    <Position X="1.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAoAAAAAAEAAgAAAAYBAAAAgACAAAJAABAwAAAmAgA=</HashCode>
+      <FileName>objects\BeginPlayScene.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GameOverScene" Collapsed="true">
+    <Position X="5.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAgAQAAAAAAAgABAA4iAAAAAAAAAANAAAQQAQAkAAA=</HashCode>
+      <FileName>objects\GameOverScene.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="IntroScene" Collapsed="true">
+    <Position X="8" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAgAQAAAAAAAEAAAAKAAQBEAAABEAIgAAQQAAAEAgA=</HashCode>
+      <FileName>objects\IntroScene.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SelectionScene" Collapsed="true">
+    <Position X="3.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAAAAAAACAAAICAIAAAKAAACIAQABQAAAEAAA=</HashCode>
+      <FileName>objects\Scenes\SelectionScene.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

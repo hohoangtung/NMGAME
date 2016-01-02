@@ -55,12 +55,13 @@ void Game::init()
 	_oldTime = _gametime->getTotalGameTime();
 	_deltaTime = 0.0f;
 }
-double lag = 0.0;
+
 void Game::run()
 {
 	MSG msg;
 	while (isExit == 0)
 	{
+#pragma region Translate Message
 		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
 		{
 			if (msg.message == WM_QUIT)
@@ -68,6 +69,7 @@ void Game::run()
 			TranslateMessage(&msg);
 			DispatchMessage(&msg);
 		}										// dont mention it.  see ebook if you want more info
+#pragma endregion
 
 		_gametime->updateGameTime();							// gametime isn't run if dont call updateGameTime
 		_deltaTime = _gametime->getTotalGameTime() - _oldTime;

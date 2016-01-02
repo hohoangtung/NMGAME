@@ -112,7 +112,9 @@ private:
 class RoundMovement : public IComponent
 {
 public:
+
 	RoundMovement(float radius, float frequency, float radian, Sprite* refSprite);
+	
 	void update(float deltatime);
 	void setRadius(float r);
 	void setAngularVeloc(float frequency);
@@ -127,19 +129,6 @@ private:
 	float _radianVeloc;			// vận tốc góc (= ω)
 	float _radian;				// góc xoay (= φ) biến thiên theo thời gian
 };
-
-class CircleMovement : public IComponent
-{
-public:
-	CircleMovement(float radius, float frequency, Sprite* refSpirte);
-	~CircleMovement();
-	void update(float deltatime);
-
-private:
-	IComponent *sinX;
-	IComponent* sinY;
-};
-
 
 
 #endif // !__ICOMPONENT_H__

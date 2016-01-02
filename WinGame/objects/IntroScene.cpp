@@ -18,9 +18,10 @@ void IntroScene::updateInput(float deltatime)
 		{
 			return;
 		}
-
-		SoundManager::getInstance()->Play(eSoundId::DESTROY_BRIDGE);
-
+		if (SoundManager::getInstance()->IsPlaying(eSoundId::DESTROY_BRIDGE) == false)
+		{
+			SoundManager::getInstance()->Play(eSoundId::DESTROY_BRIDGE);
+		}
 		if (_yellowfancon->getPositionY() == 324)
 		{
 			_ok = 1;

@@ -66,6 +66,7 @@ void SpriteManager::loadResource(LPD3DXSPRITE spriteHandle)
 	//this->_listSprite.insert(pair<eID, Sprite*>(eID::MARIO, sp));
 
 	Sprite* sp = NULL;
+
 	sp = new Sprite(spriteHandle, L"Resources\\Soldier.png");
 	this->_listSprite.insert(pair<eID, Sprite*>(eID::SOLDIER, sp));
 	this->loadSpriteInfo(eID::SOLDIER, "Resources\\soldier_animation.txt");

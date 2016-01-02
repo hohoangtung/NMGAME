@@ -15,7 +15,9 @@ public:
 	~Scenario();
 
 	__event void update(float milisecond, bool& isFinish);
+
 private:
+
 	string _name;
 
 };
@@ -29,6 +31,7 @@ public:
 	void insertScenario(Scenario* scenario);
 	bool isFinish();
 private:
+
 	queue<Scenario*> _drama;
 };
 

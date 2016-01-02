@@ -1,4 +1,4 @@
-#include "InputController.h"
+﻿#include "InputController.h"
 
 US_FRAMEWORK
 
@@ -128,10 +128,12 @@ int InputController::isKeyDown(int keycode)
 
 bool InputController::isKeyPressed(int keycode)
 {
+	// Khôgn dùng được
 	return isKeyDown(keycode) && !(_previousKeyBuffer[keycode]);
 }
 
 bool InputController::isKeyRelease(int keycode)
 {
+	// Không dùng được 
 	return !isKeyDown(keycode) && (_previousKeyBuffer[keycode]);
 }

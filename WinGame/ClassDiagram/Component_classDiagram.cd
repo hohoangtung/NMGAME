@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="IComponent" Collapsed="true">
+    <Position X="6.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAA=</HashCode>
+      <FileName>objects\IComponent.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Movement" Collapsed="true">
+    <Position X="6.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAIABAAABAAAAAAAAAAAAAAAAAJwAAAEAAA=</HashCode>
+      <FileName>objects\IComponent.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Gravity" Collapsed="true">
+    <Position X="4.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QEAAEAAAAAAIAAAAAAABAAAAAAAAAEAIAAAQAAAEAAA=</HashCode>
+      <FileName>objects\IComponent.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SinMovement" Collapsed="true">
+    <Position X="8.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QkAAAAAAAAAIAAAAAEAQAAAAAAAAAAgAAAAQAAAEAAA=</HashCode>
+      <FileName>objects\IComponent.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RoundMovement" Collapsed="true">
+    <Position X="10" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>SgAAAAAgAAAAAAAAAAAAAAAAAAAAAAAACIgQIAEEAgA=</HashCode>
+      <FileName>objects\IComponent.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CollisionBody" Collapsed="true">
+    <Position X="3" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BwAAAiAAAIAAAAAQAAAAAQAIQoAAAAAKQAEAQAgEAAA=</HashCode>
+      <FileName>objects\CollisionBody.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="eGravityStatus" Collapsed="true">
+    <Position X="10" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAA=</HashCode>
+      <FileName>objects\IComponent.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="BaseObject" Collapsed="true">
+    <Position X="6.25" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>FkAAIAAQAAgAgQQQABpgQAACAIAgBEICCQHQkAAMAIA=</HashCode>
+      <FileName>objects\BaseObject.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BaseEnemy" Collapsed="true">
+    <Position X="3" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAACAAAAAAgAAAEAAIAAAAABACACAAAAABAQAAAA=</HashCode>
+      <FileName>objects\BaseEnemy.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Bill" Collapsed="true">
+    <Position X="9.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>lABDF5KECDAYgBiAIgIgIhABEIAABUoAgEdyHFhEjAI=</HashCode>
+      <FileName>objects\Bill.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Falcon" Collapsed="true">
+    <Position X="7.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>kgCAAAEAAAgAAAUEAAIAAAABAZAAUEIAAAAAEIAEAAA=</HashCode>
+      <FileName>objects\Falcon.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AirCraft" Collapsed="true">
+    <Position X="12" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EgAAAAAgBAgQAIUEgAIQAAAApZAAUAoAAABAAIAEAAA=</HashCode>
+      <FileName>objects\AirCraft.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Rifleman" Collapsed="true">
+    <Position X="5.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EABAQgAEACAAACEEAAIAAAABAIIIBAYASAAAKIgEAAA=</HashCode>
+      <FileName>objects\Rifleman.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Soldier" Collapsed="true">
+    <Position X="3" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>GAACAgAEACABQEEEAEIAAAADIoAIBAIAAEBAEIgEBAA=</HashCode>
+      <FileName>objects\Soldier.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WallTurret" Collapsed="true">
+    <Position X="0.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EgAAAgAEAAgCAAUEAEIAAAEAgAIgNEJACAAAmIgEBEA=</HashCode>
+      <FileName>objects\WallTurret.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
