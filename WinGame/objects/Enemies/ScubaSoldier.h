@@ -1,17 +1,17 @@
 #ifndef _SCUBASOLDIER_H
 #define _SCUBASOLDIER_H
 
-#include "BaseEnemy.h"
-#include "CollisionBody.h"
-#include "Bullet.h"
-#include "IComponent.h"
-#include "../FrameWork/Animation.h"
-#include "../Framework/StopWatch.h"
-#include "PlayScene.h"
-#include "BulletManager.h"
-#include "Bullet.h"
-#include "Explosion.h"
+#include "../../FrameWork/Animation.h"
+#include "../../Framework/StopWatch.h"
+#include "../CollisionBody.h"
+#include "../IComponent.h"
+#include "../Explosion.h"
 
+#include "../Bullets/Bullet.h"
+#include "../Scenes/PlayScene.h"
+#include "../Bullets/BulletManager.h"
+#include "../Bullets/Bullet.h"
+#include "BaseEnemy.h"
 using namespace std;
 
 #define SCUBASOLDIER_HITPOINT 1

@@ -3,13 +3,13 @@
 #ifndef __BEGIN_STAGE3__
 #define __BEGIN_STAGE3__
 
-#include "..\FrameWork\Sprite.h"
-#include "..\FrameWork\SpriteManager.h"
-#include "..\FrameWork\Managers\SoundManager.h"
-#include "..\FrameWork\InputController.h"
-#include "..\FrameWork\StopWatch.h"
-#include "..\objects\Stage3.h"
-#include "TextSprite.h"
+#include "..\..\FrameWork\Sprite.h"
+#include "..\..\FrameWork\SpriteManager.h"
+#include "..\..\FrameWork\Managers\SoundManager.h"
+#include "..\..\FrameWork\InputController.h"
+#include "..\..\FrameWork\StopWatch.h"
+#include "..\TextSprite.h"
+#include "Stage3.h"
 
 class HighScore
 {

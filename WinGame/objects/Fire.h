@@ -1,10 +1,12 @@
 ﻿#ifndef __FIRE__
 #define __FIRE__
+
+#include "../FrameWork/Animation.h"
 #include "BaseObject.h"
 #include "IComponent.h"
 #include "CollisionBody.h"
-#include "PlayScene.h"
-#include "../FrameWork/Animation.h"
+#include "Scenes/PlayScene.h"
+
 using namespace std;
 
 #define HORIZONTAL_VELOC		GVector2(100.0f, 0.0f)		// vận tốc ngang

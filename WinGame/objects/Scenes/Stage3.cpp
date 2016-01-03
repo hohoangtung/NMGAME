@@ -1,154 +1,144 @@
-﻿#include "PlayScene.h"
-#include "..\Tiles\ObjectFactory.h"
+﻿#include "../../Tiles/ObjectFactory.h"
+#include "../Enemies/ShadowBeast.h"
+#include "../Score.h"
 #include "BeginPlayScene.h"
 #include "GameOverScene.h"
-#include "Score.h"
+#include "Stage3.h"
+
 
 #if _DEBUG
 #include <time.h>
 #endif
 
+#include "IntroScene.h"
  
-PlayScene::PlayScene()
+Stage3::Stage3(int billlife)
 {
+	_restBill = billlife;
 	_viewport = new Viewport(0, WINDOW_HEIGHT, WINDOW_WIDTH, WINDOW_HEIGHT);
 } 
 
-PlayScene::~PlayScene()
+Stage3::~Stage3()
 {
 	delete _viewport;
 	_viewport = nullptr;
 }
-void PlayScene::setViewport(Viewport * viewport)
+void Stage3::setViewport(Viewport * viewport)
 {
 	if (_viewport != viewport)
 		_viewport = viewport;
 }
 
-bool PlayScene::init()
+bool Stage3::init()
 {
-
-	auto bill = new Bill(3);
+	auto bill = new Bill(_restBill);
 	bill->init();
-	bill->setPosition(200, 500);
+	bill->setPosition(200, 200);
 	
 	this->_bill = bill;
 	_listControlObject.push_back(bill);
 	_listobject.push_back(bill);
 
-	_bulletmanager = new BulletManager();
-	_bulletmanager->init();
-	//_listobject.push_back(bulletmanager);
-	
+	auto bulletmanager = new BulletManager();
+	bulletmanager->init();
+	_listobject.push_back(bulletmanager);
+
+	//auto shadow = new ShadowBeast(GVector2(256, 4124));
+	//shadow->init();
+	//_listobject.push_back(shadow);
 	_text = new Text(L"Arial", "", 10, 25);
 
-	map<string, BaseObject*>* maptemp = ObjectFactory::getMapObjectFromFile("Resources//Map//stage1.xml");
+	map<string, BaseObject*>* maptemp = ObjectFactory::getMapObjectFromFile("Resources//Map//stage3.xml");
+
 	this->_mapobject.insert(maptemp->begin(), maptemp->end());
 
-	_root = QNode::loadQuadTree("Resources//Map//stage1_quadtree.xml");
+	_root = QNode::loadQuadTree("Resources//Map//stage3_quadtree.xml");
+	OutputDebugString(L"_root Success\n");
 
-	background = Map::LoadFromFile("Resources//Map//stage1.xml",eID::MAPSTAGE1);
+	background = Map::LoadFromFile("Resources//Map//stage3.xml",eID::MAPSTAGE3);
+	OutputDebugString(L"background Success\n");
 
-	SoundManager::getInstance()->PlayLoop(eSoundId::BACKGROUND_STAGE1);
+	SoundManager::getInstance()->PlayLoop(eSoundId::BACKGROUND_STAGE2);
 
 	auto scenarioBoss_Viewport = new Scenario("BossViewport");
-	__hook(&Scenario::update, scenarioBoss_Viewport, &PlayScene::bossScene_Viewport);
+	__hook(&Scenario::update, scenarioBoss_Viewport, &Stage3::bossScene_Viewport);
 	auto scenarioBossSound = new Scenario("BossSound");
-	__hook(&Scenario::update, scenarioBossSound, &PlayScene::playBossStage1Sound);
+	__hook(&Scenario::update, scenarioBossSound, &Stage3::playBossStage1Sound);
 	_director = new ScenarioManager();
 	_director->insertScenario(scenarioBossSound);
 	_director->insertScenario(scenarioBoss_Viewport);
 
 	auto scenarioKillBoss = new Scenario("KillBoss");
-	__hook(&Scenario::update, scenarioKillBoss, &PlayScene::killbossScene_Bill);
+	__hook(&Scenario::update, scenarioKillBoss, &Stage3::killbossScene_Bill);
 	auto playsound = new Scenario("PassBossSound");
-	__hook(&Scenario::update, playsound, &PlayScene::playPassBossSound);
+	__hook(&Scenario::update, playsound, &Stage3::playPassBossSound);
 
 	flagbossScenario = false;
 	_directorKillBoss = new ScenarioManager();
 	_directorKillBoss->insertScenario(playsound);
 	_directorKillBoss->insertScenario(scenarioKillBoss);
 
-	_help = new Help();
-	_help->init();
-
+	_flagCredit = false;
+	_credit = new Credit();
+	_credit->init();
 	return true;
 }
-void PlayScene::bossScene_Viewport(float dt, bool& finish)
+void Stage3::bossScene_Viewport(float dt, bool& finish)
 {
 	GVector2 current_position = _viewport->getPositionWorld();
 	GVector2 worldsize = this->background->getWorldSize();
 
-	current_position.x += BILL_MOVE_SPEED * dt / 1000;
-	if (current_position.x + WINDOW_WIDTH > worldsize.x)
+	current_position.y += BILL_MOVE_SPEED * dt / 1000;
+	if (current_position.y > worldsize.y)
 	{ 
-		current_position.x = worldsize.x - WINDOW_WIDTH;
+		current_position.y = worldsize.y;
 		finish = true;
 		_viewport->setPositionWorld(current_position);
 		return;
 	}
 	_viewport->setPositionWorld(current_position);
-	if (_bill->getBounding().left < current_position.x)
-	{
-		GVector2 curPos = _bill->getPosition();
-		curPos.x = current_position.x + (_bill->getSprite()->getFrameWidth() >> 1);
-		_bill->setPosition(curPos);
-	}
+	//if (_bill->getBounding().left < current_position.x)
+	//{
+	//	GVector2 curPos = _bill->getPosition();
+	//	curPos.x = current_position.x + (_bill->getSprite()->getFrameWidth() >> 1);
+	//	_bill->setPosition(curPos);
+	//}
 	finish = false;
 }
-void PlayScene::playBossStage1Sound(float dt, bool& finish)
+void Stage3::playBossStage1Sound(float dt, bool& finish)
 {
 	SoundManager::getInstance()->Play(eSoundId::BOSS_SOUNG1);
 	finish = true;
 }
-void PlayScene::playPassBossSound(float dt, bool& finish)
+void Stage3::playPassBossSound(float dt, bool& finish)
 {
-	SoundManager::getInstance()->Play(eSoundId::PASS_BOSS);
+	SoundManager::getInstance()->Play(eSoundId::WINGAME);
+	_flagCredit = true;
+
 	((Bill*)_bill)->unhookinputevent();
 	finish = true;
 }
 
-void PlayScene::killbossScene_Bill(float deltatime, bool& isFinish)
+void Stage3::killbossScene_Bill(float deltatime, bool& isFinish)
 {
-	auto bill = (Bill*)_bill;
-
-
-	if (bill->getBounding().left < _viewport->getBounding().right)
-	{
-		if (bill->getPositionX() < 6448)
-			bill->forceMoveRight();
-		else
-		{
-			if (bill->getPositionX() < 6500)
-				bill->forceJump();
-		}
-	}
-	else
-	{
-		bill->unforceMoveRight();
-		bill->unforceJump();
-		bill->removeGravity();
-	}
-
-
-
-	if (SoundManager::getInstance()->IsPlaying(eSoundId::PASS_BOSS) == false)
+	if (SoundManager::getInstance()->IsPlaying(eSoundId::WINGAME) == false)
 	{
 		isFinish = true;
 	}
 }
 
-void PlayScene::updateInput(float dt)
+void Stage3::updateInput(float dt)
 {
 	for (IControlable* obj : _listControlObject)
 	{
 		obj->updateInput(dt);
 	}
+
 }
 
-void PlayScene::update(float dt)
+void Stage3::update(float dt)
 {
-	_help->update(dt);
+	
 	char str[100];
 	sprintf(str, "delta time: %f", dt);
 	_text->setText(str);
@@ -162,37 +152,17 @@ void PlayScene::update(float dt)
 		this->updateViewport(_bill);
 	}
 
-	//// IMPORTANT
-
-	/*
-	*		Hiện tại chúng ta có 2 danh sách object.
-			Một là _listobject chứa các đối tượng hoạt động rộng. không thể đưa vào quadtree
-			Hai là _mapobject chứa các đối tượng đã được đưa vào quadtree. 
-			Ta có một listobject phụ là _active_object để chứ các object sẽ được update, draw ở mỗi frame. được clear ở đầu hàm update.
-
-			Quá trình update gồm các bước.
-				- Kiểm tra và đối tượng hết hiệu lực (Status = Destroy) từ frame trước			(Bước 1)
-				- Clear danh sách _active_object của frame trước, chuẩn bị cho vòng lặp mới.	(Bước 2)
-				- Tìm các tên của đối tượng đã được lưu trong quadtree.							(Bước 3)
-				- Từ danh sách tên ở bước trên, add các đối tượng có tên tương ứng với _mapobject vào _active_object	(Bước 4)
-				- Add danh sách các đối tượng trong _listobject vào _active_object.										(Bước 5)
-				- Kiểm tra va chạm chéo giữa các đối tượng trong _active_object. Nếu có n đối tượng, thi có n * n lần kiểm tra va chạm..	(Bước 6)
-				- update các đối tượng trong _active_object																(Bước 7)
-
-			Vẽ:
-				- Chỉ vẽ các đối tượng có trong _active_object.
-	*/
-
 	GVector2 viewport_position = _viewport->getPositionWorld();
 	RECT viewport_in_transform = _viewport->getBounding();
-
+	auto mapsize = this->background->getWorldSize();
 	// Hàm getlistobject của quadtree yêu cầu truyền vào một hình chữ nhật theo hệ top left, nên cần tính lại khung màn hình
 	RECT screen;
 	// left right không đổi dù hệ top-left hay hệ bot-left
 	screen.left = viewport_in_transform.left;
 	screen.right = viewport_in_transform.right;
-	screen.top = this->background->getWorldSize().y - viewport_position.y;
+	screen.top = mapsize.y - viewport_position.y;
 	screen.bottom = screen.top + _viewport->getHeight();
+
 	// getlistobject
 #if _DEBUG
 	// clock_t để test thời gian chạy đoạn code update (milisecond)
@@ -225,7 +195,7 @@ void PlayScene::update(float dt)
 	for (BaseObject* obj : _active_object)
 	{
 		// một vài trạng thái không cần thiết phải check hàm va chạm
-		if (obj == nullptr || obj->isInStatus(eStatus::DESTROY) || obj->getId() == eID::LAND || 
+		if (obj == nullptr || obj->isInStatus(eStatus::DESTROY) || obj->getId() == eID::LAND ||
 			obj->getId() == eID::WALL_TURRET || obj->getId() == eID::REDCANNON || obj->getId() == eID::ROCKFLY)
 			continue;
 
@@ -236,12 +206,6 @@ void PlayScene::update(float dt)
 
 			obj->checkCollision(passiveobj, dt);
 		}
-	}
-
-	if (_bulletmanager != nullptr)
-	{
-		_bulletmanager->checkCollision(_bill, dt);
-		_bulletmanager->update(dt);
 	}
 
 	// [Bước 7]
@@ -260,7 +224,7 @@ void PlayScene::update(float dt)
 	this->ScenarioKillBoss(dt);
 }
 
-void PlayScene::destroyobject()
+void Stage3::destroyobject()
 {
 	for (auto object : _listobject)
 	{
@@ -291,10 +255,10 @@ void PlayScene::destroyobject()
 			continue;
 		if (object->second->getStatus() == eStatus::DESTROY)	// kiểm tra nếu là destroy thì loại khỏi list
 		{
-			//if (dynamic_cast<BaseEnemy*> (object->second) != nullptr)
-			//{
-			//	SoundManager::getInstance()->Play(eSoundId::DESTROY_ENEMY);
-			//}
+			if (dynamic_cast<BaseEnemy*> (object->second) != nullptr)
+			{
+				SoundManager::getInstance()->Play(eSoundId::DESTROY_ENEMY);
+			}
 			object->second->release();
 			delete object->second;
 			object->second = NULL;
@@ -304,50 +268,53 @@ void PlayScene::destroyobject()
 	}
 }
 
-void PlayScene::updateViewport(BaseObject* objTracker)
+void Stage3::updateViewport(BaseObject* objTracker)
 {
 	// Vị trí hiện tại của viewport. 
 	GVector2 current_position = _viewport->getPositionWorld();
 	GVector2 worldsize = this->background->getWorldSize();
-	// Bám theo object.
-	GVector2 new_position = GVector2(max(objTracker->getPositionX() - 260, 0), WINDOW_HEIGHT);		// 200 khoảng cách tối đa giữa object và map -> hardcode
+	GVector2 new_position = GVector2(0, max(objTracker->getPositionY() + 192, WINDOW_HEIGHT));		// 192 khoảng cách tối đa giữa object và map -> hardcode
 
-//#if(!_DEBUG)
-	// Không cho đi ngược
-	if (new_position.x < current_position.x)
+	if (new_position.y < current_position.y)
 	{
-		new_position.x = current_position.x;
+		new_position.y = current_position.y;
 	}
-//#endif
+	if (new_position.y > worldsize.y)
+	{
+		new_position.y = worldsize.y ;
+	}
 
-	// Không cho đi quá map.
-	if (new_position.x + WINDOW_WIDTH > worldsize.x)
-	{
-		new_position.x = worldsize.x - WINDOW_WIDTH;
-	}
 
 	_viewport->setPositionWorld(new_position);
+
+	float billPositionX = objTracker->getPositionX();
+	auto halfwidth = objTracker->getSprite()->getFrameWidth() * objTracker->getSprite()->getOrigin().x;
+	if (billPositionX + halfwidth >= WINDOW_WIDTH)
+	{
+		objTracker->setPositionX(current_position.x + WINDOW_WIDTH - halfwidth);
+	}
 }
 
-void PlayScene::draw(LPD3DXSPRITE spriteHandle)
+void Stage3::draw(LPD3DXSPRITE spriteHandle)
 {
+	//sprite->render(spriteHandle, _viewport);
 	background->draw(spriteHandle, _viewport);
 
 	for (BaseObject* object : _active_object)
 	{
 		object->draw(spriteHandle, _viewport);
 	}
-	_bulletmanager->draw(spriteHandle, _viewport);
-	if (_help != nullptr)
+	if (_flagCredit == true)
 	{
-		_help->draw(spriteHandle);
+		_credit->draw(spriteHandle);
 	}
+
 #if _DEBUG
 	_text->draw();
 #endif
 }
 
-void PlayScene::release()
+void Stage3::release()
 {
 	for (auto object : _listobject)
 	{
@@ -362,12 +329,12 @@ void PlayScene::release()
 
 }
 
-void PlayScene::ScenarioMoveViewport(float deltatime)
+void Stage3::ScenarioMoveViewport(float deltatime)
 {
 	if (_director == nullptr)
 		return;
-
-	if (((Bill*)_bill)->getPositionX() > BOSS_VIEWPORT_ANCHOR)
+	
+	if (_viewport->getPositionWorld().y > 4192.0f)
 	{
 		flagbossScenario = true;
 	}
@@ -380,35 +347,46 @@ void PlayScene::ScenarioMoveViewport(float deltatime)
 		}
 	}
 }
-void PlayScene::ScenarioKillBoss(float deltatime)
+void Stage3::ScenarioKillBoss(float deltatime)
 {
 	if (_directorKillBoss == nullptr)
 		return;
-	auto boss = getObject(eID::BOSS_STAGE1);
+	auto boss = getObject(eID::SHADOW_BEAST);
 	if ((SoundManager::getInstance()->IsPlaying(eSoundId::DESTROY_BOSS) == false) && boss != nullptr && boss->isInStatus(eStatus::DYING) == true)
 	{
+		_credit->update(deltatime);
 		this->_directorKillBoss->update(deltatime);
 		if (this->_directorKillBoss->isFinish() == true)
 		{
 			SAFE_DELETE(_directorKillBoss);
 			//chuyển scene
-			auto play = new BeginPlayScene(Score::getScore(), ((Bill*)_bill)->getLifeNumber(), 3);
-			SceneManager::getInstance()->replaceScene(play);
+			// test
+			auto intro = new IntroScene();
+			SceneManager::getInstance()->replaceScene(intro);
+		}
+		if (InputController::getInstance()->isKeyDown(DIK_Q))
+		{
+			auto intro = new IntroScene();
+			if (SoundManager::getInstance()->IsPlaying(eSoundId::WINGAME))
+			{
+				SoundManager::getInstance()->Stop(eSoundId::WINGAME);
+			}
+			SceneManager::getInstance()->replaceScene(intro);
 		}
 	}
 }
-bool PlayScene::checkGameLife()
+bool Stage3::checkGameLife()
 {
 	if (((Bill*)_bill)->getLifeNumber() < 0)
 	{
-		auto gameoverScene = new GameOverScene(Score::getScore(), 1);
-		SoundManager::getInstance()->Stop(eSoundId::BACKGROUND_STAGE1);
+		auto gameoverScene = new GameOverScene(Score::getScore(), 3);		// hardcode test: 1000 = số điểm
+		SoundManager::getInstance()->Stop(eSoundId::BACKGROUND_STAGE2);
 		SceneManager::getInstance()->replaceScene(gameoverScene);
 		return true;
 	}
 	return false;
 }
-BaseObject* PlayScene::getObject(eID id)
+BaseObject* Stage3::getObject(eID id)
 {
 	if (id == eID::BILL)
 		return getBill();
@@ -426,7 +404,7 @@ BaseObject* PlayScene::getObject(eID id)
 	return nullptr;
 }
 
-Bill* PlayScene::getBill()
+Bill* Stage3::getBill()
 {
 	return (Bill*)this->_bill;
 }

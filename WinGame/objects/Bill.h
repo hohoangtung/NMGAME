@@ -12,19 +12,19 @@ update 30/11/2015
 #ifndef __BILL_H__
 #define __BILL_H__
 
-#include "..\FrameWork\define.h"
-#include "..\FrameWork\Animation.h"
-#include "..\FrameWork\InputController.h"
-#include "..\FrameWork\Managers\SceneManager.h"
-#include "..\FrameWork\StopWatch.h"
+#include "../FrameWork/define.h"
+#include "../FrameWork/Animation.h"
+#include "../FrameWork/InputController.h"
+#include "../FrameWork/Managers/SceneManager.h"
+#include "../FrameWork/StopWatch.h"
 #include "BaseObject.h"
 #include "IComponent.h"
 #include "CollisionBody.h"
-#include "Bullet.h"
-#include "L_Bullet.h"
-#include "F_Bullet.h"
-#include "S_Bullet.h"
-#include "M_Bullet.h"
+#include "Bullets/Bullet.h"
+#include "Bullets/L_Bullet.h"
+#include "Bullets/F_Bullet.h"
+#include "Bullets/S_Bullet.h"
+#include "Bullets/M_Bullet.h"
 #include "LifeUI.h"
 
 #define BILL_MOVE_SPEED 125

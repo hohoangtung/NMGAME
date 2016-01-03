@@ -19,7 +19,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>v110</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
@@ -41,8 +41,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Lib\x86;$(LibraryPath)</LibraryPath>
+    <IncludePath>D:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;$(IncludePath)</IncludePath>
+    <LibraryPath>D:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -61,7 +61,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>d3d9.lib;d3dx9.lib;dinput8.lib;dxguid.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>d3d9.lib;d3dx9.lib;dinput8.lib;dxguid.lib;dsound.lib;dxerr.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PreBuildEvent>
       <Command>
@@ -93,6 +93,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ContraGame.cpp" />
+    <ClCompile Include="dxaudio.cpp" />
     <ClCompile Include="FrameWork\Animation.cpp" />
     <ClCompile Include="FrameWork\DeviceManager.cpp" />
     <ClCompile Include="FrameWork\Event.cpp" />
@@ -100,6 +101,9 @@
     <ClCompile Include="FrameWork\Graphics.cpp" />
     <ClCompile Include="FrameWork\InputController.cpp" />
     <ClCompile Include="FrameWork\Managers\SceneManager.cpp" />
+    <ClCompile Include="FrameWork\Managers\SoundManager.cpp" />
+    <ClCompile Include="FrameWork\Scenario.cpp" />
+    <ClCompile Include="FrameWork\Surface.cpp" />
     <ClCompile Include="FrameWork\Transformable.cpp" />
     <ClCompile Include="FrameWork\Sprite.cpp" />
     <ClCompile Include="FrameWork\SpriteManager.cpp" />
@@ -108,29 +112,62 @@
     <ClCompile Include="FrameWork\TextBitmap.cpp" />
     <ClCompile Include="FrameWork\Texture.cpp" />
     <ClCompile Include="FrameWork\TimeSpan.cpp" />
+    <ClCompile Include="FrameWork\utils.cpp" />
     <ClCompile Include="FrameWork\Viewport.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Map\Map.cpp" />
     <ClCompile Include="objects\AirCraft.cpp" />
-    <ClCompile Include="objects\BaseEnemy.cpp" />
     <ClCompile Include="objects\BaseObject.cpp" />
     <ClCompile Include="objects\Bill.cpp" />
     <ClCompile Include="objects\Bridge.cpp" />
-    <ClCompile Include="objects\Bullet.cpp" />
+    <ClCompile Include="objects\Bullets\Beast_Bullet.cpp" />
+    <ClCompile Include="objects\Bullets\Bullet.cpp" />
+    <ClCompile Include="objects\Bullets\BulletManager.cpp" />
+    <ClCompile Include="objects\Bullets\F_Bullet.cpp" />
+    <ClCompile Include="objects\Bullets\L_Bullet.cpp" />
+    <ClCompile Include="objects\Bullets\M_Bullet.cpp" />
+    <ClCompile Include="objects\Bullets\S_Bullet.cpp" />
     <ClCompile Include="objects\CollisionBody.cpp" />
+    <ClCompile Include="objects\EmptyObject.cpp" />
+    <ClCompile Include="objects\Enemies\BaseEnemy.cpp" />
+    <ClCompile Include="objects\Enemies\Boss.cpp" />
+    <ClCompile Include="objects\Enemies\ObjectCreator.cpp" />
+    <ClCompile Include="objects\Enemies\RedCannon.cpp" />
+    <ClCompile Include="objects\Enemies\Rifleman.cpp" />
+    <ClCompile Include="objects\Enemies\RockCreator.cpp" />
+    <ClCompile Include="objects\Enemies\RockFall.cpp" />
+    <ClCompile Include="objects\Enemies\ScubaSoldier.cpp" />
+    <ClCompile Include="objects\Enemies\ShadowBeast.cpp" />
+    <ClCompile Include="objects\Enemies\Soldier.cpp" />
+    <ClCompile Include="objects\Enemies\WallTurret.cpp" />
     <ClCompile Include="objects\Explosion.cpp" />
     <ClCompile Include="objects\Falcon.cpp" />
+    <ClCompile Include="objects\Fire.cpp" />
+    <ClCompile Include="objects\Help.cpp" />
     <ClCompile Include="objects\IComponent.cpp" />
-    <ClCompile Include="objects\mario.cpp" />
-    <ClCompile Include="objects\PlayScene.cpp" />
-    <ClCompile Include="objects\RedCannon.cpp" />
-    <ClCompile Include="objects\Rifleman.cpp" />
-    <ClCompile Include="objects\Scene.cpp" />
-    <ClCompile Include="objects\Soldier.cpp" />
+    <ClCompile Include="objects\Item.cpp" />
+    <ClCompile Include="objects\Land.cpp" />
+    <ClCompile Include="objects\LifeUI.cpp" />
+    <ClCompile Include="objects\RockFly.cpp" />
+    <ClCompile Include="objects\Scenes\BeginPlayScene.cpp" />
+    <ClCompile Include="objects\Scenes\GameOverScene.cpp" />
+    <ClCompile Include="objects\Scenes\IntroScene.cpp" />
+    <ClCompile Include="objects\Scenes\PlayScene.cpp" />
+    <ClCompile Include="objects\Scenes\Scene.cpp" />
+    <ClCompile Include="objects\Scenes\SelectionScene.cpp" />
+    <ClCompile Include="objects\Scenes\Stage3.cpp" />
+    <ClCompile Include="objects\Score.cpp" />
+    <ClCompile Include="objects\TextSprite.cpp" />
+    <ClCompile Include="QNode.cpp" />
+    <ClCompile Include="Tiles\Map.cpp" />
+    <ClCompile Include="Tiles\ObjectFactory.cpp" />
+    <ClCompile Include="Tiles\Tile.cpp" />
+    <ClCompile Include="Tiles\TileSet.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ContraGame.h" />
+    <ClInclude Include="debug.h" />
+    <ClInclude Include="dxaudio.h" />
     <ClInclude Include="FrameWork\Animation.h" />
     <ClInclude Include="FrameWork\define.h" />
     <ClInclude Include="FrameWork\DeviceManager.h" />
@@ -139,6 +176,9 @@
     <ClInclude Include="FrameWork\Graphics.h" />
     <ClInclude Include="FrameWork\InputController.h" />
     <ClInclude Include="FrameWork\Managers\SceneManager.h" />
+    <ClInclude Include="FrameWork\Managers\SoundManager.h" />
+    <ClInclude Include="FrameWork\Scenario.h" />
+    <ClInclude Include="FrameWork\Surface.h" />
     <ClInclude Include="FrameWork\Transformable.h" />
     <ClInclude Include="FrameWork\Sprite.h" />
     <ClInclude Include="FrameWork\SpriteManager.h" />
@@ -147,24 +187,57 @@
     <ClInclude Include="FrameWork\TextBitmap.h" />
     <ClInclude Include="FrameWork\Texture.h" />
     <ClInclude Include="FrameWork\TimeSpan.h" />
+    <ClInclude Include="FrameWork\utils.h" />
     <ClInclude Include="FrameWork\Viewport.h" />
     <ClInclude Include="Game.h" />
-    <ClInclude Include="Map\Map.h" />
     <ClInclude Include="objects\AirCraft.h" />
-    <ClInclude Include="objects\BaseEnemy.h" />
     <ClInclude Include="objects\BaseObject.h" />
     <ClInclude Include="objects\Bill.h" />
     <ClInclude Include="objects\Bridge.h" />
-    <ClInclude Include="objects\Bullet.h" />
+    <ClInclude Include="objects\Bullets\Beast_Bullet.h" />
+    <ClInclude Include="objects\Bullets\Bullet.h" />
+    <ClInclude Include="objects\Bullets\BulletManager.h" />
+    <ClInclude Include="objects\Bullets\F_Bullet.h" />
+    <ClInclude Include="objects\Bullets\L_Bullet.h" />
+    <ClInclude Include="objects\Bullets\M_Bullet.h" />
+    <ClInclude Include="objects\Bullets\S_Bullet.h" />
     <ClInclude Include="objects\CollisionBody.h" />
+    <ClInclude Include="objects\EmptyObject.h" />
+    <ClInclude Include="objects\Enemies\BaseEnemy.h" />
+    <ClInclude Include="objects\Enemies\Boss.h" />
+    <ClInclude Include="objects\Enemies\ObjectCreator.h" />
+    <ClInclude Include="objects\Enemies\RedCannon.h" />
+    <ClInclude Include="objects\Enemies\Rifleman.h" />
+    <ClInclude Include="objects\Enemies\RockCreator.h" />
+    <ClInclude Include="objects\Enemies\RockFall.h" />
+    <ClInclude Include="objects\Enemies\ScubaSoldier.h" />
+    <ClInclude Include="objects\Enemies\ShadowBeast.h" />
+    <ClInclude Include="objects\Enemies\Soldier.h" />
+    <ClInclude Include="objects\Enemies\WallTurret.h" />
     <ClInclude Include="objects\Explosion.h" />
     <ClInclude Include="objects\Falcon.h" />
+    <ClInclude Include="objects\Fire.h" />
+    <ClInclude Include="objects\Help.h" />
     <ClInclude Include="objects\IComponent.h" />
-    <ClInclude Include="objects\PlayScene.h" />
-    <ClInclude Include="objects\RedCannon.h" />
-    <ClInclude Include="objects\Rifleman.h" />
-    <ClInclude Include="objects\Scene.h" />
-    <ClInclude Include="objects\Soldier.h" />
+    <ClInclude Include="objects\Item.h" />
+    <ClInclude Include="objects\Land.h" />
+    <ClInclude Include="objects\LifeUI.h" />
+    <ClInclude Include="objects\RockFly.h" />
+    <ClInclude Include="objects\Scenes\BeginPlayScene.h" />
+    <ClInclude Include="objects\Scenes\GameOverScene.h" />
+    <ClInclude Include="objects\Scenes\IntroScene.h" />
+    <ClInclude Include="objects\Scenes\PlayScene.h" />
+    <ClInclude Include="objects\Scenes\Scene.h" />
+    <ClInclude Include="objects\Scenes\SelectionScene.h" />
+    <ClInclude Include="objects\Scenes\Stage3.h" />
+    <ClInclude Include="objects\Score.h" />
+    <ClInclude Include="objects\TextSprite.h" />
+    <ClInclude Include="QNode.h" />
+    <ClInclude Include="Tiles\config.h" />
+    <ClInclude Include="Tiles\Map.h" />
+    <ClInclude Include="Tiles\ObjectFactory.h" />
+    <ClInclude Include="Tiles\Tile.h" />
+    <ClInclude Include="Tiles\TileSet.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Flower.png">
@@ -176,6 +249,18 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="Readme.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="pugixml-1.7\scripts\pugixml_vs2010.vcxproj">
+      <Project>{89a1e353-e2dc-495c-b403-742be206aced}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram\Bullet_classDiagram.cd" />
+    <None Include="ClassDiagram\Component_classDiagram.cd" />
+    <None Include="ClassDiagram\Game_classDiagram.cd" />
+    <None Include="ClassDiagram\Object_classDiagram.cd" />
+    <None Include="ClassDiagram\Scene_classDiagram.cd" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -31,8 +31,8 @@ Trong lớp này có:
 #ifndef __BRIDGE_H__
 #define __BRIDGE_H__
 
-#include "..\FrameWork\StopWatch.h"
-#include "PlayScene.h"
+#include "../FrameWork/StopWatch.h"
+#include "Scenes/PlayScene.h"
 #include "BaseObject.h"
 #include "Explosion.h"
 #include "Land.h"

@@ -3,13 +3,13 @@
 #ifndef __SHADOW_BEAST__
 #define __SHADOW_BEAST__
 
+#include "../../FrameWork/Animation.h"
+#include "../../FrameWork/StopWatch.h"
+#include "../../FrameWork/Managers/SoundManager.h"
+#include "../Bullets/Bullet.h"
+#include "../Bullets/BulletManager.h"
+#include "../Bullets/Beast_Bullet.h"
 #include "BaseEnemy.h"
-#include "..\FrameWork\Animation.h"
-#include "..\FrameWork\StopWatch.h"
-#include "..\FrameWork\Managers\SoundManager.h"
-#include "Bullet.h"
-#include "BulletManager.h"
-#include "Beast_Bullet.h"
 
 class ShadowBeast : public BaseEnemy
 {

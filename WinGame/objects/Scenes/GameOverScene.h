@@ -3,15 +3,15 @@
 #ifndef __GAMEOVER_SCENE__
 #define __GAMEOVER_SCENE__
 
-#include "..\FrameWork\Sprite.h"
-#include "..\FrameWork\SpriteManager.h"
-#include "..\FrameWork\Managers\SoundManager.h"
-#include "..\FrameWork\InputController.h"
-#include "..\FrameWork\StopWatch.h"
+#include "../../FrameWork/Sprite.h"
+#include "../../FrameWork/SpriteManager.h"
+#include "../../FrameWork/Managers/SoundManager.h"
+#include "../../FrameWork/InputController.h"
+#include "../../FrameWork/StopWatch.h"
 
-#include "IComponent.h"
-#include "BaseObject.h"
-#include "TextSprite.h"
+#include "../IComponent.h"
+#include "../BaseObject.h"
+#include "../TextSprite.h"
 #include "Scene.h"
 
 [event_receiver(native)]

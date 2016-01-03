@@ -37,6 +37,27 @@
     <Filter Include="Source Files\Objects\GameObjects">
       <UniqueIdentifier>{577704fe-4bbd-4b33-8fa0-9820c80b92a2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Tiles">
+      <UniqueIdentifier>{36c01360-e55f-4b3d-90bb-80c68e3906a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Objects\Scenes">
+      <UniqueIdentifier>{068b2f80-4f37-4359-a241-dbbf4ab0ffc9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Objects\Bullets">
+      <UniqueIdentifier>{4bbc1317-8320-4072-9321-dc5189d2ecc6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Objects\Scenes">
+      <UniqueIdentifier>{4217e3e7-aa6b-49c6-bdc4-67fd63904702}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Objects\Bullets">
+      <UniqueIdentifier>{a0c71e74-c006-4465-bb37-4f606e7a1f5a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Objects\Enemies">
+      <UniqueIdentifier>{8208f633-7839-4ca2-bf43-51df408e8b9f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Objects\Enemies">
+      <UniqueIdentifier>{0941ff8f-f9a9-414f-b81b-4a21f9972f9e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -81,12 +102,6 @@
     <ClCompile Include="FrameWork\Managers\SceneManager.cpp">
       <Filter>Source Files\FrameWork\Managers</Filter>
     </ClCompile>
-    <ClCompile Include="objects\Scene.cpp">
-      <Filter>Source Files\Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="objects\PlayScene.cpp">
-      <Filter>Source Files\Objects</Filter>
-    </ClCompile>
     <ClCompile Include="ContraGame.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -114,34 +129,13 @@
     <ClCompile Include="objects\Falcon.cpp">
       <Filter>Source Files\Objects\GameObjects</Filter>
     </ClCompile>
-    <ClCompile Include="objects\RedCannon.cpp">
-      <Filter>Source Files\Objects\GameObjects</Filter>
-    </ClCompile>
-    <ClCompile Include="objects\Soldier.cpp">
-      <Filter>Source Files\Objects\GameObjects</Filter>
-    </ClCompile>
     <ClCompile Include="objects\CollisionBody.cpp">
       <Filter>Source Files\Objects</Filter>
     </ClCompile>
     <ClCompile Include="objects\AirCraft.cpp">
       <Filter>Source Files\Objects\GameObjects</Filter>
     </ClCompile>
-    <ClCompile Include="objects\BaseEnemy.cpp">
-      <Filter>Source Files\Objects\GameObjects</Filter>
-    </ClCompile>
     <ClCompile Include="objects\Explosion.cpp">
-      <Filter>Source Files\Objects\GameObjects</Filter>
-    </ClCompile>
-    <ClCompile Include="objects\mario.cpp">
-      <Filter>Source Files\Objects\GameObjects</Filter>
-    </ClCompile>
-    <ClCompile Include="objects\Rifleman.cpp">
-      <Filter>Source Files\Objects\GameObjects</Filter>
-    </ClCompile>
-    <ClCompile Include="Map\Map.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="objects\Bullet.cpp">
       <Filter>Source Files\Objects\GameObjects</Filter>
     </ClCompile>
     <ClCompile Include="objects\Bullet.cpp">
@@ -149,6 +143,138 @@
     </ClCompile>
     <ClCompile Include="objects\Bridge.cpp">
       <Filter>Source Files\Objects\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="FrameWork\utils.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="dxaudio.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="QNode.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="FrameWork\Managers\SoundManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="FrameWork\Surface.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Tiles\ObjectFactory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="objects\EmptyObject.cpp">
+      <Filter>Source Files\Objects\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="objects\Fire.cpp">
+      <Filter>Source Files\Objects\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="objects\Item.cpp">
+      <Filter>Source Files\Objects\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="objects\Land.cpp">
+      <Filter>Source Files\Objects\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="objects\LifeUI.cpp">
+      <Filter>Source Files\Objects\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="objects\RockFly.cpp">
+      <Filter>Source Files\Objects\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Tiles\Tile.cpp">
+      <Filter>Source Files\Tiles</Filter>
+    </ClCompile>
+    <ClCompile Include="Tiles\TileSet.cpp">
+      <Filter>Source Files\Tiles</Filter>
+    </ClCompile>
+    <ClCompile Include="Tiles\Map.cpp">
+      <Filter>Source Files\Tiles</Filter>
+    </ClCompile>
+    <ClCompile Include="FrameWork\Scenario.cpp">
+      <Filter>Source Files\FrameWork</Filter>
+    </ClCompile>
+    <ClCompile Include="objects\TextSprite.cpp">
+      <Filter>Source Files\FrameWork</Filter>
+    </ClCompile>
+    <ClCompile Include="objects\Score.cpp">
+      <Filter>Source Files\Objects\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="objects\Help.cpp">
+      <Filter>Source Files\Objects\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="objects\Scenes\PlayScene.cpp">
+      <Filter>Source Files\Objects\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="objects\Scenes\Scene.cpp">
+      <Filter>Source Files\Objects\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="objects\Scenes\SelectionScene.cpp">
+      <Filter>Source Files\Objects\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="objects\Scenes\Stage3.cpp">
+      <Filter>Source Files\Objects\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="objects\Scenes\BeginPlayScene.cpp">
+      <Filter>Source Files\Objects\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="objects\Scenes\GameOverScene.cpp">
+      <Filter>Source Files\Objects\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="objects\Scenes\IntroScene.cpp">
+      <Filter>Source Files\Objects\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="objects\Bullets\Beast_Bullet.cpp">
+      <Filter>Source Files\Objects\Bullets</Filter>
+    </ClCompile>
+    <ClCompile Include="objects\Bullets\Bullet.cpp">
+      <Filter>Source Files\Objects\Bullets</Filter>
+    </ClCompile>
+    <ClCompile Include="objects\Bullets\BulletManager.cpp">
+      <Filter>Source Files\Objects\Bullets</Filter>
+    </ClCompile>
+    <ClCompile Include="objects\Bullets\F_Bullet.cpp">
+      <Filter>Source Files\Objects\Bullets</Filter>
+    </ClCompile>
+    <ClCompile Include="objects\Bullets\L_Bullet.cpp">
+      <Filter>Source Files\Objects\Bullets</Filter>
+    </ClCompile>
+    <ClCompile Include="objects\Bullets\M_Bullet.cpp">
+      <Filter>Source Files\Objects\Bullets</Filter>
+    </ClCompile>
+    <ClCompile Include="objects\Bullets\S_Bullet.cpp">
+      <Filter>Source Files\Objects\Bullets</Filter>
+    </ClCompile>
+    <ClCompile Include="objects\Enemies\BaseEnemy.cpp">
+      <Filter>Source Files\Objects\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="objects\Enemies\Boss.cpp">
+      <Filter>Source Files\Objects\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="objects\Enemies\ObjectCreator.cpp">
+      <Filter>Source Files\Objects\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="objects\Enemies\RedCannon.cpp">
+      <Filter>Source Files\Objects\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="objects\Enemies\Rifleman.cpp">
+      <Filter>Source Files\Objects\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="objects\Enemies\RockCreator.cpp">
+      <Filter>Source Files\Objects\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="objects\Enemies\RockFall.cpp">
+      <Filter>Source Files\Objects\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="objects\Enemies\ScubaSoldier.cpp">
+      <Filter>Source Files\Objects\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="objects\Enemies\ShadowBeast.cpp">
+      <Filter>Source Files\Objects\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="objects\Enemies\Soldier.cpp">
+      <Filter>Source Files\Objects\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="objects\Enemies\WallTurret.cpp">
+      <Filter>Source Files\Objects\Enemies</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -194,12 +320,6 @@
     <ClInclude Include="FrameWork\Managers\SceneManager.h">
       <Filter>Header Files\FrameWork\Managers</Filter>
     </ClInclude>
-    <ClInclude Include="objects\Scene.h">
-      <Filter>Header Files\Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="objects\PlayScene.h">
-      <Filter>Header Files\Objects</Filter>
-    </ClInclude>
     <ClInclude Include="ContraGame.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -227,31 +347,13 @@
     <ClInclude Include="objects\Falcon.h">
       <Filter>Header Files\Objects\GameObjects</Filter>
     </ClInclude>
-    <ClInclude Include="objects\RedCannon.h">
-      <Filter>Header Files\Objects\GameObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="objects\Soldier.h">
-      <Filter>Header Files\Objects\GameObjects</Filter>
-    </ClInclude>
     <ClInclude Include="objects\CollisionBody.h">
       <Filter>Header Files\Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="objects\Rifleman.h">
-      <Filter>Header Files\Objects\GameObjects</Filter>
     </ClInclude>
     <ClInclude Include="objects\Explosion.h">
       <Filter>Header Files\Objects\GameObjects</Filter>
     </ClInclude>
-    <ClInclude Include="objects\BaseEnemy.h">
-      <Filter>Header Files\Objects\GameObjects</Filter>
-    </ClInclude>
     <ClInclude Include="objects\AirCraft.h">
-      <Filter>Header Files\Objects\GameObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="Map\Map.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="objects\Bullet.h">
       <Filter>Header Files\Objects\GameObjects</Filter>
     </ClInclude>
     <ClInclude Include="objects\Bullet.h">
@@ -259,6 +361,144 @@
     </ClInclude>
     <ClInclude Include="objects\Bridge.h">
       <Filter>Header Files\Objects\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="FrameWork\utils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="objects\EmptyObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="objects\Item.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="objects\Land.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="debug.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="dxaudio.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="QNode.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FrameWork\Managers\SoundManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FrameWork\Surface.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Tiles\config.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Tiles\Map.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Tiles\ObjectFactory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Tiles\Tile.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Tiles\TileSet.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="objects\Fire.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="objects\LifeUI.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="objects\RockFly.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FrameWork\Scenario.h">
+      <Filter>Header Files\FrameWork</Filter>
+    </ClInclude>
+    <ClInclude Include="objects\TextSprite.h">
+      <Filter>Header Files\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="objects\Score.h">
+      <Filter>Header Files\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="objects\Help.h">
+      <Filter>Header Files\Objects\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="objects\Scenes\PlayScene.h">
+      <Filter>Header Files\Objects\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="objects\Scenes\Scene.h">
+      <Filter>Header Files\Objects\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="objects\Scenes\SelectionScene.h">
+      <Filter>Header Files\Objects\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="objects\Scenes\Stage3.h">
+      <Filter>Header Files\Objects\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="objects\Scenes\BeginPlayScene.h">
+      <Filter>Header Files\Objects\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="objects\Scenes\GameOverScene.h">
+      <Filter>Header Files\Objects\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="objects\Scenes\IntroScene.h">
+      <Filter>Header Files\Objects\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="objects\Bullets\Beast_Bullet.h">
+      <Filter>Header Files\Objects\Bullets</Filter>
+    </ClInclude>
+    <ClInclude Include="objects\Bullets\Bullet.h">
+      <Filter>Header Files\Objects\Bullets</Filter>
+    </ClInclude>
+    <ClInclude Include="objects\Bullets\BulletManager.h">
+      <Filter>Header Files\Objects\Bullets</Filter>
+    </ClInclude>
+    <ClInclude Include="objects\Bullets\F_Bullet.h">
+      <Filter>Header Files\Objects\Bullets</Filter>
+    </ClInclude>
+    <ClInclude Include="objects\Bullets\L_Bullet.h">
+      <Filter>Header Files\Objects\Bullets</Filter>
+    </ClInclude>
+    <ClInclude Include="objects\Bullets\M_Bullet.h">
+      <Filter>Header Files\Objects\Bullets</Filter>
+    </ClInclude>
+    <ClInclude Include="objects\Bullets\S_Bullet.h">
+      <Filter>Header Files\Objects\Bullets</Filter>
+    </ClInclude>
+    <ClInclude Include="objects\Enemies\BaseEnemy.h">
+      <Filter>Header Files\Objects\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="objects\Enemies\Boss.h">
+      <Filter>Header Files\Objects\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="objects\Enemies\ObjectCreator.h">
+      <Filter>Header Files\Objects\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="objects\Enemies\RedCannon.h">
+      <Filter>Header Files\Objects\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="objects\Enemies\Rifleman.h">
+      <Filter>Header Files\Objects\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="objects\Enemies\RockCreator.h">
+      <Filter>Header Files\Objects\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="objects\Enemies\RockFall.h">
+      <Filter>Header Files\Objects\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="objects\Enemies\ScubaSoldier.h">
+      <Filter>Header Files\Objects\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="objects\Enemies\ShadowBeast.h">
+      <Filter>Header Files\Objects\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="objects\Enemies\Soldier.h">
+      <Filter>Header Files\Objects\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="objects\Enemies\WallTurret.h">
+      <Filter>Header Files\Objects\Enemies</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -271,5 +511,12 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="Readme.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram\Bullet_classDiagram.cd" />
+    <None Include="ClassDiagram\Component_classDiagram.cd" />
+    <None Include="ClassDiagram\Game_classDiagram.cd" />
+    <None Include="ClassDiagram\Object_classDiagram.cd" />
+    <None Include="ClassDiagram\Scene_classDiagram.cd" />
   </ItemGroup>
 </Project>

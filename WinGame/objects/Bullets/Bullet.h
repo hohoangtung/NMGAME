@@ -1,14 +1,13 @@
 ﻿#ifndef __BULLET_H__
 #define __BULLET_H__
 
-#include "../FrameWork/define.h"
-#include "../FrameWork/Managers/SceneManager.h"
-#include "../FrameWork/StopWatch.h"
-
-#include "BaseObject.h"
-#include "BaseEnemy.h"
-#include "IComponent.h"
-#include "CollisionBody.h"
+#include "../../FrameWork/define.h"
+#include "../../FrameWork/Managers/SceneManager.h"
+#include "../../FrameWork/StopWatch.h"
+#include "../Enemies/BaseEnemy.h"
+#include "../BaseObject.h"
+#include "../IComponent.h"
+#include "../CollisionBody.h"
 #define NORMAL_BULLET_SPEED 400
 
 #define TOP_SHOOT_ANGLE					0.0f

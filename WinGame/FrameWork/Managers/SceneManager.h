@@ -3,7 +3,7 @@
 
 #include <vector>
 #include "../define.h"
-#include "../../objects/Scene.h"
+#include "../../objects/Scenes/Scene.h"
 
 class SceneManager
 {

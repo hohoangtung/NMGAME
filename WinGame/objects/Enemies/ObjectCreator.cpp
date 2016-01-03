@@ -120,7 +120,7 @@ float ObjectCreator::checkCollision(BaseObject * object, float dt)
 	//Tùng: sửa lại chỉ cho kiểm tra va chạm với land
 	// có đoạn sau rồi thì không cần đoạn trên nữa. dynamic cast gây lãng phí nhiều hơn 
 	// ref "dynamic_cast is slow": http://stackoverflow.com/questions/4050901/performance-of-dynamic-cast
-	if (object->getId() != eID::LAND)
+	if (object->getId() != eID::LAND && object->getId() != eID::BILL)
 	{
 		return 0.0f;
 	}

@@ -3,17 +3,18 @@
 #ifndef __INTRO_SCENE__
 #define __INTRO_SCENE__
 
-#include "..\FrameWork\Sprite.h"
-#include "..\FrameWork\SpriteManager.h"
-#include "..\FrameWork\Managers\SoundManager.h"
-#include "..\FrameWork\InputController.h"
-#include "..\FrameWork\StopWatch.h"
-#include "..\objects\Scenes\SelectionScene.h"
+#include "../../FrameWork/Sprite.h"
+#include "../../FrameWork/SpriteManager.h"
+#include "../../FrameWork/Managers/SoundManager.h"
+#include "../../FrameWork/InputController.h"
+#include "../../FrameWork/StopWatch.h"
 
-#include "IComponent.h"
-#include "BaseObject.h"
+#include "../IComponent.h"
+#include "../BaseObject.h"
+#include "../TextSprite.h"
+
+#include "SelectionScene.h"
 #include "Scene.h"
-#include "TextSprite.h"
 
 [event_receiver(native)]
 class IntroScene : public Scene, public IControlable

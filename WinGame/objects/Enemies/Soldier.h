@@ -1,13 +1,12 @@
 ﻿#ifndef _RUNNINGSOLDIER_H
 #define _RUNNINGSOLDIER_H
 
+#include "../../FrameWork/Animation.h"
+#include "../../FrameWork/StopWatch.h"
+#include "../Explosion.h"
+#include "../IComponent.h"
+#include "../Scenes/PlayScene.h"
 #include "BaseEnemy.h"
-#include "Explosion.h"
-#include "IComponent.h"
-#include "PlayScene.h"
-#include "../FrameWork/Animation.h"
-#include "../FrameWork/StopWatch.h"
-#include <map>
 
 using namespace std;
 

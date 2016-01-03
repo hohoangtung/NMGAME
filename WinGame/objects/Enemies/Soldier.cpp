@@ -342,38 +342,6 @@ float Soldier::checkCollision(BaseObject * object, float dt)
 						this->setStatus(eStatus::RUNNING);
 					prevObject = object;
 				}
-				//else if (this->getVelocity().y == 0 && this->getVelocity().x < 0)
-				//{
-				//	if (this->getBounding().left - object->getBounding().left < 8)
-				//	{
-				//		flagend = true;
-				//	}
-				//}
-				//else if (this->getVelocity().y == 0 && this->getVelocity().x > 0)
-				//{
-				//	if (this->getBounding().right - object->getBounding().right > 8)
-				//	{
-				//		flagend = true;
-				//	}
-				//}
-
-				//if (flagend == true)
-				//{
-				//	int chance = rand() % 5;
-				//	if (chance == 0)
-				//	{
-				//		jump();
-				//		auto gravity = (Gravity*)this->_listComponent["Gravity"];
-				//		gravity->setStatus(eGravityStatus::FALLING__DOWN);
-				//		this->setStatus(FALLING);
-				//	}
-				//	else
-				//	{
-				//		Movement* movement = (Movement*)this->getComponent("Movement");
-				//		movement->setVelocity(GVector2(-movement->getVelocity().x, movement->getVelocity().y));
-				//		this->setScaleX( - this->getScale().x);
-				//	}
-				//}
 			}
 			else if (land == eLandType::WATER)
 			{
@@ -413,7 +381,9 @@ float Soldier::checkCollision(BaseObject * object, float dt)
 	}
 	else
 	{
+
 		collisionBody->checkCollision(object, dt, false);
+
 	}
 	return 0.0f;
 

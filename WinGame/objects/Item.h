@@ -3,10 +3,10 @@
 #ifndef __ITEM__
 #define __ITEM__
 
-#include "..\FrameWork\Animation.h"
+#include "../FrameWork/Animation.h"
 #include "BaseObject.h"
 #include "IComponent.h"
-#include "PlayScene.h"
+#include "Scenes/PlayScene.h"
 
 #define ITEM_FORCE				GVector2(50.0f, 250.0f)	
 #define ITEM_GRAVITY			GVector2(0.0f, -250.0f)

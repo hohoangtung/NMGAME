@@ -1,5 +1,5 @@
 ﻿#include "Bullet.h"
-#include "../FrameWork/Managers/SoundManager.h"
+#include "../../FrameWork/Managers/SoundManager.h"
 
 Bullet::Bullet(GVector2 startPosition, eBulletType type,eDirection dir) : BaseObject(eID::BULLET)
 {

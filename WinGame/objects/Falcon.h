@@ -1,14 +1,14 @@
 ﻿#ifndef _FALCON_H
 #define _FALCON_H
 
-#include "BaseObject.h"
-#include "IComponent.h"
-#include "PlayScene.h"
-#include "Explosion.h"
-#include "Item.h"
 #include "../FrameWork/Animation.h"
 #include "../FrameWork/StopWatch.h"
-#include <map>
+
+#include "BaseObject.h"
+#include "IComponent.h"
+#include "Explosion.h"
+#include "Item.h"
+#include "Scenes/PlayScene.h"
 
 using namespace std;
 

@@ -1,11 +1,10 @@
 ﻿#include "Bill.h"
 #include "AirCraft.h"
-#include "../debug.h"
-#include "GameOverScene.h"
-#include "ShadowBeast.h"
-#include "ObjectCreator.h"
-#include "RockCreator.h"
 
+#include "Scenes/GameOverScene.h"
+#include "Enemies/ShadowBeast.h"
+#include "Enemies/ObjectCreator.h"
+#include "Enemies/RockCreator.h"
 Bill::Bill(int life) : BaseObject(eID::BILL)
 {
 	_canJumpDown = true;
@@ -612,7 +611,7 @@ float Bill::checkCollision(BaseObject * object, float dt)
 	}
 	else
 	{
-		if (objectId == eID::CREATOR)
+		if (objectId == eID::CREATOR && _touchKill == true)
 		{
 			auto children = ((ObjectCreator*)object)->getObjects();
 			for (auto child : children)

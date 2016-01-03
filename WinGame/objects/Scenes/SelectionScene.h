@@ -1,12 +1,14 @@
 #ifndef __SELECTION_SCENE_H__
 #define __SELECTION_SCENE_H__
 
-#include "../Scene.h"
-#include "../TextSprite.h"
 #include "../../FrameWork/define.h"
 #include "../../FrameWork/Managers/SoundManager.h"
-#include "../BeginPlayScene.h"
 #include "../../FrameWork/Sprite.h"
+
+#include "../TextSprite.h"
+
+#include "BeginPlayScene.h"
+#include "Scene.h"
 
 class SelectionScene : public Scene, public IControlable
 {

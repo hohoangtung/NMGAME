@@ -1,6 +1,6 @@
 #include "BaseEnemy.h"
-#include "..\FrameWork\Managers\SoundManager.h"
-#include "Score.h"
+#include "../../FrameWork/Managers/SoundManager.h"
+#include "../Score.h"
 BaseEnemy::BaseEnemy(eID id) : BaseObject(id) {}
 BaseEnemy::~BaseEnemy() {}
 int BaseEnemy::getHitpoint() 

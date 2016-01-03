@@ -5,7 +5,7 @@
 
 
 #include "Bullet.h"
-#include "..\FrameWork\Animation.h"
+#include "../../FrameWork/Animation.h"
 
 #define BEAST_BULLET_SPEED 240.0f
 

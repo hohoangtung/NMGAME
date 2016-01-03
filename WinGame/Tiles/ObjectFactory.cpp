@@ -1,8 +1,8 @@
 ﻿
 #include "ObjectFactory.h"
-#include "..\objects\Land.h"
-#include "..\objects\RockCreator.h"
-#include "..\objects\ShadowBeast.h"
+#include "../objects/Land.h"
+#include "../objects/Enemies/RockCreator.h"
+#include "../objects/Enemies/ShadowBeast.h"
 
 ObjectFactory::ObjectFactory()
 {

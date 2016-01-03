@@ -1,16 +1,16 @@
 #pragma once
 #ifndef __WALL_TURRET_H__
 #define __WALL_TURRET_H__
+
+#include "../../FrameWork/Animation.h"
+#include "../../FrameWork/StopWatch.h"
+#include "../Scenes/PlayScene.h"
+#include "../Bullets/Bullet.h"
+#include "../CollisionBody.h"
+#include "../IComponent.h"
+#include "../Explosion.h"
 #include "BaseEnemy.h"
-#include "CollisionBody.h"
-#include "IComponent.h"
-#include "Bullet.h"
-#include "Explosion.h"
-#include "PlayScene.h"
-#include "../FrameWork/Animation.h"
-#include "../FrameWork/StopWatch.h"
-#include <map>
-#include <math.h>
+
 #define WALL_TURRET_HITPOINT 8
 #define WALL_TURRET_SCORE 1000
 #define WALL_TURRET_SHOOTING_DELAY 3000.0f

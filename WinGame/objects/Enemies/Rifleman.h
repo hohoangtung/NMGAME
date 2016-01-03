@@ -1,14 +1,14 @@
 ﻿#ifndef _RIFLEMAN_H
 #define _RIFLEMAN_H
 
+#include "../../FrameWork/Animation.h"
+#include "../../Framework/StopWatch.h"
+#include "../Bullets/BulletManager.h"
+#include "../Bullets/Bullet.h"
+#include "../Scenes/PlayScene.h"
+#include "../CollisionBody.h"
+#include "../IComponent.h"
 #include "BaseEnemy.h"
-#include "CollisionBody.h"
-#include "Bullet.h"
-#include "IComponent.h"
-#include "../FrameWork/Animation.h"
-#include "../Framework/StopWatch.h"
-#include "PlayScene.h"
-#include "BulletManager.h"
 using namespace std;
 
 #define RIFLEMAN_HITPOINT 1

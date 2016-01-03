@@ -4,13 +4,15 @@
 
 #ifndef __ROCKFALL_H__
 #define __ROCKFALL_H__
+
+#include "../../FrameWork/Animation.h"
+#include "../../FrameWork/StopWatch.h"
+#include "../CollisionBody.h"
+#include "../IComponent.h"
+#include "../Explosion.h"
+#include "../Scenes/PlayScene.h"
 #include "BaseEnemy.h"
-#include "CollisionBody.h"
-#include "PlayScene.h"
-#include "IComponent.h"
-#include "Explosion.h"
-#include "../FrameWork/Animation.h"
-#include "../FrameWork/StopWatch.h"
+
 
 #define ROCKFALL_HORIZONTAL_VELOC		GVector2(30.0f, 0.0f)		// vận tốc ngang
 #define ROCKFALL_HORIZONTAL_VELOC_PRE	GVector2(-30.0f, 0.0f)		// vận tốc ngang

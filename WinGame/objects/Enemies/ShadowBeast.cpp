@@ -1,6 +1,6 @@
 ﻿
 #include "ShadowBeast.h"
-#include "Stage3.h"
+#include "../Scenes/Stage3.h"
 
 ShadowBeast::ShadowBeast(GVector2 position) : BaseEnemy(eID::SHADOW_BEAST)
 {

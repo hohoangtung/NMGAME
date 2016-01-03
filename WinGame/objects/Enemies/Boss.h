@@ -3,13 +3,14 @@
 #define __BOSS_H__
 
 
+#include "../../FrameWork/Animation.h"
+#include "../../FrameWork/StopWatch.h"
+#include "../../FrameWork/Managers/SoundManager.h"
+#include "../Bullets/Bullet.h"
+#include "../Bullets/BulletManager.h"
 #include "BaseEnemy.h"
-#include "..\FrameWork\Animation.h"
-#include "..\FrameWork\StopWatch.h"
-#include "..\FrameWork\Managers\SoundManager.h"
-#include "Bullet.h"
-#include "BulletManager.h"
 #include "Rifleman.h"
+
 
 #define BOSS_SHIELD_HP		32
 #define BOSS_GUN_HP			16

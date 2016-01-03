@@ -2,16 +2,14 @@
 #ifndef __REDCANNON_H__
 #define __REDCANNON_H__
 
+#include "../../FrameWork/Animation.h"
+#include "../../FrameWork/StopWatch.h"
+#include "../Scenes/PlayScene.h"
+#include "../Bullets/Bullet.h"
+#include "../CollisionBody.h"
+#include "../IComponent.h"
+#include "../Explosion.h"
 #include "BaseEnemy.h"
-#include "CollisionBody.h"
-#include "Bullet.h"
-#include "IComponent.h"
-#include "Explosion.h"
-#include "../FrameWork/Animation.h"
-#include "../FrameWork/StopWatch.h"
-#include <map>
-#include <math.h>
-#include "PlayScene.h"
 using namespace std;
 #define CANNON_HITPOINT 8
 #define CANNON_SCORE 500
