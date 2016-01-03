@@ -9,6 +9,7 @@ WallTurret::WallTurret(eStatus status, GVector2 position) :BaseEnemy(eID::WALL_T
 	_sprite->setFrameRect(0, 0, 32, 32);
 	this->setPosition(position);
 	this->setStatus(status);
+	this->setWTStatus(eWT_Status::WT_NORMAL);
 }
 
 WallTurret::WallTurret(eStatus status, float x, float y) :BaseEnemy(eID::WALL_TURRET)
@@ -18,6 +19,7 @@ WallTurret::WallTurret(eStatus status, float x, float y) :BaseEnemy(eID::WALL_TU
 	GVector2 pos(x, y);
 	this->setPosition(pos);
 	this->setStatus(status);
+	this->setWTStatus(eWT_Status::WT_NORMAL);
 
 }
 WallTurret::WallTurret(eWT_Status wtstatus, GVector2 position) :BaseEnemy(eID::WALL_TURRET)
@@ -254,7 +256,7 @@ void WallTurret::update(float deltatime)
 		{
 			shoot();
 		}
-			_stopwatch->restart();
+		_stopwatch->restart();
 	}
 	
 	_animation[this->getWT_Status()]->update(deltatime);

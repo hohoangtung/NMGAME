@@ -237,21 +237,21 @@ enum eSoundId
 };
 enum eWT_Status
 {
-	WT_NORMAL = 0,
-	WT_LEFT_30 = (1 << 0),
-	WT_LEFT_60 = (1 << 1),
-	WT_LEFT_150 = (1 << 2),
-	WT_LEFT_120 = (1 << 3),
-	WT_UP = (1 << 4),
-	WT_DOWN = (1 << 5),
-	WT_RIGHT = (1 << 6),
-	WT_RIGHT_30 = (1 << 7),
-	WT_RIGHT_60 = (1 << 8),
-	WT_RIGHT_120 = (1 << 9),
-	WT_RIGHT_150 = (1 << 10),
-	WT_APPEAR = (1 << 11),
-	WT_CLOSE = (1 << 12),
-	WT_SHOOTING = (1 << 13)
+	WT_NORMAL = (1 << 0),
+	WT_LEFT_30 = (1 << 1),
+	WT_LEFT_60 = (1 << 2),
+	WT_LEFT_150 = (1 << 3),
+	WT_LEFT_120 = (1 << 4),
+	WT_UP = (1 << 5),
+	WT_DOWN = (1 << 6),
+	WT_RIGHT = (1 << 7),
+	WT_RIGHT_30 = (1 << 8),
+	WT_RIGHT_60 = (1 << 9),
+	WT_RIGHT_120 = (1 << 10),
+	WT_RIGHT_150 = (1 << 11),
+	WT_APPEAR = (1 << 12),
+	WT_CLOSE = (1 << 13),
+	WT_SHOOTING = (1 << 14)
 };
 typedef D3DXVECTOR3 GVector3;
 typedef D3DXVECTOR2 GVector2;

@@ -66,6 +66,7 @@ void ObjectCreator::update(float deltatime)
 	}
 	else if (this->getPositionX() <= vpBounding.left || this->getPositionY() <= vpBounding.bottom)
 	{
+		// Tùng: trong màn hình rồi thì huỷ luôn. tại cũng hết giá trị lợi dụng
 		// qua luôn rồi thì hủy
 		this->setStatus(eStatus::DESTROY);
 		return;
@@ -114,8 +115,15 @@ void ObjectCreator::release()
 
 float ObjectCreator::checkCollision(BaseObject * object, float dt)
 {
-	if (dynamic_cast<BaseEnemy*>(object))
+	//if (dynamic_cast<BaseEnemy*>(object))
+	//	return 0.0f;
+	//Tùng: sửa lại chỉ cho kiểm tra va chạm với land
+	// có đoạn sau rồi thì không cần đoạn trên nữa. dynamic cast gây lãng phí nhiều hơn 
+	// ref "dynamic_cast is slow": http://stackoverflow.com/questions/4050901/performance-of-dynamic-cast
+	if (object->getId() != eID::LAND)
+	{
 		return 0.0f;
+	}
 
 	for (auto item : _listObjects)
 	{

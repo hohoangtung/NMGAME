@@ -41,3 +41,12 @@ void BaseEnemy::dropHitpoint(int damage)
 	if (_hitpoint <= 0)
 		gainScore();
 }
+
+void BaseEnemy::setStatus(eStatus status)
+{
+	if (status == eStatus::DESTROY)
+	{
+		SoundManager::getInstance()->Play(eSoundId::DESTROY_ENEMY);
+	}
+	BaseObject::setStatus(status);
+}

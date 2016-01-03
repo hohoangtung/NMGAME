@@ -13,6 +13,7 @@ RedCannon::RedCannon(eStatus status, GVector2 position) :BaseEnemy(eID::REDCANNO
 	_sprite->setFrameRect(0, 0, 32, 32);
 	this->setPosition(position);
 	this->setStatus(status);
+	this->setWTStatus(eWT_Status::WT_NORMAL);
 }
 RedCannon::RedCannon(eStatus status, float x, float y) :BaseEnemy(eID::REDCANNON)
 {
@@ -22,6 +23,7 @@ RedCannon::RedCannon(eStatus status, float x, float y) :BaseEnemy(eID::REDCANNON
 	GVector2 pos(x, y);
 	this->setPosition(pos);
 	this->setStatus(status);
+	this->setWTStatus(eWT_Status::WT_NORMAL);
 }
 RedCannon::RedCannon(eWT_Status wtstatus, GVector2 position) :BaseEnemy(eID::REDCANNON)
 {

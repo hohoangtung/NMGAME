@@ -36,9 +36,9 @@ bool PlayScene::init()
 	_listControlObject.push_back(bill);
 	_listobject.push_back(bill);
 
-	auto bulletmanager = new BulletManager();
-	bulletmanager->init();
-	_listobject.push_back(bulletmanager);
+	_bulletmanager = new BulletManager();
+	_bulletmanager->init();
+	//_listobject.push_back(bulletmanager);
 	
 	_text = new Text(L"Arial", "", 10, 25);
 
@@ -238,6 +238,12 @@ void PlayScene::update(float dt)
 		}
 	}
 
+	if (_bulletmanager != nullptr)
+	{
+		_bulletmanager->checkCollision(_bill, dt);
+		_bulletmanager->update(dt);
+	}
+
 	// [Bước 7]
 	for (BaseObject* obj : _active_object)
 	{
@@ -285,10 +291,10 @@ void PlayScene::destroyobject()
 			continue;
 		if (object->second->getStatus() == eStatus::DESTROY)	// kiểm tra nếu là destroy thì loại khỏi list
 		{
-			if (dynamic_cast<BaseEnemy*> (object->second) != nullptr)
-			{
-				SoundManager::getInstance()->Play(eSoundId::DESTROY_ENEMY);
-			}
+			//if (dynamic_cast<BaseEnemy*> (object->second) != nullptr)
+			//{
+			//	SoundManager::getInstance()->Play(eSoundId::DESTROY_ENEMY);
+			//}
 			object->second->release();
 			delete object->second;
 			object->second = NULL;
@@ -331,7 +337,7 @@ void PlayScene::draw(LPD3DXSPRITE spriteHandle)
 	{
 		object->draw(spriteHandle, _viewport);
 	}
-
+	_bulletmanager->draw(spriteHandle, _viewport);
 	if (_help != nullptr)
 	{
 		_help->draw(spriteHandle);

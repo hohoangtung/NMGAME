@@ -617,19 +617,20 @@ float Bill::checkCollision(BaseObject * object, float dt)
 			auto children = ((ObjectCreator*)object)->getObjects();
 			for (auto child : children)
 			{
-				collisionBody->checkCollision(child, dt);
+				collisionBody->checkCollision(child, dt,false);
 			}
 		}
 		else
 		{
-			collisionBody->checkCollision(object, dt);
+			// tùng
+			//collisionBody->checkCollision(object, dt, false);
 		}
 	}
-
-	for (auto it = _listBullets.begin(); it != _listBullets.end(); it++)
+	if (objectId != eID::LAND && objectId )
 	{
-		if (object->getId() != eID::LAND )
+		for (auto it = _listBullets.begin(); it != _listBullets.end(); it++)
 		{
+
 			if (objectId == eID::ROCKCREATOR)
 			{
 				safeCheckCollision((*it), ((RockCreator*)object)->getRock(), dt);
@@ -658,6 +659,7 @@ float Bill::checkCollision(BaseObject * object, float dt)
 			}
 			else
 			{
+				//tùng
 				(*it)->checkCollision(object, dt);
 			}
 		}

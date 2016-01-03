@@ -9,7 +9,6 @@
 #include "..\FrameWork\Managers\SoundManager.h"
 #include "Bullet.h"
 #include "BulletManager.h"
-#include "Bazier.h"
 #include "Beast_Bullet.h"
 
 class ShadowBeast : public BaseEnemy

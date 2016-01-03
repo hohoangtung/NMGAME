@@ -10,6 +10,12 @@ void BulletManager::init()
 
 float BulletManager::checkCollision(BaseObject * object, float dt)
 {
+	// Tùng: sử chỉ cho kiểm tra va chạm với bill và land
+	eID id = object->getId();
+	if (id != BILL && id != LAND)
+	{
+		return 0.0f;
+	}
 	for (Bullet* bullet : _listBullet)
 	{
 		if (bullet == nullptr)
@@ -19,11 +25,15 @@ float BulletManager::checkCollision(BaseObject * object, float dt)
 		}
 		else
 		{
-			if (dynamic_cast<BaseEnemy*>(object) && bullet->isEnemyBullet())
+			//if (dynamic_cast<BaseEnemy*>(object) && bullet->isEnemyBullet())
+			//{
+			//	continue;
+			//}
+			eID id = object->getId();
+			if (id != BILL && id != LAND)
 			{
 				continue;
 			}
-
 			bullet->checkCollision(object, dt);
 		}
 	}

@@ -17,6 +17,8 @@ public:
 	void setScore(int);
 	virtual void dropHitpoint();
 	virtual void dropHitpoint(int damage);
+	
+	void setStatus(eStatus status) override;
 	virtual ~BaseEnemy();
 protected:
 	void gainScore();
